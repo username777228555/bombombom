@@ -25,6 +25,8 @@ interface Ctx {
 }
 
 const imp = (x: { importance?: number }) => x.importance ?? 2;
+/** Wraps a title in guillemets unless it already has them (book titles often do). */
+const q = (s: string) => (/^«.*»$/.test(s.trim()) ? s.trim() : `«${s.trim()}»`);
 const nameOf = (p: PersonItem) => p.short ?? p.name;
 
 function distinctYears(events: EventItem[], n: number, rng: Rng, minGap = 1): EventItem[] | null {
@@ -55,7 +57,7 @@ const G: Record<string, Gen> = {
     if (!e) return null;
     const opts = yearOptions(e.year, events, rng);
     return {
-      type: 'single', prompt: `В каком году: «${e.title}»?`, options: opts.map((y) => formatYear(y)),
+      type: 'single', prompt: `В каком году: ${q(e.title)}?`, options: opts.map((y) => formatYear(y)),
       answer: opts.indexOf(e.year), explain: `${formatEventDate(e)}. ${e.summary}`, entity: e.id, period: e.period,
     };
   },
@@ -63,7 +65,7 @@ const G: Record<string, Gen> = {
     const e = pick(events.filter((x) => imp(x) >= 2), rng) ?? pick(events, rng);
     if (!e) return null;
     return {
-      type: 'year', prompt: `Укажите год: «${e.title}»`, answer: e.year, tolerance: e.circa ? 3 : 0,
+      type: 'year', prompt: `Укажите год: ${q(e.title)}`, answer: e.year, tolerance: e.circa ? 3 : 0,
       explain: `${formatEventDate(e)}. ${e.summary}`, entity: e.id, period: e.period,
     };
   },
@@ -168,7 +170,7 @@ const G: Record<string, Gen> = {
     }
     const list = shuffle([...opts], rng);
     return {
-      type: 'single', prompt: `К какому веку относится памятник «${c.title}»?`, options: list.map((x) => `${toRoman(x)} век`),
+      type: 'single', prompt: `К какому веку относится памятник ${q(c.title)}?`, options: list.map((x) => `${toRoman(x)} век`),
       answer: list.indexOf(cen), explain: `${c.title} (${CULTURE_KIND_LABELS[c.kind].toLowerCase()}) — ${c.circa ? centuryLabel(c.year) : formatYear(c.year)}. ${c.summary}`,
       entity: c.id, period: c.period,
     };
@@ -189,7 +191,7 @@ const G: Record<string, Gen> = {
     const others = [...candidates].slice(0, 3);
     if (others.length < 3) return null;
     const opts = shuffle([author, ...others], rng);
-    return { type: 'single', prompt: `Кто автор (создатель) памятника «${c.title}»?`, options: opts, answer: opts.indexOf(author), explain: c.summary, entity: c.id, period: c.period };
+    return { type: 'single', prompt: `Кто автор (создатель) памятника ${q(c.title)}?`, options: opts, answer: opts.indexOf(author), explain: c.summary, entity: c.id, period: c.period };
   },
   multiplePeriod({ rng, events, periods }) {
     const target = periods?.length ? pick(periods, rng) : pick(kb.periods, rng).id;
@@ -202,7 +204,7 @@ const G: Record<string, Gen> = {
     const opts = shuffle([...ins, ...outs], rng);
     const period = kb.periodById.get(target)!;
     return {
-      type: 'multiple', prompt: `Какие события относятся к периоду «${period.title}» (${period.range})?`, options: opts.map((e) => e.title),
+      type: 'multiple', prompt: `Какие события относятся к периоду ${q(period.title)} (${period.range})?`, options: opts.map((e) => e.title),
       answers: opts.map((e, i) => (ins.includes(e) ? i : -1)).filter((i) => i >= 0),
       explain: opts.map((e) => `${e.title} — ${formatYear(e.year)}`).join('; '),
     };
@@ -221,7 +223,7 @@ const G: Record<string, Gen> = {
     return {
       type: 'errors', prompt: 'Найдите ошибки в тексте (нажмите на неверные фрагменты)',
       segments: [
-        { text: `«${e.title}» — `, wrong: false },
+        { text: `${q(e.title)} — `, wrong: false },
         { text: `событие ${formatYear(wrongYear ? altYear : e.year)} года`, wrong: wrongYear, fix: `${formatYear(e.year)} год` },
         { text: `, относится к периоду «${period.short}»`, wrong: false },
         { text: `; его участник — ${usePerson ? nameOf(alt) : person}.`, wrong: !!usePerson, fix: person },

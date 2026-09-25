@@ -1,5 +1,5 @@
 import { ChartGantt, Network, Crown, BookOpen, Landmark } from '@lucide/svelte';
-import { defineModule } from '$lib/core/modules';
+import { defineModule } from '$lib/core/define-module';
 
 export default defineModule({
   id: 'explore',

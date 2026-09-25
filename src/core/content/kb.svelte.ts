@@ -103,7 +103,14 @@ class KnowledgeBase {
     const builtin = await Promise.all(
       Object.entries(manifestLoaders).map(async ([path, load]): Promise<RawPack | null> => {
         const dir = path.split('/')[3]!;
-        const m = PackManifestSchema.safeParse(await load());
+        let rawManifest: unknown;
+        try {
+          rawManifest = await load();
+        } catch (e) {
+          console.warn('[content] unreadable pack.json', path, e);
+          return null;
+        }
+        const m = PackManifestSchema.safeParse(rawManifest);
         if (!m.success) {
           console.warn('[content] invalid pack.json', path, m.error.issues);
           return null;
@@ -112,7 +119,16 @@ class KnowledgeBase {
         const paths = Object.keys(fragmentLoaders).filter((p) => p.startsWith(`/content/packs/${dir}/`)).sort();
         const fragments = await Promise.all(
           paths.map(async (p) => {
-            const r = FragmentSchema.safeParse(await fragmentLoaders[p]!());
+            // A single broken file must not take the whole app down: skip it and report in «Пакеты».
+            let data: unknown;
+            try {
+              data = await fragmentLoaders[p]!();
+            } catch (e) {
+              skipped++;
+              console.warn('[content] unreadable fragment', p, e);
+              return null;
+            }
+            const r = FragmentSchema.safeParse(data);
             if (!r.success) {
               skipped++;
               console.warn('[content] skipped invalid fragment', p, r.error.issues.slice(0, 5));

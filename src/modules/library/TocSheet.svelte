@@ -7,8 +7,8 @@
   }
   let { items, current, ongo }: { items: Item[]; current?: string; ongo: (href: string) => void } = $props();
   function go(href: string) {
-    closeSheet();
     ongo(href);
+    closeSheet();
   }
 </script>
 

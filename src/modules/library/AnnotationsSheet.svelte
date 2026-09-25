@@ -15,7 +15,7 @@
   <h2>Закладки и выделения</h2>
   {#each list as a (a.id)}
     <div class="an">
-      <button class="body" onclick={() => { closeSheet(); ongo(a); }}>
+      <button class="body" onclick={() => { ongo(a); closeSheet(); }}>
         {#if a.kind === 'bookmark'}
           <span class="bm"><Bookmark size={16} /> Закладка{a.page ? ` · стр. ${a.page}` : ''}</span>
         {:else}

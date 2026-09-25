@@ -1,4 +1,4 @@
-import type { Component } from 'svelte';
+import { untrack, type Component } from 'svelte';
 
 export interface Toast {
   id: number;
@@ -40,7 +40,16 @@ export function toast(message: string, kind: Toast['kind'] = 'info', timeout = 2
 
 export const celebrate = (c: Celebration) => ui.celebrations.push(c);
 export const openSheet = (s: SheetState) => (ui.sheet = s);
-export const closeSheet = () => (ui.sheet = null);
+
+export function closeSheet(): void {
+  // Untracked: closeSheet is called from effects, which must not start depending on `ui.sheet`.
+  const closing = untrack(() => ui.sheet);
+  // Sheet props are read lazily from `ui.sheet`, so clearing it synchronously would break a sheet
+  // that closes itself and then calls a callback prop. Opening another sheet meanwhile wins.
+  queueMicrotask(() => {
+    if (ui.sheet === closing) ui.sheet = null;
+  });
+}
 
 export function confirmDialog(title: string, opts: { message?: string; ok?: string; danger?: boolean } = {}): Promise<boolean> {
   return new Promise((resolve) => {

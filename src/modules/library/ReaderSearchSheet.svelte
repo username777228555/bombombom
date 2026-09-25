@@ -31,7 +31,7 @@
   {#each groups as g, gi (gi)}
     {#if g.label}<span class="eyebrow">{g.label}</span>{/if}
     {#each g.items as it, i (gi + '-' + i)}
-      <button class="hit" onclick={() => { closeSheet(); ongo(it.target); }}>{it.excerpt}</button>
+      <button class="hit" onclick={() => { ongo(it.target); closeSheet(); }}>{it.excerpt}</button>
     {/each}
   {/each}
   {#if !running && q && !groups.length}<p class="muted">Нажмите «Найти».</p>{/if}

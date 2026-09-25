@@ -14,7 +14,8 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Pinned: `ubuntu-latest` moves to Ubuntu 26 in Oct 2026; this build must keep working unattended.
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:

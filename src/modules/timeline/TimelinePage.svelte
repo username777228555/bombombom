@@ -76,23 +76,32 @@
 
   // Pointer pan + pinch zoom.
   const pointers = new Map<number, { x: number; y: number }>();
+  let downX = 0;
   let lastPinch = 0;
   let moved = false;
   function pdown(e: PointerEvent) {
     animating = false;
     moved = false;
+    downX = e.clientX;
     pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    (e.currentTarget as Element).setPointerCapture(e.pointerId);
+  }
+  // Capture only once a drag starts: with capture active the browser retargets `click` to the <svg>,
+  // and taps on events would never reach their handlers.
+  function capture(id: number) {
+    if (svgEl && !svgEl.hasPointerCapture(id)) svgEl.setPointerCapture(id);
   }
   function pmove(e: PointerEvent) {
     const prev = pointers.get(e.pointerId);
     if (!prev) return;
     const cur = { x: e.clientX, y: e.clientY };
     if (pointers.size === 1) {
+      if (!moved && Math.abs(cur.x - downX) < 6) return;
+      moved = true;
+      capture(e.pointerId);
       const dx = cur.x - prev.x;
-      if (Math.abs(dx) > 1) moved = true;
       setView(start - (dx / width) * span, span);
     } else if (pointers.size === 2) {
+      for (const id of pointers.keys()) capture(id);
       pointers.set(e.pointerId, cur);
       const [a, b] = [...pointers.values()];
       const dist = Math.hypot(a!.x - b!.x, a!.y - b!.y);
@@ -211,6 +220,7 @@
       onpointermove={pmove}
       onpointerup={pup}
       onpointercancel={pup}
+      onpointerleave={pup}
       onwheel={wheel}
       role="application"
       aria-label="Лента времени: перетаскивайте и масштабируйте"

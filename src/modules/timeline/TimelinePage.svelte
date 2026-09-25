@@ -171,7 +171,7 @@
     return pack(list, (c) => [x(c.year) - 5, x(c.year) + textW(c.title)], 2);
   });
 
-  const LANE = { rulers: 3 * 26 + 14, events: 4 * 30 + 16, world: 2 * 30 + 16, culture: 2 * 30 + 16 };
+  const LANE = { rulers: 3 * 26 + 14, events: 4 * 30 + 24, world: 2 * 30 + 24, culture: 2 * 30 + 24 };
   type Layout = { rulers?: number; events?: number; culture?: number; world?: number; height: number };
   const layout = $derived.by((): Layout => {
     let y = 40;
@@ -232,7 +232,7 @@
 
       {#each Object.entries(LABELS) as [k, label] (k)}
         {#if lanes[k as keyof typeof lanes] && layout[k as keyof typeof layout] !== undefined}
-          <text class="lane" x="8" y={(layout[k as keyof typeof layout] as number) + 11}>{label}</text>
+          <text class="lane" x="8" y={(layout[k as keyof typeof layout] as number) + 6}>{label}</text>
           <line class="sep" x1="0" x2={width} y1={(layout[k as keyof typeof layout] as number) - 4} y2={(layout[k as keyof typeof layout] as number) - 4} />
         {/if}
       {/each}
@@ -251,7 +251,7 @@
       {#snippet points(rows: { item: { id: string; year: number; endYear?: number; title: string; importance?: number }; row: number }[], top: number, shape: 'dot' | 'diamond')}
         {#each rows as { item: e, row } (e.id)}
           {@const px = x(e.year)}
-          {@const y = top + 22 + Math.max(row, 0) * 30}
+          {@const y = row >= 0 ? top + 30 + row * 30 : top + 15}
           <g class="ev" class:focus={focusId === e.id} class:key={(e.importance ?? 2) >= 3} onclick={() => open(e.id)} role="presentation">
             {#if e.endYear && e.endYear > e.year}
               <rect x={px} y={y - 3} width={Math.max(2, x(e.endYear) - px)} height="6" rx="3" fill={colorAt(e.year)} opacity="0.35" />
@@ -259,7 +259,7 @@
             {#if shape === 'diamond'}
               <rect x={px - 5} y={y - 5} width="10" height="10" transform="rotate(45 {px} {y})" fill={colorAt(e.year)} />
             {:else}
-              <circle cx={px} cy={y} r={(e.importance ?? 2) >= 3 ? 6 : 4.5} fill={colorAt(e.year)} />
+              <circle cx={px} cy={y} r={row < 0 ? 3 : (e.importance ?? 2) >= 3 ? 6 : 4.5} fill={colorAt(e.year)} opacity={row < 0 ? 0.55 : 1} />
             {/if}
             {#if row >= 0}<text x={px + 9} y={y + 4} class="etext">{e.title.length > 28 ? e.title.slice(0, 27) + '…' : e.title}</text>{/if}
           </g>

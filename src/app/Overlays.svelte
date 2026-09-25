@@ -33,7 +33,7 @@
 
 <div class="toasts" aria-live="polite">
   {#each ui.toasts as t (t.id)}
-    <div class="toast {t.kind}" in:fly={{ y: 24, duration: 260 }} out:fade={{ duration: 180 }}>
+    <div class="toast {t.kind}" in:fly={{ y: -24, duration: 260 }} out:fade={{ duration: 180 }}>
       {#if t.kind === 'success'}<CircleCheck size={18} />{:else if t.kind === 'error'}<CircleX size={18} />{:else}<Info size={18} />{/if}
       <span>{t.message}</span>
     </div>
@@ -81,7 +81,7 @@
     position: fixed;
     left: 0;
     right: 0;
-    bottom: calc(var(--tabbar-h) + var(--safe-bottom) + var(--sp-5));
+    top: calc(var(--safe-top) + var(--sp-3));
     z-index: 200;
     display: flex;
     flex-direction: column;

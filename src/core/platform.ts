@@ -79,7 +79,9 @@ export function pickFiles(accept: string, multiple = false): Promise<File[]> {
   return new Promise((resolve) => {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = accept;
+    // Android maps `accept` to MIME types and silently drops unknown extensions (.fb2, .fbz, .azw3),
+    // hiding those files in the picker. Formats are detected by content anyway, so allow any file there.
+    if (!isNative) input.accept = accept;
     input.multiple = multiple;
     input.style.display = 'none';
     input.addEventListener('change', () => {

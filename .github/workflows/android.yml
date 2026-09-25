@@ -1,8 +1,9 @@
 name: Android APK
 
 on:
+  # PR branches are built by `pull_request`; building their pushes too would double Actions minutes.
   push:
-    branches: ['**']
+    branches: [main]
     tags: ['v*']
   pull_request:
   workflow_dispatch:

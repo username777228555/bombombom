@@ -35,7 +35,9 @@ function fontFaces(): string {
 
 export function bookCss(r: Settings['reader']): string {
   const t = READER_THEMES[r.theme];
-  return `${fontFaces()}
+  // @namespace must precede every other rule, otherwise it is dropped together with the epub|type selectors.
+  return `@namespace epub "http://www.idpf.org/2007/ops";
+${fontFaces()}
 html { color-scheme: ${t.dark ? 'dark' : 'light'}; background: ${t.bg} !important; color: ${t.fg} !important; }
 body { background: transparent !important; color: ${t.fg} !important; font-family: ${READER_FONTS[r.font].family} !important; font-size: ${r.fontSize}% !important; }
 p, li, blockquote, dd, div { line-height: ${r.lineHeight} !important; }
@@ -45,6 +47,5 @@ img, svg { max-width: 100%; height: auto; }
 pre { white-space: pre-wrap !important; }
 ::selection { background: ${t.dark ? 'rgba(224,103,122,.45)' : 'rgba(124,29,43,.25)'}; }
 [align="center"] { text-align: center; } [align="right"] { text-align: right; }
-aside[epub|type~="footnote"], aside[epub|type~="endnote"] { display: none; }
-@namespace epub "http://www.idpf.org/2007/ops";`;
+aside[epub|type~="footnote"], aside[epub|type~="endnote"] { display: none; }`;
 }

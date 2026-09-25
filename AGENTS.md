@@ -17,8 +17,9 @@
 | `pnpm icons` | иконки и сплэш Android из эмблемы |
 | `pnpm android:apk` | локальная сборка APK (нужны JDK 21 и Android SDK 36) |
 
-CI (`.github/workflows/android.yml`) на каждый push проверяет контент и типы, собирает APK и
-прикладывает его как артефакт. Тег `v*` публикует релиз.
+CI (`.github/workflows/android.yml`) на каждый PR и push в `main` проверяет контент и типы, собирает APK
+и прикладывает его как артефакт. Тег `v*` публикует релиз. Другую ветку можно собрать вручную:
+Actions → Android APK → Run workflow.
 
 ## Что где лежит
 

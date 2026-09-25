@@ -22,3 +22,4 @@ keystore.properties
 # Content work files of generator agents
 content/packs/*/_work/
 dist-packs/
+!android/keystores/stolypin-debug.keystore

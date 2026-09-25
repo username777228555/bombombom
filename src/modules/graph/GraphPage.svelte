@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { Search, RefreshCw, Maximize } from '@lucide/svelte';
-  import type { Core, ElementDefinition } from 'cytoscape';
+  import type { Core, ElementDefinition, NodeSingular } from 'cytoscape';
   import PageHeader from '$lib/design/components/PageHeader.svelte';
   import IconButton from '$lib/design/components/IconButton.svelte';
   import Chip from '$lib/design/components/Chip.svelte';
@@ -115,7 +115,7 @@
     cy.one('layoutstop', () => {
       // Keep labels readable on phones: never start zoomed out below 0.55.
       if (cy && cy.zoom() < 0.55 && !(focus && cy.$id(focus).nonempty())) {
-        const hub = cy.nodes().not('.faded').max((n) => n.degree(false)).ele;
+        const hub = cy.nodes().not('.faded').max((n) => (n as NodeSingular).degree(false)).ele;
         cy.animate({ zoom: 0.55, center: { eles: hub ?? cy.nodes() } }, { duration: 400 });
       }
       if (focus && cy?.$id(focus).nonempty()) {

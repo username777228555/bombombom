@@ -18,7 +18,9 @@
       <g transform={side === -1 ? 'translate(120 0) scale(-1 1)' : undefined}>
         <path class="stem" pathLength="1" d="M52 108 C24 100 10 76 12 54 C14 34 26 18 44 10" />
         {#each LEAVES as [x, y, r], i (i)}
-          <ellipse class="leaf" style:--i={i} cx={x} cy={y} rx="8.5" ry="3.6" transform="rotate({r} {x} {y})" />
+          <!-- Rotation lives on the <g>: an SVG transform attribute combined with CSS transform-origin on the
+               same element double-applies the pivot and throws the leaf far away. -->
+          <g transform="rotate({r} {x} {y})"><ellipse class="leaf" style:--i={i} cx={x} cy={y} rx="8.5" ry="3.6" /></g>
         {/each}
       </g>
     {/each}

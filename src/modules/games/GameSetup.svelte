@@ -27,7 +27,7 @@
 <div class="setup">
   <header class="bar"><IconButton icon={X} label="Закрыть" onclick={() => router.back('/practice')} /></header>
   <div class="hero" style:--t={tint}>
-    <Laurel size={150}><span class="medal"><Icon size={40} strokeWidth={1.6} /></span></Laurel>
+    <Laurel size={176}><span class="medal"><Icon size={40} strokeWidth={1.6} /></span></Laurel>
     <h1>{title}</h1>
     <Ornament variant="flourish" width={170} />
     <p class="secondary">{rules}</p>

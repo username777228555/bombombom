@@ -39,7 +39,7 @@
   <path class="gem" d="M50 17 l3 4 -3 4 -3 -4z" fill="url(#{id}-gold)" />
   <path class="gem" d="M50 75 l3 4 -3 4 -3 -4z" fill="url(#{id}-gold)" />
   {#if animate}
-    <g clip-path="url(#{id}-clip)"><rect class="glint" x="-60" y="-10" width="40" height="120" fill="url(#{id}-glint)" transform="rotate(20 50 50)" /></g>
+    <g clip-path="url(#{id}-clip)"><rect class="glint" x="-60" y="-10" width="40" height="120" fill="url(#{id}-glint)" /></g>
   {/if}
 </svg>
 
@@ -49,6 +49,8 @@
   .animate .frame.thin { animation-delay: 0.45s; }
   .animate .letters { transform-box: fill-box; transform-origin: center; animation: emb-pop 0.8s var(--ease-spring) 0.5s both; }
   .animate .gem { transform-box: fill-box; transform-origin: center; animation: emb-pop 0.5s var(--ease-spring) 1s both; }
+  /* Tilt and sweep are both in CSS (a transform attribute would be overridden by the animation anyway). */
+  .glint { transform-box: view-box; transform-origin: 50px 50px; transform: rotate(20deg); }
   .animate .glint { animation: emb-glint 2.8s ease-in-out 1.3s infinite; }
   @keyframes emb-draw { to { stroke-dashoffset: 0; } }
   @keyframes emb-pop { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: none; } }

@@ -34,6 +34,26 @@ const Day = z.number().int().min(1).max(31);
 /** Relative path inside the pack folder (e.g. "images/petr-i.webp") or an https URL. */
 const Asset = z.string().trim().min(1);
 
+/**
+ * Who made a picture and when: shown under images in the gallery, on entity pages and in «Картина дня».
+ * Filled automatically by scripts/media/wiki_images.py from Wikimedia Commons metadata.
+ */
+export const ImageInfoSchema = z.strictObject({
+  /** Название произведения: «Утро стрелецкой казни». */
+  title: OptText,
+  /** Автор: «Василий Иванович Суриков», «Неизвестный автор». */
+  author: OptText,
+  /** Дата создания как в источнике: «1881», «1870–1873», «XVI век». */
+  date: OptText,
+  /** Краткое описание изображения. */
+  about: OptText,
+  /** Лицензия: «Public domain», «CC BY-SA 4.0». */
+  license: OptText,
+  /** Страница файла (Wikimedia Commons и т. п.). */
+  source: OptText,
+});
+export type ImageInfo = z.infer<typeof ImageInfoSchema>;
+
 export const CONFIDENCE = ['high', 'medium', 'low'] as const;
 const Confidence = z.enum(CONFIDENCE);
 const Importance = z.union([z.literal(1), z.literal(2), z.literal(3)]);
@@ -64,6 +84,13 @@ export const LINK_TYPES = [
   'spouse', 'ally', 'opponent', 'influence', 'related',
 ] as const;
 export const SYMMETRIC_LINKS: ReadonlySet<string> = new Set(['spouse', 'ally', 'opponent', 'related']);
+/**
+ * Kind of a post in `person.reigns`. Only `head` (глава Русского государства) and `regent` get onto the
+ * rulers ladder, the timeline and the «При ком?» game; the rest are shown on the person's page only.
+ * When omitted, the kind is inferred from the title (see `core/content/rulers.ts`).
+ */
+export const REIGN_KINDS = ['head', 'regent', 'appanage', 'office', 'church', 'foreign'] as const;
+export type ReignKind = (typeof REIGN_KINDS)[number];
 
 export const PeriodSchema = z.strictObject({
   id: Id,
@@ -76,6 +103,7 @@ export const PeriodSchema = z.strictObject({
   description: Text,
   cover: Asset.optional(),
   coverCredit: OptText,
+  coverInfo: ImageInfoSchema.optional(),
 });
 export const PeriodsFileSchema = z.strictObject({
   $schema: z.string().optional(),
@@ -101,7 +129,10 @@ export const EventSchema = z.strictObject({
   place: OptText,
   persons: z.array(Id).optional(),
   image: Asset.optional(),
+  imageInfo: ImageInfoSchema.optional(),
   confidence: Confidence.optional(),
+  /** Название статьи русской Википедии (для scripts/media/wiki_images.py; в приложении не показывается). */
+  wiki: OptText,
   refs: Refs.optional(),
 });
 
@@ -115,14 +146,17 @@ export const PersonSchema = z.strictObject({
   circa: z.boolean().optional(),
   periods: z.array(Id).min(1),
   role: Text,
-  reigns: z.array(z.strictObject({ title: Text, from: Year, to: Year })).optional(),
+  reigns: z.array(z.strictObject({ title: Text, from: Year, to: Year, kind: z.enum(REIGN_KINDS).optional() })).optional(),
   tags: z.array(z.enum(PERSON_TAGS)).optional(),
   importance: Importance.optional(),
   summary: Text,
   details: OptText,
   hints: z.array(Text).optional(),
   image: Asset.optional(),
+  imageInfo: ImageInfoSchema.optional(),
   confidence: Confidence.optional(),
+  /** Название статьи русской Википедии (для scripts/media/wiki_images.py; в приложении не показывается). */
+  wiki: OptText,
   refs: Refs.optional(),
 });
 
@@ -142,7 +176,10 @@ export const CultureSchema = z.strictObject({
   hints: z.array(Text).optional(),
   importance: Importance.optional(),
   image: Asset.optional(),
+  imageInfo: ImageInfoSchema.optional(),
   confidence: Confidence.optional(),
+  /** Название статьи русской Википедии (для scripts/media/wiki_images.py; в приложении не показывается). */
+  wiki: OptText,
   refs: Refs.optional(),
 });
 

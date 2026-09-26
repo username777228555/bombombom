@@ -122,6 +122,36 @@
             "type": "string",
             "minLength": 1
           },
+          "imageInfo": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "author": {
+                "type": "string",
+                "minLength": 1
+              },
+              "date": {
+                "type": "string",
+                "minLength": 1
+              },
+              "about": {
+                "type": "string",
+                "minLength": 1
+              },
+              "license": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          },
           "confidence": {
             "type": "string",
             "enum": [
@@ -129,6 +159,10 @@
               "medium",
               "low"
             ]
+          },
+          "wiki": {
+            "type": "string",
+            "minLength": 1
           },
           "refs": {
             "type": "array",
@@ -229,6 +263,17 @@
                   "type": "integer",
                   "minimum": -3000,
                   "maximum": 2100
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "head",
+                    "regent",
+                    "appanage",
+                    "office",
+                    "church",
+                    "foreign"
+                  ]
                 }
               },
               "required": [
@@ -297,6 +342,36 @@
             "type": "string",
             "minLength": 1
           },
+          "imageInfo": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "author": {
+                "type": "string",
+                "minLength": 1
+              },
+              "date": {
+                "type": "string",
+                "minLength": 1
+              },
+              "about": {
+                "type": "string",
+                "minLength": 1
+              },
+              "license": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          },
           "confidence": {
             "type": "string",
             "enum": [
@@ -304,6 +379,10 @@
               "medium",
               "low"
             ]
+          },
+          "wiki": {
+            "type": "string",
+            "minLength": 1
           },
           "refs": {
             "type": "array",
@@ -423,6 +502,36 @@
             "type": "string",
             "minLength": 1
           },
+          "imageInfo": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "author": {
+                "type": "string",
+                "minLength": 1
+              },
+              "date": {
+                "type": "string",
+                "minLength": 1
+              },
+              "about": {
+                "type": "string",
+                "minLength": 1
+              },
+              "license": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          },
           "confidence": {
             "type": "string",
             "enum": [
@@ -430,6 +539,10 @@
               "medium",
               "low"
             ]
+          },
+          "wiki": {
+            "type": "string",
+            "minLength": 1
           },
           "refs": {
             "type": "array",

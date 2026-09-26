@@ -1,7 +1,7 @@
 {
   "name": "stolypin",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.1",
   "type": "module",
   "description": "СТОЛЫПИНЪ — учёба истории: офлайн-приложение для подготовки к олимпиадам по истории России",
   "scripts": {
@@ -12,9 +12,12 @@
     "content:check": "tsx scripts/content-check.ts",
     "content:stats": "tsx scripts/content-check.ts --stats",
     "content:new": "tsx scripts/content-new.ts",
+    "content:add": "tsx scripts/content-add.ts",
     "content:id": "tsx scripts/content-id.ts",
     "content:schema": "tsx scripts/content-schema.ts",
     "content:bundle": "tsx scripts/content-bundle.ts",
+    "content:books": "tsx scripts/book-titles.ts",
+    "content:rulers": "tsx scripts/rulers-check.ts",
     "icons": "tsx scripts/gen-icons.ts",
     "android:sync": "vite build && cap sync android",
     "android:apk": "vite build && cap sync android && cd android && ./gradlew assembleRelease"

@@ -71,7 +71,7 @@
     transform: translateX(calc(var(--i) * 100%));
     border-radius: 18px;
     background: var(--accent-soft);
-    transition: transform var(--dur-3) var(--ease-out);
+    transition: transform 460ms var(--ease-spring);
   }
   button {
     position: relative;

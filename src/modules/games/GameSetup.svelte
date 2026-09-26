@@ -5,6 +5,7 @@
   import Button from '$lib/design/components/Button.svelte';
   import Chip from '$lib/design/components/Chip.svelte';
   import Ornament from '$lib/design/components/Ornament.svelte';
+  import Laurel from '$lib/design/components/Laurel.svelte';
   import { kb } from '$lib/core/content/kb.svelte';
   import { router } from '$lib/core/router.svelte';
 
@@ -26,9 +27,9 @@
 <div class="setup">
   <header class="bar"><IconButton icon={X} label="Закрыть" onclick={() => router.back('/practice')} /></header>
   <div class="hero" style:--t={tint}>
-    <span class="medal"><Icon size={40} strokeWidth={1.6} /></span>
+    <Laurel size={176}><span class="medal"><Icon size={40} strokeWidth={1.6} /></span></Laurel>
     <h1>{title}</h1>
-    <Ornament width={140} />
+    <Ornament variant="flourish" width={170} />
     <p class="secondary">{rules}</p>
     {#if best}<p class="best"><Trophy size={16} /> Рекорд: <b class="num">{best}</b></p>{/if}
   </div>

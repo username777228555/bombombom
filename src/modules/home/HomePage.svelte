@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Search, Flame, Layers, Swords, UserSearch, Crosshair, ChartGantt, Network, Sparkles, BookOpen, ArrowRight, CalendarDays } from '@lucide/svelte';
+  import { Search, Flame, Layers, Swords, UserSearch, Crosshair, ChartGantt, Network, Sparkles, BookOpen, ArrowRight, CalendarDays, Crown, CalendarCheck } from '@lucide/svelte';
   import Emblem from '$lib/design/components/Emblem.svelte';
   import IconButton from '$lib/design/components/IconButton.svelte';
   import ProgressRing from '$lib/design/components/ProgressRing.svelte';
@@ -8,14 +8,17 @@
   import Card from '$lib/design/components/Card.svelte';
   import Tile from '$lib/design/components/Tile.svelte';
   import Ornament from '$lib/design/components/Ornament.svelte';
+  import Painting from '$lib/design/components/Painting.svelte';
+  import { reveal, dailyPick } from '$lib/design/motion';
   import PeriodCard from '$lib/components/PeriodCard.svelte';
   import EntityRow from '$lib/components/EntityRow.svelte';
+  import ImageCredit from '$lib/components/ImageCredit.svelte';
   import { kb } from '$lib/core/content/kb.svelte';
   import { progress, currentRank } from '$lib/core/progress.svelte';
   import { settings } from '$lib/core/settings.svelte';
   import { buildQueue } from '$lib/core/srs';
   import { db, type BookMeta } from '$lib/core/db';
-  import { greeting, formatDateLong, pluralN, monthGen } from '$lib/core/utils/format';
+  import { greeting, formatDateLong, pluralN, monthGen, formatEventDate, formatSpan } from '$lib/core/utils/format';
   import { hashString, mulberry32, pick } from '$lib/core/utils/random';
   import { navigate } from '$lib/core/router.svelte';
 
@@ -31,6 +34,23 @@
   });
 
   const now = new Date();
+  // «Картина дня»: one of the event illustrations, the same all day. Hero backdrop: a period cover painting.
+  const artOfDay = $derived.by(() => {
+    void kb.version;
+    // Every other day a work of art, otherwise an illustrated event (both from content packs).
+    const art = kb.culture.flatMap((c) => {
+      const ent = kb.get(c.id);
+      const src = c.image && ent ? kb.imageOf(ent) : undefined;
+      return src && (c.kind === 'painting' || c.kind === 'icon') ? [{ id: c.id, title: c.title, sub: formatSpan(c.year, c.endYear, c.circa), period: c.period, info: c.imageInfo, src }] : [];
+    });
+    const events = kb.events.flatMap((e) => {
+      const ent = kb.get(e.id);
+      const src = e.image && ent ? kb.imageOf(ent) : undefined;
+      return src && (e.importance ?? 2) >= 2 ? [{ id: e.id, title: e.title, sub: formatEventDate(e), period: e.period, info: e.imageInfo, src }] : [];
+    });
+    return dailyPick(now.getDate() % 2 && art.length ? art : events.length ? events : art, 'art');
+  });
+  const heroCover = $derived(dailyPick(kb.periods.map((p) => kb.periodCover(p)).filter((x): x is string => !!x), 'hero'));
   const goal = $derived(progress.today.xp / Math.max(1, settings.dailyGoal));
   const onThisDay = $derived.by(() => {
     void kb.version;
@@ -62,6 +82,7 @@
   </section>
 
   <section class="hero">
+    {#if heroCover}<img class="hero-art" src={heroCover} alt="" aria-hidden="true" />{/if}
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-row">
       <ProgressRing value={goal} size={96} stroke={9} color="#f0cf82" track="rgba(255,255,255,.16)">
@@ -100,6 +121,22 @@
     </Card>
   {/if}
 
+  {#if artOfDay}
+    <section class="section" use:reveal>
+      <div class="section-title">
+        <h2>Картина дня</h2>
+        <a href="#/gallery" class="more">Галерея <ArrowRight size={14} /></a>
+      </div>
+      <Painting src={artOfDay.src} alt={artOfDay.title} height="210px" onclick={() => navigate(`/gallery?open=${artOfDay.id}`)}>
+        {#snippet caption()}
+          <b class="art-t">{artOfDay.title}</b>
+          <small class="art-d">{artOfDay.sub} · {kb.periodById.get(artOfDay.period)?.short}</small>
+        {/snippet}
+      </Painting>
+      <div class="art-credit"><ImageCredit info={artOfDay.info} compact /></div>
+    </section>
+  {/if}
+
   <section class="section">
     <div class="section-title">
       <h2>Эпохи</h2>
@@ -112,7 +149,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" use:reveal>
     <div class="section-title"><h2>Практика</h2></div>
     <div class="grid-2 wide-3">
       <Tile icon={Layers} title="Карточки" description="Интервальные повторения" href="/cards" tint="#7c1d2b" badge={due || null} />
@@ -121,6 +158,8 @@
       <Tile icon={UserSearch} title="Кто я?" description="Угадай по подсказкам" href="/games/whoami" tint="#1d6b57" />
       <Tile icon={Crosshair} title="Год-снайпер" description="Попади в дату" href="/games/sniper" tint="#a3202e" />
       <Tile icon={ChartGantt} title="Лента времени" description="Синхронная хронология" href="/timeline" tint="#56627a" />
+      <Tile icon={Crown} title="При ком это было?" description="Событие → правитель" href="/games/reign" tint="#a87a28" />
+      <Tile icon={CalendarCheck} title="Ключевые даты" description="Шпаргалка с самопроверкой" href="/dates" tint="#8e2430" />
     </div>
   </section>
 
@@ -148,7 +187,7 @@
         <ArrowRight size={18} />
       </div>
     </Card>
-    <Ornament />
+    <Ornament variant="flourish" width={220} />
     <p class="foot muted">
       {kb.events.length} событий · {kb.persons.length} персоналий · {kb.culture.length} памятников · {kb.terms.length} терминов
     </p>
@@ -171,6 +210,22 @@
     background: linear-gradient(150deg, #8f2233 0%, #6a1623 55%, #3f0c15 100%);
     box-shadow: 0 18px 40px rgba(94, 19, 32, 0.35);
   }
+  .hero-art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.26;
+    mix-blend-mode: luminosity;
+    transform: scale(1.08);
+    animation: hero-drift 26s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes hero-drift { to { transform: scale(1.2) translate(-3%, 2%); } }
+  .art-t { font-family: var(--font-display); font-size: var(--text-lg); line-height: 1.2; }
+  .art-d { font-size: var(--text-xs); opacity: 0.85; }
+  .art-credit { margin-top: var(--sp-2); padding: 0 4px; }
   .hero-bg {
     position: absolute;
     inset: 0;

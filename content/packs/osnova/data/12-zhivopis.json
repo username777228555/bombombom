@@ -1,0 +1,1665 @@
+{
+  "culture": [
+    {
+      "id": "c-zvenigorodskiy-chin",
+      "title": "Звенигородский чин («Спас»)",
+      "kind": "icon",
+      "period": "udel",
+      "year": 1410,
+      "authors": [
+        "p-andrey-rublev"
+      ],
+      "summary": "Деисусный чин, приписываемый Андрею Рублёву. Самая известная икона — «Спас» с кротким, просветлённым ликом; найден в 1918 году в сарае под Звенигородом.",
+      "features": [
+        "мягкий, «умозрительный» лик Христа",
+        "сохранился фрагментарно",
+        "рублёвская гармония и светлые краски"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-zvenigorodskiy-chin.webp",
+      "imageInfo": {
+        "date": "2014",
+        "about": "Звенигородский чин (Третьяковская галерея)",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Zvenigorodskiy_chin_(Tretyakov_gallery)_-_by_shakko_01.JPG"
+      },
+      "wiki": "Звенигородский чин"
+    },
+    {
+      "id": "c-freski-spasa-na-iline",
+      "title": "Фрески церкви Спаса Преображения на Ильине улице",
+      "kind": "painting",
+      "period": "udel",
+      "year": 1378,
+      "authors": [
+        "p-feofan-grek"
+      ],
+      "summary": "Единственные достоверные работы Феофана Грека на Руси: суровые, аскетичные образы в почти монохромной охристой гамме.",
+      "features": [
+        "экспрессивная манера, резкие белильные «движки»",
+        "Новгород, 1378 год",
+        "образы столпников и праотцев"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-freski-spasa-na-iline.webp",
+      "imageInfo": {
+        "author": "Феофан Грек",
+        "date": "1378",
+        "about": "Священномученик Елевферий Иллирийский. Роспись церкви Спаса Преображения на Ильине улице в Великом Новгороде. 1378 г. Мастер - Феофан Грек",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Eleutherius_of_Illyria_(1378,_Theophanes_the_Greek).jpg"
+      },
+      "wiki": "Церковь Спаса Преображения на Ильине улице"
+    },
+    {
+      "id": "c-tserkov-voinstvuyushchaya",
+      "title": "Икона «Благословенно воинство Небесного Царя» («Церковь воинствующая»)",
+      "kind": "icon",
+      "period": "muscovy",
+      "year": 1552,
+      "authorName": "Неизвестный мастер",
+      "summary": "Икона-аллегория на взятие Казани войском Ивана Грозного: воинство движется от горящего города к Небесному Иерусалиму.",
+      "features": [
+        "длинная горизонтальная композиция",
+        "шествие войска во главе с архангелом Михаилом",
+        "связана со взятием Казани (1552)"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-tserkov-voinstvuyushchaya.webp",
+      "imageInfo": {
+        "title": "Благословенно воинство Небесного Царя",
+        "author": "Неизвестный автор",
+        "about": "Изображение: Икона «Благословенно воинство Небесного Царя» («Церковь воинствующая»)",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Blessed_Be_the_Host_of_the_King_of_Heaven%E2%80%A6_-_Google_Art_Project.jpg"
+      },
+      "wiki": "Благословенно воинство Небесного Царя"
+    },
+    {
+      "id": "c-vladimir-i-rogneda",
+      "title": "«Владимир и Рогнеда»",
+      "kind": "painting",
+      "period": "c18",
+      "year": 1770,
+      "authorName": "Антон Лосенко",
+      "summary": "Первое полотно Академии художеств на сюжет из русской истории: князь Владимир и полоцкая княжна Рогнеда.",
+      "features": [
+        "первая картина на тему отечественной истории",
+        "классицизм, театральные жесты",
+        "князь просит прощения у полоцкой княжны"
+      ],
+      "importance": 2,
+      "wiki": "Владимир и Рогнеда (картина Лосенко)",
+      "image": "images/culture/c-vladimir-i-rogneda.webp",
+      "imageInfo": {
+        "title": "Владимир и Рогнеда",
+        "author": "Антон Павлович Лосенко",
+        "date": "1770",
+        "about": "Изображение: «Владимир и Рогнеда».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Anton_Losenko_-_Vladimir_and_Rogneda_-_Google_Art_Project.jpg"
+      }
+    },
+    {
+      "id": "c-portret-napolnogo-getmana",
+      "title": "«Портрет напольного гетмана»",
+      "kind": "painting",
+      "period": "c18",
+      "year": 1720,
+      "authorName": "Иван Никитин",
+      "summary": "Портрет работы петровского пенсионера Ивана Никитина — образец нового, светского искусства начала XVIII века.",
+      "features": [
+        "петровская эпоха",
+        "психологизм без парадности",
+        "один из первых русских светских живописцев"
+      ],
+      "importance": 1,
+      "wiki": "Портрет напольного гетмана",
+      "image": "images/culture/c-portret-napolnogo-getmana.webp",
+      "imageInfo": {
+        "author": "Иван Никитич Никитин",
+        "about": "Портрет напольного гетмана. Государственный Русский музей, Санкт-Петербург",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikitin_Getman.jpg"
+      }
+    },
+    {
+      "id": "c-avtoportret-s-zhenoy",
+      "title": "«Автопортрет с женой»",
+      "kind": "painting",
+      "period": "c18",
+      "year": 1729,
+      "authorName": "Андрей Матвеев",
+      "summary": "Первый в русской живописи автопортрет и первый «супружеский» портрет, написанный выучеником голландской школы.",
+      "features": [
+        "первый автопортрет в русской живописи",
+        "парный портрет",
+        "художник учился в Голландии по воле Петра I"
+      ],
+      "importance": 1,
+      "wiki": "Автопортрет с женой (картина Матвеева)",
+      "image": "images/culture/c-avtoportret-s-zhenoy.webp",
+      "imageInfo": {
+        "author": "Матвеев, Андрей Матвеевич",
+        "date": "1729",
+        "about": "Вскоре по возвращении из-за границы Матвеев женился на дочери кузнечного мастера Канцелярии от строений Ирине Степановне Антроповой, двоюродной сестре своего ученика Алексея Антропова. В это время ему было двадцать семь лет, а ей —…",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Andrei_Matveev_-_Selfportrait_with_wife.jpg"
+      }
+    },
+    {
+      "id": "c-portret-struyskoy",
+      "title": "«Портрет А. П. Струйской»",
+      "kind": "painting",
+      "period": "c18",
+      "year": 1772,
+      "authorName": "Фёдор Рокотов",
+      "summary": "Самый поэтичный портрет Рокотова: образ молодой женщины, окутанный мягкой дымкой светотени.",
+      "features": [
+        "лёгкая дымка, мягкие переходы",
+        "загадочная полуулыбка",
+        "стихи Н. Заболоцкого «Любите живопись, поэты…»"
+      ],
+      "importance": 2,
+      "wiki": "Портрет Александры Струйской",
+      "image": "images/culture/c-portret-struyskoy.webp",
+      "imageInfo": {
+        "author": "Фёдор Степанович Рокотов",
+        "date": "1772",
+        "about": "Изображение: «Портрет А. П. Струйской».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Fedor_Rokotov_-_%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%90.%D0%9F.%D0%A1%D1%82%D1%80%D1%83%D0%B9%D1%81%D0%BA%D0%BE%D0%B9_-_Google_Art_Project.jpg"
+      }
+    },
+    {
+      "id": "c-ekaterina-zakonodatelnitsa",
+      "title": "«Портрет Екатерины II — законодательницы в храме богини Правосудия»",
+      "kind": "painting",
+      "period": "c18",
+      "year": 1783,
+      "authorName": "Дмитрий Левицкий",
+      "summary": "Парадный портрет-аллегория просвещённого абсолютизма: императрица сжигает маки на алтаре Правосудия, жертвуя покоем ради общего блага.",
+      "features": [
+        "аллегория просвещённого абсолютизма",
+        "лавровый венок, книги законов, орёл",
+        "классицизм"
+      ],
+      "importance": 2,
+      "wiki": "Портрет Екатерины II — законодательницы в храме богини Правосудия",
+      "image": "images/culture/c-ekaterina-zakonodatelnitsa.webp",
+      "imageInfo": {
+        "author": "Дмитрий Григорьевич Левицкий",
+        "date": "1783",
+        "about": "Иконографический тип Ф.С. Рокотова (между 1769 и 1777)",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Dmitry_Levitsky_-_Portrait_of_Catherine_II_the_Legislatress_in_the_Temple_of_the_Goddess_of_Justice_-_Google_Art_Project.jpg"
+      }
+    },
+    {
+      "id": "c-smolyanki",
+      "title": "Портреты смолянок",
+      "kind": "painting",
+      "period": "c18",
+      "year": 1772,
+      "endYear": 1776,
+      "authorName": "Дмитрий Левицкий",
+      "summary": "Серия из семи портретов воспитанниц Смольного института благородных девиц, написанная по заказу Екатерины II.",
+      "features": [
+        "семь портретов воспитанниц",
+        "театральные костюмы и позы",
+        "изящество рококо"
+      ],
+      "importance": 1,
+      "wiki": "Смолянки",
+      "image": "images/culture/c-smolyanki.webp",
+      "imageInfo": {
+        "title": "Портрет Екатерины Хрущевой и княжны Екатерины Хованской",
+        "author": "Дмитрий Григорьевич Левицкий",
+        "date": "1773",
+        "about": "Изображение: Портреты смолянок.",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Dmitry_Levitsky_-_Portrait_of_Ekaterina_Khruschova_and_Ekaterina_Khovanskaya_-_Google_Art_Project.jpg"
+      }
+    },
+    {
+      "id": "c-portret-lopukhinoy",
+      "title": "«Портрет М. И. Лопухиной»",
+      "kind": "painting",
+      "period": "c18",
+      "year": 1797,
+      "authorName": "Владимир Боровиковский",
+      "summary": "Вершина сентиментализма в русском портрете: мечтательная Мария Лопухина на фоне тихого пейзажа.",
+      "features": [
+        "сентиментализм",
+        "пейзажный фон, розы и васильки",
+        "мечтательная, задумчивая модель"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-portret-lopukhinoy.webp",
+      "imageInfo": {
+        "author": "Владимир Лукич Боровиковский",
+        "date": "1797",
+        "about": "Изображение: «Портрет М. И. Лопухиной»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Vladimir_Borovikovskiy_-_%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%9C.%D0%98.%D0%9B%D0%BE%D0%BF%D1%83%D1%85%D0%B8%D0%BD%D0%BE%D0%B9_-_Google_Art_Project.jpg"
+      },
+      "wiki": "Портрет Марии Лопухиной"
+    },
+    {
+      "id": "c-ekaterina-na-progulke",
+      "title": "«Екатерина II на прогулке в Царскосельском парке»",
+      "kind": "painting",
+      "period": "c18",
+      "year": 1794,
+      "authorName": "Владимир Боровиковский",
+      "summary": "Непарадный портрет стареющей императрицы с собачкой — образ «матушки», а не богини. Эту сцену описал Пушкин в «Капитанской дочке».",
+      "features": [
+        "императрица в домашнем платье с собачкой",
+        "Чесменская колонна на фоне",
+        "сентиментализм"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-ekaterina-na-progulke.webp",
+      "imageInfo": {
+        "author": "Владимир Лукич Боровиковский",
+        "date": "1794",
+        "about": "Изображение: «Екатерина II на прогулке в Царскосельском парке»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Catherine_II_walking_by_V.Borovikovskiy_(1794,_Tretyakov_gallery).jpg"
+      },
+      "wiki": "Екатерина II на прогулке в Царскосельском парке"
+    },
+    {
+      "id": "c-portret-pushkina-kiprenskogo",
+      "title": "«Портрет А. С. Пушкина» Кипренского",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1827,
+      "authorName": "Орест Кипренский",
+      "summary": "Самый известный прижизненный портрет поэта, заказанный Дельвигом. Пушкин ответил стихами: «Себя как в зеркале я вижу, но это зеркало мне льстит».",
+      "features": [
+        "скрещённые руки, взгляд в сторону",
+        "статуэтка музы за плечом",
+        "романтизм"
+      ],
+      "importance": 3,
+      "wiki": "Портрет Пушкина (картина Кипренского)",
+      "image": "images/culture/c-portret-pushkina-kiprenskogo.webp",
+      "imageInfo": {
+        "title": "Портрет Александра Сергеевича Пушкина (1799—1837)",
+        "author": "Орест Адамович Кипренский",
+        "date": "1827",
+        "about": "Изображение: «Портрет А. С. Пушкина» Кипренского.",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Orest_Kiprensky_-_%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%BF%D0%BE%D1%8D%D1%82%D0%B0_%D0%90.%D0%A1.%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD%D0%B0_-_Google_Art_Project.jpg"
+      }
+    },
+    {
+      "id": "c-portret-davydova",
+      "title": "«Портрет Е. В. Давыдова»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1809,
+      "authorName": "Орест Кипренский",
+      "summary": "Романтический портрет гусара, ставший символом героической эпохи 1812 года; долго считался портретом Дениса Давыдова.",
+      "features": [
+        "романтический образ гусара",
+        "светлое лицо на тёмном фоне",
+        "ассоциируется с войной 1812 года"
+      ],
+      "importance": 1,
+      "wiki": "Портрет Евграфа Давыдова",
+      "image": "images/culture/c-portret-davydova.webp",
+      "imageInfo": {
+        "title": "Портрет лейб-гусарского полковника Е.В.Давыдова",
+        "author": "Орест Адамович Кипренский",
+        "date": "1809",
+        "about": "Изображение: «Портрет Е. В. Давыдова».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Orest_Kiprensky_-_Portrait_of_Life_Guard_Colonel_Yevgraf_Davydov_-_Google_Art_Project.jpg"
+      }
+    },
+    {
+      "id": "c-kruzhevnitsa",
+      "title": "«Кружевница»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1823,
+      "authorName": "Василий Тропинин",
+      "summary": "Поэтичный жанровый портрет работы Тропинина, получившего вольную лишь в 47 лет.",
+      "features": [
+        "жанровый портрет",
+        "девушка на миг отвлеклась от коклюшек",
+        "автор — бывший крепостной"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-kruzhevnitsa.webp",
+      "imageInfo": {
+        "author": "Василий Андреевич Тропинин",
+        "date": "1823",
+        "about": "Изображение: «Кружевница».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Tropinin_lacemaker.jpg"
+      },
+      "wiki": "Кружевница (картина Тропинина)"
+    },
+    {
+      "id": "c-na-pashne-vesna",
+      "title": "«На пашне. Весна»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1820,
+      "authorName": "Алексей Венецианов",
+      "summary": "Венецианов — основатель бытового жанра: крестьянский труд у него торжествен и красив, словно античная сцена.",
+      "features": [
+        "крестьянка в сарафане ведёт лошадей",
+        "поэтизация крестьянского труда",
+        "ребёнок на краю поля"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-na-pashne-vesna.webp",
+      "imageInfo": {
+        "author": "Алексей Гаврилович Венецианов",
+        "date": "первая половина 1820-х",
+        "about": "Изображение: «На пашне. Весна»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Aleksey_Venetsianov_-_%D0%9D%D0%B0_%D0%BF%D0%B0%D1%88%D0%BD%D0%B5._%D0%92%D0%B5%D1%81%D0%BD%D0%B0_-_Google_Art_ProjectFXD.jpg"
+      },
+      "wiki": "На пашне. Весна"
+    },
+    {
+      "id": "c-vsadnitsa",
+      "title": "«Всадница»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1832,
+      "authorName": "Карл Брюллов",
+      "summary": "Эффектный парадный портрет воспитанниц графини Самойловой, написанный в Италии.",
+      "features": [
+        "парадный портрет в движении",
+        "девочка на крыльце, собаки",
+        "романтизм"
+      ],
+      "importance": 1,
+      "wiki": "Всадница (картина Брюллова)",
+      "image": "images/culture/c-vsadnitsa.webp",
+      "imageInfo": {
+        "author": "Карл Павлович Брюллов",
+        "date": "1832",
+        "about": "Изображение: «Всадница».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Karl_Bryullov_(Bryullo)_-_%D0%92%D1%81%D0%B0%D0%B4%D0%BD%D0%B8%D1%86%D0%B0_-_Google_Art_Project.jpg"
+      }
+    },
+    {
+      "id": "c-svatovstvo-mayora",
+      "title": "«Сватовство майора»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1848,
+      "authorName": "Павел Федотов",
+      "summary": "Сатирическая жанровая сцена: разорившийся майор сватается к богатой купеческой дочке.",
+      "features": [
+        "купеческий дом, невеста пытается убежать",
+        "бравый майор в дверях",
+        "сатира на брак по расчёту"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-svatovstvo-mayora.webp",
+      "imageInfo": {
+        "author": "Павел Андреевич Федотов",
+        "date": "1848",
+        "about": "Изображение: «Сватовство майора»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Pavel_Fedotov_-_%D0%A1%D0%B2%D0%B0%D1%82%D0%BE%D0%B2%D1%81%D1%82%D0%B2%D0%BE_%D0%BC%D0%B0%D0%B9%D0%BE%D1%80%D0%B0_-_Google_Art_Project.jpg"
+      },
+      "wiki": "Сватовство майора"
+    },
+    {
+      "id": "c-devyatyy-val",
+      "title": "«Девятый вал»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1850,
+      "authorName": "Иван Айвазовский",
+      "summary": "Самая известная марина Айвазовского: люди, спасшиеся после кораблекрушения, и свет, сулящий надежду.",
+      "features": [
+        "люди на обломках мачты",
+        "огромная волна в лучах солнца",
+        "романтизм, маринист"
+      ],
+      "importance": 3,
+      "image": "images/culture/c-devyatyy-val.webp",
+      "imageInfo": {
+        "title": "Девятый вал",
+        "date": "1850",
+        "about": "Изображение: «Девятый вал»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Hovhannes_Aivazovsky_-_The_Ninth_Wave_-_Google_Art_Project.jpg"
+      },
+      "wiki": "Девятый вал (картина)"
+    },
+    {
+      "id": "c-chesmenskiy-boy",
+      "title": "«Чесменский бой»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1848,
+      "authorName": "Иван Айвазовский",
+      "summary": "Ночной бой 1770 года: русский флот сжигает турецкую эскадру в Чесменской бухте.",
+      "features": [
+        "ночь, взрывы турецких кораблей",
+        "зарево над морем",
+        "морская победа 1770 года"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-chesmenskiy-boy.webp",
+      "imageInfo": {
+        "author": "Иван Айвазовский",
+        "date": "1848",
+        "about": "Чесменский бой в ночь с 25 на 26 июня 1770 года",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Ivan_Constantinovich_Aivazovsky_-_Battle_of_%C3%87esme_at_Night.JPG"
+      },
+      "wiki": "Чесменский бой (картина Айвазовского)"
+    },
+    {
+      "id": "c-troyka-perova",
+      "title": "«Тройка. Ученики мастеровые везут воду»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1866,
+      "authorName": "Василий Перов",
+      "summary": "Одна из самых горьких картин критического реализма — о тяжёлом детском труде.",
+      "features": [
+        "дети тащат бочку с водой по зимней улице",
+        "мальчик сзади толкает сани",
+        "критический реализм"
+      ],
+      "importance": 2,
+      "wiki": "Тройка (картина Перова)",
+      "image": "images/culture/c-troyka-perova.webp",
+      "imageInfo": {
+        "title": "Тройка. Ученики-мастеровые везут воду",
+        "author": "Василий Григорьевич Перов",
+        "date": "1866",
+        "about": "Изображение: «Тройка. Ученики мастеровые везут воду».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%A2%D1%80%D0%BE%D0%B9%D0%BA%D0%B0_-_%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D0%B8%D0%B9_%D0%93%D1%80%D0%B8%D0%B3%D0%BE%D1%80%D1%8C%D0%B5%D0%B2%D0%B8%D1%87_%D0%9F%D0%B5%D1%80%D0%BE%D0%B2_(1866).jpg"
+      }
+    },
+    {
+      "id": "c-grachi-prileteli",
+      "title": "«Грачи прилетели»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1871,
+      "authorName": "Алексей Саврасов",
+      "summary": "Скромный весенний пейзаж, с которого, по словам Левитана, началась русская лирическая пейзажная живопись. Показан на первой выставке передвижников.",
+      "features": [
+        "ранняя весна, берёзы с гнёздами",
+        "сельская церковь, талый снег",
+        "первая выставка передвижников (1871)"
+      ],
+      "importance": 3,
+      "image": "images/culture/c-grachi-prileteli.webp",
+      "imageInfo": {
+        "title": "Грачи прилетели",
+        "author": "Алексей Кондратьевич Саврасов",
+        "date": "1871",
+        "about": "Изображение: «Грачи прилетели»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:RooksBackOfSavrasov.jpg"
+      },
+      "wiki": "Грачи прилетели"
+    },
+    {
+      "id": "c-utro-v-sosnovom-lesu",
+      "title": "«Утро в сосновом лесу»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1889,
+      "authorName": "Иван Шишкин, Константин Савицкий",
+      "summary": "Самая знаменитая картина Шишкина; медведей для неё написал Константин Савицкий.",
+      "features": [
+        "медведица с медвежатами на поваленном дереве",
+        "утренний туман в сосновом лесу",
+        "медведей писал Савицкий"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-utro-v-sosnovom-lesu.webp",
+      "imageInfo": {
+        "author": "Иван Иванович Шишкин / Константин Аполлонович Савицкий",
+        "date": "1889",
+        "about": "Изображение: «Утро в сосновом лесу»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Shishkin,_Ivan_-_Morning_in_a_Pine_Forest.jpg"
+      },
+      "wiki": "Утро в сосновом лесу"
+    },
+    {
+      "id": "c-neizvestnaya",
+      "title": "«Неизвестная»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1883,
+      "authorName": "Иван Крамской",
+      "summary": "Загадочный портрет молодой женщины в открытой коляске на Невском проспекте.",
+      "features": [
+        "дама в коляске на фоне Аничкова дворца",
+        "бархатный берет с пером",
+        "имя модели неизвестно"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-neizvestnaya.webp",
+      "imageInfo": {
+        "author": "Иван Николаевич Крамской",
+        "date": "1883",
+        "about": "Изображение: «Неизвестная»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Kramskoy_Portrait_of_a_Woman.jpg"
+      },
+      "wiki": "Неизвестная (картина Крамского)"
+    },
+    {
+      "id": "c-khristos-v-pustyne",
+      "title": "«Христос в пустыне»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1872,
+      "authorName": "Иван Крамской",
+      "summary": "Картина-размышление о нравственном выборе, одна из главных работ лидера передвижников.",
+      "features": [
+        "сидящий Христос со сцепленными руками",
+        "каменистая пустыня на рассвете",
+        "автор — лидер передвижников"
+      ],
+      "importance": 1,
+      "wiki": "Христос в пустыне",
+      "image": "images/culture/c-khristos-v-pustyne.webp",
+      "imageInfo": {
+        "author": "Иван Николаевич Крамской",
+        "date": "1872",
+        "about": "Изображение: «Христос в пустыне».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Christ_in_the_Wilderness_-_Ivan_Kramskoy_-_Google_Cultural_Institute.jpg"
+      }
+    },
+    {
+      "id": "c-petr-i-doprashivaet-alekseya",
+      "title": "«Пётр I допрашивает царевича Алексея Петровича в Петергофе»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1871,
+      "authorName": "Николай Ге",
+      "summary": "Историческая драма: Пётр I решает судьбу сына, обвинённого в измене (1718). Показана на первой выставке передвижников.",
+      "features": [
+        "Монплезир, шахматный пол",
+        "отец сидит, сын стоит, опустив глаза",
+        "первая выставка передвижников"
+      ],
+      "importance": 3,
+      "image": "images/culture/c-petr-i-doprashivaet-alekseya.webp",
+      "imageInfo": {
+        "author": "Николай Николаевич Ге",
+        "date": "1871",
+        "about": "«Петр I допрашивает царевича Алексея Петровича в Петергофе», картина Николая Ге, 1871 г",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Peter_the_Great_Interrogating_the_Tsarevich_Alexei_Petrovich.jpg"
+      },
+      "wiki": "Пётр I допрашивает царевича Алексея Петровича в Петергофе"
+    },
+    {
+      "id": "c-burlaki-na-volge",
+      "title": "«Бурлаки на Волге»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1870,
+      "endYear": 1873,
+      "authorName": "Илья Репин",
+      "summary": "Самая известная картина Репина о тяжёлом труде бурлаков; у каждого из одиннадцати героев свой характер.",
+      "features": [
+        "одиннадцать бурлаков тянут барку",
+        "молодой бурлак Ларька поправляет лямку",
+        "критический реализм"
+      ],
+      "importance": 3,
+      "image": "images/culture/c-burlaki-na-volge.webp",
+      "imageInfo": {
+        "author": "Илья Ефимович Репин",
+        "date": "(1870 - 1873)",
+        "about": "Изображение: «Бурлаки на Волге»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Ilya_Repin_-_Barge_Haulers_on_the_Volga_-_Google_Art_Project.jpg"
+      },
+      "wiki": "Бурлаки на Волге"
+    },
+    {
+      "id": "c-ivan-groznyy-i-syn",
+      "title": "«Иван Грозный и сын его Иван 16 ноября 1581 года»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1885,
+      "authorName": "Илья Репин",
+      "summary": "Трагедия царской семьи: Иван IV в ужасе от убийства собственного сына. Александр III запретил показывать картину.",
+      "features": [
+        "отец обнимает смертельно раненного сына",
+        "красный ковёр, опрокинутое кресло",
+        "царский жезл на полу"
+      ],
+      "importance": 3,
+      "image": "images/culture/c-ivan-groznyy-i-syn.webp",
+      "imageInfo": {
+        "author": "Илья Ефимович Репин",
+        "date": "1885",
+        "about": "Изображение: «Иван Грозный и сын его Иван 16 ноября 1581 года»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Iv%C3%A1n_el_Terrible_y_su_hijo,_por_Ili%C3%A1_Repin.jpg"
+      },
+      "wiki": "Иван Грозный и сын его Иван 16 ноября 1581 года"
+    },
+    {
+      "id": "c-krestnyy-khod-kursk",
+      "title": "«Крестный ход в Курской губернии»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1880,
+      "endYear": 1883,
+      "authorName": "Илья Репин",
+      "summary": "Панорама пореформенной России: все сословия в одном шествии за чудотворной иконой.",
+      "features": [
+        "многолюдное шествие по пыльной дороге",
+        "горбун с костылём",
+        "срез пореформенного общества"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-krestnyy-khod-kursk.webp",
+      "imageInfo": {
+        "author": "Илья Ефимович Репин",
+        "about": "Изображение: «Крестный ход в Курской губернии»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Ilya_Repin_-_%D0%9A%D1%80%D0%B5%D1%81%D1%82%D0%BD%D1%8B%D0%B9_%D1%85%D0%BE%D0%B4_%D0%B2_%D0%9A%D1%83%D1%80%D1%81%D0%BA%D0%BE%D0%B9_%D0%B3%D1%83%D0%B1%D0%B5%D1%80%D0%BD%D0%B8%D0%B8_-_Google_Art_Project.jpg"
+      },
+      "wiki": "Крестный ход в Курской губернии"
+    },
+    {
+      "id": "c-zaporozhtsy",
+      "title": "«Запорожцы пишут письмо турецкому султану»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1880,
+      "endYear": 1891,
+      "authorName": "Илья Репин",
+      "summary": "Весёлая историческая сцена о вольных казаках, сочиняющих дерзкий ответ султану.",
+      "features": [
+        "хохочущие казаки вокруг писаря",
+        "казацкая вольница",
+        "легендарное письмо XVII века"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-zaporozhtsy.webp",
+      "imageInfo": {
+        "author": "Илья Ефимович Репин",
+        "date": "Неизвестная дата",
+        "about": "Изображение: «Запорожцы пишут письмо турецкому султану»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Ilja_Jefimowitsch_Repin_-_Reply_of_the_Zaporozhian_Cossacks_-_Yorck.jpg"
+      },
+      "wiki": "Запорожцы (картина)"
+    },
+    {
+      "id": "c-ne-zhdali",
+      "title": "«Не ждали»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1884,
+      "endYear": 1888,
+      "authorName": "Илья Репин",
+      "summary": "Возвращение политического ссыльного в семью — картина о революционерах-народниках.",
+      "features": [
+        "ссыльный неожиданно входит в комнату",
+        "портреты Шевченко и Некрасова на стене",
+        "народническая тема"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-ne-zhdali.webp",
+      "imageInfo": {
+        "author": "Илья Ефимович Репин",
+        "about": "Замысел картины возник на подъёме, связанном с завершением «Крестного хода». Здесь всё взято в упор; автор явно присутствует где-то рядом, наблюдает, слушает, спорит. Мы находим его справа на переднем плане по характерной голове, знакомой…",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Ilya_Repin_Unexpected_visitors.jpg"
+      },
+      "wiki": "Не ждали"
+    },
+    {
+      "id": "c-zasedanie-gossoveta",
+      "title": "«Торжественное заседание Государственного совета 7 мая 1901 года»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1903,
+      "authorName": "Илья Репин, Борис Кустодиев, Иван Куликов",
+      "summary": "Огромный групповой портрет 81 сановника империи на заседании в честь столетия Государственного совета.",
+      "features": [
+        "групповой портрет высших сановников",
+        "Николай II в центре полукруга",
+        "юбилей Государственного совета"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-zasedanie-gossoveta.webp",
+      "imageInfo": {
+        "title": "Торжественное заседание Государственного совета 7 мая 1901 года в день столетнего юбилея со дня его учреждения",
+        "author": "Илья Ефимович Репин",
+        "date": "1903",
+        "about": "Изображение: «Торжественное заседание Государственного совета 7 мая 1901 года»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Ilya_Repin_-_Ceremonial_Sitting_of_the_State_Council_on_7_May_1901_Marking_the_Centenary_of_its_Foundation_-_Google_Art_Project.jpg"
+      },
+      "wiki": "Торжественное заседание Государственного совета 7 мая 1901 года"
+    },
+    {
+      "id": "c-utro-streletskoy-kazni",
+      "title": "«Утро стрелецкой казни»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1881,
+      "authorName": "Василий Суриков",
+      "summary": "Трагедия стрелецкого бунта 1698 года: утро перед казнью и безмолвное противостояние Петра и стрельцов.",
+      "features": [
+        "Красная площадь, горящие свечи",
+        "Пётр I на коне у Кремлёвской стены",
+        "рыжебородый стрелец"
+      ],
+      "importance": 3,
+      "image": "images/culture/c-utro-streletskoy-kazni.webp",
+      "imageInfo": {
+        "title": "Утро стрелецкой казни",
+        "author": "Василий Иванович Суриков",
+        "date": "1881",
+        "about": "Изображение: «Утро стрелецкой казни»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Surikov_streltsi.jpg"
+      },
+      "wiki": "Утро стрелецкой казни"
+    },
+    {
+      "id": "c-menshikov-v-berezove",
+      "title": "«Меншиков в Берёзове»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1883,
+      "authorName": "Василий Суриков",
+      "summary": "Опальный Меншиков с детьми в сибирской ссылке — картина о падении всесильного временщика.",
+      "features": [
+        "тесная изба, ссыльный с детьми",
+        "бывший «полудержавный властелин»",
+        "ссылка 1727 года"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-menshikov-v-berezove.webp",
+      "imageInfo": {
+        "title": "Картина «Меншиков в Берёзово». Художник В.И. Суриков (1888), Третьяковская галерея, Москва",
+        "author": "Василий Иванович Суриков",
+        "date": "1888",
+        "about": "Изображение: «Меншиков в Берёзове»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:SurikovMenshikovBerezovo.jpg"
+      },
+      "wiki": "Меншиков в Берёзове"
+    },
+    {
+      "id": "c-boyarynya-morozova",
+      "title": "«Боярыня Морозова»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1887,
+      "authorName": "Василий Суриков",
+      "summary": "Раскольницу Феодосию Морозову везут в заточение; поднятое двоеперстие — символ верности старой вере.",
+      "features": [
+        "сани, поднятое двоеперстие",
+        "юродивый на снегу",
+        "церковный раскол XVII века"
+      ],
+      "importance": 3,
+      "image": "images/culture/c-boyarynya-morozova.webp",
+      "imageInfo": {
+        "author": "Василий Иванович Суриков",
+        "date": "1887",
+        "about": "Боярыня Морозова (картина Василия Сурикова, 1887)",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Surikov_Boyarynya_Morozova_gtg.jpg"
+      },
+      "wiki": "Боярыня Морозова (картина)"
+    },
+    {
+      "id": "c-pokorenie-sibiri-ermakom",
+      "title": "«Покорение Сибири Ермаком Тимофеевичем»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1895,
+      "authorName": "Василий Суриков",
+      "summary": "Эпическое полотно о походе Ермака и разгроме войска Кучума в 1582 году.",
+      "features": [
+        "казаки стреляют из стругов",
+        "войско Кучума на крутом берегу",
+        "иконы и хоругви над казаками"
+      ],
+      "importance": 3,
+      "image": "images/culture/c-pokorenie-sibiri-ermakom.webp",
+      "imageInfo": {
+        "date": "1895",
+        "about": "Василий Иванович Суриков, \"Покорение Сибири Ермаком\". Холст, масло, размер — 599*285 см",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Surikov_Pokoreniye_Sibiri_Yermakom.jpg"
+      },
+      "wiki": "Покорение Сибири Ермаком Тимофеевичем"
+    },
+    {
+      "id": "c-perekhod-suvorova-cherez-alpy",
+      "title": "«Переход Суворова через Альпы»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1899,
+      "authorName": "Василий Суриков",
+      "summary": "Героический эпизод Швейцарского похода 1799 года: солдаты скатываются с обледенелого склона.",
+      "features": [
+        "солдаты скатываются с обрыва",
+        "Суворов на коне",
+        "Швейцарский поход 1799 года"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-perekhod-suvorova-cherez-alpy.webp",
+      "imageInfo": {
+        "title": "Переход Суворова через Альпы в 1799 году",
+        "author": "Василий Иванович Суриков",
+        "date": "1899",
+        "about": "Изображение: «Переход Суворова через Альпы».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Vasily_Surikov_-_Suvorov_Crossing_the_Alps_in_1799_-_Google_Art_Project.jpg"
+      },
+      "wiki": "Переход Суворова через Альпы"
+    },
+    {
+      "id": "c-vzyatie-snezhnogo-gorodka",
+      "title": "«Взятие снежного городка»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1891,
+      "authorName": "Василий Суриков",
+      "summary": "Масленичная забава, которую Суриков видел в детстве в Сибири: всадник разбивает снежную крепость.",
+      "features": [
+        "Масленица, всадник разбивает снежную стену",
+        "сибирская народная забава",
+        "яркая праздничная сцена"
+      ],
+      "importance": 1,
+      "image": "images/culture/c-vzyatie-snezhnogo-gorodka.webp",
+      "imageInfo": {
+        "title": "Взятие снежного городка",
+        "author": "Василий Иванович Суриков",
+        "date": "1891",
+        "about": "Изображение: «Взятие снежного городка»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:SurikovSnowFortress.jpg"
+      },
+      "wiki": "Взятие снежного городка"
+    },
+    {
+      "id": "c-bogatyri",
+      "title": "«Богатыри»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1881,
+      "endYear": 1898,
+      "authorName": "Виктор Васнецов",
+      "summary": "Три былинных богатыря в дозоре на границе степи — образ защитников Русской земли.",
+      "features": [
+        "Илья Муромец, Добрыня Никитич, Алёша Попович",
+        "дозор на границе степи",
+        "былинный сюжет"
+      ],
+      "importance": 3,
+      "image": "images/culture/c-bogatyri.webp",
+      "imageInfo": {
+        "author": "Виктор Михайлович Васнецов",
+        "about": "Изображение: «Богатыри»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Viktor_Vasnetsov_-_%D0%91%D0%BE%D0%B3%D0%B0%D1%82%D1%8B%D1%80%D0%B8_-_Google_Art_Project.jpg"
+      },
+      "wiki": "Богатыри (картина Васнецова)"
+    },
+    {
+      "id": "c-vityaz-na-rasputye",
+      "title": "«Витязь на распутье»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1882,
+      "authorName": "Виктор Васнецов",
+      "summary": "Витязь перед камнем с роковыми надписями — картина о выборе пути.",
+      "features": [
+        "камень с надписью",
+        "черепа в поле на закате",
+        "сказочный сюжет"
+      ],
+      "importance": 1,
+      "image": "images/culture/c-vityaz-na-rasputye.webp",
+      "imageInfo": {
+        "title": "Витязь на распутье",
+        "author": "Виктор Михайлович Васнецов",
+        "date": "1882",
+        "about": "Изображение: «Витязь на распутье»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:19-v_2h_Vasnetsov.jpg"
+      },
+      "wiki": "Витязь на распутье"
+    },
+    {
+      "id": "c-posle-poboishcha-igorya",
+      "title": "«После побоища Игоря Святославича с половцами»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1880,
+      "authorName": "Виктор Васнецов",
+      "summary": "Трагический финал похода Игоря 1185 года по мотивам «Слова о полку Игореве».",
+      "features": [
+        "поле битвы, павшие воины",
+        "восходит кровавая луна",
+        "сюжет «Слова о полку Игореве»"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-posle-poboishcha-igorya.webp",
+      "imageInfo": {
+        "date": "Снято: 12 мая 2018",
+        "about": "Изображение: «После побоища Игоря Святославича с половцами»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:After_the_battle_of_Igor_Svyatoslavich_with_the_Cumans_par_Victor_Mikhailovich_Vasnetsov.jpg"
+      },
+      "wiki": "После побоища Игоря Святославича с половцами"
+    },
+    {
+      "id": "c-apofeoz-voyny",
+      "title": "«Апофеоз войны»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1871,
+      "authorName": "Василий Верещагин",
+      "summary": "Антивоенная картина из Туркестанской серии. На раме надпись: «Посвящается всем великим завоевателям, прошедшим, настоящим и будущим».",
+      "features": [
+        "пирамида черепов в пустыне",
+        "вороны над черепами",
+        "Туркестанская серия"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-apofeoz-voyny.webp",
+      "imageInfo": {
+        "author": "Василий Васильевич Верещагин",
+        "date": "1871",
+        "about": "Изображение: «Апофеоз войны»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Apotheosis.jpg"
+      },
+      "wiki": "Апофеоз войны"
+    },
+    {
+      "id": "c-napoleon-na-borodinskikh-vysotakh",
+      "title": "«Наполеон I на Бородинских высотах»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1897,
+      "authorName": "Василий Верещагин",
+      "summary": "Картина из серии «1812 год»: Наполеон со штабом наблюдает за Бородинским сражением.",
+      "features": [
+        "Наполеон со штабом на холме",
+        "дым сражения на горизонте",
+        "серия «1812 год»"
+      ],
+      "importance": 2,
+      "wiki": "Наполеон I на Бородинских высотах",
+      "image": "images/culture/c-napoleon-na-borodinskikh-vysotakh.webp",
+      "imageInfo": {
+        "title": "Наполеон на Бородинских высотах (1897)",
+        "author": "Василий Васильевич Верещагин",
+        "date": "1897",
+        "about": "Изображение: «Наполеон I на Бородинских высотах».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Vereshchagin_Napoleon_near_Borodino.jpg"
+      }
+    },
+    {
+      "id": "c-voennyy-sovet-v-filyakh",
+      "title": "«Военный совет в Филях»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1880,
+      "authorName": "Алексей Кившенко",
+      "summary": "Совет 1 сентября 1812 года в избе крестьянина Фролова, на котором Кутузов решил оставить Москву без боя.",
+      "features": [
+        "изба, генералы за столом",
+        "Кутузов в углу",
+        "решение оставить Москву"
+      ],
+      "importance": 3,
+      "image": "images/culture/c-voennyy-sovet-v-filyakh.webp",
+      "imageInfo": {
+        "author": "Кившенко, Алексей Данилович",
+        "date": "1880",
+        "about": "Картина Алексея Кившенко «Совет в Филях», написанная в 1880 году в качестве иллюстрации к роману Л. Н. Толстого «Война и мир». На картине слева изображён сидящий отдельно генерал от инфантерии М. И. Кутузов, справа от него за столом по…",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Kutuzov_fili.jpg"
+      },
+      "wiki": "Военный совет в Филях"
+    },
+    {
+      "id": "c-nad-vechnym-pokoem",
+      "title": "«Над вечным покоем»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1894,
+      "authorName": "Исаак Левитан",
+      "summary": "Философский пейзаж о вечности природы и краткости человеческой жизни.",
+      "features": [
+        "деревянная церковь на обрыве",
+        "кладбище и ширь озера",
+        "философский пейзаж"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-nad-vechnym-pokoem.webp",
+      "imageInfo": {
+        "author": "Исаак Левитан",
+        "date": "1894",
+        "about": "Над вечным покоем",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Levitan_nad_vech_pok28.jpg"
+      },
+      "wiki": "Над вечным покоем"
+    },
+    {
+      "id": "c-vladimirka",
+      "title": "«Владимирка»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1892,
+      "authorName": "Исаак Левитан",
+      "summary": "Пейзаж с историческим смыслом: по Владимирскому тракту гнали каторжан в Сибирь.",
+      "features": [
+        "пустая дорога под серым небом",
+        "путь ссыльных в Сибирь",
+        "одинокая странница"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-vladimirka.webp",
+      "imageInfo": {
+        "author": "Исаак Левитан",
+        "date": "1892",
+        "about": "Левитан. Владимирка. Версия без рамки",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Vladimirka_without_frame.jpg"
+      },
+      "wiki": "Владимирка (картина)"
+    },
+    {
+      "id": "c-lunnaya-noch-na-dnepre",
+      "title": "«Лунная ночь на Днепре»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1880,
+      "authorName": "Архип Куинджи",
+      "summary": "Картина с поразительным эффектом света; её показывали в затемнённом зале с одной подсветкой.",
+      "features": [
+        "светящаяся лунная дорожка",
+        "выставка одной картины в тёмном зале",
+        "эффект освещения"
+      ],
+      "importance": 1,
+      "image": "images/culture/c-lunnaya-noch-na-dnepre.webp",
+      "imageInfo": {
+        "author": "Архип Иванович Куинджи",
+        "date": "1880",
+        "about": "А. И. Куинджи. Лунная ночь на Днепре. 1880. Холст, масло. 105 × 146 см. Ж-4191. Русский музей, Санкт-Петербург, Россия",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg"
+      },
+      "wiki": "Лунная ночь на Днепре"
+    },
+    {
+      "id": "c-vsyudu-zhizn",
+      "title": "«Всюду жизнь»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1888,
+      "authorName": "Николай Ярошенко",
+      "summary": "Арестанты в вагоне кормят голубей — картина о человечности даже за решёткой.",
+      "features": [
+        "арестантский вагон",
+        "голуби у окна с решёткой",
+        "передвижники"
+      ],
+      "importance": 1,
+      "image": "images/culture/c-vsyudu-zhizn.webp",
+      "imageInfo": {
+        "author": "Николай Александрович Ярошенко",
+        "date": "1888",
+        "about": "Всюду жизнь",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:1888._Nikolaj_Alexandrowitsch_Jaroschenko_008.jpg"
+      },
+      "wiki": "Всюду жизнь"
+    },
+    {
+      "id": "c-knyazhna-tarakanova",
+      "title": "«Княжна Тараканова»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1864,
+      "authorName": "Константин Флавицкий",
+      "summary": "Легенда о самозванке, погибшей в Петропавловской крепости во время наводнения.",
+      "features": [
+        "вода заливает камеру крепости",
+        "самозванка на кровати, крысы",
+        "легенда о гибели в 1777 году"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-knyazhna-tarakanova.webp",
+      "imageInfo": {
+        "author": "Константин Дмитриевич Флавицкий",
+        "date": "1864",
+        "about": "Изображение: «Княжна Тараканова»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Tarakanova.jpg"
+      },
+      "wiki": "Княжна Тараканова (картина)"
+    },
+    {
+      "id": "c-videnie-otroku-varfolomeyu",
+      "title": "«Видение отроку Варфоломею»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1889,
+      "endYear": 1890,
+      "authorName": "Михаил Нестеров",
+      "summary": "Эпизод из жития Сергия Радонежского: отроку Варфоломею является старец-схимник.",
+      "features": [
+        "мальчик и старец под деревом",
+        "будущий Сергий Радонежский",
+        "тихий осенний пейзаж"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-videnie-otroku-varfolomeyu.webp",
+      "imageInfo": {
+        "author": "Михаил Васильевич Нестеров",
+        "about": "Изображение: «Видение отроку Варфоломею»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Mikhail_Nesterov_001.jpg"
+      },
+      "wiki": "Видение отроку Варфоломею"
+    },
+    {
+      "id": "c-devochka-s-persikami",
+      "title": "«Девочка с персиками»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1887,
+      "authorName": "Валентин Серов",
+      "summary": "Портрет 12-летней Веры Мамонтовой в Абрамцеве — светлый шедевр раннего Серова.",
+      "features": [
+        "девочка за столом у окна",
+        "усадьба Абрамцево",
+        "импрессионистическая свежесть"
+      ],
+      "importance": 3,
+      "image": "images/culture/c-devochka-s-persikami.webp",
+      "imageInfo": {
+        "author": "Валентин Серов",
+        "date": "1887",
+        "about": "Изображение: «Девочка с персиками»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Valentin_Serov_-_%D0%94%D0%B5%D0%B2%D0%BE%D1%87%D0%BA%D0%B0_%D1%81_%D0%BF%D0%B5%D1%80%D1%81%D0%B8%D0%BA%D0%B0%D0%BC%D0%B8._%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%92.%D0%A1.%D0%9C%D0%B0%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2%D0%BE%D0%B9_-_Google_Art_Project.jpg"
+      },
+      "wiki": "Девочка с персиками"
+    },
+    {
+      "id": "c-petr-i-serova",
+      "title": "«Пётр I» Серова",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1907,
+      "authorName": "Валентин Серов",
+      "summary": "Небольшая темпера: гигантский Пётр стремительно шагает по стройке Петербурга, свита едва поспевает.",
+      "features": [
+        "царь шагает против ветра",
+        "свита едва поспевает",
+        "строительство Петербурга"
+      ],
+      "importance": 2,
+      "wiki": "Пётр I (картина Серова)",
+      "image": "images/culture/c-petr-i-serova.webp",
+      "imageInfo": {
+        "author": "Валентин Серов",
+        "about": "Изображение: «Пётр I» Серова.",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Serov_%E2%80%94_Peter_the_Great.jpg"
+      }
+    },
+    {
+      "id": "c-demon-sidyashchiy",
+      "title": "«Демон сидящий»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1890,
+      "authorName": "Михаил Врубель",
+      "summary": "Картина по мотивам поэмы Лермонтова, начало «демонической» темы Врубеля.",
+      "features": [
+        "«кристаллический», мозаичный мазок",
+        "сцепленные руки на фоне заката",
+        "по мотивам Лермонтова"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-demon-sidyashchiy.webp",
+      "imageInfo": {
+        "title": "Демон (сидящий). Государственная Третьяковская галерея, зал № 33",
+        "author": "Михаил Александрович Врубель",
+        "date": "1890",
+        "about": "Изображение: «Демон сидящий»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Vrubel_Demon.jpg"
+      },
+      "wiki": "Демон сидящий"
+    },
+    {
+      "id": "c-kupchikha-za-chaem",
+      "title": "«Купчиха за чаем»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1918,
+      "authorName": "Борис Кустодиев",
+      "summary": "Праздничный образ купеческой провинции, написанный в голодном 1918 году.",
+      "features": [
+        "пышная купчиха с блюдцем",
+        "самовар, арбуз, кот",
+        "ностальгия по старой провинции"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-kupchikha-za-chaem.webp",
+      "imageInfo": {
+        "title": "Купчиха за чаем",
+        "author": "Борис Михайлович Кустодиев",
+        "date": "1918",
+        "about": "Изображение: «Купчиха за чаем»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Boris_Kustodiev_-_Merchant%27s_Wife_at_Tea_-_Google_Art_Project.jpg"
+      },
+      "wiki": "Купчиха за чаем"
+    },
+    {
+      "id": "c-bolshevik",
+      "title": "«Большевик»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1920,
+      "authorName": "Борис Кустодиев",
+      "summary": "Аллегория революции: огромный большевик с красным знаменем шагает над городом.",
+      "features": [
+        "великан с красным знаменем",
+        "толпа на улицах внизу",
+        "аллегория революции"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-bolshevik.webp",
+      "imageInfo": {
+        "title": "Большевик",
+        "author": "Борис Михайлович Кустодиев",
+        "date": "1920",
+        "about": "Изображение: «Большевик»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Bolshevik_-_Kustodiev.jpg"
+      },
+      "wiki": "Большевик (картина)"
+    },
+    {
+      "id": "c-kupanie-krasnogo-konya",
+      "title": "«Купание красного коня»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1912,
+      "authorName": "Кузьма Петров-Водкин",
+      "summary": "Символическое полотно-предчувствие грядущих потрясений, продолжающее иконописную традицию.",
+      "features": [
+        "красный конь и юноша",
+        "«сферическая перспектива»",
+        "символ предчувствия перемен"
+      ],
+      "importance": 3,
+      "image": "images/culture/c-kupanie-krasnogo-konya.webp",
+      "imageInfo": {
+        "author": "Козьма Сергеевич Петров-Водкин",
+        "date": "1912",
+        "about": "Купание красного коня",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Bathing_of_a_Red_Horse_(Petrov-Vodkin).jpg"
+      },
+      "wiki": "Купание красного коня"
+    },
+    {
+      "id": "c-lenin-v-smolnom",
+      "title": "«В. И. Ленин в Смольном в 1917 году»",
+      "kind": "painting",
+      "period": "interwar",
+      "year": 1930,
+      "authorName": "Исаак Бродский",
+      "summary": "Одна из самых растиражированных картин советской ленинианы.",
+      "features": [
+        "Ленин пишет за столом",
+        "пустые кресла в чехлах",
+        "канон ленинианы"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-lenin-v-smolnom.webp",
+      "imageInfo": {
+        "author": "Исаак Бродский",
+        "date": "1930",
+        "about": "Изображение: «В. И. Ленин в Смольном в 1917 году».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Brodski_lenin.jpg"
+      },
+      "wiki": "Ленин в Смольном"
+    },
+    {
+      "id": "c-ty-zapisalsya-dobrovoltsem",
+      "title": "Плакат «Ты записался добровольцем?»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1920,
+      "authorName": "Дмитрий Моор",
+      "summary": "Знаменитый агитационный плакат Гражданской войны: красноармеец указывает прямо на зрителя.",
+      "features": [
+        "красноармеец указывает на зрителя",
+        "дымящие трубы заводов",
+        "Гражданская война"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-ty-zapisalsya-dobrovoltsem.webp",
+      "imageInfo": {
+        "title": "Моор. Ты записался добровольцем",
+        "author": "Дмитрий Моор",
+        "date": "1920",
+        "about": "Плакат гражданской войны в России",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%BE%D0%BE%D1%80._%D0%A2%D1%8B_%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D0%BB%D1%81%D1%8F_%D0%B4%D0%BE%D0%B1%D1%80%D0%BE%D0%B2%D0%BE%D0%BB%D1%8C%D1%86%D0%B5%D0%BC.jpg"
+      },
+      "wiki": "Ты записался добровольцем?"
+    },
+    {
+      "id": "c-kompozitsiya-vii",
+      "title": "«Композиция VII»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1913,
+      "authorName": "Василий Кандинский",
+      "summary": "Одна из вершин абстрактного искусства, написанная Кандинским в Мюнхене.",
+      "features": [
+        "беспредметная живопись",
+        "вихрь цветовых пятен",
+        "русский авангард"
+      ],
+      "importance": 1,
+      "image": "images/culture/c-kompozitsiya-vii.webp",
+      "imageInfo": {
+        "author": "Василий Васильевич Кандинский",
+        "date": "1913",
+        "about": "Изображение: «Композиция VII»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Composition_VII_-_Wassily_Kandinsky,_GAC.jpg"
+      },
+      "wiki": "Композиция VII"
+    },
+    {
+      "id": "c-rabochiy-i-kolkhoznitsa",
+      "title": "«Рабочий и колхозница»",
+      "kind": "sculpture",
+      "period": "interwar",
+      "year": 1937,
+      "authorName": "Вера Мухина",
+      "summary": "Монумент-символ СССР из нержавеющей стали, созданный для павильона СССР на Всемирной выставке 1937 года в Париже.",
+      "features": [
+        "серп и молот в поднятых руках",
+        "нержавеющая сталь",
+        "павильон СССР в Париже"
+      ],
+      "importance": 3,
+      "image": "images/culture/c-rabochiy-i-kolkhoznitsa.webp",
+      "imageInfo": {
+        "date": "2010",
+        "about": "Изображение: «Рабочий и колхозница».",
+        "license": "CC BY 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Worker_and_Kolkhoz_Woman_Monument_(4326069520).jpg"
+      },
+      "wiki": "Рабочий и колхозница"
+    },
+    {
+      "id": "c-boyarskiy-svadebnyy-pir",
+      "title": "«Боярский свадебный пир в XVII веке»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1883,
+      "authorName": "Константин Маковский",
+      "summary": "Нарядная сцена боярской свадьбы — русский XVII век глазами художника XIX века.",
+      "features": [
+        "пир в богатых палатах",
+        "слуги вносят жареного лебедя",
+        "салонный историзм"
+      ],
+      "importance": 1,
+      "wiki": "Боярский свадебный пир в XVII веке",
+      "image": "images/culture/c-boyarskiy-svadebnyy-pir.webp",
+      "imageInfo": {
+        "author": "Константин Егорович Маковский",
+        "date": "1883",
+        "about": "Изображение: «Боярский свадебный пир в XVII веке».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9A_%D0%95_%D0%9C%D0%B0%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%91%D0%BE%D1%8F%D1%80%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B2%D0%B0%D0%B4%D0%B5%D0%B1%D0%BD%D1%8B%D0%B9_%D0%BF%D0%B8%D1%80_%D0%B2_xvii_%D0%B2%D0%B5%D0%BA%D0%B5_1883.jpg"
+      }
+    },
+    {
+      "id": "c-moskovskaya-ulitsa-xvii-veka",
+      "title": "«Московская улица XVII века в праздничный день»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1895,
+      "authorName": "Андрей Рябушкин",
+      "summary": "Историко-бытовая картина о повседневной жизни допетровской Москвы.",
+      "features": [
+        "слякотная улица, горожане после службы",
+        "бытовые подробности допетровской Москвы",
+        "историко-бытовой жанр"
+      ],
+      "importance": 1,
+      "image": "images/culture/c-moskovskaya-ulitsa-xvii-veka.webp",
+      "imageInfo": {
+        "author": "Рябушкин, Андрей Петрович",
+        "date": "1895",
+        "about": "Изображение: «Московская улица XVII века в праздничный день».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Andrei_Ryabushkin_-_Seventeenth-Century_Moscow_Street_on_a_Public_Holiday_-_Google_Art_Project.jpg"
+      },
+      "wiki": "Московская улица XVII века в праздничный день"
+    },
+    {
+      "id": "c-yuryev-den",
+      "title": "«Юрьев день»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1908,
+      "authorName": "Сергей Иванов",
+      "summary": "Картина о праве крестьянского перехода в Юрьев день, отменённом в конце XVI века.",
+      "features": [
+        "крестьяне и приказчик у барской усадьбы",
+        "право перехода в Юрьев день",
+        "историческая сцена"
+      ],
+      "importance": 2,
+      "wiki": "Юрьев день (картина)",
+      "image": "images/culture/c-yuryev-den.webp",
+      "imageInfo": {
+        "author": "Сергей Васильевич Иванов",
+        "date": "1908",
+        "about": "Изображение: «Юрьев день».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:S._V._Ivanov._Yuri%27s_Day._(1908).jpg"
+      }
+    },
+    {
+      "id": "c-zemstvo-obedaet",
+      "title": "«Земство обедает»",
+      "kind": "painting",
+      "period": "c19",
+      "year": 1872,
+      "authorName": "Григорий Мясоедов",
+      "summary": "Сатира на неравенство в земстве: крестьяне-гласные обедают на крыльце, пока господа пируют внутри.",
+      "features": [
+        "крестьяне-гласные едят хлеб на крыльце",
+        "в окне лакей моет посуду",
+        "критика земской реформы"
+      ],
+      "importance": 2,
+      "image": "images/culture/c-zemstvo-obedaet.webp",
+      "imageInfo": {
+        "title": "Земство обедает",
+        "author": "Григорий Григорьевич Мясоедов",
+        "date": "1872",
+        "about": "Изображение: «Земство обедает»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Grigorij_Grigorjewitsch_Mjassojedow_001.jpg"
+      },
+      "wiki": "Земство обедает"
+    },
+    {
+      "id": "c-dama-v-golubom",
+      "title": "«Дама в голубом»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1897,
+      "endYear": 1900,
+      "authorName": "Константин Сомов",
+      "summary": "Ретроспективный портрет художницы Е. Мартыновой — программная работа «Мира искусства».",
+      "features": [
+        "старинное платье, парк",
+        "ретроспективизм",
+        "«Мир искусства»"
+      ],
+      "importance": 1,
+      "wiki": "Дама в голубом",
+      "image": "images/culture/c-dama-v-golubom.webp",
+      "imageInfo": {
+        "author": "Константин Андреевич Сомов",
+        "about": "Изображение: «Дама в голубом».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Konstantin_Somov_-_%D0%94%D0%B0%D0%BC%D0%B0_%D0%B2_%D0%B3%D0%BE%D0%BB%D1%83%D0%B1%D0%BE%D0%BC._%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%95.%D0%9C.%D0%9C%D0%B0%D1%80%D1%82%D1%8B%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9_-_Google_Art_Project.jpg"
+      }
+    },
+    {
+      "id": "c-zamorskie-gosti",
+      "title": "«Заморские гости»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1901,
+      "authorName": "Николай Рерих",
+      "summary": "Декоративная картина о варяжских ладьях на пути «из варяг в греки».",
+      "features": [
+        "варяжские ладьи с яркими парусами",
+        "декоративный стиль",
+        "древняя Русь"
+      ],
+      "importance": 1,
+      "image": "images/culture/c-zamorskie-gosti.webp",
+      "imageInfo": {
+        "author": "Николай Константинович Рерих",
+        "date": "1901",
+        "about": "Н.К.Рерих \"Заморские гости\". Серия \"Начало Руси. Славяне\". 1901. Холст, масло. 85x112,5 см. Государственная Третьяковская галерея, Москва",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Nicholas_Roerich,_Guests_from_Overseas.jpg"
+      },
+      "wiki": "Заморские гости"
+    },
+    {
+      "id": "c-elizaveta-v-tsarskom-sele",
+      "title": "«Императрица Елизавета Петровна в Царском Селе»",
+      "kind": "painting",
+      "period": "revolution",
+      "year": 1905,
+      "authorName": "Евгений Лансере",
+      "summary": "Праздничная сцена елизаветинского двора глазами художника «Мира искусства».",
+      "features": [
+        "пышная свита у Екатерининского дворца",
+        "ретроспективизм «Мира искусства»",
+        "галантный XVIII век"
+      ],
+      "importance": 1,
+      "wiki": "Императрица Елизавета Петровна в Царском Селе",
+      "image": "images/culture/c-elizaveta-v-tsarskom-sele.webp",
+      "imageInfo": {
+        "title": "Императрица Елизавета Петровна в Царском Селе",
+        "author": "Лансере, Евгений Евгеньевич",
+        "date": "1905",
+        "about": "Работа была создана как иллюстрация к книге А. Н. Бенуа «Царское Село в царствование императрицы Елизаветы Петровны». Книга А. Н. Бенуа была издана в 1910 году в Санкт-Петербурге Товариществом Р. Голике и А. Вильборг, но иллюстрация…",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Eliabeth_lanceret.jpg"
+      }
+    }
+  ],
+  "links": [
+    {
+      "from": "c-tserkov-voinstvuyushchaya",
+      "to": "e-vzyatie-kazani-1552",
+      "type": "related"
+    },
+    {
+      "from": "c-ekaterina-zakonodatelnitsa",
+      "to": "e-ulozhennaya-komissiya",
+      "type": "related"
+    },
+    {
+      "from": "c-boyarynya-morozova",
+      "to": "e-tserkovnaya-reforma-nikona",
+      "type": "related"
+    },
+    {
+      "from": "c-pokorenie-sibiri-ermakom",
+      "to": "e-pohod-ermaka",
+      "type": "related"
+    },
+    {
+      "from": "c-perekhod-suvorova-cherez-alpy",
+      "to": "e-pohody-suvorova-1799",
+      "type": "related"
+    },
+    {
+      "from": "c-posle-poboishcha-igorya",
+      "to": "e-pokhod-igorya-na-polovtsev",
+      "type": "related"
+    },
+    {
+      "from": "c-napoleon-na-borodinskikh-vysotakh",
+      "to": "e-borodinskoe-srazhenie-1812",
+      "type": "related"
+    },
+    {
+      "from": "c-yuryev-den",
+      "to": "e-zapovednye-leta-1581",
+      "type": "related"
+    },
+    {
+      "from": "c-zemstvo-obedaet",
+      "to": "e-zemskaya-i-sudebnaya-reformy-1864",
+      "type": "related"
+    },
+    {
+      "from": "c-zamorskie-gosti",
+      "to": "e-prizvanie-varyagov",
+      "type": "related"
+    },
+    {
+      "from": "c-voennyy-sovet-v-filyakh",
+      "to": "e-otechestvennaya-voyna-1812",
+      "type": "related"
+    }
+  ]
+}

@@ -7,8 +7,8 @@
 
 ## Установка на телефон
 
-1. Откройте вкладку **Actions** репозитория → последний успешный запуск **Android APK** → артефакт
-   `stolypin-apk`. Для версий с тегом `v*` APK лежит в **Releases**.
+1. Скачайте APK из раздела **Releases** (последняя версия). Сборки веток и PR лежат во вкладке **Actions** →
+   запуск **Android APK** → артефакт `stolypin-apk`.
 2. Скачайте `.apk` на телефон и откройте его. Android попросит разрешить установку из этого источника.
 3. Новые версии устанавливаются поверх старых: все сборки подписаны одним ключом
    (`android/keystores/README.md`), прогресс сохраняется.
@@ -39,13 +39,17 @@
 
 ![Библиотека и читалка: EPUB, выделение, оглавление, PDF, конспект](docs/screenshots/reader.jpg)
 
+![До и после: правители, лента времени, граф](docs/screenshots/before-after.jpg)
+
 ## Материалы
 
-Контент добавляется данными, без изменения кода: `content/packs/<пакет>/`. Формат описан в
+Контент добавляется данными, без изменения кода: `content/packs/<пакет>/`. Пошаговое руководство (для людей и
+агентов) — [`docs/agent-guide.md`](docs/agent-guide.md). Формат описан в
 [`docs/content-format.md`](docs/content-format.md), порядок работы для агентов — в
 [`.agents/skills/add-content/SKILL.md`](.agents/skills/add-content/SKILL.md).
 
 ```bash
+pnpm content:add event "Название" --year 1698   # заготовка нового материала
 pnpm content:new lekcii-mgu "Лекции МГУ"   # новый пакет
 pnpm content:check                          # проверка всего корпуса
 pnpm content:bundle lekcii-mgu              # файл для импорта прямо в приложении

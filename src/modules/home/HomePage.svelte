@@ -12,12 +12,13 @@
   import { reveal, dailyPick } from '$lib/design/motion';
   import PeriodCard from '$lib/components/PeriodCard.svelte';
   import EntityRow from '$lib/components/EntityRow.svelte';
+  import ImageCredit from '$lib/components/ImageCredit.svelte';
   import { kb } from '$lib/core/content/kb.svelte';
   import { progress, currentRank } from '$lib/core/progress.svelte';
   import { settings } from '$lib/core/settings.svelte';
   import { buildQueue } from '$lib/core/srs';
   import { db, type BookMeta } from '$lib/core/db';
-  import { greeting, formatDateLong, pluralN, monthGen, formatEventDate } from '$lib/core/utils/format';
+  import { greeting, formatDateLong, pluralN, monthGen, formatEventDate, formatSpan } from '$lib/core/utils/format';
   import { hashString, mulberry32, pick } from '$lib/core/utils/random';
   import { navigate } from '$lib/core/router.svelte';
 
@@ -36,12 +37,18 @@
   // «Картина дня»: one of the event illustrations, the same all day. Hero backdrop: a period cover painting.
   const artOfDay = $derived.by(() => {
     void kb.version;
-    const pics = kb.events.flatMap((e) => {
+    // Every other day a work of art, otherwise an illustrated event (both from content packs).
+    const art = kb.culture.flatMap((c) => {
+      const ent = kb.get(c.id);
+      const src = c.image && ent ? kb.imageOf(ent) : undefined;
+      return src && (c.kind === 'painting' || c.kind === 'icon') ? [{ id: c.id, title: c.title, sub: formatSpan(c.year, c.endYear, c.circa), period: c.period, info: c.imageInfo, src }] : [];
+    });
+    const events = kb.events.flatMap((e) => {
       const ent = kb.get(e.id);
       const src = e.image && ent ? kb.imageOf(ent) : undefined;
-      return src && (e.importance ?? 2) >= 2 ? [{ e, src }] : [];
+      return src && (e.importance ?? 2) >= 2 ? [{ id: e.id, title: e.title, sub: formatEventDate(e), period: e.period, info: e.imageInfo, src }] : [];
     });
-    return dailyPick(pics, 'art');
+    return dailyPick(now.getDate() % 2 && art.length ? art : events.length ? events : art, 'art');
   });
   const heroCover = $derived(dailyPick(kb.periods.map((p) => kb.periodCover(p)).filter((x): x is string => !!x), 'hero'));
   const goal = $derived(progress.today.xp / Math.max(1, settings.dailyGoal));
@@ -120,12 +127,13 @@
         <h2>Картина дня</h2>
         <a href="#/gallery" class="more">Галерея <ArrowRight size={14} /></a>
       </div>
-      <Painting src={artOfDay.src} alt={artOfDay.e.title} height="210px" onclick={() => navigate(`/gallery?open=${artOfDay.e.id}`)}>
+      <Painting src={artOfDay.src} alt={artOfDay.title} height="210px" onclick={() => navigate(`/gallery?open=${artOfDay.id}`)}>
         {#snippet caption()}
-          <b class="art-t">{artOfDay.e.title}</b>
-          <small class="art-d">{formatEventDate(artOfDay.e)} · {kb.periodById.get(artOfDay.e.period)?.short}</small>
+          <b class="art-t">{artOfDay.title}</b>
+          <small class="art-d">{artOfDay.sub} · {kb.periodById.get(artOfDay.period)?.short}</small>
         {/snippet}
       </Painting>
+      <div class="art-credit"><ImageCredit info={artOfDay.info} compact /></div>
     </section>
   {/if}
 
@@ -217,6 +225,7 @@
   @keyframes hero-drift { to { transform: scale(1.2) translate(-3%, 2%); } }
   .art-t { font-family: var(--font-display); font-size: var(--text-lg); line-height: 1.2; }
   .art-d { font-size: var(--text-xs); opacity: 0.85; }
+  .art-credit { margin-top: var(--sp-2); padding: 0 4px; }
   .hero-bg {
     position: absolute;
     inset: 0;

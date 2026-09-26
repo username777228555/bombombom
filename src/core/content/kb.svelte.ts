@@ -5,7 +5,7 @@
 import {
   FragmentSchema, PackManifestSchema, PeriodsFileSchema, SYMMETRIC_LINKS,
   type CultureItem, type DeckItem, type EventItem, type Fragment, type LinkItem, type MapItem,
-  type PackManifest, type Period, type PersonItem, type QuizItem, type SourceItem, type TermItem,
+  type PackManifest, type Period, type PersonItem, type QuizItem, type SourceItem, type TermItem, type ImageInfo,
 } from './schema';
 import { db } from '../db';
 import { settings } from '../settings.svelte';
@@ -312,6 +312,11 @@ class KnowledgeBase {
 
   imageOf(e: Entity): string | undefined {
     return 'image' in e.item ? this.assetUrl(e.pack, e.item.image) : undefined;
+  }
+
+  /** Author / date / description of the entity's picture (if the pack provides them). */
+  imageInfoOf(e: Entity): ImageInfo | undefined {
+    return 'imageInfo' in e.item ? e.item.imageInfo : undefined;
   }
 
   periodCover(p: Period): string | undefined {

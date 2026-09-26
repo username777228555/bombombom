@@ -1,8 +1,11 @@
 <script lang="ts">
   /**
-   * «Галерея» — every event illustration from the packs as a picture gallery with a full-screen viewer,
-   * plus a quiz «Что изображено?». Pictures are the event `image` files already bundled with content,
-   * so this works offline and grows automatically when agents add illustrated events.
+   * «Галерея» — all pictures from the packs: illustrations of events and works of art (culture items with
+   * `image`), with author / date / description from `imageInfo`. Modes:
+   *   · «Смотреть» — grid + full-screen viewer (swipe, arrows, Esc);
+   *   · «Что изображено?» — guess the event or the work by the picture;
+   *   · «Кто автор?» — attribution of works of art (a classic olympiad task).
+   * Grows automatically when agents add pictures to content packs.
    */
   import { onMount } from 'svelte';
   import { fade, fly, scale } from 'svelte/transition';
@@ -13,10 +16,11 @@
   import Button from '$lib/design/components/Button.svelte';
   import Painting from '$lib/design/components/Painting.svelte';
   import Ornament from '$lib/design/components/Ornament.svelte';
+  import ImageCredit from '$lib/components/ImageCredit.svelte';
   import { kb } from '$lib/core/content/kb.svelte';
-  import type { EventItem } from '$lib/core/content/schema';
+  import type { ImageInfo } from '$lib/core/content/schema';
   import { router, navigate } from '$lib/core/router.svelte';
-  import { formatEventDate } from '$lib/core/utils/format';
+  import { formatEventDate, formatSpan } from '$lib/core/utils/format';
   import { sample, shuffle } from '$lib/core/utils/random';
   import { record, saveResult, bestResult } from '$lib/core/progress.svelte';
   import { haptic } from '$lib/core/platform';
@@ -24,21 +28,40 @@
   import { burst } from '$lib/design/confetti';
 
   interface Pic {
-    e: EventItem;
+    id: string;
+    kind: 'event' | 'culture';
+    title: string;
+    year: number;
+    date: string;
+    period: string;
     src: string;
+    info?: ImageInfo;
+    summary: string;
+    /** Author of a work of art (culture) — used by «Кто автор?». */
+    author?: string;
   }
-  let mode = $state<'look' | 'quiz'>('look');
+  let mode = $state<'look' | 'quiz' | 'author'>('look');
+  let what = $state<'all' | 'event' | 'culture'>('all');
   let period = $state<string | null>(null);
 
   const all = $derived.by((): Pic[] => {
     void kb.version;
-    return kb.events.flatMap((e) => {
+    const out: Pic[] = [];
+    for (const e of kb.events) {
       const ent = kb.get(e.id);
       const src = e.image && ent ? kb.imageOf(ent) : undefined;
-      return src ? [{ e, src }] : [];
-    });
+      if (src) out.push({ id: e.id, kind: 'event', title: e.title, year: e.year, date: formatEventDate(e), period: e.period, src, info: e.imageInfo, summary: e.summary });
+    }
+    for (const c of kb.culture) {
+      const ent = kb.get(c.id);
+      const src = c.image && ent ? kb.imageOf(ent) : undefined;
+      if (!src) continue;
+      const author = c.authorName ?? (c.authors?.length ? c.authors.map((a) => kb.title(a)).join(', ') : undefined);
+      out.push({ id: c.id, kind: 'culture', title: c.title, year: c.year, date: formatSpan(c.year, c.endYear, c.circa), period: c.period, src, info: c.imageInfo, summary: c.summary, author });
+    }
+    return out.sort((a, b) => a.year - b.year);
   });
-  const pics = $derived(all.filter((p) => !period || p.e.period === period));
+  const pics = $derived(all.filter((p) => (what === 'all' || p.kind === what) && (!period || p.period === period)));
   const colorOf = (pid: string) => kb.periodById.get(pid)?.color ?? 'var(--accent)';
 
   // ——— Viewer ———
@@ -59,17 +82,18 @@
   onMount(async () => {
     const id = router.query.get('open');
     if (id) {
-      const i = pics.findIndex((p) => p.e.id === id);
+      const i = pics.findIndex((p) => p.id === id);
       if (i >= 0) open = i;
     }
-    best = await bestResult('gallery');
+    best = await bestResult(mode === 'author' ? 'gallery-author' : 'gallery');
   });
 
-  // ——— Quiz «Что изображено?» ———
+  // ——— Quizzes ———
   const ROUNDS = 10;
   interface Round {
     pic: Pic;
-    options: EventItem[];
+    options: string[];
+    answer: string;
   }
   let rounds = $state<Round[]>([]);
   let qi = $state(0);
@@ -77,22 +101,39 @@
   let score = $state(0);
   let best = $state(0);
   let over = $state(false);
-  function startQuiz() {
+
+  function buildRounds(): Round[] {
+    if (mode === 'author') {
+      const pool = (pics.filter((p) => p.author).length >= 4 ? pics : all).filter((p) => p.author);
+      const authors = [...new Set(all.filter((p) => p.author).map((p) => p.author!))];
+      return sample(pool, Math.min(ROUNDS, pool.length)).map((pic) => {
+        // Distractors from the same century when possible — telling Surikov from Vasnetsov is the skill.
+        const near = shuffle(authors.filter((a) => a !== pic.author)).sort((a, b) => {
+          const ya = all.find((p) => p.author === a)!.year;
+          const yb = all.find((p) => p.author === b)!.year;
+          return Math.abs(ya - pic.year) - Math.abs(yb - pic.year);
+        });
+        return { pic, answer: pic.author!, options: shuffle([pic.author!, ...near.slice(0, 3)]) };
+      });
+    }
     const pool = pics.length >= 4 ? pics : all;
-    rounds = sample(pool, Math.min(ROUNDS, pool.length)).map((pic) => {
-      const near = all.filter((p) => p.e.id !== pic.e.id).sort((a, b) => Math.abs(a.e.year - pic.e.year) - Math.abs(b.e.year - pic.e.year));
-      const others = sample(near.slice(0, 12), 3).map((p) => p.e);
-      return { pic, options: shuffle([pic.e, ...others]) };
+    return sample(pool, Math.min(ROUNDS, pool.length)).map((pic) => {
+      const near = all.filter((p) => p.id !== pic.id && p.kind === pic.kind).sort((a, b) => Math.abs(a.year - pic.year) - Math.abs(b.year - pic.year));
+      return { pic, answer: pic.title, options: shuffle([pic.title, ...sample(near.slice(0, 12), 3).map((p) => p.title)]) };
     });
+  }
+  async function startQuiz() {
+    rounds = buildRounds();
     qi = 0;
     score = 0;
     picked = null;
     over = false;
+    best = await bestResult(mode === 'author' ? 'gallery-author' : 'gallery');
   }
-  function answer(id: string) {
+  function answer(opt: string) {
     if (picked) return;
-    picked = id;
-    const ok = id === rounds[qi]!.pic.e.id;
+    picked = opt;
+    const ok = opt === rounds[qi]!.answer;
     if (ok) score++;
     haptic(ok ? 'success' : 'error');
   }
@@ -101,7 +142,7 @@
       over = true;
       const prev = best;
       best = Math.max(best, score);
-      await saveResult({ kind: 'game', ref: 'gallery', score, total: rounds.length });
+      await saveResult({ kind: 'game', ref: mode === 'author' ? 'gallery-author' : 'gallery', score, total: rounds.length });
       await record({ games: 1, xp: 5 + score * 2 });
       if (score > prev && score > 0) burst();
       return;
@@ -109,8 +150,13 @@
     qi++;
     picked = null;
   }
+  let lastMode = '';
   $effect(() => {
-    if (mode === 'quiz' && !rounds.length) startQuiz();
+    const key = `${mode}|${what}|${period}`;
+    if (mode !== 'look' && key !== lastMode) {
+      lastMode = key;
+      void startQuiz();
+    }
   });
   const round = $derived(rounds[qi]);
 </script>
@@ -119,28 +165,37 @@
 
 <div class="page">
   <PageHeader title="Галерея" eyebrow="История в картинах" back="/explore" />
-  <Segmented bind:value={mode} options={[{ value: 'look', label: 'Смотреть', count: pics.length }, { value: 'quiz', label: 'Что изображено?' }]} />
-  <div class="hscroll chips">
-    <Chip selected={!period} onclick={() => { period = null; rounds = []; }}>Все</Chip>
-    {#each kb.periods as p (p.id)}
-      <Chip size="sm" color={p.color} selected={period === p.id} onclick={() => { period = p.id; rounds = []; }}>{p.short}</Chip>
-    {/each}
+  <Segmented bind:value={mode} options={[{ value: 'look', label: 'Смотреть', count: pics.length }, { value: 'quiz', label: 'Что это?' }, { value: 'author', label: 'Кто автор?' }]} />
+  <div class="filters">
+    {#if mode !== 'author'}
+      <div class="what">
+        <Chip size="sm" selected={what === 'all'} onclick={() => (what = 'all')}>Всё</Chip>
+        <Chip size="sm" selected={what === 'event'} onclick={() => (what = 'event')}>События</Chip>
+        <Chip size="sm" selected={what === 'culture'} onclick={() => (what = 'culture')}>Искусство</Chip>
+      </div>
+    {/if}
+    <div class="hscroll chips">
+      <Chip size="sm" selected={!period} onclick={() => (period = null)}>Все эпохи</Chip>
+      {#each kb.periods as p (p.id)}
+        <Chip size="sm" color={p.color} selected={period === p.id} onclick={() => (period = p.id)}>{p.short}</Chip>
+      {/each}
+    </div>
   </div>
 
   {#if mode === 'look'}
     <div class="grid">
-      {#each pics as p, i (p.e.id)}
+      {#each pics as p, i (p.id)}
         <div use:reveal={{ delay: (i % 6) * 40 }}>
-          <Painting src={p.src} alt={p.e.title} height="150px" frame={false} drift={false} onclick={() => show(i)}>
+          <Painting src={p.src} alt={p.title} height="150px" frame={false} drift={false} onclick={() => show(i)}>
             {#snippet caption()}
-              <b class="cap-t">{p.e.title}</b>
-              <small class="num" style:color={colorOf(p.e.period)}>{p.e.year}</small>
+              <b class="cap-t">{p.title}</b>
+              <small class="num" style:color={colorOf(p.period)}>{p.kind === 'culture' ? (p.author ?? p.date) : p.year}</small>
             {/snippet}
           </Painting>
         </div>
       {/each}
     </div>
-    {#if !pics.length}<p class="muted empty"><Images size={18} /> В этой эпохе пока нет иллюстраций.</p>{/if}
+    {#if !pics.length}<p class="muted empty"><Images size={18} /> Здесь пока нет изображений.</p>{/if}
   {:else if over}
     <div class="over" in:scale={{ start: 0.92 }}>
       <Trophy size={44} class="gold" />
@@ -150,42 +205,49 @@
       <Button full onclick={startQuiz}>Ещё раз</Button>
     </div>
   {:else if round}
-    {#key qi}
+    {#key `${mode}-${qi}`}
       <div class="quiz" in:fly={{ y: 20, duration: 300 }}>
-        <div class="qhead"><span class="eyebrow">Картина {qi + 1} из {rounds.length}</span><strong class="num qscore">{score}</strong></div>
+        <div class="qhead"><span class="eyebrow">{mode === 'author' ? 'Кто написал эту картину?' : 'Что изображено?'} · {qi + 1} из {rounds.length}</span><strong class="num qscore">{score}</strong></div>
         <Painting src={round.pic.src} alt="" height="min(46dvh, 360px)" />
         <div class="opts">
-          {#each round.options as o, k (o.id)}
-            {@const ok = picked && o.id === round.pic.e.id}
-            {@const bad = picked === o.id && !ok}
-            <button class="opt" class:ok class:bad disabled={!!picked} onclick={() => answer(o.id)} in:fly={{ y: 12, delay: 80 + k * 50 }}>
-              <span>{o.title}</span>{#if picked}<small class="num">{o.year}</small>{/if}{#if ok}<Check size={18} />{/if}
+          {#each round.options as o, k (o)}
+            {@const ok = picked && o === round.answer}
+            {@const bad = picked === o && !ok}
+            <button class="opt" class:ok class:bad disabled={!!picked} onclick={() => answer(o)} in:fly={{ y: 12, delay: 80 + k * 50 }}>
+              <span>{o}</span>{#if ok}<Check size={18} />{/if}
             </button>
           {/each}
         </div>
         {#if picked}
-          <p class="about" in:fade>{round.pic.e.summary}</p>
+          <div class="about" in:fade>
+            <b>{round.pic.title}</b> <span class="num">· {round.pic.date}</span>
+            <p>{round.pic.summary}</p>
+            <ImageCredit info={round.pic.info} compact />
+          </div>
           <Button full size="lg" iconRight={ArrowRight} onclick={nextRound}>{qi + 1 >= rounds.length ? 'Итоги' : 'Дальше'}</Button>
         {/if}
       </div>
     {/key}
+  {:else}
+    <p class="muted empty">Для викторины нужно хотя бы четыре картины — выберите другую эпоху.</p>
   {/if}
 </div>
 
 {#if cur && open !== null}
-  <div class="viewer" transition:fade={{ duration: 200 }} role="dialog" tabindex="-1" aria-modal="true" aria-label={cur.e.title}
+  <div class="viewer" transition:fade={{ duration: 200 }} role="dialog" tabindex="-1" aria-modal="true" aria-label={cur.title}
     onpointerdown={(e) => (downX = e.clientX)}
     onpointerup={(e) => { const dx = e.clientX - downX; if (Math.abs(dx) > 60) show(open! + (dx < 0 ? 1 : -1)); }}>
     <button class="close" aria-label="Закрыть" onclick={() => (open = null)}><X size={22} /></button>
-    {#key cur.e.id}
+    {#key cur.id}
       <div class="stage" in:scale={{ start: 0.96, duration: 280 }}>
-        <Painting src={cur.src} alt={cur.e.title} height="min(62dvh, 560px)" />
+        <Painting src={cur.src} alt={cur.title} height="min(62dvh, 560px)" />
         <div class="info" in:fly={{ y: 10, delay: 120 }}>
-          <span class="eyebrow light">{kb.periodById.get(cur.e.period)?.title}</span>
-          <h2>{cur.e.title}</h2>
-          <p class="date num">{formatEventDate(cur.e)}</p>
-          <p class="sum">{cur.e.summary}</p>
-          <Button variant="gold" iconRight={ArrowRight} onclick={() => { const id = cur.e.id; open = null; navigate(`/entity/${id}`); }}>К событию</Button>
+          <span class="eyebrow light">{kb.periodById.get(cur.period)?.title} · {cur.kind === 'culture' ? 'искусство' : 'событие'}</span>
+          <h2>{cur.title}</h2>
+          <p class="date num">{cur.date}{cur.author ? ` · ${cur.author}` : ''}</p>
+          <p class="sum">{cur.summary}</p>
+          <ImageCredit info={cur.info} light />
+          <Button variant="gold" iconRight={ArrowRight} onclick={() => { const id = cur.id; open = null; navigate(`/entity/${id}`); }}>Подробнее</Button>
         </div>
       </div>
     {/key}
@@ -195,23 +257,24 @@
 {/if}
 
 <style>
-  .chips { margin-top: var(--sp-3); }
-  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); margin-top: var(--sp-2); }
+  .filters { display: flex; flex-direction: column; gap: 4px; margin-top: var(--sp-3); }
+  .what { display: flex; gap: 6px; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); margin-top: var(--sp-1); }
   @media (min-width: 640px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .cap-t { font-size: var(--text-xs); font-weight: 650; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .grid small { font-size: var(--text-2xs); font-weight: 700; filter: brightness(1.6); }
-  .empty { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: var(--sp-6); }
-  .quiz { display: flex; flex-direction: column; gap: var(--sp-3); margin-top: var(--sp-2); }
-  .qhead { display: flex; justify-content: space-between; align-items: baseline; }
+  .grid small { font-size: var(--text-2xs); font-weight: 700; filter: brightness(1.7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .empty { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: var(--sp-6); text-align: center; }
+  .quiz { display: flex; flex-direction: column; gap: var(--sp-3); margin-top: var(--sp-1); }
+  .qhead { display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-2); }
   .qscore { font-family: var(--font-display); font-size: var(--text-2xl); color: var(--accent); }
   .opts { display: flex; flex-direction: column; gap: 6px; }
   .opt { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-radius: var(--r-md); border: 1.5px solid var(--line); background: var(--surface); text-align: left; cursor: pointer; font-size: var(--text-sm); box-shadow: var(--shadow-1); transition: border-color var(--dur-2), background-color var(--dur-2); }
   .opt span { flex: 1; line-height: 1.3; }
-  .opt small { color: var(--ink-3); }
   .opt.ok { border-color: var(--success); background: var(--success-soft); color: var(--success); }
   .opt.ok span { color: var(--ink); }
   .opt.bad { border-color: var(--danger); background: var(--danger-soft); animation: shake 420ms; }
-  .about { font-family: var(--font-read); font-size: var(--text-sm); color: var(--ink-2); line-height: 1.5; }
+  .about { display: flex; flex-direction: column; gap: 4px; font-size: var(--text-sm); color: var(--ink-2); line-height: 1.5; }
+  .about p { font-family: var(--font-read); }
   .over { display: flex; flex-direction: column; align-items: center; gap: var(--sp-3); text-align: center; padding: var(--sp-6) 0; }
   .over h1 { font-size: var(--text-3xl); }
   .over :global(.gold) { color: var(--gold); }

@@ -1,0 +1,23 @@
+{
+  "_comment": "Ручной выбор картинок: id сущности → имя файла на Wikimedia Commons (без «File:»), null — картинка не нужна. Используется scripts/media/wiki_images.py fetch.",
+  "p-ryurik": "Rurik - from Titulyarnik (1672).jpg",
+  "p-yaroslav-mudryy": "Yaroslav the Wise.jpg",
+  "p-yaroslav-vsevolodovich": "Titulyarnik - Yaroslav Vsevolodovich.png",
+  "p-vasiliy-i": "Vasily Dmitrievich titularnik.jpg",
+  "p-vladimir-i": "Vladimir I of Kiev.PNG",
+  "p-yuriy-vsevolodovich": "Unknown Artist - Iouri II de Vladimir.jpg",
+  "p-vasiliy-ii-temnyy": "Titulyarnik - Vasily Vasiliyevich.jpg",
+  "p-anna-ioannovna": "Louis Caravaque, Portrait of Empress Anna Ioannovna (1730).jpg",
+  "p-petr-iii": "Peter III by A.Antropov (1762, Tretyakov gallery) variation - Google Art Project.jpg",
+  "p-lenin": "Vladimir Lenin in July 1920 by Pavel Zhukov.jpg",
+  "p-igor-ryurikovich": "Игорь I Рюрикович Старый.png",
+  "p-askold": "Askold of Kiev.jpg",
+  "p-dir": "Аскольд та Дір.png",
+  "p-mamay": "Mamai.jpg",
+  "p-afanasiy-nikitin": null,
+  "p-dionisiy": null,
+  "p-mikhail-tverskoy": null,
+  "e-san-stefanskiy-mir-1878": "Treaty of San Stefano.jpg",
+  "e-boi-u-ozera-khasan": "Battle of Lake Khasan-Red Army soldiers setting the flag on the Zaozernaya Hill.jpg",
+  "e-smert-stalina": "Stalin funeral. Stalin disease first reported by Pravda.jpg"
+}

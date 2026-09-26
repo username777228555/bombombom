@@ -70,9 +70,12 @@ async def main():
         await page.wait_for_timeout(500)
         print("   next →", await page.locator(".viewer h2").inner_text())
         await page.keyboard.press("Escape")
-        await page.get_by_role("tab", name="Что изображено?").click()
+        await page.get_by_role("tab", name="Что это?").click()
         await page.wait_for_timeout(800)
-        print("gallery quiz options:", await page.locator(".opt").count(), "| grid items before:", await page.locator(".grid > div").count())
+        print("gallery quiz options:", await page.locator(".opt").count())
+        await page.get_by_role("tab", name="Кто автор?").click()
+        await page.wait_for_timeout(800)
+        print("gallery author quiz options:", await page.locator(".opt").count(), "|", (await page.locator(".opt").all_inner_texts())[:4])
 
         # Home
         await go("/", 2500)

@@ -42,7 +42,16 @@
       "persons": [],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D0%BD%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F_%D1%80%D0%B5%D1%84%D0%BE%D1%80%D0%BC%D0%B0_%D0%B2_%D0%A1%D0%A1%D0%A1%D0%A0_1922%E2%80%941924_%D0%B3%D0%BE%D0%B4%D0%BE%D0%B2"
-      ]
+      ],
+      "image": "images/events/e-denezhnaya-reforma-1922-1924.webp",
+      "imageInfo": {
+        "title": "RR3213-0001 Chervonets 1923",
+        "author": "Антон Фёдорович Васютинский",
+        "date": "1923",
+        "about": "Золотой червонец, «сеятель» 1923 года",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:RR3213-0001_Chervonets_1923.jpg"
+      }
     },
     {
       "id": "e-konstitutsiya-sssr-1924",
@@ -82,7 +91,16 @@
       "details": "Международно-правовое признание Советского государства — это хронологический порядок установления дипломатических отношений РСФСР и (с 30 декабря 1922 года) СССР с другими государствами. Первыми советскую Россию признали соседние Эстония (2 февраля 1920 года), Литва (12 июля 1920 года) и Латвия (11 августа 1920 года). «Полоса признаний» 1924 года началась с Великобритании (2 февраля) и Италии (8 февраля), затем последовали Норвегия (13 февраля), Австрия (25 февраля), Греция (8 марта) и Швеция (15 марта); осенью СССР признала Франция (30 октября 1924 года), а в январе 1925 года — Япония (20 января). Ранее, 16 марта 1921 года, Великобритания признала советское правительство де-факто, заключив торговое соглашение.",
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%9C%D0%B5%D0%B6%D0%B4%D1%83%D0%BD%D0%B0%D1%80%D0%BE%D0%B4%D0%BD%D0%BE-%D0%BF%D1%80%D0%B0%D0%B2%D0%BE%D0%B2%D0%BE%D0%B5_%D0%BF%D1%80%D0%B8%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D0%B5_%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%B3%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B0"
-      ]
+      ],
+      "image": "images/events/e-polosa-priznaniy.webp",
+      "imageInfo": {
+        "title": "Rom, Italienisch-russischer Vertrag <abbr class=\"BArchtooltips\" title=\"Short title assigned by the archive\">",
+        "author": "Неизвестный автор",
+        "date": "Снято: 7 февраля 1924",
+        "about": "Для документальных целей Немецкий федеральный архив часто сохранял оригинальные заголовки изображений, которые могут быть ошибочными, подверженными внешнему влиянию, устаревшими или политически окрашенными. <abbr class=\"BArchtooltips\"…",
+        "license": "CC BY-SA 3.0 de",
+        "source": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_102-00270,_Rom,_Italienisch-russischer_Vertrag.jpg"
+      }
     },
     {
       "id": "e-smert-lenina",
@@ -104,7 +122,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A1%D0%BC%D0%B5%D1%80%D1%82%D1%8C_%D0%B8_%D0%BF%D0%BE%D1%85%D0%BE%D1%80%D0%BE%D0%BD%D1%8B_%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%B0_%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Iljitsj Oeljanov Lenin Het opgebaarde gebalsemde lijk van de communistische revolutionaire en, SFA001007963",
+        "author": "Неизвестный автор",
+        "date": "1924",
+        "about": "Иллюстрация к событию «Смерть В. И. Ленина».",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Iljitsj_Oeljanov_Lenin_Het_opgebaarde_gebalsemde_lijk_van_de_communistische_revolutionaire_en,_SFA001007963.jpg"
+      }
     },
     {
       "id": "e-xiv-sezd-vkp-b",
@@ -128,7 +154,16 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/XIV_%D1%81%D1%8A%D0%B5%D0%B7%D0%B4_%D0%92%D0%9A%D0%9F%28%D0%B1%29"
-      ]
+      ],
+      "image": "images/events/e-xiv-sezd-vkp-b.webp",
+      "imageInfo": {
+        "title": "Delegates to the 14th Congress of the Russian Communist Party (Bolsheviks)",
+        "author": "Неизвестный автор",
+        "date": "18–31 December 1925",
+        "about": "Иллюстрация к событию «XIV съезд ВКП(б): разгром «новой оппозиции»».",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Delegates_to_the_14th_Congress_of_the_Russian_Communist_Party_(Bolsheviks).jpeg"
+      }
     },
     {
       "id": "e-obedinennaya-oppozitsiya",
@@ -192,7 +227,16 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A2%D1%80%D0%BE%D1%86%D0%BA%D0%B8%D0%B9%2C_%D0%9B%D0%B5%D0%B2_%D0%94%D0%B0%D0%B2%D0%B8%D0%B4%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "image": "images/events/e-vysylka-trotskogo.webp",
+      "imageInfo": {
+        "title": "Лев Давидович Троцкий",
+        "author": "Неизвестный автор",
+        "date": "early 1920s",
+        "about": "Иллюстрация к событию «Высылка Льва Троцкого из СССР».",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9B%D0%B5%D0%B2_%D0%94%D0%B0%D0%B2%D0%B8%D0%B4%D0%BE%D0%B2%D0%B8%D1%87_%D0%A2%D1%80%D0%BE%D1%86%D0%BA%D0%B8%D0%B9.jpg"
+      }
     },
     {
       "id": "e-shakhtinskoe-delo",
@@ -215,7 +259,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%85%D1%82%D0%B8%D0%BD%D1%81%D0%BA%D0%BE%D0%B5_%D0%B4%D0%B5%D0%BB%D0%BE"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Шахтинское Дело",
+        "author": "Неизвестный автор",
+        "date": "с 18 мая 1928 по 7 июля 1928date…",
+        "about": "Иллюстрация к событию «Шахтинское дело».",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%A8%D0%B0%D1%85%D1%82%D0%B8%D0%BD%D1%81%D0%BA%D0%BE%D0%B5_%D0%94%D0%B5%D0%BB%D0%BE.jpg"
+      }
     },
     {
       "id": "e-pervaya-pyatiletka",
@@ -235,7 +287,16 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%9F%D0%B5%D1%80%D0%B2%D0%B0%D1%8F_%D0%BF%D1%8F%D1%82%D0%B8%D0%BB%D0%B5%D1%82%D0%BA%D0%B0"
-      ]
+      ],
+      "image": "images/events/e-pervaya-pyatiletka.webp",
+      "imageInfo": {
+        "title": "Yakov Guminer - Arithmetic of a counter-plan poster (1931)",
+        "author": "Гуминер, Яков Моисеевич",
+        "date": "1931",
+        "about": "Плакат Якова Гуминера \"Арифметика встречного промфинплана: 2+2 плюс энтузиазм рабочих=5 \" (1931)",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Yakov_Guminer_-_Arithmetic_of_a_counter-plan_poster_(1931).jpg"
+      }
     },
     {
       "id": "e-god-velikogo-pereloma",
@@ -256,7 +317,16 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%92%D0%B5%D0%BB%D0%B8%D0%BA%D0%B8%D0%B9_%D0%BF%D0%B5%D1%80%D0%B5%D0%BB%D0%BE%D0%BC"
-      ]
+      ],
+      "image": "images/events/e-god-velikogo-pereloma.webp",
+      "imageInfo": {
+        "title": "Pn-slogan-zakon",
+        "author": "Фотокорреспондент Ю. Н. Частов",
+        "date": "1997-11",
+        "about": "Лозунг «План — закон, выполнение — долг, перевыполнение — честь!» в здании Ольховско-Батьковского торфяного предприятия в Кубринске, Переславский район",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Pn-slogan-zakon.jpg"
+      }
     },
     {
       "id": "e-kollektivizatsiya",
@@ -276,7 +346,16 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D0%B8%D0%B2%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F_%D0%B2_%D0%A1%D0%A1%D0%A1%D0%A0"
-      ]
+      ],
+      "image": "images/events/e-kollektivizatsiya.webp",
+      "imageInfo": {
+        "title": "Bezbozhnik - Forward to the complete collectivization, November 1, 1930",
+        "author": "Mechislav Dobrokovsky (Доброковский Мечислав Васильевич) (1895-1937)",
+        "date": "1930",
+        "about": "Обложка журнала «ru:Безбожник»",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Bezbozhnik_-_Forward_to_the_complete_collectivization,_November_1,_1930.jpg"
+      }
     },
     {
       "id": "e-raskulachivanie",
@@ -298,7 +377,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D1%81%D0%BA%D1%83%D0%BB%D0%B0%D1%87%D0%B8%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Away With Private Peasants! (3273571261)",
+        "author": "Иванова и Мирзаянц",
+        "date": "1930",
+        "about": "Плакат. «Долой кулака из колхоза»",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Away_With_Private_Peasants!_(3273571261).jpg"
+      }
     },
     {
       "id": "e-golod-1932-1933",
@@ -315,7 +402,16 @@
       "details": "Голод стал следствием сверхэксплуатации деревни и её деградации, принудительных хлебозаготовок 1929 года и сплошной коллективизации, начатой в 1930 году, создавших дефицит продовольствия на селе. Голод явился прямым результатом курса сталинского руководства на ускоренную индустриализацию, требовавшую валютных источников для её осуществления, одним из которых стал зерновой экспорт. С этой целью для крестьянских хозяйств устанавливались невыполнимые задания по хлебосдаче. Поэтому, как нетрудно догадаться, к началу весенней посевной 1932 года деревня подошла с серьёзным недостатком тягловой силы и резко ухудшившимся качеством трудовых ресурсов. В итоге на Украине, Северном Кавказе и в других районах поля, засеянные зерновыми, зарастали сорняками.",
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%93%D0%BE%D0%BB%D0%BE%D0%B4_%D0%B2_%D0%A1%D0%A1%D0%A1%D0%A0_%281932%E2%80%941933%29"
-      ]
+      ],
+      "image": "images/events/e-golod-1932-1933.webp",
+      "imageInfo": {
+        "title": "Alexander Wienerberger Holodomor9",
+        "author": "Александр Винербергер",
+        "date": "1933",
+        "about": "Иллюстрация к событию «Голод 1932–1933 годов».",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Alexander_Wienerberger_Holodomor9.jpg"
+      }
     },
     {
       "id": "e-dneproges",
@@ -334,7 +430,16 @@
       "place": "Запорожье",
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%94%D0%BD%D0%B5%D0%BF%D1%80%D0%BE%D0%B3%D1%8D%D1%81"
-      ]
+      ],
+      "image": "images/events/e-dneproges.webp",
+      "imageInfo": {
+        "title": "Дніпрогес з висоти",
+        "author": "Anatoliy Volkov",
+        "date": "2018",
+        "about": "ДнепроГЭС в Запорожье, Украина",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%94%D0%BD%D1%96%D0%BF%D1%80%D0%BE%D0%B3%D0%B5%D1%81_%D0%B7_%D0%B2%D0%B8%D1%81%D0%BE%D1%82%D0%B8.jpg"
+      }
     },
     {
       "id": "e-magnitogorskiy-kombinat",
@@ -352,7 +457,16 @@
       "place": "Магнитогорск",
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%9C%D0%B0%D0%B3%D0%BD%D0%B8%D1%82%D0%BE%D0%B3%D0%BE%D1%80%D1%81%D0%BA%D0%B8%D0%B9_%D0%BC%D0%B5%D1%82%D0%B0%D0%BB%D0%BB%D1%83%D1%80%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D0%BA%D0%BE%D0%BC%D0%B1%D0%B8%D0%BD%D0%B0%D1%82"
-      ]
+      ],
+      "image": "images/events/e-magnitogorskiy-kombinat.webp",
+      "imageInfo": {
+        "title": "Памятник Ленину комс.пл",
+        "author": "Александр Барденцев",
+        "date": "2003",
+        "about": "Памятник В.И. Ленину: площадь Комсомольская, Магнитогорск, Челябинская область",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9F%D0%B0%D0%BC%D1%8F%D1%82%D0%BD%D0%B8%D0%BA_%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D1%83_%D0%BA%D0%BE%D0%BC%D1%81.%D0%BF%D0%BB.jpg"
+      }
     },
     {
       "id": "e-belomorkanal",
@@ -375,7 +489,16 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%91%D0%B5%D0%BB%D0%BE%D0%BC%D0%BE%D1%80%D1%81%D0%BA%D0%BE-%D0%91%D0%B0%D0%BB%D1%82%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B9_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB"
-      ]
+      ],
+      "image": "images/events/e-belomorkanal.webp",
+      "imageInfo": {
+        "title": "Map of the White Sea-Baltic Canal",
+        "author": "Оригинал: Михаил Семёнов Вектор: WikiForMen",
+        "date": "2017",
+        "about": "Карта Беломорско-Балтийского канала (Республика Карелия)",
+        "license": "CC0",
+        "source": "https://commons.wikimedia.org/wiki/File:Map_of_the_White_Sea-Baltic_Canal.svg"
+      }
     },
     {
       "id": "e-vstuplenie-sssr-v-ligu-natsiy",
@@ -418,7 +541,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A3%D0%B1%D0%B8%D0%B9%D1%81%D1%82%D0%B2%D0%BE_%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D1%8F_%D0%9A%D0%B8%D1%80%D0%BE%D0%B2%D0%B0"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Kirov funeral",
+        "author": "Неизвестный автор",
+        "date": "1934",
+        "about": "Похороны Кирова. Вдова покойного Мария Маркус у гроба",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Kirov_funeral.jpg"
+      }
     },
     {
       "id": "e-chelyuskinskaya-epopeya",
@@ -436,7 +567,15 @@
       "place": "Чукотское море",
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A7%D0%B5%D0%BB%D1%8E%D1%81%D0%BA%D0%B8%D0%BD_%28%D0%BF%D0%B0%D1%80%D0%BE%D1%85%D0%BE%D0%B4%29"
-      ]
+      ],
+      "image": "images/events/e-chelyuskinskaya-epopeya.webp",
+      "imageInfo": {
+        "title": "Пароход Челюскин",
+        "author": "Русский матрос",
+        "about": "Более точное фото",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9F%D0%B0%D1%80%D0%BE%D1%85%D0%BE%D0%B4_%D0%A7%D0%B5%D0%BB%D1%8E%D1%81%D0%BA%D0%B8%D0%BD.jpg"
+      }
     },
     {
       "id": "e-konstitutsiya-sssr-1936",
@@ -524,7 +663,16 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D0%BB%D0%BE_%D0%A2%D1%83%D1%85%D0%B0%D1%87%D0%B5%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE"
-      ]
+      ],
+      "image": "images/events/e-delo-tukhachevskogo.webp",
+      "imageInfo": {
+        "title": "1927-meeting soviet commander military districts",
+        "author": "Неизвестный автор",
+        "date": "1927",
+        "about": "Иллюстрация к событию ««Дело военных» (Тухачевского)».",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:1927-meeting_soviet_commander_military_districts.jpg"
+      }
     },
     {
       "id": "e-bolshoy-terror",
@@ -550,7 +698,16 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%91%D0%BE%D0%BB%D1%8C%D1%88%D0%BE%D0%B9_%D1%82%D0%B5%D1%80%D1%80%D0%BE%D1%80"
-      ]
+      ],
+      "image": "images/events/e-bolshoy-terror.webp",
+      "imageInfo": {
+        "title": "Last Address Sign - Moscow, Orlovo-Davydovsky Lane, 2 (2018-08-26) 35",
+        "author": "David Krikheli",
+        "date": "2018",
+        "about": "Мемориальный знак «Последний адрес» представляет собой пластину из нержавеющей стали размером 11 на 19 см, на которую наносятся сведения о репрессированном при советской власти человеке: его имя, профессия, а также даты рождения, ареста,…",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Last_Address_Sign_-_Moscow,_Orlovo-Davydovsky_Lane,_2_(2018-08-26)_35.jpg"
+      }
     },
     {
       "id": "e-boi-u-ozera-khasan",
@@ -577,7 +734,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A5%D0%B0%D1%81%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B5_%D0%B1%D0%BE%D0%B8"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Battle of Lake Khasan-Red Army soldiers setting the flag on the Zaozernaya Hill",
+        "author": "Viktor Antonovich Tyomin",
+        "date": "1938",
+        "about": "Иллюстрация к событию «Бои у озера Хасан».",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Battle_of_Lake_Khasan-Red_Army_soldiers_setting_the_flag_on_the_Zaozernaya_Hill.jpg"
+      }
     },
     {
       "id": "e-boi-na-khalkhin-gole",
@@ -603,7 +768,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%91%D0%BE%D0%B8_%D0%BD%D0%B0_%D0%A5%D0%B0%D0%BB%D1%85%D0%B8%D0%BD-%D0%93%D0%BE%D0%BB%D0%B5"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Khalkhin Gol Soviet tanks 1939",
+        "author": "soviet reporter",
+        "date": "1939",
+        "about": "Танки РККА на Халхин-Голе",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Khalkhin_Gol_Soviet_tanks_1939.jpg"
+      }
     },
     {
       "id": "e-pakt-molotova-ribbentropa",
@@ -626,7 +799,16 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%94%D0%BE%D0%B3%D0%BE%D0%B2%D0%BE%D1%80_%D0%BE_%D0%BD%D0%B5%D0%BD%D0%B0%D0%BF%D0%B0%D0%B4%D0%B5%D0%BD%D0%B8%D0%B8_%D0%BC%D0%B5%D0%B6%D0%B4%D1%83_%D0%93%D0%B5%D1%80%D0%BC%D0%B0%D0%BD%D0%B8%D0%B5%D0%B9_%D0%B8_%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%BC_%D0%A1%D0%BE%D1%8E%D0%B7%D0%BE%D0%BC"
-      ]
+      ],
+      "image": "images/events/e-pakt-molotova-ribbentropa.webp",
+      "imageInfo": {
+        "title": "Moskau, Stalin und Ribbentrop im Kreml <abbr class=\"BArchtooltips\" title=\"Short title assigned by the archive\">",
+        "author": "Template:Helmut Laux",
+        "date": "Снято: 23 августа 1939",
+        "about": "Для документальных целей Немецкий федеральный архив часто сохранял оригинальные заголовки изображений, которые могут быть ошибочными, подверженными внешнему влиянию, устаревшими или политически окрашенными. <abbr class=\"BArchtooltips\"…",
+        "license": "CC BY-SA 3.0 de",
+        "source": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-H27337,_Moskau,_Stalin_und_Ribbentrop_im_Kreml.jpg"
+      }
     },
     {
       "id": "e-sovetsko-finskaya-voyna",
@@ -694,7 +876,15 @@
       "details": "Ликбе́з (ликвида́ция безгра́мотности у населения) — массовое обучение неграмотных взрослых чтению и письму в Советской России и СССР. Исторически термин «ликбез» возник как сокращение названия государственной программы Советской России по «ликвидации безграмотности», начало которой положил декрет Совета народных комиссаров РСФСР «О ликвидации безграмотности в РСФСР» от 26 декабря 1919 года. Народному комиссариату просвещения предоставлялось право привлекать всех грамотных лиц к обучению неграмотных на основе трудовой повинности. По прошествии трёх лет войны, к 1917 году значительная часть населения страны оставалась неграмотной, особенно в Средней Азии.",
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%9B%D0%B8%D0%BA%D0%B1%D0%B5%D0%B7"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Чтобы больше иметь — надо больше производить. Чтобы больше производить — надо больше знать",
+        "author": "Зеленский, Александр Николаевич",
+        "date": "1920",
+        "about": "Александр Зеленский. Плакат «Чтобы больше иметь — надо больше производить. Чтобы больше производить — надо больше знать». Петроград: Наркомзем, [1920]. Хромолитография, 65×46 см",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%A7%D1%82%D0%BE%D0%B1%D1%8B_%D0%B1%D0%BE%D0%BB%D1%8C%D1%88%D0%B5_%D0%B8%D0%BC%D0%B5%D1%82%D1%8C_%E2%80%94_%D0%BD%D0%B0%D0%B4%D0%BE_%D0%B1%D0%BE%D0%BB%D1%8C%D1%88%D0%B5_%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%B4%D0%B8%D1%82%D1%8C._%D0%A7%D1%82%D0%BE%D0%B1%D1%8B_%D0%B1%D0%BE%D0%BB%D1%8C%D1%88%D0%B5_%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%B4%D0%B8%D1%82%D1%8C_%E2%80%94_%D0%BD%D0%B0%D0%B4%D0%BE_%D0%B1%D0%BE%D0%BB%D1%8C%D1%88%D0%B5_%D0%B7%D0%BD%D0%B0%D1%82%D1%8C.jpg"
+      }
     },
     {
       "id": "e-perelet-chkalova",
@@ -718,7 +908,16 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A7%D0%BA%D0%B0%D0%BB%D0%BE%D0%B2%2C_%D0%92%D0%B0%D0%BB%D0%B5%D1%80%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "image": "images/events/e-perelet-chkalova.webp",
+      "imageInfo": {
+        "title": "Валерий Павлович Чкалов",
+        "author": "Неизвестный автор",
+        "date": "1938",
+        "about": "Герой Советского Союза Валерий Павлович Чкалов",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%B0%D0%BB%D0%B5%D1%80%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B2%D0%B8%D1%87_%D0%A7%D0%BA%D0%B0%D0%BB%D0%BE%D0%B2.jpg"
+      }
     },
     {
       "id": "e-zakon-o-religioznykh-obedineniyakh-1929",
@@ -742,7 +941,7 @@
   "persons": [
     {
       "id": "p-stalin",
-      "image": "images/persons/p-stalin.jpg",
+      "image": "images/persons/p-stalin.webp",
       "name": "Иосиф Сталин",
       "short": "Сталин",
       "aliases": [
@@ -786,7 +985,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A1%D1%82%D0%B0%D0%BB%D0%B8%D0%BD%2C_%D0%98%D0%BE%D1%81%D0%B8%D1%84_%D0%92%D0%B8%D1%81%D1%81%D0%B0%D1%80%D0%B8%D0%BE%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Joseph Stalin official portrait",
+        "author": "Иван Шагин",
+        "date": "1945",
+        "about": "СССР. Москва. 1949 г. Секретарь ЦК ВКП(б), председатель Совета народных комиссаров СССР Иосиф Виссарионович Сталин",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Joseph_Stalin_official_portrait.jpg"
+      }
     },
     {
       "id": "p-bukharin",
@@ -815,7 +1022,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%91%D1%83%D1%85%D0%B0%D1%80%D0%B8%D0%BD%2C_%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D0%B9_%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "N.I. Bukharin (1888-1938)",
+        "author": "Неизвестный автор",
+        "date": "Unknown, circa 1920s",
+        "about": "Изображение: Бухарин.",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:N.I._Bukharin_(1888-1938).jpg"
+      }
     },
     {
       "id": "p-zinovev",
@@ -847,7 +1062,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%97%D0%B8%D0%BD%D0%BE%D0%B2%D1%8C%D0%B5%D0%B2%2C_%D0%93%D1%80%D0%B8%D0%B3%D0%BE%D1%80%D0%B8%D0%B9_%D0%95%D0%B2%D1%81%D0%B5%D0%B5%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Grigorii Zinovieff 1920",
+        "author": "Moisei Nappelbaum",
+        "date": "1920",
+        "about": "Изображение: Зиновьев.",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Grigorii_Zinovieff_1920.jpg"
+      }
     },
     {
       "id": "p-kamenev",
@@ -878,11 +1101,20 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BC%D0%B5%D0%BD%D0%B5%D0%B2%2C_%D0%9B%D0%B5%D0%B2_%D0%91%D0%BE%D1%80%D0%B8%D1%81%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "image": "images/persons/p-kamenev.webp",
+      "imageInfo": {
+        "title": "Lev Kamenev 1920s",
+        "author": "Неизвестный автор",
+        "date": "ранее 1923date…",
+        "about": "Изображение: Каменев.",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Lev_Kamenev_1920s.jpg"
+      }
     },
     {
       "id": "p-rykov",
-      "image": "images/persons/p-rykov.jpg",
+      "image": "images/persons/p-rykov.webp",
       "name": "Алексей Рыков",
       "short": "Рыков",
       "born": 1881,
@@ -914,7 +1146,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A0%D1%8B%D0%BA%D0%BE%D0%B2%2C_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9_%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Alexei Rykov",
+        "author": "Неизвестный автор",
+        "date": "ранее 1938date…",
+        "about": "Алексей Рыков, советский государственный деятель",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Alexei_Rykov.jpg"
+      }
     },
     {
       "id": "p-kalinin",
@@ -956,11 +1196,20 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BB%D0%B8%D0%BD%D0%B8%D0%BD%2C_%D0%9C%D0%B8%D1%85%D0%B0%D0%B8%D0%BB_%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "image": "images/persons/p-kalinin.webp",
+      "imageInfo": {
+        "title": "Михаил Калинин",
+        "author": "Григорий Вайль",
+        "date": "1939",
+        "about": "Председатель Президиума Верховного Совета СССР Михаил Калинин",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%B8%D1%85%D0%B0%D0%B8%D0%BB_%D0%9A%D0%B0%D0%BB%D0%B8%D0%BD%D0%B8%D0%BD.jpg"
+      }
     },
     {
       "id": "p-molotov",
-      "image": "images/persons/p-molotov.jpg",
+      "image": "images/persons/p-molotov.webp",
       "name": "Вячеслав Молотов",
       "short": "Молотов",
       "aliases": [
@@ -1001,7 +1250,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%9C%D0%BE%D0%BB%D0%BE%D1%82%D0%BE%D0%B2%2C_%D0%92%D1%8F%D1%87%D0%B5%D1%81%D0%BB%D0%B0%D0%B2_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "V.M. Molotov TASS Portrait Trim Edit",
+        "author": "G. Weil for TASS",
+        "date": "circa 1947",
+        "about": "Изображение: Молотов.",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:V.M._Molotov_TASS_Portrait_Trim_Edit.jpg"
+      }
     },
     {
       "id": "p-litvinov",
@@ -1040,7 +1297,16 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%9B%D0%B8%D1%82%D0%B2%D0%B8%D0%BD%D0%BE%D0%B2%2C_%D0%9C%D0%B0%D0%BA%D1%81%D0%B8%D0%BC_%D0%9C%D0%B0%D0%BA%D1%81%D0%B8%D0%BC%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "image": "images/persons/p-litvinov.webp",
+      "imageInfo": {
+        "title": "Максим Литвинов (1946)",
+        "author": "Михаил Дубнов / ТАСС",
+        "date": "1946",
+        "about": "Максим Максимович Литвинов (Макс Валлах) - государственный деятель, член коллегии Наркоминдела, полпред в Эстонии, нарком иностранных дел СССР, посол СССР в США, член ЦК партии в 1934-1941 годах",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%B0%D0%BA%D1%81%D0%B8%D0%BC_%D0%9B%D0%B8%D1%82%D0%B2%D0%B8%D0%BD%D0%BE%D0%B2_(1946).jpg"
+      }
     },
     {
       "id": "p-kirov",
@@ -1072,11 +1338,19 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%9A%D0%B8%D1%80%D0%BE%D0%B2%2C_%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9_%D0%9C%D0%B8%D1%80%D0%BE%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Киров Сергей Миронович (фото М. Калашникова)",
+        "author": "Михаил Михайлович Калашников",
+        "date": "1934-01-31, published in Избранные…",
+        "about": "С.М. Киров на трибуне XVII съезда ВКП(б)",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%B8%D1%80%D0%BE%D0%B2_%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9_%D0%9C%D0%B8%D1%80%D0%BE%D0%BD%D0%BE%D0%B2%D0%B8%D1%87_(%D1%84%D0%BE%D1%82%D0%BE_%D0%9C._%D0%9A%D0%B0%D0%BB%D0%B0%D1%88%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D0%B0).jpg"
+      }
     },
     {
       "id": "p-yagoda",
-      "image": "images/persons/p-yagoda.jpg",
+      "image": "images/persons/p-yagoda.webp",
       "name": "Генрих Ягода",
       "short": "Ягода",
       "born": 1891,
@@ -1112,11 +1386,19 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%AF%D0%B3%D0%BE%D0%B4%D0%B0%2C_%D0%93%D0%B5%D0%BD%D1%80%D0%B8%D1%85_%D0%93%D1%80%D0%B8%D0%B3%D0%BE%D1%80%D1%8C%D0%B5%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "1936 genrich grigorijewitsch jagoda",
+        "author": "Неизвестный автор",
+        "date": "1936",
+        "about": "Изображение: Ягода.",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:1936_genrich_grigorijewitsch_jagoda.jpg"
+      }
     },
     {
       "id": "p-ezhov",
-      "image": "images/persons/p-ezhov.jpg",
+      "image": "images/persons/p-ezhov.webp",
       "name": "Николай Ежов",
       "short": "Ежов",
       "born": 1895,
@@ -1146,11 +1428,19 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%95%D0%B6%D0%BE%D0%B2%2C_%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D0%B9_%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Ezhov NI",
+        "author": "Неизвестный автор",
+        "date": "1938",
+        "about": "Николай Иванович Ежов",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Ezhov_NI.jpg"
+      }
     },
     {
       "id": "p-beriya",
-      "image": "images/persons/p-beriya.jpg",
+      "image": "images/persons/p-beriya.webp",
       "name": "Лаврентий Берия",
       "short": "Берия",
       "born": 1899,
@@ -1182,11 +1472,19 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%91%D0%B5%D1%80%D0%B8%D1%8F%2C_%D0%9B%D0%B0%D0%B2%D1%80%D0%B5%D0%BD%D1%82%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Lavrentiy Beria portrait 2",
+        "author": "Неизвестный автор",
+        "date": "с 1938 по 1940date…",
+        "about": "Изображение: Берия.",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Lavrentiy_Beria_portrait_2.jpg"
+      }
     },
     {
       "id": "p-voroshilov",
-      "image": "images/persons/p-voroshilov.jpg",
+      "image": "images/persons/p-voroshilov.webp",
       "name": "Климент Ворошилов",
       "short": "Ворошилов",
       "born": 1881,
@@ -1221,7 +1519,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%92%D0%BE%D1%80%D0%BE%D1%88%D0%B8%D0%BB%D0%BE%D0%B2%2C_%D0%9A%D0%BB%D0%B8%D0%BC%D0%B5%D0%BD%D1%82_%D0%95%D1%84%D1%80%D0%B5%D0%BC%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "K.E. Voroshilov TASS Portrait Trim Edit",
+        "author": "G. Weil for TASS",
+        "date": "circa 1945–1948 (dated using medals)",
+        "about": "Изображение: Ворошилов.",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:K.E._Voroshilov_TASS_Portrait_Trim_Edit.jpg"
+      }
     },
     {
       "id": "p-tukhachevskiy",
@@ -1250,7 +1556,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A2%D1%83%D1%85%D0%B0%D1%87%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9%2C_%D0%9C%D0%B8%D1%85%D0%B0%D0%B8%D0%BB_%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D0%B5%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Mikhail Tukhachevsky",
+        "author": "Неизвестный автор",
+        "date": "ранее 1937date…",
+        "about": "Михаил Николаевич Тухачевский",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Mikhail_Tukhachevsky.jpg"
+      }
     },
     {
       "id": "p-stakhanov",
@@ -1275,7 +1589,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A1%D1%82%D0%B0%D1%85%D0%B0%D0%BD%D0%BE%D0%B2%2C_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9_%D0%93%D1%80%D0%B8%D0%B3%D0%BE%D1%80%D1%8C%D0%B5%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Stakhanov AG",
+        "author": "Неизвестный автор",
+        "date": "1938",
+        "about": "Стаханов Алексей Григорьевич",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Stakhanov_AG.jpg"
+      }
     },
     {
       "id": "p-chkalov",
@@ -1302,7 +1624,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A7%D0%BA%D0%B0%D0%BB%D0%BE%D0%B2%2C_%D0%92%D0%B0%D0%BB%D0%B5%D1%80%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Валерий Павлович Чкалов",
+        "author": "Неизвестный автор",
+        "date": "1938",
+        "about": "Герой Советского Союза Валерий Павлович Чкалов",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%B0%D0%BB%D0%B5%D1%80%D0%B8%D0%B9_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B2%D0%B8%D1%87_%D0%A7%D0%BA%D0%B0%D0%BB%D0%BE%D0%B2.jpg"
+      }
     },
     {
       "id": "p-gorkiy",
@@ -1333,7 +1663,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%93%D0%BE%D1%80%D1%8C%D0%BA%D0%B8%D0%B9%2C_%D0%9C%D0%B0%D0%BA%D1%81%D0%B8%D0%BC"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Maxim Gorky 1927 (cropped)",
+        "author": "Неизвестный автор",
+        "date": "1927",
+        "about": "Photo of Maxim Gorky published in Максим Горький в портретах и фотографиях. Огонёк, 1927. The photographer is not credited",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Maxim_Gorky_1927_(cropped).png"
+      }
     },
     {
       "id": "p-eyzenshteyn",
@@ -1360,7 +1698,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%AD%D0%B9%D0%B7%D0%B5%D0%BD%D1%88%D1%82%D0%B5%D0%B9%D0%BD%2C_%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Sergei Eisenstein 02",
+        "author": "Неизвестный автор",
+        "date": "c. 1940",
+        "about": "Изображение: Эйзенштейн.",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Sergei_Eisenstein_02.jpg"
+      }
     },
     {
       "id": "p-blyukher",
@@ -1388,7 +1734,16 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%91%D0%BB%D1%8E%D1%85%D0%B5%D1%80%2C_%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D0%B8%D0%B9_%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "image": "images/persons/p-blyukher.webp",
+      "imageInfo": {
+        "title": "Vasily Konstantinovich Blyukher",
+        "author": "Министерство обороны Российской Федерации",
+        "date": "ранее 1938date…",
+        "about": "Василий Константинович Блюхер (1890—1938) — советский военачальник, Маршал Советского Союза",
+        "license": "CC BY 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Vasily_Konstantinovich_Blyukher.jpg"
+      }
     },
     {
       "id": "p-sholokhov",
@@ -1417,7 +1772,15 @@
       ],
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%A8%D0%BE%D0%BB%D0%BE%D1%85%D0%BE%D0%B2%2C_%D0%9C%D0%B8%D1%85%D0%B0%D0%B8%D0%BB_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Михаил Александрович Шолохов",
+        "author": "Неизвестный автор",
+        "date": "1938",
+        "about": "Изображение: Шолохов.",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%B8%D1%85%D0%B0%D0%B8%D0%BB_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D0%BE%D0%B2%D0%B8%D1%87_%D0%A8%D0%BE%D0%BB%D0%BE%D1%85%D0%BE%D0%B2.jpg"
+      }
     }
   ],
   "culture": [
@@ -1436,7 +1799,19 @@
         "архитектор Щусев",
         "трибуны для руководства на парадах"
       ],
-      "importance": 2
+      "importance": 2,
+      "image": "images/culture/c-mavzoley-lenina.webp",
+      "imageInfo": {
+        "title": "Mauzoleumlenina (cropped)",
+        "author": "Staron",
+        "date": "2006",
+        "about": "Изображение: Мавзолей Ленина.",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Mauzoleumlenina_(cropped).jpeg"
+      },
+      "refs": [
+        "https://ru.wikipedia.org/wiki/%D0%9C%D0%B0%D0%B2%D0%B7%D0%BE%D0%BB%D0%B5%D0%B9_%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0"
+      ]
     },
     {
       "id": "c-moskovskoe-metro",
@@ -1470,7 +1845,19 @@
         "спорные версии о плагиате",
         "Нобелевская премия 1965 года"
       ],
-      "importance": 3
+      "importance": 3,
+      "image": "images/culture/c-tikhiy-don.webp",
+      "imageInfo": {
+        "title": "Обложка Роман-газеты 1928 г",
+        "author": "Неизвестный автор",
+        "date": "1928",
+        "about": "В журнале «Роман-газета» (изд-во «Московский рабочий») в конце 1928 года печатают первые две книги романа Михаила Шолохова «Тихий Дон» . Предисловие Александра Серафимовича. Рисунки Б. Покровского. В издании «Роман-газеты» каждая глава…",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9E%D0%B1%D0%BB%D0%BE%D0%B6%D0%BA%D0%B0_%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD-%D0%B3%D0%B0%D0%B7%D0%B5%D1%82%D1%8B_1928_%D0%B3.jpg"
+      },
+      "refs": [
+        "https://ru.wikipedia.org/wiki/%D0%A2%D0%B8%D1%85%D0%B8%D0%B9_%D0%94%D0%BE%D0%BD"
+      ]
     },
     {
       "id": "c-podnyataya-tselina",
@@ -1487,7 +1874,19 @@
         "хутор Гремячий Лог",
         "образы Давыдова и деда Щукаря"
       ],
-      "importance": 1
+      "importance": 1,
+      "image": "images/culture/c-podnyataya-tselina.webp",
+      "imageInfo": {
+        "title": "Поднятая целина 1937",
+        "author": "AndreyRussia",
+        "date": "2011",
+        "about": "М. Шолохов \"Поднятая целина\" Государственное издание \"Художественная литература\" 1937 года выпуска",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9F%D0%BE%D0%B4%D0%BD%D1%8F%D1%82%D0%B0%D1%8F_%D1%86%D0%B5%D0%BB%D0%B8%D0%BD%D0%B0_1937.jpeg"
+      },
+      "refs": [
+        "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%B4%D0%BD%D1%8F%D1%82%D0%B0%D1%8F_%D1%86%D0%B5%D0%BB%D0%B8%D0%BD%D0%B0"
+      ]
     },
     {
       "id": "c-kak-zakalyalas-stal",
@@ -1517,7 +1916,19 @@
         "последнее крупное произведение автора",
         "гибель автора в 1930 году"
       ],
-      "importance": 1
+      "importance": 1,
+      "image": "images/culture/c-poema-vo-ves-golos.webp",
+      "imageInfo": {
+        "title": "Владимир Маяковский 1930",
+        "author": "Штеренберг, Абрам Петрович",
+        "date": "1930",
+        "about": "Владимир Маяковский у окон РОСТа",
+        "license": "CC BY 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%9C%D0%B0%D1%8F%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_1930.jpg"
+      },
+      "refs": [
+        "https://ru.wikipedia.org/wiki/%D0%9C%D0%B0%D1%8F%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9%2C_%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
+      ]
     },
     {
       "id": "c-bronenosets-potemkin",
@@ -1535,7 +1946,19 @@
         "сцена на одесской лестнице",
         "революционный монтаж"
       ],
-      "importance": 2
+      "importance": 2,
+      "image": "images/culture/c-bronenosets-potemkin.webp",
+      "imageInfo": {
+        "title": "Battleship Potemkin-Ship portrait",
+        "author": "SM Eisenstein",
+        "date": "1925",
+        "about": "Изображение: «Броненосец „Потёмкин“».",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Battleship_Potemkin-Ship_portrait.jpg"
+      },
+      "refs": [
+        "https://ru.wikipedia.org/wiki/%D0%91%D1%80%D0%BE%D0%BD%D0%B5%D0%BD%D0%BE%D1%81%D0%B5%D1%86_%C2%AB%D0%9F%D0%BE%D1%82%D1%91%D0%BC%D0%BA%D0%B8%D0%BD%C2%BB_%28%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%29"
+      ]
     },
     {
       "id": "c-film-chapaev",
@@ -1567,7 +1990,10 @@
         "музыка Прокофьева",
         "патриотический подтекст накануне войны"
       ],
-      "importance": 2
+      "importance": 2,
+      "refs": [
+        "https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%9D%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%28%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%29"
+      ]
     }
   ],
   "terms": [

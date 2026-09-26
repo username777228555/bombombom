@@ -8,10 +8,11 @@
   import EntityRow from '$lib/components/EntityRow.svelte';
   import PeriodTag from '$lib/components/PeriodTag.svelte';
   import ConfidenceNote from '$lib/components/ConfidenceNote.svelte';
+  import ImageCredit from '$lib/components/ImageCredit.svelte';
   import { kb, type Neighbor } from '$lib/core/content/kb.svelte';
   import { isThrone } from '$lib/core/content/rulers';
   import { EVENT_TAG_LABELS, PERSON_TAG_LABELS, CULTURE_KIND_LABELS, SOURCE_KIND_LABELS } from '$lib/core/content/schema';
-  import { router } from '$lib/core/router.svelte';
+  import { router, navigate } from '$lib/core/router.svelte';
   import { formatEventDate, formatLife, formatYear, centuryLabel, formatSpan } from '$lib/core/utils/format';
   import { richText } from '$lib/core/utils/text';
   import { enroll } from '$lib/core/srs';
@@ -76,15 +77,23 @@
 
       {#if e.kind === 'person'}
         <div class="person-head">
-          <Avatar name={e.item.name} color={period?.color} {image} size={76} />
+          <Avatar name={e.item.name} color={period?.color} {image} size={88} />
           <div>
             <h1>{e.item.name}</h1>
             <p class="secondary">{e.item.role}</p>
             <p class="date num">{formatLife(e.item.born, e.item.died, e.item.circa)}</p>
           </div>
         </div>
+        <ImageCredit info={kb.imageInfoOf(e)} compact />
       {:else}
-        {#if image}<img class="hero-img" src={image} alt="" />{/if}
+        {#if image}
+          <figure class="hero-fig" class:art={e.kind === 'culture'}>
+            <button class="hero-btn" onclick={() => navigate(`/gallery?open=${e.item.id}`)} aria-label="Открыть в галерее">
+              <img class="hero-img" src={image} alt="" />
+            </button>
+            <ImageCredit info={kb.imageInfoOf(e)} />
+          </figure>
+        {/if}
         <h1>{e.kind === 'term' ? e.item.term : e.item.title}</h1>
         {#if e.kind === 'event'}
           <p class="date num">{formatEventDate(e.item)}</p>
@@ -183,7 +192,12 @@
   .person-head { display: flex; gap: var(--sp-4); align-items: center; }
   .person-head h1 { font-size: var(--text-2xl); }
   .date { font-family: var(--font-display); font-size: var(--text-lg); color: color-mix(in srgb, var(--c) 80%, var(--ink)); font-weight: 700; }
-  .hero-img { width: 100%; max-height: 280px; object-fit: cover; border-radius: var(--r-lg); margin: var(--sp-2) 0; }
+  .hero-fig { margin: var(--sp-2) 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+  .hero-btn { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-2); }
+  .hero-img { display: block; width: 100%; max-height: 300px; object-fit: cover; object-position: 50% 30%; }
+  /* Works of art are never cropped: the whole picture on a dark mat. */
+  .art .hero-btn { background: #241b13; padding: 10px; }
+  .art .hero-img { object-fit: contain; max-height: 360px; }
   .body { --gap: var(--sp-4); }
   .lead { font-family: var(--font-read); font-size: var(--text-lg); line-height: 1.55; }
   blockquote { margin: 0; padding: var(--sp-4); border-left: 3px solid var(--gold); background: var(--gold-soft); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-read); font-style: italic; }

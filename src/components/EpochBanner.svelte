@@ -17,6 +17,7 @@
   <span class="txt">
     <strong>{period.title}</strong>
     <small>{period.range}</small>
+    {#if period.coverInfo?.author}<em class="credit">{period.coverInfo.author} · «{period.coverInfo.title}», {period.coverInfo.date}</em>{/if}
   </span>
   {#if aside}<span class="aside">{@render aside()}</span>{/if}
 </header>
@@ -50,5 +51,6 @@
   .txt { display: flex; flex-direction: column; min-width: 0; flex: 1; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45); }
   strong { font-family: var(--font-display); font-size: var(--text-xl); line-height: 1.15; }
   small { font-size: var(--text-xs); opacity: 0.85; letter-spacing: 0.02em; }
+  .credit { font-style: normal; font-size: var(--text-2xs); opacity: 0.7; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .aside { font-family: var(--font-display); font-weight: 700; font-size: var(--text-xl); text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45); }
 </style>

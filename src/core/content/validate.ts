@@ -146,6 +146,10 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
       if (!asset || /^https?:\/\//.test(asset) || !assetExists) return;
       if (!assetExists(asset)) add('error', file, path, `файл «${asset}» не найден в папке пакета`);
     };
+    // Pictures must say who made them and when (shown to students under every image).
+    const checkCredit = (file: string, path: string, it: { image?: string; imageInfo?: { author?: string; date?: string } }) => {
+      if (it.image && !it.imageInfo?.author) add('warning', file, path, 'у картинки нет автора (imageInfo.author): заполните вручную или запустите scripts/media/wiki_images.py');
+    };
     for (const { file, data: d } of pack.fragments) {
       const ref = (path: string, id: string | undefined, kinds?: EntityKind[]) => {
         if (!id) return;
@@ -169,6 +173,7 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         if (e.endYear !== undefined && e.endYear < e.year) add('error', file, `${at}.endYear`, 'endYear раньше year');
         if (e.day !== undefined && e.month === undefined) add('error', file, `${at}.day`, 'day без month');
         checkAsset(file, `${at}.image`, e.image);
+        checkCredit(file, `${at}.imageInfo`, e);
       });
       d.persons?.forEach((p, i) => {
         const at = `persons[${i}]`;
@@ -187,6 +192,7 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
           if (hit) add('warning', file, `${at}.hints[${j}]`, `подсказка выдаёт имя («${hit}…»)`);
         });
         checkAsset(file, `${at}.image`, p.image);
+        checkCredit(file, `${at}.imageInfo`, p);
       });
       d.culture?.forEach((c, i) => {
         const at = `culture[${i}]`;
@@ -194,6 +200,7 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         c.authors?.forEach((id, j) => ref(`${at}.authors[${j}]`, id, ['person']));
         if (c.endYear !== undefined && c.endYear < c.year) add('error', file, `${at}.endYear`, 'endYear раньше year');
         checkAsset(file, `${at}.image`, c.image);
+        checkCredit(file, `${at}.imageInfo`, c);
       });
       d.terms?.forEach((t, i) => {
         t.periods?.forEach((id, j) => period(`terms[${i}].periods[${j}]`, id));

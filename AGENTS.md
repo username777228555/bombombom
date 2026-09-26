@@ -16,6 +16,7 @@
 | `pnpm content:check [--file f] [--pack id]` | валидация пакетов контента |
 | `pnpm content:books` | все файлы из каталога «Книжная полка» распознаются импортом Библиотеки |
 | `pnpm content:rulers` | лестница правителей и классификация должностей (`reigns[].kind`) |
+| `python3 scripts/media/wiki_images.py fetch\|apply\|gc` | картинки с Wikimedia Commons с автором, датой и лицензией (портреты обрезаются по лицу); в CI — workflow «Media» (коммит с `[media]` в ветку `gumball/**`/`media/**`), ручной выбор файла — `scripts/media/overrides.json` |
 | `pnpm content:new <id> "Название"` | заготовка нового пакета |
 | `pnpm content:bundle <id>` | пакет одним файлом для импорта в приложении |
 | `pnpm content:schema` | JSON Schema для редакторов (после правки `schema.ts`) |
@@ -50,7 +51,8 @@ Actions → Android APK → Run workflow.
 |--------|-----------|
 | Добавить события/персоналии/термины | JSON в `content/packs/<пакет>/data/`, затем `pnpm content:check` |
 | Добавить правителя | персоналия с `reigns`; для необычного титула укажите `kind` (`head`, `regent`…) → `pnpm content:rulers` |
-| Картинка к событию | `image` у события (≤ 300 КБ, webp, общественное достояние) — сама попадёт в «Галерею» и «Картину дня» |
+| Картинка к событию / портрет / произведение | `image` + `imageInfo` (автор, дата, описание, лицензия) — или `scripts/media/wiki_images.py`; попадёт в «Галерею», викторины и «Картину дня» |
+| Произведение искусства | запись в `culture` (`kind: painting/icon/sculpture…`, `year`, `authorName`, `features` для атрибуции, `refs` на статью Википедии), пример: `data/12-zhivopis.json` |
 | Книга в «Книжную полку» | `sources` в `content/packs/biblioteka/data/`, имя файла в `note` в «кавычках-ёлочках» → `pnpm content:books` |
 | Новый экран или игра | папка/страница в `src/modules/…` + маршрут и плитка в `module.ts` (пример: `modules/study/module.ts`) |
 | Новый тип вопроса | `schema.ts` → компонент в `components/questions/` → `registry.ts` → генератор в `questions.ts` |
@@ -72,6 +74,12 @@ Actions → Android APK → Run workflow.
 - Картинки только с разрешённой лицензией; автора и название укажите в `refs`.
 - Подписи на SVG/канвасе не должны пересекаться: лента времени меряет текст (`timeline/textMeasure`),
   граф раздвигает узлы и прячет лишние подписи (`graph/declutter.ts`). Не возвращайте оценки «символы × 0,55».
+
+## Выпуск версии (APK в Releases)
+
+1. Поднимите `version` в `package.json`.
+2. Создайте ветку `release/vX.Y.Z` от нужного коммита (или запушьте тег `vX.Y.Z`).
+3. CI соберёт подписанный APK и опубликует релиз `vX.Y.Z` с файлом `stolypin-X.Y.Z-N.apk`.
 
 ## Проверка перед PR
 

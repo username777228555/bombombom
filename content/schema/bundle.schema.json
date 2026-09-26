@@ -207,6 +207,36 @@
                   "type": "string",
                   "minLength": 1
                 },
+                "imageInfo": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "author": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "date": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "about": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "license": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "source": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
                 "confidence": {
                   "type": "string",
                   "enum": [
@@ -393,6 +423,36 @@
                   "type": "string",
                   "minLength": 1
                 },
+                "imageInfo": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "author": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "date": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "about": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "license": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "source": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
                 "confidence": {
                   "type": "string",
                   "enum": [
@@ -518,6 +578,36 @@
                 "image": {
                   "type": "string",
                   "minLength": 1
+                },
+                "imageInfo": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "author": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "date": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "about": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "license": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "source": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
                 },
                 "confidence": {
                   "type": "string",

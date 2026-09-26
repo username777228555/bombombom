@@ -34,6 +34,26 @@ const Day = z.number().int().min(1).max(31);
 /** Relative path inside the pack folder (e.g. "images/petr-i.webp") or an https URL. */
 const Asset = z.string().trim().min(1);
 
+/**
+ * Who made a picture and when: shown under images in the gallery, on entity pages and in «Картина дня».
+ * Filled automatically by scripts/media/wiki_images.py from Wikimedia Commons metadata.
+ */
+export const ImageInfoSchema = z.strictObject({
+  /** Название произведения: «Утро стрелецкой казни». */
+  title: OptText,
+  /** Автор: «Василий Иванович Суриков», «Неизвестный автор». */
+  author: OptText,
+  /** Дата создания как в источнике: «1881», «1870–1873», «XVI век». */
+  date: OptText,
+  /** Краткое описание изображения. */
+  about: OptText,
+  /** Лицензия: «Public domain», «CC BY-SA 4.0». */
+  license: OptText,
+  /** Страница файла (Wikimedia Commons и т. п.). */
+  source: OptText,
+});
+export type ImageInfo = z.infer<typeof ImageInfoSchema>;
+
 export const CONFIDENCE = ['high', 'medium', 'low'] as const;
 const Confidence = z.enum(CONFIDENCE);
 const Importance = z.union([z.literal(1), z.literal(2), z.literal(3)]);
@@ -83,6 +103,7 @@ export const PeriodSchema = z.strictObject({
   description: Text,
   cover: Asset.optional(),
   coverCredit: OptText,
+  coverInfo: ImageInfoSchema.optional(),
 });
 export const PeriodsFileSchema = z.strictObject({
   $schema: z.string().optional(),
@@ -108,6 +129,7 @@ export const EventSchema = z.strictObject({
   place: OptText,
   persons: z.array(Id).optional(),
   image: Asset.optional(),
+  imageInfo: ImageInfoSchema.optional(),
   confidence: Confidence.optional(),
   refs: Refs.optional(),
 });
@@ -129,6 +151,7 @@ export const PersonSchema = z.strictObject({
   details: OptText,
   hints: z.array(Text).optional(),
   image: Asset.optional(),
+  imageInfo: ImageInfoSchema.optional(),
   confidence: Confidence.optional(),
   refs: Refs.optional(),
 });
@@ -149,6 +172,7 @@ export const CultureSchema = z.strictObject({
   hints: z.array(Text).optional(),
   importance: Importance.optional(),
   image: Asset.optional(),
+  imageInfo: ImageInfoSchema.optional(),
   confidence: Confidence.optional(),
   refs: Refs.optional(),
 });

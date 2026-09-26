@@ -51,7 +51,6 @@
       <Emblem size={40} />
       <div>
         <strong class="display">СТОЛЫПИНЪ</strong>
-        <span class="eyebrow">учёба истории</span>
       </div>
     </div>
     <IconButton icon={Search} label="Поиск" variant="surface" onclick={() => navigate('/search')} />

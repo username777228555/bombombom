@@ -3,9 +3,7 @@
   import Card from '$lib/design/components/Card.svelte';
   import Emblem from '$lib/design/components/Emblem.svelte';
   import Ornament from '$lib/design/components/Ornament.svelte';
-  import { kb } from '$lib/core/content/kb.svelte';
   const version = __APP_VERSION__;
-  const credits = $derived(kb.periods.filter((p) => p.coverCredit));
 </script>
 
 <div class="page">
@@ -13,7 +11,7 @@
   <div class="hero">
     <Emblem size={88} />
     <h1 class="display">СТОЛЫПИНЪ</h1>
-    <p class="eyebrow">учёба истории · версия {version}</p>
+    <p class="eyebrow">версия {version}</p>
     <Ornament />
   </div>
 
@@ -24,14 +22,13 @@
     </Card>
     <Card padding="md" tone="gold">
       <h2>О точности</h2>
-      <p class="secondary">Базовый пакет «Основа» собран с помощью ИИ и может содержать неточности, особенно в датах и деталях. Спорные места помечены. Сверяйте с учебником и лекциями — и добавляйте проверенные материалы своими пакетами.</p>
+      <p class="secondary">Базовый пакет «Основа» может содержать неточности, особенно в датах и деталях. Спорные места помечены. Сверяйте с учебником и лекциями — и добавляйте проверенные материалы своими пакетами.</p>
     </Card>
     <Card padding="md">
       <h2>Благодарности</h2>
       <ul class="secondary">
         <li>Шрифты: Old Standard TT, Inter, Literata — SIL Open Font License.</li>
         <li>Библиотеки: Svelte, Capacitor, Dexie, ts-fsrs (FSRS), Cytoscape.js, foliate-js, PDF.js, MiniSearch, Lucide, Zod.</li>
-        {#each credits as p (p.id)}<li>Обложка «{p.short}»: {p.coverCredit}</li>{/each}
       </ul>
     </Card>
   </div>

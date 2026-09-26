@@ -23,3 +23,6 @@ keystore.properties
 content/packs/*/_work/
 dist-packs/
 !android/keystores/stolypin-debug.keystore
+
+# Локальные материалы кружка (книги ~1.5 ГБ, не для коммита и APK)
+материалы)/

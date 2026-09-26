@@ -83,9 +83,15 @@
     const css = getComputedStyle(document.documentElement);
     const ink = css.getPropertyValue('--ink').trim();
     const bg = css.getPropertyValue('--surface').trim();
+    const elements = buildElements();
+    // Большие графы разреживаем сильнее, иначе точки слипаются, а подписи налезают друг на друга.
+    // Маленькие графы оставляем как были.
+    const nodeCount = counts.nodes;
+    const hugeGraph = nodeCount > 160;
+    const bigGraph = !hugeGraph && nodeCount > 90;
     cy = cytoscape({
       container,
-      elements: buildElements(),
+      elements,
       minZoom: 0.15,
       maxZoom: 3,
       style: [
@@ -102,7 +108,7 @@
         { selector: 'node.hl', style: { 'border-color': ink, 'border-width': 3, opacity: 1 } },
         { selector: 'edge.hl', style: { width: 3, opacity: 1, label: 'data(label)', 'font-size': 9, color: ink, 'text-rotation': 'autorotate', 'text-background-color': bg, 'text-background-opacity': 0.9 } },
       ],
-      layout: { name: 'fcose', animate: true, animationDuration: 700, randomize: true, nodeRepulsion: () => 6500, idealEdgeLength: () => 70, nodeSeparation: 60, padding: 20, packComponents: true } as never,
+      layout: { name: 'fcose', animate: !hugeGraph, animationDuration: 700, randomize: true, nodeRepulsion: () => hugeGraph ? 26000 : bigGraph ? 14000 : 6500, idealEdgeLength: () => hugeGraph ? 170 : bigGraph ? 120 : 70, nodeSeparation: hugeGraph ? 170 : bigGraph ? 110 : 60, padding: 20, packComponents: true } as never,
     });
     cy.on('tap', 'node', (evt) => {
       const n = evt.target;

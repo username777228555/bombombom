@@ -59,7 +59,7 @@
       "imageInfo": {
         "title": "Facial Chronicle - b.15, p. 243",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "Бежали они долго, уже и кони их утомились, и стали бросаться с коней своих в воду, в болота, и в леса",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.15,_p._243.gif"
@@ -124,7 +124,7 @@
       "imageInfo": {
         "title": "Facial Chronicle - b.16, p. 462 - Great standing on the Ugra",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "Стояние на Угре. 1480 г. Миниатюра из Лицевого летописного свода. XVI век. «А наши стрелами и пищалми многих побиша, а их стрелы межы наших падаху, и никогож уязвляху и отбиша их от берегу»",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.16,_p._462_-_Great_standing_on_the_Ugra.jpg"
@@ -153,7 +153,7 @@
       "imageInfo": {
         "title": "Facial Chronicle - b.11, p.007 - Sergius of Radonezh",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "но потом, в старо- сти, обнищал, и род их оскудел. Расска- жу и о том, почему обнищал: из-за частых хождений с князем в Орду, из-за частых набегов татарских, которые испытывала Русь, из-за частых приходов татарских послов, из-за частых…",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.11,_p.007_-_Sergius_of_Radonezh.gif"
@@ -447,7 +447,7 @@
       "imageInfo": {
         "title": "Facial Chronicle - b.20, p. 317 - Murder of Yuri Glinsky",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "«Восстание в Москве в 1547 году. Миниатюра из Лицевого летописного свода. 16 век",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.20,_p._317_-_Murder_of_Yuri_Glinsky.jpg"
@@ -566,7 +566,7 @@
       "imageInfo": {
         "title": "Facial Chronicle - b.22, p. 144",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "Лицевой летописный свод",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.22,_p._144.gif"
@@ -597,7 +597,7 @@
       "imageInfo": {
         "title": "Kazan storm chronicle",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "Взятие Казани",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Kazan_storm_chronicle.GIF"
@@ -704,7 +704,7 @@
       "imageInfo": {
         "title": "Facial Chronicle - b.23, p. 006",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "О взятии Новгородка. Месяца июля в 6 день прислали к царю и великому князю бояре и воеводы князь Петр Иванович Шуйский и князь Андрей Михайлович Курбский, и все воеводы князя Богдана Ромодановского и Елизара Ржевского и Федора Солов-[цова]",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.23,_p._006.jpg"
@@ -788,7 +788,7 @@
       "imageInfo": {
         "title": "«Татары идут (Идут! Набег татар на Москву)»label QS:Len,\"The Tatars come (Come! Tatar raid on Moscow)\"label…",
         "author": "Васнецов, Аполлинарий Михайлович",
-        "date": "1909date QS:P571,+1909-00-00T00:00:00Z/9",
+        "date": "1909",
         "about": "Иллюстрация к событию «Сожжение Москвы Девлет-Гиреем».",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Vasnetsov_Tatary_Idut.jpg"
@@ -1261,7 +1261,16 @@
         "Отстаивал право обителей на земли и богатства — они должны нести общественные траты и благотворительность.",
         "Написал «Просветитель» — обличение ереси жидовствующих.",
         "Возглавил сторонников богатой церкви в споре с нестяжателями."
-      ]
+      ],
+      "image": "images/persons/p-iosif-volotskiy.webp",
+      "imageInfo": {
+        "title": "Joseph Volotsky",
+        "author": "Неизвестный автор",
+        "date": "XVI",
+        "about": "Изображение: Иосиф Волоцкий.",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Joseph_Volotsky.jpg"
+      }
     },
     {
       "id": "p-nil-sorskiy",
@@ -1637,7 +1646,7 @@
       "imageInfo": {
         "title": "Facial Chronicle - b.23, p. 006",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "О взятии Новгородка. Месяца июля в 6 день прислали к царю и великому князю бояре и воеводы князь Петр Иванович Шуйский и князь Андрей Михайлович Курбский, и все воеводы князя Богдана Ромодановского и Елизара Ржевского и Федора Солов-[цова]",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.23,_p._006.jpg"
@@ -1820,7 +1829,7 @@
       "imageInfo": {
         "title": "Feodor I of Russia (parsuna, 1630s, Moscow History museum)",
         "author": "Неизвестный автор",
-        "date": "1630date QS:P571,+1630-00-00T00:00:00Z/9",
+        "date": "1630",
         "about": "Царь Фёдор Иванович. Парсуна. Неизвестный художник. Россия. 1630-е г. ГИМ. Дерево, левкас, бархат, темпера. Образ входил в группу парсун, которые располгаались у гробниц в Архангельском соборе",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Feodor_I_of_Russia_(parsuna,_1630s,_Moscow_History_museum).jpg"
@@ -1942,7 +1951,7 @@
       "imageInfo": {
         "title": "Devlet I Giray",
         "author": "Matrakçı Nasuh",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "Девлет Герай, хан Крыма. Фрагмент турецкой миниатюры 16 века",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Devlet_I_Giray.jpg"

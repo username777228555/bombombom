@@ -209,7 +209,7 @@
       "imageInfo": {
         "title": "«После побоища Игоря Святославича с половцами»title QS:P1476,ru:\"После побоища Игоря Святославича с половцами\"label…",
         "author": "Виктор Михайлович Васнецов",
-        "date": "1880date QS:P571,+1880-00-00T00:00:00Z/9",
+        "date": "1880",
         "about": "Иллюстрация к событию «Поход Игоря на половцев».",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Igorsvyat.jpg"
@@ -417,7 +417,7 @@
       "imageInfo": {
         "title": "Facial Chronicle - b.06, p.028 - Battle of Neva",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "Невская битва Лицевой летописный свод (том 6 стр. 28). И тогда, еще поспешнее устремившись, напал Александр на неприятелей в шестом часу дня; и была битва [большая с римлянами; и убили новгородцы множество бесчисленное римлян; и самому…",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.06,_p.028_-_Battle_of_Neva.png"
@@ -448,7 +448,7 @@
       "imageInfo": {
         "title": "Facial Chronicle - b.06, page 085 - Battle of the Ice",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "Ледовое побоище.[ И укрепил Александр всех силой крестной, и, подняв всех за собой, пошел на немцев. Потряслось же озеро Чудское, было же обоих войск множество большое. Отец же Александра великий князь Ярослав Всеволодович прислал ему на…",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.06,_page_085_-_Battle_of_the_Ice.jpg"
@@ -761,7 +761,7 @@
       "imageInfo": {
         "title": "Facial Chronicle - b.09, p.098 - Execution of strigolniki",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "Казнь стригольников в Новгороде в 1375 году. Лицевой летописный свод 9 том страница 98",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.09,_p.098_-_Execution_of_strigolniki.png"
@@ -824,7 +824,7 @@
       "imageInfo": {
         "title": "Facial Chronicle - b.10, p.049 - Tokhtamysh at Moscow",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "Иллюстрация к событию «Нашествие Тохтамыша».",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.10,_p.049_-_Tokhtamysh_at_Moscow.jpg"
@@ -880,7 +880,7 @@
       "imageInfo": {
         "title": "Facial Chronicle - b.12, p.177 - Edigu's invasion",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "нашествие Едыгея В ту же зиму месяца декабря в 20 день Ордынский князь Едыгей повелением царя Большой Орды Булат-Салтана пришел с войском на Русскую землю, а вместе с ним четыре царевича и много татарских князей, вот их имена: царевич…",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.12,_p.177_-_Edigu%27s_invasion.jpg"
@@ -911,7 +911,7 @@
       "imageInfo": {
         "title": "Битва при Грюнвальде label QS:Lit,\"La battaglia di Grunwald\" label QS:Lfr,\"La Bataille de Grunwald\" label…",
         "author": "Ян Матейко",
-        "date": "1878date QS:P571,+1878-00-00T00:00:00Z/9",
+        "date": "1878",
         "about": "Иллюстрация к событию «Грюнвальдская битва».",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Jan_Matejko,_Bitwa_pod_Grunwaldem.jpg"
@@ -1943,7 +1943,7 @@
       "imageInfo": {
         "title": "Tokhtamysh from Facial Chronicle - b.11, p.132",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "Изображение: Тохтамыш.",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Tokhtamysh_from_Facial_Chronicle_-_b.11,_p.132.jpg"
@@ -1978,7 +1978,7 @@
       "imageInfo": {
         "title": "Facial Chronicle - b.11, p.172",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "В том же году в центре города Москвы была расписана церковь Рождества Пречистой Богородицы и придел святого Лазаря. А ма- стера — Феодор грек да Семен Черный",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.11,_p.172.gif"
@@ -2106,6 +2106,7 @@
     },
     {
       "id": "p-vasiliy-ii-temnyy",
+      "image": "images/persons/p-vasiliy-ii-temnyy.webp",
       "name": "Василий II Тёмный",
       "short": "Василий Тёмный",
       "aliases": [
@@ -2140,7 +2141,15 @@
       "refs": [
         "https://ru.wikipedia.org/wiki/%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D0%B8%D0%B9_II_%D0%A2%D1%91%D0%BC%D0%BD%D1%8B%D0%B9",
         "https://ru.wikipedia.org/wiki/%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9_%D0%AE%D1%80%D1%8C%D0%B5%D0%B2%D0%B8%D1%87_%D0%A8%D0%B5%D0%BC%D1%8F%D0%BA%D0%B0"
-      ]
+      ],
+      "imageInfo": {
+        "title": "Titulyarnik - Vasily Vasiliyevich",
+        "author": "collective",
+        "date": "1672",
+        "about": "Василий Васильевич",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Titulyarnik_-_Vasily_Vasiliyevich.jpg"
+      }
     },
     {
       "id": "p-dmitriy-shemyaka",
@@ -2379,7 +2388,7 @@
       "imageInfo": {
         "title": "«Вероятный вид белокаменного Кремля Дмитрия Донского. Конец XIV века»title QS:P1476,ru:\"Вероятный вид белокаменного…",
         "author": "Васнецов, Аполлинарий Михайлович",
-        "date": "1922date QS:P571,+1922-00-00T00:00:00Z/9",
+        "date": "1922",
         "about": "А. М. Васнецов. «Вероятный вид белокаменного Кремля Дмитрия Донского. Конец XIV века». 1922. Бумага на картоне, акварель, уголь. 51 × 80. Музей Москвы, Москва",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Moscow_Kremlin_under_Dmitry_Donskoj.jpg"
@@ -2435,7 +2444,7 @@
       "imageInfo": {
         "title": "RYAZAN",
         "author": "Неизвестный автор",
-        "date": "XVI векdate QS:P,+1550-00-00T00:00:00Z/7",
+        "date": "XVI век",
         "about": "Повесть о разорении Рязани Батыем. Миниатюра. Лицевой свод XVI в. Древний летописец, т. II. (Санкт-Петербург, БАН)",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:RYAZAN.JPG"

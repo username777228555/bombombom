@@ -160,7 +160,16 @@
       "details": "Причина — затянувшаяся русско-турецкая война 1806–1812 годов на фоне неминуемого столкновения с Наполеоном; нужно было развязать руки на западе. Ход: главнокомандующий М. И. Кутузов после победы при Рущуке и окружения турецкой армии за Дунаем вёл переговоры в Бухаресте; договор подписан 16 (28) мая 1812 года главным уполномоченным Кутузовым и Ахмедом-пашой. Итоги: Россия получила Бессарабию с крепостями Хотин, Аккерман и Измаил, граница прошла по Пруту; Дунайская армия высвободилась накануне нашествия. Мир завершил войну 1806–1812 годов и укрепил позиции России на Дунае.",
       "refs": [
         "https://ru.wikipedia.org/wiki/Бухарестский_мирный_договор_(1812)"
-      ]
+      ],
+      "image": "images/events/e-bukharestskiy-mir-1812.webp",
+      "imageInfo": {
+        "title": "Treaty of Bucharest-1812",
+        "author": "Spiridon Ion Cepleanu",
+        "date": "2014",
+        "about": "Иллюстрация к событию «Бухарестский мир».",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Treaty_of_Bucharest-1812.png"
+      }
     },
     {
       "id": "e-otechestvennaya-voyna-1812",
@@ -222,7 +231,7 @@
       "imageInfo": {
         "title": "Battle of Moscow, 7th September 1812label QS:Len,\"Battle of Moscow, 7th September 1812\"",
         "author": "Louis Lejeune",
-        "date": "1822date QS:P571,+1822-00-00T00:00:00Z/9",
+        "date": "1822",
         "about": "Иллюстрация к событию «Бородинское сражение».",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Battle_of_Borodino.jpg"
@@ -253,7 +262,7 @@
       "imageInfo": {
         "title": "MoshkovVI SrazhLeypcigomGRM",
         "author": "Мошков, Владимир Иванович",
-        "date": "1815date QS:P571,+1815-00-00T00:00:00Z/9",
+        "date": "1815",
         "about": "Сражение под Лейпцигом 16 октября 1813 года",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:MoshkovVI_SrazhLeypcigomGRM.jpg"
@@ -379,7 +388,7 @@
       "imageInfo": {
         "title": "Attaque du carré des décabristes par le régiment des gardes à cheval le 14 décembre 1825",
         "author": "Василий Фёдорович Тимм",
-        "date": "1853date QS:P571,+1853-00-00T00:00:00Z/9",
+        "date": "1853",
         "about": "Иллюстрация к событию «Восстание декабристов».",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Au_service_des_Tsars_-_inv._%D0%AD%D0%A0%D0%96-2379_-_Attaque_du_carr%C3%A9_des_d%C3%A9cabristes_par_le_r%C3%A9giment_des_gardes_%C3%A0_cheval_le_14_d%C3%A9cembre_1825.jpg"
@@ -489,7 +498,7 @@
       "imageInfo": {
         "title": "RusPortraits v5-140 Graf Sergei Semenovich Uvarov, 1786-1855 (cropped)",
         "author": "Неизвестный автор",
-        "date": "1908date QS:P571,+1908-00-00T00:00:00Z/9",
+        "date": "1908",
         "about": "Иллюстрация к событию «Теория официальной народности».",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:RusPortraits_v5-140_Graf_Sergei_Semenovich_Uvarov,_1786-1855_(cropped).jpg"
@@ -572,7 +581,7 @@
       "imageInfo": {
         "title": "«Ахульго»label QS:Lru,\"Ахульго\"label QS:Len,\"Ahulgo\"",
         "author": "Франц Алексеевич Рубо",
-        "date": "1888date QS:P571,+1888-00-00T00:00:00Z/9",
+        "date": "1888",
         "about": "Ахульго. Данное изображение было использовано в статье «Ахульго» опубликованной в третьем томе «Военной энциклопедии», который был издан книгоиздательским товариществом Ивана Дмитриевича Сытина в 1911 году в столице Российской империи…",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:RuboFA_Ahulgo1888.jpg"
@@ -632,7 +641,7 @@
       "imageInfo": {
         "title": "«Синопский бой 18 ноября 1853 года.»label QS:Len,\"Battle of Sinop\"label QS:Lru,\"Синопский бой 18 ноября 1853 года.\"",
         "author": "Алексей Петрович Боголюбов",
-        "date": "1860date QS:P571,+1860-00-00T00:00:00Z/9",
+        "date": "1860",
         "about": "Иллюстрация к событию «Синопское сражение».",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:BattleOfSinop_2.jpg"
@@ -664,7 +673,7 @@
       "imageInfo": {
         "title": "Malakhov2",
         "author": "Франц Алексеевич Рубо",
-        "date": "1904date QS:P571,+1904-00-00T00:00:00Z/9",
+        "date": "1904",
         "about": "Иллюстрация к событию «Первая оборона Севастополя».",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Malakhov2.jpg"
@@ -727,7 +736,7 @@
       "imageInfo": {
         "title": "«Чтение манифеста (Освобождение крестьян)»title QS:P1476,ru:\"Чтение манифеста (Освобождение крестьян)\"label…",
         "author": "Борис Михайлович Кустодиев",
-        "date": "1907date QS:P571,+1907-00-00T00:00:00Z/9",
+        "date": "1907",
         "about": "Для издания И.Н. Кнебеля \"Русская история в картинах\" (изд.хромлит. - https://catalog.shm.ru/entity/OBJECT/2205016 )",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Reading_of_the_Manifest_(Liberation_of_peasants)_-_Kustodiev,_1907.jpg"
@@ -876,7 +885,7 @@
       "imageInfo": {
         "title": "«Захват Гривицкого редута под Плевной», Николай Дмитриевич Дмитриев-Оренбургский",
         "author": "Дмитриев-Оренбургский, Николай Дмитриевич",
-        "date": "1885date QS:P571,+1885-00-00T00:00:00Z/9",
+        "date": "1885",
         "about": "Иллюстрация к событию «Русско-турецкая война 1877–1878 годов».",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Zahvat_grivickogo_reduta.jpg"
@@ -901,7 +910,7 @@
       "imageInfo": {
         "title": "Защита «Орлиного гнезда» орловцами и брянцами 12 августа 1877 года",
         "author": "Алексей Николаевич Попов",
-        "date": "1893date QS:P571,+1893-00-00T00:00:00Z/9",
+        "date": "1893",
         "about": "Иллюстрация к событию «Оборона Шипки».",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:The_defeat_of_Shipka_Peak,_Bulgarian_War_of_Independence.JPG"
@@ -928,7 +937,7 @@
       "imageInfo": {
         "title": "«Артиллерийский бой под Плевной. Батарея осадных орудий на Великокняжеской горе.»label QS:Lru,\"Артиллерийский бой под…",
         "author": "Дмитриев-Оренбургский, Николай Дмитриевич",
-        "date": "1880date QS:P571,+1880-00-00T00:00:00Z/9",
+        "date": "1880",
         "about": "Иллюстрация к событию «Падение Плевны».",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Dmitriev_004.jpg"
@@ -991,7 +1000,7 @@
       "imageInfo": {
         "title": "«Берлинский конгресс, 13 июля 1878»label QS:Les,\"Congreso de Berlín de 13 июля 1878\"label QS:Lhu,\"Berlini kongresszus,…",
         "author": "Антон фон Вернер",
-        "date": "1881date QS:P571,+1881-00-00T00:00:00Z/9",
+        "date": "1881",
         "about": "Иллюстрация к событию «Берлинский конгресс».",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Berliner_kongress.jpg"
@@ -1348,7 +1357,7 @@
       "imageInfo": {
         "title": "английский: \"Portrait of Count Alexey Arakcheyev\" «Портрет графа Алексея Андреевича Аракчеева»title…",
         "author": "Джордж Доу",
-        "date": "1823date QS:P571,+1823-00-00T00:00:00Z/9",
+        "date": "1823",
         "about": "Портрет графа А.А. Аракчеева. Картина поступила в Эрмитаж в 1951 году из Артеллерийского исторического музея",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Graf_Aleksei_Andreevich_Arakcheev,_1769-1834.jpg"
@@ -1391,7 +1400,7 @@
       "imageInfo": {
         "title": "немецкий: Napoleon I. Bonaparte (1769-1821) als König von Italien Napoleon I of Francetitle QS:P1476,de:\"Napoleon I.…",
         "author": "Андреа Аппиани",
-        "date": "1805date QS:P571,+1805-00-00T00:00:00Z/9",
+        "date": "1805",
         "about": "Изображение: Наполеон Бонапарт.",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Napoleon_I_of_France_by_Andrea_Appiani.jpg"
@@ -1504,7 +1513,7 @@
       "imageInfo": {
         "title": "«Портрет Н.М. Карамзина»label QS:Lru,\"Портрет Н.М. Карамзина\"label QS:Len,\"Portrait of the Writer and Historian N. M.…",
         "author": "Василий Андреевич Тропинин",
-        "date": "1818date QS:P571,+1818-00-00T00:00:00Z/9",
+        "date": "1818",
         "about": "Изображение: Николай Карамзин.",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Karamzin_by_Tropinin_(1818,_Tretyakov_gallery).jpg"
@@ -1653,7 +1662,7 @@
       "imageInfo": {
         "title": "английский: Portrait of Alexander Kh. von Benckendorf (1781-1844) (1st) «Портрет Александра Христофоровича фон…",
         "author": "Джордж Доу",
-        "date": "1822date QS:P571,+1822-00-00T00:00:00Z/9",
+        "date": "1822",
         "about": "(Александр Христофорович Бенкендорф, 1783-1844)",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Alexander_von_Benckendorff.jpg"
@@ -1726,7 +1735,7 @@
       "imageInfo": {
         "title": "Портрет Count Pavel Kiselev",
         "author": "Франц Крюгер",
-        "date": "1851date QS:P571,+1851-00-00T00:00:00Z/9",
+        "date": "1851",
         "about": "Изображение: Павел Киселёв.",
         "license": "CC BY-SA 3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Kiseleff.jpg"
@@ -1868,7 +1877,7 @@
       "imageInfo": {
         "title": "Портрет Александра Сергеевича Пушкина (1799—1837)",
         "author": "Орест Адамович Кипренский",
-        "date": "1827date QS:P571,+1827-00-00T00:00:00Z/9",
+        "date": "1827",
         "about": "Изображение: Александр Пушкин.",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Kiprensky_Pushkin.jpg"
@@ -1904,7 +1913,7 @@
       "imageInfo": {
         "title": "английский: Portrait of Alexander Herzen «Портрет писателя А.И. Герцена»label QS:Lru,\"Портрет писателя А.И.…",
         "author": "Николай Николаевич Ге",
-        "date": "1867date QS:P571,+1867-00-00T00:00:00Z/9",
+        "date": "1867",
         "about": "Изображение: Александр Герцен.",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Herzen_ge.jpg"
@@ -2022,7 +2031,7 @@
       "imageInfo": {
         "title": "Портрет М. Т. Лорис-Меликова",
         "author": "Иван Айвазовский",
-        "date": "1888date QS:P571,+1888-00-00T00:00:00Z/9",
+        "date": "1888",
         "about": "Изображение: Михаил Лорис-Меликов.",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:LorisMelikov_Aivazovsky.jpg"
@@ -2280,7 +2289,7 @@
       "imageInfo": {
         "title": "«Портрет Н.Х. Бунге, 1887»title QS:P1476,ru:\"Портрет Н.Х. Бунге, 1887\"label QS:Lru,\"Портрет Н.Х. Бунге, 1887\"label…",
         "author": "Тюрин, Иван Алексеевич",
-        "date": "1881date QS:P571,+1881-00-00T00:00:00Z/9",
+        "date": "1881",
         "about": "Изображение: Николай Бунге.",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Ivan_Tyurin_-_Portrait_of_N.H.Bunge,_1887.jpg"

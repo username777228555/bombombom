@@ -420,7 +420,8 @@ def cmd_report(a):
 
 def clean_date(date: str, license: str) -> str:
     """EXIF timestamps are scan/upload times, not creation dates: keep the year, drop them for old PD works."""
-    d = re.sub(r'\s+\d{1,2}:\d{2}(:\d{2})?$', '', date or '').strip()
+    d = re.sub(r'date QS:.*$|QS:P.*$', '', date or '')  # Wikidata template leftovers
+    d = re.sub(r'\s+\d{1,2}:\d{2}(:\d{2})?$', '', d).strip(' ,;')
     m = re.match(r'^(\d{4})-\d{2}-\d{2}$', d)
     if m:
         if int(m.group(1)) >= 1990 and re.search(r'public domain|^pd', license or '', re.I):

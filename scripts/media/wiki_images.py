@@ -12,7 +12,7 @@
 
 Использование (из корня репозитория, нужен интернет и `pip install requests pillow opencv-python`):
   python3 scripts/media/wiki_images.py fetch  [--pack osnova] [--kinds persons,events,culture] [--missing-only]
-  python3 scripts/media/wiki_images.py apply  [--pack osnova]
+  python3 scripts/media/wiki_images.py apply  [--pack osnova] [--ids id1,id2]   # --ids: только эти материалы
   python3 scripts/media/wiki_images.py report
   python3 scripts/media/wiki_images.py gc      # удалить неиспользуемые файлы и битые ссылки
 В GitHub Actions всё это делает workflow «Media» (.github/workflows/media.yml): запускается вручную или
@@ -499,6 +499,8 @@ def cmd_apply(a):
     removed: list[str] = []
     by_file: dict[str, list] = {}
     for iid, rec in m.items():
+        if a.ids and iid not in a.ids:
+            continue  # `apply --ids X` touches only the given materials
         if 'skip' in rec or not os.path.exists(os.path.join(cdir, 'img', f'{iid}.webp')):
             continue
         by_file.setdefault(rec['file'], []).append((iid, rec))

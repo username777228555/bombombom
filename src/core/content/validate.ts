@@ -138,6 +138,28 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
     validated.push(pack);
   }
 
+  // Guards for hand-added materials (see docs/agent-guide.md):
+  //  · «TODO» placeholders left by `pnpm content:add` are errors — a half-filled stub must not ship;
+  //  · the same title/name under a different id is probably a duplicate;
+  //  · Wikipedia links belong to the short `wiki` field, not to `refs`;
+  //  · `short` is the famous name («Дмитрий Донской»), not a name with patronymic.
+  const titleKey = (s: string) => norm(s).replace(/[«»"“”„.,:;!?()]/g, '').replace(/\s+/g, ' ').trim();
+  const seenTitles = new Map<string, { id: string; file: string }>();
+  const dup = (file: string, path: string, id: string, key: string) => {
+    const prev = seenTitles.get(key);
+    if (prev && prev.id !== id) add('warning', file, path, `похоже на дубликат «${prev.id}» (${prev.file}) — проверьте, не добавлено ли это уже`);
+    else if (!prev) seenTitles.set(key, { id, file });
+  };
+  const wikiRefs = (file: string, path: string, refs: string[] | undefined) => {
+    if (refs?.some((r) => /wiki(pedia|media)\.org/.test(r))) add('warning', file, `${path}.refs`, 'ссылка на Википедию: перенесите название статьи в поле wiki');
+  };
+  const findTodos = (value: unknown, path: string, report: (path: string) => void): void => {
+    if (typeof value === 'string') {
+      if (/\bTODO\b/.test(value)) report(path);
+    } else if (Array.isArray(value)) value.forEach((x, i) => findTodos(x, `${path}[${i}]`, report));
+    else if (value && typeof value === 'object') for (const [k, x] of Object.entries(value)) findTodos(x, path ? `${path}.${k}` : k, report);
+  };
+
   // 2. References and sanity checks.
   const refLevel: IssueLevel = opts.lenientRefs ? 'warning' : 'error';
   for (const [pi, pack] of validated.entries()) {
@@ -151,6 +173,7 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
       if (it.image && !it.imageInfo) add('warning', file, path, 'у картинки нет сведений (imageInfo): заполните вручную или запустите scripts/media/wiki_images.py');
     };
     for (const { file, data: d } of pack.fragments) {
+      findTodos(d, '', (path) => add('error', file, path, 'не заполнено («TODO…»): допишите значение или удалите поле'));
       const ref = (path: string, id: string | undefined, kinds?: EntityKind[]) => {
         if (!id) return;
         const hit = registry.get(id);
@@ -174,6 +197,8 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         if (e.day !== undefined && e.month === undefined) add('error', file, `${at}.day`, 'day без month');
         checkAsset(file, `${at}.image`, e.image);
         checkCredit(file, `${at}.imageInfo`, e);
+        dup(file, at, e.id, `e|${titleKey(e.title)}|${e.year}`);
+        wikiRefs(file, at, e.refs);
       });
       d.persons?.forEach((p, i) => {
         const at = `persons[${i}]`;
@@ -193,6 +218,11 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         });
         checkAsset(file, `${at}.image`, p.image);
         checkCredit(file, `${at}.imageInfo`, p);
+        dup(file, at, p.id, `p|${titleKey(p.name)}`);
+        wikiRefs(file, at, p.refs);
+        if (p.short && p.short.split(/\s+/).length > p.name.split(/\s+/).length && /(вич|вна|ична)\b/.test(p.short)) {
+          add('warning', file, `${at}.short`, 'short — это известное имя без отчества («Дмитрий Донской»); полное имя с отчеством положите в aliases');
+        }
       });
       d.culture?.forEach((c, i) => {
         const at = `culture[${i}]`;
@@ -201,6 +231,8 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         if (c.endYear !== undefined && c.endYear < c.year) add('error', file, `${at}.endYear`, 'endYear раньше year');
         checkAsset(file, `${at}.image`, c.image);
         checkCredit(file, `${at}.imageInfo`, c);
+        dup(file, at, c.id, `c|${titleKey(c.title)}`);
+        wikiRefs(file, at, c.refs);
       });
       d.terms?.forEach((t, i) => {
         t.periods?.forEach((id, j) => period(`terms[${i}].periods[${j}]`, id));

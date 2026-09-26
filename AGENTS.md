@@ -3,7 +3,8 @@
 Офлайн-приложение для подготовки к олимпиадам по истории России: Svelte 5 + TypeScript + Vite,
 оборачивается в Android APK через Capacitor 8. Интерфейс и контент на русском.
 
-> Сначала прочитайте этот файл целиком, потом тот документ из `docs/`, который относится к задаче.
+> **Начните с [`docs/agent-guide.md`](docs/agent-guide.md)** — введение в проект и пошаговое добавление
+> материалов без ошибок. Этот файл — краткая шпаргалка: команды, правила, рецепты.
 > Большинство задач решается **данными** (`content/`), а не кодом.
 
 ## Команды
@@ -13,7 +14,8 @@
 | `pnpm dev` | dev-сервер (http://localhost:5173) |
 | `pnpm build` | сборка веб-части в `dist/` |
 | `pnpm check` | svelte-check + проверка контента |
-| `pnpm content:check [--file f] [--pack id]` | валидация пакетов контента |
+| `pnpm content:add <event\|person\|culture\|term\|link> "Название" --year N` | заготовка нового материала: id, период и структура — автоматически, `TODO` нужно заполнить |
+| `pnpm content:check [--file f] [--pack id]` | валидация пакетов контента (TODO, дубликаты, битые ссылки — ошибки/предупреждения) |
 | `pnpm content:books` | все файлы из каталога «Книжная полка» распознаются импортом Библиотеки |
 | `pnpm content:rulers` | лестница правителей и классификация должностей (`reigns[].kind`) |
 | `python3 scripts/media/wiki_images.py fetch\|apply\|gc` | картинки с Wikimedia Commons с автором, датой и лицензией (портреты обрезаются по лицу); в CI — workflow «Media» (коммит с `[media]` в ветку `gumball/**`/`media/**`), ручной выбор файла — `scripts/media/overrides.json` |
@@ -49,7 +51,7 @@ Actions → Android APK → Run workflow.
 
 | Задача | Где и как |
 |--------|-----------|
-| Добавить события/персоналии/термины | JSON в `content/packs/<пакет>/data/`, затем `pnpm content:check` |
+| Добавить события/персоналии/термины | `pnpm content:add …` → заполнить `TODO` → `pnpm content:check` (подробно — `docs/agent-guide.md`) |
 | Добавить правителя | персоналия с `reigns`; для необычного титула укажите `kind` (`head`, `regent`…) → `pnpm content:rulers` |
 | Картинка к событию / портрет / произведение | `image` + `imageInfo` (автор, дата, описание, лицензия) — или `scripts/media/wiki_images.py`; попадёт в «Галерею», викторины и «Картину дня» |
 | Произведение искусства | запись в `culture` (`kind: painting/icon/sculpture…`, `year`, `authorName`, `features` для атрибуции, `wiki` — название статьи Википедии), пример: `data/12-zhivopis.json`, `data/13-muzyka-literatura-pamyatniki.json` |

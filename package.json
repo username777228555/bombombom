@@ -12,6 +12,7 @@
     "content:check": "tsx scripts/content-check.ts",
     "content:stats": "tsx scripts/content-check.ts --stats",
     "content:new": "tsx scripts/content-new.ts",
+    "content:add": "tsx scripts/content-add.ts",
     "content:id": "tsx scripts/content-id.ts",
     "content:schema": "tsx scripts/content-schema.ts",
     "content:bundle": "tsx scripts/content-bundle.ts",

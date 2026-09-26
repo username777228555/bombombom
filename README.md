@@ -43,11 +43,13 @@
 
 ## Материалы
 
-Контент добавляется данными, без изменения кода: `content/packs/<пакет>/`. Формат описан в
+Контент добавляется данными, без изменения кода: `content/packs/<пакет>/`. Пошаговое руководство (для людей и
+агентов) — [`docs/agent-guide.md`](docs/agent-guide.md). Формат описан в
 [`docs/content-format.md`](docs/content-format.md), порядок работы для агентов — в
 [`.agents/skills/add-content/SKILL.md`](.agents/skills/add-content/SKILL.md).
 
 ```bash
+pnpm content:add event "Название" --year 1698   # заготовка нового материала
 pnpm content:new lekcii-mgu "Лекции МГУ"   # новый пакет
 pnpm content:check                          # проверка всего корпуса
 pnpm content:bundle lekcii-mgu              # файл для импорта прямо в приложении

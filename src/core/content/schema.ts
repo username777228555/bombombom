@@ -131,6 +131,8 @@ export const EventSchema = z.strictObject({
   image: Asset.optional(),
   imageInfo: ImageInfoSchema.optional(),
   confidence: Confidence.optional(),
+  /** Название статьи русской Википедии (для scripts/media/wiki_images.py; в приложении не показывается). */
+  wiki: OptText,
   refs: Refs.optional(),
 });
 
@@ -153,6 +155,8 @@ export const PersonSchema = z.strictObject({
   image: Asset.optional(),
   imageInfo: ImageInfoSchema.optional(),
   confidence: Confidence.optional(),
+  /** Название статьи русской Википедии (для scripts/media/wiki_images.py; в приложении не показывается). */
+  wiki: OptText,
   refs: Refs.optional(),
 });
 
@@ -174,6 +178,8 @@ export const CultureSchema = z.strictObject({
   image: Asset.optional(),
   imageInfo: ImageInfoSchema.optional(),
   confidence: Confidence.optional(),
+  /** Название статьи русской Википедии (для scripts/media/wiki_images.py; в приложении не показывается). */
+  wiki: OptText,
   refs: Refs.optional(),
 });
 

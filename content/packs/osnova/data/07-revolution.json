@@ -18,17 +18,14 @@
       "persons": [
         "p-nikolay-ii"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%94%D0%B0%D0%B2%D0%BA%D0%B0_%D0%BD%D0%B0_%D0%A5%D0%BE%D0%B4%D1%8B%D0%BD%D1%81%D0%BA%D0%BE%D0%BC_%D0%BF%D0%BE%D0%BB%D0%B5"
-      ],
       "imageInfo": {
-        "title": "Chodynka",
         "author": "Владимир Егорович Маковский",
         "date": "1899",
-        "about": "Иллюстрация к событию «Ходынская катастрофа».",
-        "license": "Public domain",
+        "about": "Иллюстрация к событию «Ходынская катастрофа»",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Chodynka.jpg"
-      }
+      },
+      "wiki": "Давка на Ходынском поле"
     },
     {
       "id": "e-denezhnaya-reforma-vitte",
@@ -46,16 +43,13 @@
       "persons": [
         "p-vitte"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D0%BD%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F_%D1%80%D0%B5%D1%84%D0%BE%D1%80%D0%BC%D0%B0_%D0%B2_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8_1895%E2%80%941897_%D0%B3%D0%BE%D0%B4%D0%BE%D0%B2"
-      ],
       "imageInfo": {
-        "title": "RR5111-0053R 100-летие эмиссионного закона Витте",
         "author": "Банк России",
         "about": "Монета Банка России — 100-летие эмиссионного закона Витте, 3 рубля реверс",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:RR5111-0053R_100-%D0%BB%D0%B5%D1%82%D0%B8%D0%B5_%D1%8D%D0%BC%D0%B8%D1%81%D1%81%D0%B8%D0%BE%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD%D0%B0_%D0%92%D0%B8%D1%82%D1%82%D0%B5.gif"
-      }
+      },
+      "wiki": "Денежная реформа в России 1895—1897 годов"
     },
     {
       "id": "e-perepis-1897",
@@ -72,17 +66,13 @@
       "summary": "Первая в истории России всеобщая перепись зафиксировала 125,6 млн жителей. Она показала аграрный характер страны: около 85% населения жило в деревне.",
       "details": "Пе́рвая всео́бщая пе́репись населе́ния Росси́йской импе́рии 1897 го́да — всеобщая перепись населения Российской империи (без Великого княжества Финляндского за пределами Гельсингфорса), проведённая 28 января (9 февраля) 1897 года путём непосредственного опроса всего населения на одну и ту же дату, в соответствии с Высочайше утверждённым в 1895 году «Положением о Первой всеобщей переписи населения Российской империи». Инициатором проведения переписи выступил русский географ и статистик П.П. Семёнов (с 1906 года — Семёнов-Тян-Шанский). Перепись 1897 года стала первой и единственной всеобщей переписью населения Российской империи. Результаты переписи были опубликованы в 1897—1905 годах в 89 томах (119 книг) под общим заглавием «Первая всеобщая перепись населения Российской империи 1897 года».",
       "persons": [],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9F%D0%B5%D1%80%D0%B5%D0%BF%D0%B8%D1%81%D1%8C_%D0%BD%D0%B0%D1%81%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B9_%D0%B8%D0%BC%D0%BF%D0%B5%D1%80%D0%B8%D0%B8_%281897%29"
-      ],
       "image": "images/events/e-perepis-1897.webp",
       "imageInfo": {
-        "title": "Russian-census-1897-p1",
-        "author": "Håkan Henriksson (Narking)",
-        "about": "Иллюстрация к событию «Первая всеобщая перепись населения».",
-        "license": "Public domain",
+        "about": "Иллюстрация к событию «Первая всеобщая перепись населения»",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Russian-census-1897-p1.jpg"
-      }
+      },
+      "wiki": "Перепись населения Российской империи (1897)"
     },
     {
       "id": "e-osnovanie-rsdrp",
@@ -100,18 +90,14 @@
       "details": "I съезд Росси́йской социа́л-демократи́ческой рабо́чей па́ртии состоялся нелегально в Минске с 1 (13) по 3 (15) марта 1898 года. На съезде присутствовало девять делегатов. Съезд не выработал ни программы, ни устава партии. Через несколько недель все участники съезда, кроме одного, были арестованы — по мнению В.И. Ленина, реально действующая партия на этом съезде создана не была. Впервые идея съезда разрозненных социал-демократических кружков появилась в 1896 году у петербуржцев, и «Группа 4-го листка» завязала по этому поводу переговоры с Вильно, Киевом и Москвой и даже предложила будущей партии свою типографию. Но продолжавшиеся массовые аресты среди социал-демократического Петербурга, Москвы и других городов Центральной России не позволили тогда развернуть практическую работу по подготовке партийного съезда.",
       "place": "Минск",
       "persons": [],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/I_%D1%81%D1%8A%D0%B5%D0%B7%D0%B4_%D0%A0%D0%A1%D0%94%D0%A0%D0%9F"
-      ],
       "image": "images/events/e-osnovanie-rsdrp.webp",
       "imageInfo": {
-        "title": "1st Congress of the RSDLP",
-        "author": "https://cs10.pikabu.ru/post_img/2019/01/12/11/1547317911160250645.jpg",
         "date": "1898",
-        "about": "Иллюстрация к событию «I съезд РСДРП».",
+        "about": "Иллюстрация к событию «I съезд РСДРП»",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:1st_Congress_of_the_RSDLP.jpg"
-      }
+      },
+      "wiki": "I съезд РСДРП"
     },
     {
       "id": "e-ii-sezd-rsdrp",
@@ -136,9 +122,7 @@
         "p-martov",
         "p-plekhanov"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/II_%D1%81%D1%8A%D0%B5%D0%B7%D0%B4_%D0%A0%D0%A1%D0%94%D0%A0%D0%9F"
-      ]
+      "wiki": "II съезд РСДРП"
     },
     {
       "id": "e-osnovanie-psr",
@@ -156,18 +140,14 @@
       "persons": [
         "p-chernov"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9F%D0%B0%D1%80%D1%82%D0%B8%D1%8F_%D1%81%D0%BE%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D1%81%D1%82%D0%BE%D0%B2-%D1%80%D0%B5%D0%B2%D0%BE%D0%BB%D1%8E%D1%86%D0%B8%D0%BE%D0%BD%D0%B5%D1%80%D0%BE%D0%B2"
-      ],
       "image": "images/events/e-osnovanie-psr.webp",
       "imageInfo": {
-        "title": "Socialist Revolutionary Party poster 1917 detail",
-        "author": "nc161tcs",
         "date": "2021",
         "about": "Символ взят с агитационного плаката, напечатанного Партией социалистов-революционеров в рамках выборов во Всероссийское Учредительное собрание. Исторически НЕТ ОСНОВАНИЙ полагать, что он являлся логотипом, эмблемой или партийным символом,…",
         "license": "CC0",
         "source": "https://commons.wikimedia.org/wiki/File:Socialist_Revolutionary_Party_poster_1917_detail.svg"
-      }
+      },
+      "wiki": "Партия социалистов-революционеров"
     },
     {
       "id": "e-nachalo-russko-yaponskoy-voyny",
@@ -188,18 +168,14 @@
       "persons": [
         "p-nikolay-ii"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE-%D1%8F%D0%BF%D0%BE%D0%BD%D1%81%D0%BA%D0%B0%D1%8F_%D0%B2%D0%BE%D0%B9%D0%BD%D0%B0"
-      ],
       "image": "images/events/e-nachalo-russko-yaponskoy-voyny.webp",
       "imageInfo": {
-        "title": "Japanese battleship Shikishima on Battle of the Yellow Sea",
         "author": "Неизвестный автор",
-        "date": "1904年(明治37年)8月10日 (10 August 1904)",
-        "about": "Иллюстрация к событию «Начало русско-японской войны».",
-        "license": "Public domain",
+        "about": "Иллюстрация к событию «Начало русско-японской войны»",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Japanese_battleship_Shikishima_on_Battle_of_the_Yellow_Sea.jpg"
-      }
+      },
+      "wiki": "Русско-японская война"
     },
     {
       "id": "e-oborona-port-artura",
@@ -218,17 +194,14 @@
       "summary": "Крепость выдерживала осаду около 157 дней и сдалась 20 декабря 1904 года (1 января 1905 года). Падение Порт-Артура предрешило исход войны.",
       "details": "Оборо́на Порт-Арту́ра — самое продолжительное сражение Русско-японской войны. Во время осады Порт-Артура широко применялись такие новые виды оружия, как 11-дюймовые (280-миллиметровые) мортиры, скорострельные гаубицы, пулемёты Максима, заграждения из колючей проволоки, ручные гранаты. По одной из версий, крепость Порт-Артур стала местом рождения нового оружия — миномёта. В 1898 году, стремясь утвердиться на Дальнем Востоке, Российская империя арендовала южную часть Ляодунского п-ова с Порт-Артуром (Люйошунь) на 25 лет для базирования главных военно-морских сил на Тихом океане. В Порт-Артуре базировалась 1-я Тихоокеанская эскадра и часть кораблей Сибирской военной флотилии (7 БР, 9 КР, 24 М, 4 КЛ, 2З М, 2 МКР). В ночь на 27 января 1904 года началась русско-японская война внезапным нападением 10 японских миноносцев на русскую эскадру в Порт-Артуре, стоявшую на внешнем рейде без охранения.",
       "persons": [],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9E%D0%B1%D0%BE%D1%80%D0%BE%D0%BD%D0%B0_%D0%9F%D0%BE%D1%80%D1%82-%D0%90%D1%80%D1%82%D1%83%D1%80%D0%B0"
-      ],
       "imageInfo": {
         "title": "Порт Артур 17 июля",
-        "author": "Русско-Японская война 1904-1905 гг. Томъ VIII. Оборона Квантуна и Портъ-Артура. Часть…",
         "date": "1909",
         "about": "Оборона Порт-Артура 17 июля",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%9F%D0%BE%D1%80%D1%82_%D0%90%D1%80%D1%82%D1%83%D1%80_17_%D0%B8%D1%8E%D0%BB%D1%8F.png"
-      }
+      },
+      "wiki": "Оборона Порт-Артура"
     },
     {
       "id": "e-tsusimskoe-srazhenie",
@@ -248,18 +221,14 @@
       "details": "Цуси́мское морско́е сраже́ние (яп. цусима-кайсэн, нихонкай-кайсэн — морская битва в Японском море) — морская битва 14 (27)—15 (28) мая 1905 года в районе острова Цусима (Корейский пролив), в которой российская 2-я эскадра флота Тихого океана под командованием вице-адмирала З.П. Рожественского потерпела сокрушительное поражение от Императорского флота Японии под командованием адмирала Хэйхатиро Того. Последнее, решающее морское сражение Русско-японской войны 1904—1905 годов, в ходе которого русская эскадра была полностью разгромлена. Цусимское сражение — крупнейшее в эпоху додредноутных броненосных кораблей (классических броненосцев), а также последнее между судами такого типа, — явилось ключевым событием, предопределившим исход русско-японской войны в пользу Японии.",
       "place": "Цусимский пролив",
       "persons": [],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A6%D1%83%D1%81%D0%B8%D0%BC%D1%81%D0%BA%D0%BE%D0%B5_%D1%81%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5"
-      ],
       "image": "images/events/e-tsusimskoe-srazhenie.webp",
       "imageInfo": {
-        "title": "Tsushima battle map-ru-2",
-        "author": "Tsushima_battle_map-fr.svg: historicair 01:00, 30 September 2007 (UTC) derivative work:…",
         "date": "2012",
         "about": "Карта Цусимского сражения 27–28 мая (14–15 мая по старому стилю) 1905 года",
         "license": "CC BY-SA 3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Tsushima_battle_map-ru-2.svg"
-      }
+      },
+      "wiki": "Цусимское сражение"
     },
     {
       "id": "e-portsmutskiy-mir",
@@ -279,18 +248,14 @@
       "persons": [
         "p-vitte"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D1%80%D1%82%D1%81%D0%BC%D1%83%D1%82%D1%81%D0%BA%D0%B8%D0%B9_%D0%BC%D0%B8%D1%80%D0%BD%D1%8B%D0%B9_%D0%B4%D0%BE%D0%B3%D0%BE%D0%B2%D0%BE%D1%80"
-      ],
       "image": "images/events/e-portsmutskiy-mir.webp",
       "imageInfo": {
-        "title": "Treaty of Portsmouth",
-        "author": "P. F. Collier & Son",
         "date": "1905",
-        "about": "Иллюстрация к событию «Портсмутский мир с Японией».",
-        "license": "Public domain",
+        "about": "Иллюстрация к событию «Портсмутский мир с Японией»",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Treaty_of_Portsmouth.jpg"
-      }
+      },
+      "wiki": "Портсмутский мирный договор"
     },
     {
       "id": "e-krovavoe-voskresenye",
@@ -312,17 +277,13 @@
         "p-gapon",
         "p-nikolay-ii"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%BE%D0%B2%D0%B0%D0%B2%D0%BE%D0%B5_%D0%B2%D0%BE%D1%81%D0%BA%D1%80%D0%B5%D1%81%D0%B5%D0%BD%D1%8C%D0%B5"
-      ],
       "imageInfo": {
-        "title": "Shestviye u Narvskikh vorot",
         "author": "Неизвестный автор",
-        "date": "ранее 1925date…",
         "about": "Утром 9-го января (у Нарвских ворот). Гравюра неизвестного художника",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Shestviye_u_Narvskikh_vorot.jpg"
-      }
+      },
+      "wiki": "Кровавое воскресенье"
     },
     {
       "id": "e-vosstanie-na-potemkine",
@@ -342,18 +303,14 @@
       "details": "Восста́ние на бронено́сце «Князь Потёмкин-Таври́ческий» (также известно как «возмущение», «неповиновение», «открытое сопротивление», «бунт», «мятеж») — одно из заметных событий революции 1905—1907 годов в России и первый случай вооружённого мятежа целой воинской части в ходе этой революции. Не имея чёткого плана дальнейших действий, восставшие повели корабль в Одессу, где намеревались пополнить запасы угля, воды и продовольствия, поддержать проходившие в городе антиправительственные выступления и встретиться с главными силами Черноморского флота, которые, как полагали восставшие, присоединятся к восстанию. После того, как планы и надежды восставших не оправдались, броненосец, совершив поход от Констанцы до Феодосии и обратно, спустя одиннадцать дней сдался румынским властям в порту Констанца.",
       "place": "Одесса",
       "persons": [],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%92%D0%BE%D1%81%D1%81%D1%82%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BD%D0%B0_%D0%B1%D1%80%D0%BE%D0%BD%D0%B5%D0%BD%D0%BE%D1%81%D1%86%D0%B5_%C2%AB%D0%9F%D0%BE%D1%82%D1%91%D0%BC%D0%BA%D0%B8%D0%BD%C2%BB"
-      ],
       "image": "images/events/e-vosstanie-na-potemkine.webp",
       "imageInfo": {
-        "title": "Potemkin mutiny Odessa le corps du omeltchouk",
         "author": "Неизвестный автор",
-        "date": "June-July 1905",
-        "about": "Иллюстрация к событию «Восстание на броненосце «Князь Потёмкин-Таврический»».",
-        "license": "Public domain",
+        "about": "Иллюстрация к событию «Восстание на броненосце «Князь Потёмкин-Таврический»»",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Potemkin_mutiny_Odessa_le_corps_du_omeltchouk.jpg"
-      }
+      },
+      "wiki": "Восстание на броненосце «Потёмкин»"
     },
     {
       "id": "e-manifest-17-oktyabrya",
@@ -374,17 +331,14 @@
         "p-nikolay-ii",
         "p-vitte"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9C%D0%B0%D0%BD%D0%B8%D1%84%D0%B5%D1%81%D1%82_17_%D0%BE%D0%BA%D1%82%D1%8F%D0%B1%D1%80%D1%8F_1905_%D0%B3%D0%BE%D0%B4%D0%B0"
-      ],
       "imageInfo": {
-        "title": "October Manifesto 1",
         "author": "Неизвестный автор",
         "date": "1905",
-        "about": "Иллюстрация к событию «Манифест 17 октября 1905 года».",
-        "license": "Public domain",
+        "about": "Иллюстрация к событию «Манифест 17 октября 1905 года»",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:October_Manifesto_1.jpg"
-      }
+      },
+      "wiki": "Манифест 17 октября 1905 года"
     },
     {
       "id": "e-osnovnye-zakony-1906",
@@ -403,9 +357,7 @@
       "persons": [
         "p-nikolay-ii"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A1%D0%B2%D0%BE%D0%B4_%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D1%8B%D1%85_%D0%B3%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD%D0%BE%D0%B2_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B9_%D0%B8%D0%BC%D0%BF%D0%B5%D1%80%D0%B8%D0%B8"
-      ]
+      "wiki": "Свод основных государственных законов Российской империи"
     },
     {
       "id": "e-i-gosduma",
@@ -426,17 +378,13 @@
       "details": "Государственная дума Российской империи I созыва — первый в России избранный населением представительный законосовещательный орган. Корректировка полномочий Думы и наделение её законодательными функциями была осуществлена Манифестом «Об усовершенствовании государственного порядка» от 17 октября 1905 года: Установить, как незыблемое правило, чтобы никакой закон не мог воспринять силу без одобрения Государственной Думы, и чтобы выборным от народа обеспечена была возможность избирательного участия в надзоре за закономерностью действий поставленных от Нас властей.",
       "place": "Санкт-Петербург",
       "persons": [],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%93%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F_%D0%B4%D1%83%D0%BC%D0%B0_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B9_%D0%B8%D0%BC%D0%BF%D0%B5%D1%80%D0%B8%D0%B8_I_%D1%81%D0%BE%D0%B7%D1%8B%D0%B2%D0%B0"
-      ],
       "image": "images/events/e-i-gosduma.webp",
       "imageInfo": {
-        "title": "Elections in Russian Empire (1906)",
-        "author": "Собственная работа",
-        "about": "{legend|#980000|Трудовая группа: 110 мест",
+        "about": "Иллюстрация к событию «I Государственная дума».",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Elections_in_Russian_Empire_(1906).svg"
-      }
+      },
+      "wiki": "Государственная дума Российской империи I созыва"
     },
     {
       "id": "e-treteiyunskiy-perevorot",
@@ -455,9 +403,7 @@
       "persons": [
         "p-stolypin"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A2%D1%80%D0%B5%D1%82%D1%8C%D0%B5%D0%B8%D1%8E%D0%BD%D1%8C%D1%81%D0%BA%D0%B8%D0%B9_%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D1%80%D0%BE%D1%82"
-      ]
+      "wiki": "Третьеиюньский переворот"
     },
     {
       "id": "e-iii-i-iv-gosdumy",
@@ -480,9 +426,7 @@
       "persons": [
         "p-guchkov"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%93%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F_%D0%B4%D1%83%D0%BC%D0%B0_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B9_%D0%B8%D0%BC%D0%BF%D0%B5%D1%80%D0%B8%D0%B8"
-      ]
+      "wiki": "Государственная дума Российской империи"
     },
     {
       "id": "e-agrarnaya-reforma-stolypina",
@@ -502,9 +446,7 @@
       "persons": [
         "p-stolypin"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A1%D1%82%D0%BE%D0%BB%D1%8B%D0%BF%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F_%D0%B0%D0%B3%D1%80%D0%B0%D1%80%D0%BD%D0%B0%D1%8F_%D1%80%D0%B5%D1%84%D0%BE%D1%80%D0%BC%D0%B0"
-      ]
+      "wiki": "Столыпинская аграрная реформа"
     },
     {
       "id": "e-anglo-russkoe-soglashenie",
@@ -522,18 +464,14 @@
       "details": "Положил конец «Большой игре» в Азии и завершил складывание тройственной Антанты. Согласно соглашению Россия признавала протекторат Великобритании над Афганистаном и соглашалась не входить в прямые сношения с афганским эмиром. Обе стороны признали суверенитет Китая над Тибетом и отказались от попыток установления контроля над ним, хотя Тибет не приносил вассальной присяги цинскому императору и отвергал сюзеренитет Китая.",
       "place": "Санкт-Петербург",
       "persons": [],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%90%D0%BD%D0%B3%D0%BB%D0%BE-%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B5_%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%88%D0%B5%D0%BD%D0%B8%D0%B5_%281907%29"
-      ],
       "image": "images/events/e-anglo-russkoe-soglashenie.webp",
       "imageInfo": {
-        "title": "The Russo-British Pact in 1907",
-        "author": "Эдвард Гранвил Браун / William Morgan Shuster",
         "date": "1912",
         "about": "Карта с разграничением сфер влияния России и Британской империи в Азии, в соответствии с Англо-русским соглашением (1907). Районы Персии выделенные голубым цветом предназначались под контроль России, южные районы, выделенные розовым под…",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:The_Russo-British_Pact_in_1907.jpg"
-      }
+      },
+      "wiki": "Англо-русское соглашение (1907)"
     },
     {
       "id": "e-ubiystvo-stolypina",
@@ -552,18 +490,14 @@
       "persons": [
         "p-stolypin"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A3%D0%B1%D0%B8%D0%B9%D1%81%D1%82%D0%B2%D0%BE_%D0%9F%D0%B5%D1%82%D1%80%D0%B0_%D0%A1%D1%82%D0%BE%D0%BB%D1%8B%D0%BF%D0%B8%D0%BD%D0%B0"
-      ],
       "image": "images/events/e-ubiystvo-stolypina.webp",
       "imageInfo": {
-        "title": "Assassination of the Russian prime minister Stolypin (Illustrierte Kronen Zeitung, 1911)",
-        "author": "Ladislaus Tuszyński",
         "date": "1911-09",
-        "about": "Иллюстрация к событию «Убийство П. А. Столыпина в Киеве».",
-        "license": "Public domain",
+        "about": "Иллюстрация к событию «Убийство П. А. Столыпина в Киеве»",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Assassination_of_the_Russian_prime_minister_Stolypin_(Illustrierte_Kronen_Zeitung,_1911).jpg"
-      }
+      },
+      "wiki": "Убийство Петра Столыпина"
     },
     {
       "id": "e-lenskiy-rasstrel",
@@ -582,17 +516,14 @@
       "details": "Ленский расстрел — события 4 (17) апреля 1912 года на приисках Ленского золотопромышленного товарищества в районе города Бодайбо. В результате конфликта акционеров, забастовки и расстрела трёхтысячной толпы бастующих правительственными войсками убито 170 человек, и более 200 получили ранения. С одной стороны, происходил конфликт интересов русского и британского бизнеса в правлении головной компании «Lena Goldfields», с другой — представители управляющей компании (и бывшие владельцы) «Лензото» (во главе с бароном Гинцбургом) пытались не допустить фактического контроля над приисками со стороны правления «Lena Goldfields».",
       "place": "Ленские прииски",
       "persons": [],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9B%D0%B5%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D1%80%D0%B0%D1%81%D1%81%D1%82%D1%80%D0%B5%D0%BB"
-      ],
       "imageInfo": {
-        "title": "Lena 17 04 1912",
         "author": "Неизвестный автор",
         "date": "1912",
         "about": "Жертвы Ленского расстрела",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Lena_17_04_1912.jpg"
-      }
+      },
+      "wiki": "Ленский расстрел"
     },
     {
       "id": "e-nachalo-pervoy-mirovoy",
@@ -613,18 +544,14 @@
       "persons": [
         "p-nikolay-ii"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9F%D0%B5%D1%80%D0%B2%D0%B0%D1%8F_%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%8F_%D0%B2%D0%BE%D0%B9%D0%BD%D0%B0"
-      ],
       "image": "images/events/e-nachalo-pervoy-mirovoy.webp",
       "imageInfo": {
-        "title": "Bataille de Verdun 1916",
-        "author": "Collection DocAnciens/docpix.fr",
         "date": "1916",
-        "about": "Иллюстрация к событию «Начало Первой мировой войны».",
-        "license": "Public domain",
+        "about": "Иллюстрация к событию «Начало Первой мировой войны»",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Bataille_de_Verdun_1916.jpg"
-      }
+      },
+      "wiki": "Первая мировая война"
     },
     {
       "id": "e-brusilovskiy-proryv",
@@ -645,16 +572,12 @@
       "persons": [
         "p-brusilov"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%91%D1%80%D1%83%D1%81%D0%B8%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BF%D1%80%D0%BE%D1%80%D1%8B%D0%B2"
-      ],
       "imageInfo": {
-        "title": "Brusilov offensive",
-        "author": "Granat encyclopedic dictionary",
-        "about": "Иллюстрация к событию «Брусиловский прорыв».",
-        "license": "Public domain",
+        "about": "Иллюстрация к событию «Брусиловский прорыв»",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Brusilov_offensive.jpg"
-      }
+      },
+      "wiki": "Брусиловский прорыв"
     },
     {
       "id": "e-fevralskaya-revoluciya",
@@ -678,17 +601,14 @@
       "persons": [
         "p-kerenskiy"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A4%D0%B5%D0%B2%D1%80%D0%B0%D0%BB%D1%8C%D1%81%D0%BA%D0%B0%D1%8F_%D1%80%D0%B5%D0%B2%D0%BE%D0%BB%D1%8E%D1%86%D0%B8%D1%8F"
-      ],
       "imageInfo": {
-        "title": "Down with the eagle (2)",
         "author": "Иван Алексеевич Владимиров",
         "date": "1917",
         "about": "«Долой орла!», картина И. А. Владимирова",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Down_with_the_eagle_(2).jpeg"
-      }
+      },
+      "wiki": "Февральская революция"
     },
     {
       "id": "e-otrechenie-nikolaya-ii",
@@ -710,17 +630,13 @@
         "p-nikolay-ii",
         "p-guchkov"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9E%D1%82%D1%80%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D1%8F_II"
-      ],
       "imageInfo": {
-        "title": "Отречение от престола императора Николая II. 2 марта 1917",
-        "author": "ru:Николай Романов",
         "date": "1917",
         "about": "Отречение от престола императора Николая II. 2 марта 1917 Машинопись",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%9E%D1%82%D1%80%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BE%D1%82_%D0%BF%D1%80%D0%B5%D1%81%D1%82%D0%BE%D0%BB%D0%B0_%D0%B8%D0%BC%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0_%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D1%8F_II._2_%D0%BC%D0%B0%D1%80%D1%82%D0%B0_1917.jpg"
-      }
+      },
+      "wiki": "Отречение Николая II"
     },
     {
       "id": "e-aprelskie-tezisy",
@@ -738,18 +654,15 @@
       "persons": [
         "p-lenin"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%90%D0%BF%D1%80%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%B8%D0%B5_%D1%82%D0%B5%D0%B7%D0%B8%D1%81%D1%8B"
-      ],
       "image": "images/events/e-aprelskie-tezisy.webp",
       "imageInfo": {
-        "title": "Lenin in Tauride Palace",
         "author": "П.И.Волков",
         "date": "1917",
         "about": "В.И.Ленин выступает в Таврическом дворце",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Lenin_in_Tauride_Palace.jpg"
-      }
+      },
+      "wiki": "Апрельские тезисы"
     },
     {
       "id": "e-iyulskiy-krizis",
@@ -772,18 +685,15 @@
         "p-lenin",
         "p-kerenskiy"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%98%D1%8E%D0%BB%D1%8C%D1%81%D0%BA%D0%B8%D0%B5_%D0%B4%D0%BD%D0%B8"
-      ],
       "image": "images/events/e-iyulskiy-krizis.webp",
       "imageInfo": {
-        "title": "19170704 Riot on Nevsky prosp Petrograd",
         "author": "Виктор Карлович Булла",
         "date": "17 июля 1917 (4 июля 1917 по ст. ст.)",
         "about": "Расстрел юнкерами и казаками мирной рабочей демонстрации на Невском проспекте, Петроград 4 июля 1917",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:19170704_Riot_on_Nevsky_prosp_Petrograd.jpg"
-      }
+      },
+      "wiki": "Июльские дни"
     },
     {
       "id": "e-kornilovskoe-vystuplenie",
@@ -805,18 +715,15 @@
         "p-kornilov",
         "p-kerenskiy"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D1%80%D0%BD%D0%B8%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B5_%D0%B2%D1%8B%D1%81%D1%82%D1%83%D0%BF%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5"
-      ],
       "image": "images/events/e-kornilovskoe-vystuplenie.webp",
       "imageInfo": {
-        "title": "KornilovEnLaConferenciaEstatal",
         "author": "Неизвестный автор",
         "date": "25 августа 1917 (12 августа 1917 по…",
-        "about": "Иллюстрация к событию «Выступление Л. Г. Корнилова».",
-        "license": "Public domain",
+        "about": "Иллюстрация к событию «Выступление Л. Г. Корнилова»",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:KornilovEnLaConferenciaEstatal.jpg"
-      }
+      },
+      "wiki": "Корниловское выступление"
     },
     {
       "id": "e-oktyabrskaya-revoluciya",
@@ -840,17 +747,14 @@
         "p-lenin",
         "p-trotskiy"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9E%D0%BA%D1%82%D1%8F%D0%B1%D1%80%D1%8C%D1%81%D0%BA%D0%B0%D1%8F_%D1%80%D0%B5%D0%B2%D0%BE%D0%BB%D1%8E%D1%86%D0%B8%D1%8F"
-      ],
       "imageInfo": {
-        "title": "After the capture of the Winter Palace 26 October 1917",
         "author": "Пётр Карлович Новицкий",
         "date": "1917",
         "about": "После взятия Зимнего дворца. Петроград. 26 октября (7 ноября) 1917. Фото П. Новицкого",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:After_the_capture_of_the_Winter_Palace_26_October_1917.jpg"
-      }
+      },
+      "wiki": "Октябрьская революция"
     },
     {
       "id": "e-dekrety-o-mire-i-o-zemle",
@@ -870,19 +774,15 @@
       "persons": [
         "p-lenin"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D0%BA%D1%80%D0%B5%D1%82_%D0%BE_%D0%B7%D0%B5%D0%BC%D0%BB%D0%B5",
-        "https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D0%BA%D1%80%D0%B5%D1%82_%D0%BE_%D0%BC%D0%B8%D1%80%D0%B5"
-      ],
       "image": "images/events/e-dekrety-o-mire-i-o-zemle.webp",
       "imageInfo": {
         "title": "Декрет о земле",
-        "author": "Izvestia",
         "date": "1917",
         "about": "Декрет о земле, опубкликованный в газете «Известия»",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%94%D0%B5%D0%BA%D1%80%D0%B5%D1%82_%D0%BE_%D0%B7%D0%B5%D0%BC%D0%BB%D0%B5.jpg"
-      }
+      },
+      "wiki": "Декрет о земле"
     },
     {
       "id": "e-uchreditelnoe-sobranie",
@@ -903,17 +803,14 @@
         "p-sverdlov",
         "p-chernov"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%92%D1%81%D0%B5%D1%80%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B5_%D1%83%D1%87%D1%80%D0%B5%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5_%D1%81%D0%BE%D0%B1%D1%80%D0%B0%D0%BD%D0%B8%D0%B5"
-      ],
       "image": "images/events/e-uchreditelnoe-sobranie.webp",
       "imageInfo": {
-        "title": "Russian coa 1917",
         "author": "Билибин, Иван Яковлевич. Компьютерная обработка: Лобачев Владимир",
         "about": "Гербовый орел на печати Временного правительства 1917 года. Рисунок И. Билибина",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Russian_coa_1917.svg"
-      }
+      },
+      "wiki": "Всероссийское учредительное собрание"
     },
     {
       "id": "e-brestskiy-mir",
@@ -934,18 +831,15 @@
         "p-lenin",
         "p-trotskiy"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%91%D1%80%D0%B5%D1%81%D1%82%D1%81%D0%BA%D0%B8%D0%B9_%D0%BC%D0%B8%D1%80"
-      ],
       "image": "images/events/e-brestskiy-mir.webp",
       "imageInfo": {
-        "title": "Traktat brzeski 1918",
         "author": "Неизвестный автор",
         "date": "1918",
-        "about": "Иллюстрация к событию «Брестский мир с Германией».",
-        "license": "Public domain",
+        "about": "Иллюстрация к событию «Брестский мир с Германией»",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Traktat_brzeski_1918.jpg"
-      }
+      },
+      "wiki": "Брестский мир"
     },
     {
       "id": "e-rasstrel-carskoy-semyi",
@@ -965,18 +859,14 @@
       "persons": [
         "p-nikolay-ii"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D1%81%D1%81%D1%82%D1%80%D0%B5%D0%BB_%D1%86%D0%B0%D1%80%D1%81%D0%BA%D0%BE%D0%B9_%D1%81%D0%B5%D0%BC%D1%8C%D0%B8"
-      ],
       "image": "images/events/e-rasstrel-carskoy-semyi.webp",
       "imageInfo": {
         "title": "Расстрелянные в подвале ипатьевского дома",
-        "author": "ru:Участник:Glavkom_NN",
-        "date": "Antes de 1918",
         "about": "Растрелянные в подвале ипатьевского дома",
         "license": "CC0",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%A0%D0%B0%D1%81%D1%81%D1%82%D1%80%D0%B5%D0%BB%D1%8F%D0%BD%D0%BD%D1%8B%D0%B5_%D0%B2_%D0%BF%D0%BE%D0%B4%D0%B2%D0%B0%D0%BB%D0%B5_%D0%B8%D0%BF%D0%B0%D1%82%D1%8C%D0%B5%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%B4%D0%BE%D0%BC%D0%B0.jpg"
-      }
+      },
+      "wiki": "Расстрел царской семьи"
     },
     {
       "id": "e-grazhdanskaya-voyna",
@@ -999,16 +889,12 @@
         "p-vrangel",
         "p-frunze"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%93%D1%80%D0%B0%D0%B6%D0%B4%D0%B0%D0%BD%D1%81%D0%BA%D0%B0%D1%8F_%D0%B2%D0%BE%D0%B9%D0%BD%D0%B0_%D0%B2_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8"
-      ],
       "imageInfo": {
-        "title": "CWRArticleImage",
-        "author": "User:Yanachka",
         "about": "коллаж из фотографий Гражданской войны",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:CWRArticleImage.jpg"
-      }
+      },
+      "wiki": "Гражданская война в России"
     },
     {
       "id": "e-prodrasverstka",
@@ -1024,9 +910,7 @@
       "summary": "Декрет ВЦИК возложил на губернии обязательную сдачу хлеба и фуража по твёрдым ценам; изъятием занимались продотряды и комбеды. Главный элемент политики военного коммунизма и причина крестьянских восстаний.",
       "details": "Продразвёрстка (сокращение от словосочетания продово́льственная развёрстка) — политика обеспечения заготовок продовольствия за счёт обложения крестьян налогом в виде зерновых («хлеб») и других продуктов, проводившаяся в период с 1916 по 1921 год. Начало продразвёрстки было положено Правительством Российской империи в ноябре (декабре) 1916 года и продолжено Временным (в виде «хлебной монополии»), а затем и правительством РСФСР. С введением продразвёрстки в Российской империи сохранялась ранее действовавшая система государственных закупок на свободном рынке. В связи с низким поступлением хлеба по государственным заготовкам и продразвёрстке 25 марта 1917 года Временное правительство ввело «хлебную монополию», предполагавшую передачу всего объёма произведённого хлеба государству за вычетом установленных норм потребления на личные и хозяйственные нужды.",
       "persons": [],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D0%B4%D1%80%D0%B0%D0%B7%D0%B2%D1%91%D1%80%D1%81%D1%82%D0%BA%D0%B0"
-      ]
+      "wiki": "Продразвёрстка"
     },
     {
       "id": "e-pomestnyy-sobor",
@@ -1046,18 +930,14 @@
       "persons": [
         "p-patriarkh-tihon"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BC%D0%B5%D1%81%D1%82%D0%BD%D1%8B%D0%B9_%D1%81%D0%BE%D0%B1%D0%BE%D1%80_%D0%9F%D1%80%D0%B0%D0%B2%D0%BE%D1%81%D0%BB%D0%B0%D0%B2%D0%BD%D0%BE%D0%B9_%D1%80%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B9_%D1%86%D0%B5%D1%80%D0%BA%D0%B2%D0%B8_%281917%E2%80%941918%29"
-      ],
       "image": "images/events/e-pomestnyy-sobor.webp",
       "imageInfo": {
-        "title": "Highest authority of Russian Orthodox Church in 1917",
-        "author": "anonimus",
         "date": "1917",
         "about": "Заседание Поместного собора Русской православной церкви в Соборной палате Московского епархиального дома",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Highest_authority_of_Russian_Orthodox_Church_in_1917.jpg"
-      }
+      },
+      "wiki": "Поместный собор Православной российской церкви (1917—1918)"
     },
     {
       "id": "e-otdelenie-cerkvi-ot-gosudarstva",
@@ -1076,9 +956,7 @@
       "persons": [
         "p-patriarkh-tihon"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D0%BA%D1%80%D0%B5%D1%82_%D0%BE%D0%B1_%D0%BE%D1%82%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B8_%D1%86%D0%B5%D1%80%D0%BA%D0%B2%D0%B8_%D0%BE%D1%82_%D0%B3%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B0_%D0%B8_%D1%88%D0%BA%D0%BE%D0%BB%D1%8B_%D0%BE%D1%82_%D1%86%D0%B5%D1%80%D0%BA%D0%B2%D0%B8"
-      ]
+      "wiki": "Декрет об отделении церкви от государства и школы от церкви"
     },
     {
       "id": "e-kronshtadtskoe-vosstanie",
@@ -1102,18 +980,14 @@
         "p-trotskiy",
         "p-tukhachevskiy"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%BE%D0%BD%D1%88%D1%82%D0%B0%D0%B4%D1%82%D1%81%D0%BA%D0%BE%D0%B5_%D0%B2%D0%BE%D1%81%D1%81%D1%82%D0%B0%D0%BD%D0%B8%D0%B5_%281921%29"
-      ],
       "image": "images/events/e-kronshtadtskoe-vosstanie.webp",
       "imageInfo": {
-        "title": "Kronstadt attack",
         "author": "Неизвестный автор",
-        "date": "после 6 марта 1921date…",
         "about": "Подавление Кронштадтского мятежа (восстания). Красная Армия атакует островную крепость Кронштадт, по льду Финского залива",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Kronstadt_attack.JPG"
-      }
+      },
+      "wiki": "Кронштадтское восстание (1921)"
     },
     {
       "id": "e-tambovskoe-vosstanie",
@@ -1132,18 +1006,14 @@
         "p-antonov",
         "p-tukhachevskiy"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A2%D0%B0%D0%BC%D0%B1%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B5_%D0%B2%D0%BE%D1%81%D1%81%D1%82%D0%B0%D0%BD%D0%B8%D0%B5"
-      ],
       "image": "images/events/e-tambovskoe-vosstanie.webp",
       "imageInfo": {
-        "title": "Tambov Uprising map - RU",
-        "author": "Hellerick",
         "date": "2017",
-        "about": "Иллюстрация к событию «Тамбовское восстание («антоновщина»)».",
+        "about": "Иллюстрация к событию «Тамбовское восстание («антоновщина»)»",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Tambov_Uprising_map_-_RU.png"
-      }
+      },
+      "wiki": "Тамбовское восстание"
     },
     {
       "id": "e-x-sezd-rkpb",
@@ -1165,9 +1035,7 @@
       "persons": [
         "p-lenin"
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/X_%D1%81%D1%8A%D0%B5%D0%B7%D0%B4_%D0%A0%D0%9A%D0%9F%28%D0%B1%29"
-      ]
+      "wiki": "X съезд РКП(б)"
     }
   ],
   "persons": [
@@ -1205,17 +1073,14 @@
         "При нём страна проиграла войну с Японией, пережила революцию 1905 года и вступила в мировую войну.",
         "Отрёкся в марте 1917 года в Пскове; вместе с семьёй погиб в Ипатьевском доме."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D0%B9_II"
-      ],
       "imageInfo": {
-        "title": "Mikola II (cropped)-2",
         "author": "Неизвестный автор",
         "date": "1912",
-        "about": "Изображение: Николай II.",
-        "license": "Public domain",
+        "about": "Изображение: Николай II",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Mikola_II_(cropped)-2.jpg"
-      }
+      },
+      "wiki": "Николай II"
     },
     {
       "id": "p-vitte",
@@ -1256,17 +1121,12 @@
         "Подписал унизительный мир в Портсмуте и получил за это графский титул, который современники прозвали «полусахалинским».",
         "Убедил императора издать Манифест 17 октября 1905 года о свободах и законодательной Думе."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D1%82%D1%82%D0%B5%2C_%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9_%D0%AE%D0%BB%D1%8C%D0%B5%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "SergeiWitte01548v",
-        "author": "Chapiro, St. Petersburg",
-        "date": "между 1880 и 1886date…",
-        "about": "Изображение: Сергей Витте.",
-        "license": "Public domain",
+        "about": "Изображение: Сергей Витте",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:SergeiWitte01548v.jpg"
-      }
+      },
+      "wiki": "Витте, Сергей Юльевич"
     },
     {
       "id": "p-pleve",
@@ -1301,17 +1161,13 @@
         "Считал, что стране нужны не парламент и свобода печати, а порядок и единая и неделимая власть.",
         "Убит бомбой эсера-боевика в июле 1904 года в Санкт-Петербурге."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9F%D0%BB%D0%B5%D0%B2%D0%B5%2C_%D0%92%D1%8F%D1%87%D0%B5%D1%81%D0%BB%D0%B0%D0%B2_%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Pleve",
         "author": "Константин Аба Шапиро",
-        "date": "ранее 1904date…",
         "about": "Вячеслав Константинович Плеве, министр внутренних Российской империи",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Pleve.jpg"
-      }
+      },
+      "wiki": "Плеве, Вячеслав Константинович"
     },
     {
       "id": "p-gapon",
@@ -1339,17 +1195,15 @@
         "Вёл мирное шествие к Зимнему дворцу с петицией о рабочих нуждах 9 января 1905 года.",
         "Уцелев в расстреле, бежал за границу и был позже убит за связи с тайной полицией."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%BF%D0%BE%D0%BD%2C_%D0%93%D0%B5%D0%BE%D1%80%D0%B3%D0%B8%D0%B9_%D0%90%D0%BF%D0%BE%D0%BB%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
         "title": "Батька Гапон",
         "author": "Неизвестный автор",
         "date": "1905",
         "about": "Русский священник, политический деятель Георгий Аполлонович Гапон (1870-1906). Портрет работы неизвестного художника",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%91%D0%B0%D1%82%D1%8C%D0%BA%D0%B0_%D0%93%D0%B0%D0%BF%D0%BE%D0%BD.jpg"
-      }
+      },
+      "wiki": "Гапон, Георгий Аполлонович"
     },
     {
       "id": "p-stolypin",
@@ -1390,16 +1244,13 @@
         "Разрушал общину, давая крестьянам право выходить на отруба и хутора и переселяться за Урал.",
         "Застрелен в Киеве в 1911 году; ему приписывают слова: «Вам нужны великие потрясения — нам нужна великая Россия»."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A1%D1%82%D0%BE%D0%BB%D1%8B%D0%BF%D0%B8%D0%BD%2C_%D0%9F%D1%91%D1%82%D1%80_%D0%90%D1%80%D0%BA%D0%B0%D0%B4%D1%8C%D0%B5%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Pyotr Stolypin LOC 07327",
         "author": "Неизвестный автор",
-        "about": "Изображение: Пётр Столыпин.",
-        "license": "Public domain",
+        "about": "Изображение: Пётр Столыпин",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Pyotr_Stolypin_LOC_07327.jpg"
-      }
+      },
+      "wiki": "Столыпин, Пётр Аркадьевич"
     },
     {
       "id": "p-rasputin",
@@ -1427,17 +1278,14 @@
         "Его влияние на смену министров породило слухи о «тёмных силах» при дворе.",
         "Убит в декабре 1916 года князем Юсуповым и монархистом Пуришкевичем."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D1%81%D0%BF%D1%83%D1%82%D0%B8%D0%BD%2C_%D0%93%D1%80%D0%B8%D0%B3%D0%BE%D1%80%D0%B8%D0%B9_%D0%95%D1%84%D0%B8%D0%BC%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Grigori Rasputin 1916",
         "author": "Неизвестный автор",
         "date": "1916",
-        "about": "Изображение: Григорий Распутин.",
-        "license": "Public domain",
+        "about": "Изображение: Григорий Распутин",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Grigori_Rasputin_1916.jpg"
-      }
+      },
+      "wiki": "Распутин, Григорий Ефимович"
     },
     {
       "id": "p-milyukov",
@@ -1466,16 +1314,12 @@
         "Вошёл в первый состав Временного правительства министром иностранных дел; его нота о войне «до победного конца» спровоцировала демонстрации.",
         "После 1917 года эмигрировал и издавал в Париже газету «Последние новости»."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9C%D0%B8%D0%BB%D1%8E%D0%BA%D0%BE%D0%B2%2C_%D0%9F%D0%B0%D0%B2%D0%B5%D0%BB_%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D0%B5%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Pavel Milyukov 2",
-        "author": "http://photoarchive.spb.ru:9090/www/showObject.do?object=2001342342",
-        "about": "Изображение: Павел Милюков.",
-        "license": "Public domain",
+        "about": "Изображение: Павел Милюков",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Pavel_Milyukov_2.jpg"
-      }
+      },
+      "wiki": "Милюков, Павел Николаевич"
     },
     {
       "id": "p-guchkov",
@@ -1504,17 +1348,13 @@
         "Председательствовал в Государственной думе третьего созыва и поддерживал аграрную реформу премьера.",
         "В составе думской делегации принял отречение императора в марте 1917 года и стал военным министром."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%93%D1%83%D1%87%D0%BA%D0%BE%D0%B2%2C_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Alexander Guchkov",
         "author": "Неизвестный автор",
-        "date": "ранее 1910date…",
         "about": "Гучков, Александр Иванович",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Alexander_Guchkov.jpg"
-      }
+      },
+      "wiki": "Гучков, Александр Иванович"
     },
     {
       "id": "p-brusilov",
@@ -1549,17 +1389,14 @@
         "Временное правительство назначило его верховным главнокомандующим вместо великого князя.",
         "Принял советскую власть и служил инспектором кавалерии Красной Армии."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%91%D1%80%D1%83%D1%81%D0%B8%D0%BB%D0%BE%D0%B2%2C_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B5%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Brusilov Aleksei in 1917",
         "author": "Неизвестный автор",
         "date": "1917",
         "about": "Генерал-адъютант Алексей Алексеевич Брусилов (1853—1926)",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Brusilov_Aleksei_in_1917.jpg"
-      }
+      },
+      "wiki": "Брусилов, Алексей Алексеевич"
     },
     {
       "id": "p-georgiy-lvov",
@@ -1594,17 +1431,13 @@
         "Его кабинет не решил ни земельный, ни военный вопросы и пережил два правительственных кризиса.",
         "Передал пост главе военного ведомства-социалисту в июле 1917 года и уехал на Урал."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9B%D1%8C%D0%B2%D0%BE%D0%B2%2C_%D0%93%D0%B5%D0%BE%D1%80%D0%B3%D0%B8%D0%B9_%D0%95%D0%B2%D0%B3%D0%B5%D0%BD%D1%8C%D0%B5%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Georgy Lvov, 1918",
-        "author": "Wood, Alan",
         "date": "1918",
-        "about": "Изображение: Георгий Львов.",
-        "license": "Public domain",
+        "about": "Изображение: Георгий Львов",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Georgy_Lvov,_1918.jpg"
-      }
+      },
+      "wiki": "Львов, Георгий Евгеньевич"
     },
     {
       "id": "p-kerenskiy",
@@ -1639,17 +1472,14 @@
         "Вошёл в правительство министром юстиции, затем возглавил военное ведомство и организовал июньское наступление.",
         "Возглавил правительство с июля 1917 года и бежал из Зимнего дворца в ночь его падения."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9A%D0%B5%D1%80%D0%B5%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%2C_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%A4%D1%91%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Alexander Kerensky 1917 Crop",
         "author": "Карл Карлович Булла",
         "date": "1917",
         "about": "Председатель Временного правительства Александр Керенский",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Alexander_Kerensky_1917_Crop.jpg"
-      }
+      },
+      "wiki": "Керенский, Александр Фёдорович"
     },
     {
       "id": "p-kornilov",
@@ -1684,17 +1514,15 @@
         "Возглавил Ставку и потребовал ввести военные диктатуры в тылу, что главе правительства расценило как мятеж.",
         "Его поход на Петроград провалился; погиб в апреле 1918 года при штурме Екатеринодара."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D1%80%D0%BD%D0%B8%D0%BB%D0%BE%D0%B2%2C_%D0%9B%D0%B0%D0%B2%D1%80_%D0%93%D0%B5%D0%BE%D1%80%D0%B3%D0%B8%D0%B5%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
         "title": "Генерал-лейтенант Л.Г. Корнилов в должности главнокомандующего войсками Петроградского военного округа",
         "author": "Неизвестный автор",
         "date": "1917",
         "about": "Главнокомандующий войсками Петроградского военного округа генерал-лейтенант Л.Г. Корнилов",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%93%D0%B5%D0%BD%D0%B5%D1%80%D0%B0%D0%BB-%D0%BB%D0%B5%D0%B9%D1%82%D0%B5%D0%BD%D0%B0%D0%BD%D1%82_%D0%9B.%D0%93._%D0%9A%D0%BE%D1%80%D0%BD%D0%B8%D0%BB%D0%BE%D0%B2_%D0%B2_%D0%B4%D0%BE%D0%BB%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D0%B8_%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%BE%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%83%D1%8E%D1%89%D0%B5%D0%B3%D0%BE_%D0%B2%D0%BE%D0%B9%D1%81%D0%BA%D0%B0%D0%BC%D0%B8_%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%B4%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%B2%D0%BE%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_%D0%BE%D0%BA%D1%80%D1%83%D0%B3%D0%B0.jpg"
-      }
+      },
+      "wiki": "Корнилов, Лавр Георгиевич"
     },
     {
       "id": "p-lenin",
@@ -1735,17 +1563,14 @@
         "В апреле 1917 года объявил курс «Никакой поддержки Временному правительству, вся власть Советам!».",
         "Возглавил захват власти в октябре 1917 года и первое советское правительство."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%2C_%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%98%D0%BB%D1%8C%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Vladimir Lenin in July 1920 by Pavel Zhukov",
         "author": "Павел Семёнович Жуков",
         "date": "1920-07",
-        "about": "Изображение: Владимир Ленин.",
-        "license": "Public domain",
+        "about": "Изображение: Владимир Ленин",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Vladimir_Lenin_in_July_1920_by_Pavel_Zhukov.jpg"
-      }
+      },
+      "wiki": "Ленин, Владимир Ильич"
     },
     {
       "id": "p-martov",
@@ -1774,17 +1599,14 @@
         "На II съезде отказался закреплять в уставе узкий состав партии и оказался во главе второго крыла социал-демократов.",
         "Возглавлял умеренное крыло РСДРП; противился большевистской диктатуре и умер в эмиграции."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9C%D0%B0%D1%80%D1%82%D0%BE%D0%B2%2C_%D0%AE%D0%BB%D0%B8%D0%B9_%D0%9E%D1%81%D0%B8%D0%BF%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "YuliMartov1917PorSteinberg",
         "author": "Яков Владимирович Штейнберг",
         "date": "1917",
-        "about": "Изображение: Юлий Мартов.",
-        "license": "Public domain",
+        "about": "Изображение: Юлий Мартов",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:YuliMartov1917PorSteinberg.jpeg"
-      }
+      },
+      "wiki": "Мартов, Юлий Осипович"
     },
     {
       "id": "p-trotskiy",
@@ -1822,17 +1644,14 @@
         "Осенью 1917 года возглавил Петроградский совет и Военно-революционный комитет, взявший власть под видом обороны.",
         "Создал Красную Армию и вёл переговоры в Бресте по формуле «ни мира, ни войны»."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A2%D1%80%D0%BE%D1%86%D0%BA%D0%B8%D0%B9%2C_%D0%9B%D0%B5%D0%B2_%D0%94%D0%B0%D0%B2%D0%B8%D0%B4%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
         "title": "Лев Давидович Троцкий",
         "author": "Неизвестный автор",
-        "date": "early 1920s",
-        "about": "Изображение: Лев Троцкий.",
-        "license": "Public domain",
+        "about": "Изображение: Лев Троцкий",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%9B%D0%B5%D0%B2_%D0%94%D0%B0%D0%B2%D0%B8%D0%B4%D0%BE%D0%B2%D0%B8%D1%87_%D0%A2%D1%80%D0%BE%D1%86%D0%BA%D0%B8%D0%B9.jpg"
-      }
+      },
+      "wiki": "Троцкий, Лев Давидович"
     },
     {
       "id": "p-sverdlov",
@@ -1867,17 +1686,15 @@
         "После Октября стал первым лицом Советского государства по должности председателя ВЦИК.",
         "Именно он объявил Учредительное собрание распущенным в январе 1918 года; умер в 1919-м."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A1%D0%B2%D0%B5%D1%80%D0%B4%D0%BB%D0%BE%D0%B2%2C_%D0%AF%D0%BA%D0%BE%D0%B2_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
         "title": "Свердлов Яков Михайлович",
         "author": "Пётр Адольфович Оцуп (1883-1963)",
         "date": "1918",
         "about": "Председатель ВЦИК Яков Свердлов в рабочем кабинете. 1919 г",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%A1%D0%B2%D0%B5%D1%80%D0%B4%D0%BB%D0%BE%D0%B2_%D0%AF%D0%BA%D0%BE%D0%B2_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D0%B8%D1%87.jpg"
-      }
+      },
+      "wiki": "Свердлов, Яков Михайлович"
     },
     {
       "id": "p-dzerzhinskiy",
@@ -1914,17 +1731,13 @@
         "Его ведомство проводило красный террор и разгромило эсеровское подполье.",
         "Умер на заседании в 1926 году; по стране носили его имя заводы, города и крейсер."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%94%D0%B7%D0%B5%D1%80%D0%B6%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%2C_%D0%A4%D0%B5%D0%BB%D0%B8%D0%BA%D1%81_%D0%AD%D0%B4%D0%BC%D1%83%D0%BD%D0%B4%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Feliks Dzierżyński",
-        "author": "M.S. Nappelbaum",
         "date": "1919",
         "about": "1918 – 1919 гг. Ф.Э. Дзержинский. РГАКФД. Ед. хр. Д-2354. Фото",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Feliks_Dzier%C5%BCy%C5%84ski.jpg"
-      }
+      },
+      "wiki": "Дзержинский, Феликс Эдмундович"
     },
     {
       "id": "p-kolchak",
@@ -1960,17 +1773,14 @@
         "Принял титул Верховного правителя страны, но проиграл красным зимой 1919–1920 годов.",
         "Расстрелян в Иркутске в феврале 1920 года с санкции реввоенсовета."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BB%D1%87%D0%B0%D0%BA%2C_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D1%8C%D0%B5%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Kolchak",
         "author": "Неизвестный автор",
         "date": "1919",
         "about": "Верховный правитель адмирал Колчак",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Kolchak.jpg"
-      }
+      },
+      "wiki": "Колчак, Александр Васильевич"
     },
     {
       "id": "p-denikin",
@@ -2006,17 +1816,13 @@
         "Летом 1919 года начал поход на столицу, дошёл до Орла, но был отбит и отступил к Новороссийску.",
         "Эмигрировал и написал «Очерки русской смуты»; отказался сотрудничать с нацистами."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D0%BD%D0%B8%D0%BA%D0%B8%D0%BD%2C_%D0%90%D0%BD%D1%82%D0%BE%D0%BD_%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Denikin1",
         "author": "Неизвестный автор",
-        "date": "между 1918 и 1919date…",
         "about": "Генерал Антон Иванович Деникин",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Denikin1.PNG"
-      }
+      },
+      "wiki": "Деникин, Антон Иванович"
     },
     {
       "id": "p-yudenich",
@@ -2044,17 +1850,14 @@
         "Осенью 1919 года дважды подходил к столице революции на дистанцию артиллерийского выстрела.",
         "Отступил в Эстонию, где его части разоружили; умер во Франции."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%AE%D0%B4%D0%B5%D0%BD%D0%B8%D1%87%2C_%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D0%B9_%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D0%B5%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Nikolai N. Yudenich",
         "author": "Сканирование: Владимир Васильев",
         "date": "1916",
-        "about": "Изображение: Николай Юденич.",
-        "license": "Public domain",
+        "about": "Изображение: Николай Юденич",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Nikolai_N._Yudenich.jpg"
-      }
+      },
+      "wiki": "Юденич, Николай Николаевич"
     },
     {
       "id": "p-vrangel",
@@ -2089,16 +1892,13 @@
         "Стал последним командующим белых в Крыму, выпустив «Правила о деревнях» и реформируя тыл.",
         "После эвакуации из Крыма в ноябре 1920 года создал в эмиграции Русский общевоинский союз."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%92%D1%80%D0%B0%D0%BD%D0%B3%D0%B5%D0%BB%D1%8C%2C_%D0%9F%D1%91%D1%82%D1%80_%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D0%B5%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Pyotr Wrangel, portrait medium",
         "author": "Неизвестный автор",
-        "about": "Изображение: Пётр Врангель.",
-        "license": "Public domain",
+        "about": "Изображение: Пётр Врангель",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Pyotr_Wrangel,_portrait_medium.jpg"
-      }
+      },
+      "wiki": "Врангель, Пётр Николаевич"
     },
     {
       "id": "p-frunze",
@@ -2134,18 +1934,14 @@
         "В 1920 году провёл штурм перекопских укреплений, закончив борьбу на юге.",
         "Возглавил военное ведомство и провёл военную реформу; умер в 1925 году после операции."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A4%D1%80%D1%83%D0%BD%D0%B7%D0%B5%2C_%D0%9C%D0%B8%D1%85%D0%B0%D0%B8%D0%BB_%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D1%8C%D0%B5%D0%B2%D0%B8%D1%87"
-      ],
       "image": "images/persons/p-frunze.webp",
       "imageInfo": {
-        "title": "Mikhail Frunze",
-        "author": "Frunze II",
         "date": "1923",
         "about": "Революционный деятель 1905-1918, был губернатором Иваново-Вознесенской Области",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Mikhail_Frunze.jpg"
-      }
+      },
+      "wiki": "Фрунзе, Михаил Васильевич"
     },
     {
       "id": "p-makhno",
@@ -2174,17 +1970,15 @@
         "Его тачаночные рейды делали родное село центром «вольного» края.",
         "После разгрома в 1921 году эмигрировал и умер в Париже в 1934 году."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9C%D0%B0%D1%85%D0%BD%D0%BE%2C_%D0%9D%D0%B5%D1%81%D1%82%D0%BE%D1%80_%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
         "title": "1921. Нестор Махно в лагере для перемещенных лиц в Румынии",
         "author": "Неизвестный автор",
         "date": "Снято: 1921",
         "about": "Нестор Иванович Махно (1888-1934) в лагере для перемещенных лиц в Румынии",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:1921._%D0%9D%D0%B5%D1%81%D1%82%D0%BE%D1%80_%D0%9C%D0%B0%D1%85%D0%BD%D0%BE_%D0%B2_%D0%BB%D0%B0%D0%B3%D0%B5%D1%80%D0%B5_%D0%B4%D0%BB%D1%8F_%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D0%BB%D0%B8%D1%86_%D0%B2_%D0%A0%D1%83%D0%BC%D1%8B%D0%BD%D0%B8%D0%B8.jpg"
-      }
+      },
+      "wiki": "Махно, Нестор Иванович"
     },
     {
       "id": "p-chernov",
@@ -2213,17 +2007,14 @@
         "Входил во Временное правительство министром земледелия, готовя земельные законы.",
         "Председательствовал на единственном заседании Учредительного собрания в январе 1918 года."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A7%D0%B5%D1%80%D0%BD%D0%BE%D0%B2%2C_%D0%92%D0%B8%D0%BA%D1%82%D0%BE%D1%80_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Portrait of Minister VM Chernov Trim Edit",
         "author": "Неизвестный автор",
         "date": "1917",
-        "about": "Изображение: Виктор Чернов.",
-        "license": "Public domain",
+        "about": "Изображение: Виктор Чернов",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_Minister_VM_Chernov_Trim_Edit.jpg"
-      }
+      },
+      "wiki": "Чернов, Виктор Михайлович"
     },
     {
       "id": "p-patriarkh-tihon",
@@ -2259,17 +2050,13 @@
         "Возглавил церковь после восстановления её высшего титула, которого не было со времён Петра I.",
         "В январе 1918 года осудил гонения на веру и захват власти; умер в 1925 году."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A2%D0%B8%D1%85%D0%BE%D0%BD_%28%D0%BF%D0%B0%D1%82%D1%80%D0%B8%D0%B0%D1%80%D1%85_%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9%29"
-      ],
       "imageInfo": {
-        "title": "Tikhon of Moscow",
-        "author": "Michael Goltz",
         "date": "1918",
         "about": "Патриарх Московский и всея России Тихон. Официальный портрет",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Tikhon_of_Moscow.jpg"
-      }
+      },
+      "wiki": "Тихон (патриарх Московский)"
     },
     {
       "id": "p-pavlov",
@@ -2297,18 +2084,15 @@
         "Доказал существование условных рефлексов и создал учение о высшей нервной деятельности.",
         "Получил Нобелевскую премию в 1904 году; с его именем связано учение о сигнальных системах."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B2%2C_%D0%98%D0%B2%D0%B0%D0%BD_%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "image": "images/persons/p-pavlov.webp",
       "imageInfo": {
-        "title": "Ivan Pavlov NLM3",
         "author": "Неизвестный автор",
         "date": "Неизвестная дата",
-        "about": "Изображение: Иван Павлов.",
-        "license": "Public domain",
+        "about": "Изображение: Иван Павлов",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Ivan_Pavlov_NLM3.jpg"
-      }
+      },
+      "wiki": "Павлов, Иван Петрович"
     },
     {
       "id": "p-zubatov",
@@ -2336,17 +2120,14 @@
         "Его эксперименты называют «полицейским социализмом», а ставленник из его собрания возглавил шествие 9 января 1905 года.",
         "Уволен в 1903 году после поддержки стачки в Одессе; свёл счёты с жизнью при известии о крахе империи."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%97%D1%83%D0%B1%D0%B0%D1%82%D0%BE%D0%B2%2C_%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9_%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D1%8C%D0%B5%D0%B2%D0%B8%D1%87"
-      ],
       "imageInfo": {
-        "title": "Sergey Zubatov",
         "author": "Фотография Департамента полиции",
         "date": "1888",
         "about": "Деятель российского политического сыска Сергей Васильевич Зубатов (1864-1917)",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Sergey_Zubatov.jpg"
-      }
+      },
+      "wiki": "Зубатов, Сергей Васильевич"
     },
     {
       "id": "p-antonov",
@@ -2373,18 +2154,14 @@
         "Возглавил массовое крестьянское движение против продразвёрстки в чернозёмной губернии.",
         "Его армия разгромлена летом 1921 года, сам погиб в перестрелке в 1922-м; восстание назвали по его фамилии."
       ],
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%90%D0%BD%D1%82%D0%BE%D0%BD%D0%BE%D0%B2%2C_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%A1%D1%82%D0%B5%D0%BF%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "image": "images/persons/p-antonov.webp",
       "imageInfo": {
-        "title": "А. С. Антонов (из рaзыскного циркуляра)",
         "author": "Неизвестный автор",
-        "date": "ранее 20 февраля 1909date…",
         "about": "А. С. Антонов (из рaзыскного циркуляра)",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%90._%D0%A1._%D0%90%D0%BD%D1%82%D0%BE%D0%BD%D0%BE%D0%B2_(%D0%B8%D0%B7_%D1%80a%D0%B7%D1%8B%D1%81%D0%BA%D0%BD%D0%BE%D0%B3%D0%BE_%D1%86%D0%B8%D1%80%D0%BA%D1%83%D0%BB%D1%8F%D1%80%D0%B0).png"
-      }
+      },
+      "wiki": "Антонов, Александр Степанович"
     }
   ],
   "culture": [
@@ -2406,16 +2183,12 @@
       "importance": 2,
       "image": "images/culture/c-metropol.webp",
       "imageInfo": {
-        "title": "Metropol Facade",
-        "author": "Ivsergal",
         "date": "2021",
         "about": "Вид на отель \"Метрополь со стороны Большого театра",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Metropol_Facade.jpg"
       },
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9C%D0%B5%D1%82%D1%80%D0%BE%D0%BF%D0%BE%D0%BB%D1%8C_%28%D0%B3%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B8%D1%86%D0%B0%2C_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%29"
-      ]
+      "wiki": "Метрополь (гостиница, Москва)"
     },
     {
       "id": "c-yaroslavskiy-vokzal",
@@ -2435,16 +2208,12 @@
       "importance": 2,
       "image": "images/culture/c-yaroslavskiy-vokzal.webp",
       "imageInfo": {
-        "title": "Yaroslavsky Train Terminal, Moscow, Russia - 2013-05-19 - 90650652",
-        "author": "Sergey Ashmarin",
         "date": "2013",
-        "about": "Изображение: Ярославский вокзал.",
+        "about": "Изображение: Ярославский вокзал",
         "license": "CC BY-SA 3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Yaroslavsky_Train_Terminal,_Moscow,_Russia_-_2013-05-19_-_90650652.jpg"
       },
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%AF%D1%80%D0%BE%D1%81%D0%BB%D0%B0%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%B2%D0%BE%D0%BA%D0%B7%D0%B0%D0%BB"
-      ]
+      "wiki": "Ярославский вокзал"
     },
     {
       "id": "c-spas-na-krovi",
@@ -2464,15 +2233,12 @@
       "image": "images/culture/c-spas-na-krovi.webp",
       "imageInfo": {
         "title": "Собор Воскресения Христова 1",
-        "author": "AndreyWi",
-        "date": "Снято: 2 октября 2011,",
+        "date": "Снято: 2 октября 2011",
         "about": "Собор Воскресения Христова («Спас-на-крови») (Санкт-Петербург, канала Грибоедова наб., 2-а) на месте убийства членами террористической революционной организации \"Народная воля\" российского императора Александра II Освободителя на…",
         "license": "CC BY-SA 3.0",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%A1%D0%BE%D0%B1%D0%BE%D1%80_%D0%92%D0%BE%D1%81%D0%BA%D1%80%D0%B5%D1%81%D0%B5%D0%BD%D0%B8%D1%8F_%D0%A5%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D0%B0_1.jpg"
       },
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B0%D1%81_%D0%BD%D0%B0_%D0%9A%D1%80%D0%BE%D0%B2%D0%B8"
-      ]
+      "wiki": "Спас на Крови"
     },
     {
       "id": "c-chernyy-kvadrat",
@@ -2490,18 +2256,15 @@
       ],
       "importance": 3,
       "authorName": "Казимир Малевич",
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A7%D1%91%D1%80%D0%BD%D1%8B%D0%B9_%D0%BA%D0%B2%D0%B0%D0%B4%D1%80%D0%B0%D1%82"
-      ],
       "image": "images/culture/c-chernyy-kvadrat.webp",
       "imageInfo": {
-        "title": "английский: Black Square «Чёрный квадрат»label QS:Len,\"Black Square\"label QS:Lde,\"Schwarzes Quadrat\"",
         "author": "Казимир Малевич",
         "date": "1915",
-        "about": "Изображение: «Чёрный квадрат» К. С. Малевича.",
-        "license": "Public domain",
+        "about": "Изображение: «Чёрный квадрат» К. С. Малевича",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%A7%D1%91%D1%80%D0%BD%D1%8B%D0%B9_%D1%81%D1%83%D0%BF%D1%80%D0%B5%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D0%BA%D0%B2%D0%B0%D0%B4%D1%80%D0%B0%D1%82._1915._%D0%93%D0%A2%D0%93.png"
-      }
+      },
+      "wiki": "Чёрный квадрат"
     },
     {
       "id": "c-na-dne",
@@ -2521,16 +2284,13 @@
       "authorName": "Максим Горький",
       "image": "images/culture/c-na-dne.webp",
       "imageInfo": {
-        "title": "Maxim Gorky 1927 (cropped)",
         "author": "Неизвестный автор",
         "date": "1927",
-        "about": "Photo of Maxim Gorky published in Максим Горький в портретах и фотографиях. Огонёк, 1927. The photographer is not credited",
-        "license": "Public domain",
+        "about": "Изображение: «На дне» М. Горького.",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Maxim_Gorky_1927_(cropped).png"
       },
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%93%D0%BE%D1%80%D1%8C%D0%BA%D0%B8%D0%B9%2C_%D0%9C%D0%B0%D0%BA%D1%81%D0%B8%D0%BC"
-      ]
+      "wiki": "Горький, Максим"
     },
     {
       "id": "c-vishnevyy-sad",
@@ -2554,12 +2314,10 @@
         "author": "Средин, Леонид Валентинович",
         "date": "1904",
         "about": "А. П. Чехов, Ялта. 18 апреля 1904 года. Последняя фотография А. П. Чехова, сделанная Л. Срединым",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%90._%D0%9F._%D0%A7%D0%B5%D1%85%D0%BE%D0%B2,_%D0%AF%D0%BB%D1%82%D0%B0.jpg"
       },
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A7%D0%B5%D1%85%D0%BE%D0%B2%2C_%D0%90%D0%BD%D1%82%D0%BE%D0%BD_%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      "wiki": "Чехов, Антон Павлович"
     },
     {
       "id": "c-dvenadtsat",
@@ -2579,16 +2337,12 @@
       "authorName": "Александр Блок",
       "image": "images/culture/c-dvenadtsat.webp",
       "imageInfo": {
-        "title": "Alexander Blok",
         "author": "Неизвестный автор",
-        "date": "Photo 1903 (The Detail of the Double…",
-        "about": "Изображение: Поэма «Двенадцать» А. А. Блока.",
-        "license": "Public domain",
+        "about": "Изображение: Поэма «Двенадцать» А. А. Блока",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Alexander_Blok.jpeg"
       },
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%91%D0%BB%D0%BE%D0%BA%2C_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      "wiki": "Блок, Александр Александрович"
     },
     {
       "id": "c-zhar-ptitsa",
@@ -2608,16 +2362,11 @@
       "authorName": "Игорь Стравинский",
       "image": "images/culture/c-zhar-ptitsa.webp",
       "imageInfo": {
-        "title": "Igor Stravinsky LOC 32392u",
-        "author": "George Grantham Bain Collection",
-        "date": "Not dated. From age and fashion,…",
-        "about": "Изображение: Балет «Жар-птица» И. Ф. Стравинского.",
-        "license": "Public domain",
+        "about": "Изображение: Балет «Жар-птица» И. Ф. Стравинского",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Igor_Stravinsky_LOC_32392u.jpg"
       },
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A1%D1%82%D1%80%D0%B0%D0%B2%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%2C_%D0%98%D0%B3%D0%BE%D1%80%D1%8C_%D0%A4%D1%91%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      "wiki": "Стравинский, Игорь Фёдорович"
     },
     {
       "id": "c-russkie-sezony",
@@ -2671,16 +2420,13 @@
       "importance": 2,
       "image": "images/culture/c-nobelevskaya-premiya-pavlova.webp",
       "imageInfo": {
-        "title": "Ivan Pavlov NLM3",
         "author": "Неизвестный автор",
         "date": "Неизвестная дата",
-        "about": "Изображение: Нобелевская премия И. П. Павлова.",
-        "license": "Public domain",
+        "about": "Изображение: Нобелевская премия И. П. Павлова",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Ivan_Pavlov_NLM3.jpg"
       },
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9F%D0%B0%D0%B2%D0%BB%D0%BE%D0%B2%2C_%D0%98%D0%B2%D0%B0%D0%BD_%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      "wiki": "Павлов, Иван Петрович"
     },
     {
       "id": "c-izobretenie-radio",
@@ -2698,18 +2444,14 @@
       ],
       "importance": 2,
       "authorName": "Александр Попов",
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BF%D0%BE%D0%B2%2C_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%A1%D1%82%D0%B5%D0%BF%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87"
-      ],
       "image": "images/culture/c-izobretenie-radio.webp",
       "imageInfo": {
-        "title": "Alexander Stepanovich Popov",
         "author": "Неизвестный автор",
-        "date": "This photoimage was taken before 1906,…",
         "about": "Попов, Александр Степанович",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Alexander_Stepanovich_Popov.jpg"
-      }
+      },
+      "wiki": "Попов, Александр Степанович"
     },
     {
       "id": "c-ciolkovskiy-1903",
@@ -2733,12 +2475,10 @@
         "author": "Неизвестный автор",
         "date": "1924",
         "about": "Константин Эдуардович Циолковский (1857—1935). Портрет. Изображение ниже колен, голова - анфас. Сидит на скамейке с тростью в правой руке. В сером в широкую полоску пиджаке, тёмных брюках и накинутой на плечи чёрной крылатке. В очках. На…",
-        "license": "Public domain",
+        "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD_%D0%A6%D0%B8%D0%BE%D0%BB%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9.jpg"
       },
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A6%D0%B8%D0%BE%D0%BB%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9%2C_%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD_%D0%AD%D0%B4%D1%83%D0%B0%D1%80%D0%B4%D0%BE%D0%B2%D0%B8%D1%87"
-      ]
+      "wiki": "Циолковский, Константин Эдуардович"
     }
   ],
   "terms": [
@@ -2752,10 +2492,7 @@
       "related": [
         "t-monopoliya"
       ],
-      "importance": 2,
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%98%D0%BC%D0%BF%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%BC"
-      ]
+      "importance": 2
     },
     {
       "id": "t-monopoliya",
@@ -2779,10 +2516,7 @@
       "related": [
         "e-treteiyunskiy-perevorot"
       ],
-      "importance": 2,
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A2%D1%80%D0%B5%D1%82%D1%8C%D0%B5%D0%B8%D1%8E%D0%BD%D1%8C%D1%81%D0%BA%D0%B8%D0%B9_%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D1%80%D0%BE%D1%82"
-      ]
+      "importance": 2
     },
     {
       "id": "t-dvoevlastie",
@@ -2834,10 +2568,7 @@
         "p-martov",
         "e-ii-sezd-rsdrp"
       ],
-      "importance": 2,
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9C%D0%B5%D0%BD%D1%8C%D1%88%D0%B5%D0%B2%D0%B8%D0%BA%D0%B8"
-      ]
+      "importance": 2
     },
     {
       "id": "t-esery",
@@ -2887,10 +2618,7 @@
         "p-dzerzhinskiy",
         "t-vchk"
       ],
-      "importance": 2,
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D1%8B%D0%B9_%D1%82%D0%B5%D1%80%D1%80%D0%BE%D1%80"
-      ]
+      "importance": 2
     },
     {
       "id": "t-vchk",
@@ -2928,10 +2656,7 @@
         "e-x-sezd-rkpb",
         "t-prodnavlog"
       ],
-      "importance": 3,
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9D%D0%BE%D0%B2%D0%B0%D1%8F_%D1%8D%D0%BA%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F_%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0"
-      ]
+      "importance": 3
     },
     {
       "id": "t-prodnavlog",
@@ -2943,10 +2668,7 @@
       "related": [
         "t-nep"
       ],
-      "importance": 2,
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D0%B4%D0%BD%D0%B0%D0%BB%D0%BE%D0%B3"
-      ]
+      "importance": 2
     },
     {
       "id": "t-kombedy",
@@ -2958,10 +2680,7 @@
       "related": [
         "e-prodrasverstka"
       ],
-      "importance": 1,
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BC%D0%B1%D0%B5%D0%B4"
-      ]
+      "importance": 1
     },
     {
       "id": "t-rkka",
@@ -2974,10 +2693,7 @@
         "p-trotskiy",
         "e-grazhdanskaya-voyna"
       ],
-      "importance": 2,
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B5-%D0%BA%D1%80%D0%B5%D1%81%D1%82%D1%8C%D1%8F%D0%BD%D1%81%D0%BA%D0%B0%D1%8F_%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%B0%D1%8F_%D0%B0%D1%80%D0%BC%D0%B8%D1%8F"
-      ]
+      "importance": 2
     },
     {
       "id": "t-antanta",
@@ -3001,11 +2717,7 @@
       "related": [
         "e-agrarnaya-reforma-stolypina"
       ],
-      "importance": 2,
-      "refs": [
-        "https://ru.wikipedia.org/wiki/%D0%9E%D1%82%D1%80%D1%83%D0%B1",
-        "https://ru.wikipedia.org/wiki/%D0%A5%D1%83%D1%82%D0%BE%D1%80"
-      ]
+      "importance": 2
     },
     {
       "id": "t-zubatovshchina",

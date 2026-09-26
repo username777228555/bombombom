@@ -1,0 +1,475 @@
+{
+  "culture": [
+    {
+      "id": "c-opera-ruslan-i-lyudmila",
+      "title": "Опера «Руслан и Людмила»",
+      "kind": "music",
+      "period": "c19",
+      "year": 1842,
+      "authorName": "Михаил Глинка",
+      "summary": "Вторая опера Глинки по поэме Пушкина: сказочный эпос с восточными мотивами, одна из основ русской оперной школы.",
+      "features": [
+        "по поэме А. С. Пушкина",
+        "премьера в Петербурге в 1842 году",
+        "знаменитая стремительная увертюра"
+      ],
+      "importance": 2,
+      "wiki": "Руслан и Людмила (опера)",
+      "image": "images/culture/c-opera-ruslan-i-lyudmila.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "date": "1885",
+        "about": "Опера М. И. Глинки \"Руслан и Людмила\". Обложка издания Гутхейля, 1885",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Ruslan_i_Lyudmila_(Gutheil).jpg"
+      }
+    },
+    {
+      "id": "c-opera-boris-godunov",
+      "title": "Опера «Борис Годунов»",
+      "kind": "music",
+      "period": "c19",
+      "year": 1874,
+      "authorName": "Модест Мусоргский",
+      "summary": "Народная музыкальная драма по трагедии Пушкина о Смутном времени: главный герой в ней не только царь, но и народ.",
+      "features": [
+        "по трагедии А. С. Пушкина",
+        "автор — участник «Могучей кучки»",
+        "сцена коронации с колокольным звоном"
+      ],
+      "importance": 3,
+      "wiki": "Борис Годунов (опера)",
+      "image": "images/culture/c-opera-boris-godunov.webp",
+      "imageInfo": {
+        "author": "Головин, Александр Яковлевич",
+        "date": "1912",
+        "about": "Изображение: Опера «Борис Годунов».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Chaliapin_Godunov_1912.jpg"
+      }
+    },
+    {
+      "id": "c-balet-lebedinoe-ozero",
+      "title": "Балет «Лебединое озеро»",
+      "kind": "music",
+      "period": "c19",
+      "year": 1877,
+      "authorName": "Пётр Чайковский",
+      "summary": "Первый балет Чайковского, поставленный в Большом театре в 1877 году; в постановке М. Петипа и Л. Иванова 1895 года стал символом русского балета.",
+      "features": [
+        "Одетта и Одиллия",
+        "Большой театр, 1877",
+        "хореография Петипа и Иванова (1895)"
+      ],
+      "importance": 3,
+      "wiki": "Лебединое озеро",
+      "image": "images/culture/c-balet-lebedinoe-ozero.webp",
+      "imageInfo": {
+        "date": "1877",
+        "about": "Изображение: Балет «Лебединое озеро».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Swanlakedecor.jpg"
+      }
+    },
+    {
+      "id": "c-opera-knyaz-igor",
+      "title": "Опера «Князь Игорь»",
+      "kind": "music",
+      "period": "c19",
+      "year": 1890,
+      "authorName": "Александр Бородин",
+      "summary": "Опера по «Слову о полку Игореве», завершённая после смерти Бородина Римским-Корсаковым и Глазуновым; «Половецкие пляски» знамениты на весь мир.",
+      "features": [
+        "по «Слову о полку Игореве»",
+        "«Половецкие пляски»",
+        "дописана Римским-Корсаковым и Глазуновым"
+      ],
+      "importance": 2,
+      "wiki": "Князь Игорь (опера)",
+      "image": "images/culture/c-opera-knyaz-igor.webp",
+      "imageInfo": {
+        "date": "Снято: 1 июля 1967",
+        "about": "«Сцена из оперы \"Князь Игорь\"». Сцена из 2-го акта оперы А.П. Бородина \"Князь Игорь\". Художник-постановщик Ф. Ф. Федоровский. Государственный академический Большой театр Союза ССР (ныне - России). Россия, Москва",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:RIAN_archive_855177_Scene_Prince_Igor_opera.jpg"
+      }
+    },
+    {
+      "id": "c-opera-sadko",
+      "title": "Опера «Садко»",
+      "kind": "music",
+      "period": "revolution",
+      "year": 1898,
+      "authorName": "Николай Римский-Корсаков",
+      "summary": "Опера-былина о новгородском гусляре Садко — вершина сказочно-эпического стиля Римского-Корсакова.",
+      "features": [
+        "новгородская былина",
+        "«Песня индийского гостя»",
+        "премьера в Частной опере Мамонтова (1898)"
+      ],
+      "importance": 1,
+      "wiki": "Садко (опера)",
+      "image": "images/culture/c-opera-sadko.webp",
+      "imageInfo": {
+        "date": "21 ноября 2007 (дата первоначальной…",
+        "about": "ru:Шаляпин, Фёдор Иванович (1873-1938). Варяжский гость, опера \"Садко\" Римского-Корсакова, Русская частная опера, Москва, 1898",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Chaliapin_F._(%D0%A8%D0%B0%D0%BB%D1%8F%D0%BF%D0%B8%D0%BD_%D0%A4._%D0%98.)_1898_as_varyag_in_Sadko.jpg"
+      }
+    },
+    {
+      "id": "c-gore-ot-uma",
+      "title": "Комедия «Горе от ума»",
+      "kind": "literature",
+      "period": "c19",
+      "year": 1824,
+      "authorName": "Александр Грибоедов",
+      "summary": "Комедия в стихах о столкновении Чацкого с фамусовским обществом; разошлась в рукописных списках задолго до разрешения к печати.",
+      "features": [
+        "Чацкий, Фамусов, Молчалин",
+        "распространялась в рукописных списках",
+        "многие строки стали пословицами"
+      ],
+      "importance": 3,
+      "wiki": "Горе от ума",
+      "image": "images/culture/c-gore-ot-uma.webp",
+      "imageInfo": {
+        "title": "Кардовский, Горе от ума 7",
+        "author": "Дмитрий Николаевич Кардовский",
+        "date": "1912",
+        "about": "Иллюстрация к «Горю от ума»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%B0%D1%80%D0%B4%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9,_%D0%93%D0%BE%D1%80%D0%B5_%D0%BE%D1%82_%D1%83%D0%BC%D0%B0_7.jpg"
+      }
+    },
+    {
+      "id": "c-revizor",
+      "title": "Комедия «Ревизор»",
+      "kind": "literature",
+      "period": "c19",
+      "year": 1836,
+      "authorName": "Николай Гоголь",
+      "summary": "Комедия о чиновниках уездного города, принявших проходимца Хлестакова за ревизора; поставлена в 1836 году с одобрения Николая I.",
+      "features": [
+        "Хлестаков и городничий",
+        "немая сцена в финале",
+        "«Всем досталось, а мне — более всех» (приписывается Николаю I)"
+      ],
+      "importance": 3,
+      "wiki": "Ревизор (комедия)",
+      "image": "images/culture/c-revizor.webp",
+      "imageInfo": {
+        "title": "Ревизор (Николай Гоголь) первое издание",
+        "author": "Типография А.Плюшара",
+        "date": "1836",
+        "about": "Обложка первого издания «Ревизора» Н. В. Гоголя (1836)",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%A0%D0%B5%D0%B2%D0%B8%D0%B7%D0%BE%D1%80_(%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D0%B9_%D0%93%D0%BE%D0%B3%D0%BE%D0%BB%D1%8C)_%D0%BF%D0%B5%D1%80%D0%B2%D0%BE%D0%B5_%D0%B8%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5.jpg"
+      }
+    },
+    {
+      "id": "c-geroy-nashego-vremeni",
+      "title": "Роман «Герой нашего времени»",
+      "kind": "literature",
+      "period": "c19",
+      "year": 1840,
+      "authorName": "Михаил Лермонтов",
+      "summary": "Первый русский психологический роман в прозе: история Печорина, «лишнего человека» николаевской эпохи.",
+      "features": [
+        "Печорин",
+        "повести «Бэла», «Тамань», «Княжна Мери»",
+        "Кавказ"
+      ],
+      "importance": 2,
+      "wiki": "Герой нашего времени",
+      "image": "images/culture/c-geroy-nashego-vremeni.webp",
+      "imageInfo": {
+        "date": "1840",
+        "about": "Титульная страница первого издания романа \"Герой нашего времни\", 1840",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Geroy_nashego_vremeni.png"
+      }
+    },
+    {
+      "id": "c-voyna-i-mir",
+      "title": "Роман-эпопея «Война и мир»",
+      "kind": "literature",
+      "period": "c19",
+      "year": 1863,
+      "endYear": 1869,
+      "authorName": "Лев Толстой",
+      "summary": "Роман-эпопея о русском обществе в эпоху наполеоновских войн и Отечественной войны 1812 года.",
+      "features": [
+        "Болконские, Ростовы, Безуховы",
+        "Бородинское сражение",
+        "философия истории Толстого"
+      ],
+      "importance": 3,
+      "wiki": "Война и мир",
+      "image": "images/culture/c-voyna-i-mir.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "about": "Изображение: Роман-эпопея «Война и мир».",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:T25-011.jpg"
+      }
+    },
+    {
+      "id": "c-prestuplenie-i-nakazanie",
+      "title": "Роман «Преступление и наказание»",
+      "kind": "literature",
+      "period": "c19",
+      "year": 1866,
+      "authorName": "Фёдор Достоевский",
+      "summary": "Психологический роман о студенте Раскольникове и его теории о «право имеющих».",
+      "features": [
+        "Раскольников и Соня Мармеладова",
+        "Петербург",
+        "журнал «Русский вестник», 1866"
+      ],
+      "importance": 2,
+      "wiki": "Преступление и наказание",
+      "image": "images/culture/c-prestuplenie-i-nakazanie.webp",
+      "imageInfo": {
+        "author": "Журнал \"Русский вестник\", 1866",
+        "date": "1866",
+        "about": "Журнал \"Русский вестник\", 1866, № 1. Первая публикация романа Ф. М. Достоевского \"Преступление и наказание\"",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Russian_Gazette_1866.jpg"
+      }
+    },
+    {
+      "id": "c-pamyatnik-mininu-i-pozharskomu",
+      "title": "Памятник Минину и Пожарскому",
+      "kind": "sculpture",
+      "period": "c19",
+      "year": 1818,
+      "authorName": "Иван Мартос",
+      "summary": "Первый скульптурный памятник Москвы, открыт на Красной площади в 1818 году на народные пожертвования в память о героях 1612 года.",
+      "features": [
+        "надпись «Гражданину Минину и князю Пожарскому благодарная Россия»",
+        "Красная площадь",
+        "классицизм"
+      ],
+      "importance": 3,
+      "wiki": "Памятник Минину и Пожарскому (Москва)",
+      "image": "images/culture/c-pamyatnik-mininu-i-pozharskomu.webp",
+      "imageInfo": {
+        "author": "Юрий Д.К",
+        "date": "Снято: 23 мая 2026",
+        "about": "Москва. Барельеф памятника Минину и Пожарскому",
+        "license": "CC BY 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Moscow_-_2026_-_Bas-relief_of_the_monument_to_Minin_and_Pozharsky_(panorama).jpg"
+      }
+    },
+    {
+      "id": "c-pamyatnik-tysyacheletie-rossii",
+      "title": "Памятник «Тысячелетие России»",
+      "kind": "sculpture",
+      "period": "c19",
+      "year": 1862,
+      "authorName": "Михаил Микешин",
+      "summary": "Монумент в Великом Новгороде, открытый в 1862 году к тысячелетию призвания Рюрика: 129 фигур деятелей русской истории.",
+      "features": [
+        "форма колокола-державы",
+        "129 фигур",
+        "Великий Новгород, 1862"
+      ],
+      "importance": 3,
+      "wiki": "Памятник «Тысячелетие России»",
+      "image": "images/culture/c-pamyatnik-tysyacheletie-rossii.webp",
+      "imageInfo": {
+        "title": "Новгородский кремль Памятник тысячелетию Руси",
+        "date": "2018",
+        "about": "Памятник Тысячелетию России: Кремль, Великий Новгород, Новгородская область",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9D%D0%BE%D0%B2%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D1%81%D0%BA%D0%B8%D0%B9_%D0%BA%D1%80%D0%B5%D0%BC%D0%BB%D1%8C_%D0%9F%D0%B0%D0%BC%D1%8F%D1%82%D0%BD%D0%B8%D0%BA_%D1%82%D1%8B%D1%81%D1%8F%D1%87%D0%B5%D0%BB%D0%B5%D1%82%D0%B8%D1%8E_%D0%A0%D1%83%D1%81%D0%B8.jpg"
+      }
+    },
+    {
+      "id": "c-samson-petergof",
+      "title": "«Самсон, раздирающий пасть льва»",
+      "kind": "sculpture",
+      "period": "c19",
+      "year": 1802,
+      "authorName": "Михаил Козловский",
+      "summary": "Главный фонтан Петергофа — аллегория победы над Швецией: Полтавская битва произошла в день святого Сампсония.",
+      "features": [
+        "Большой каскад Петергофа",
+        "аллегория Полтавской победы",
+        "утрачен в войну, воссоздан в 1947 году"
+      ],
+      "importance": 2,
+      "wiki": "Самсон, раздирающий пасть льва",
+      "image": "images/culture/c-samson-petergof.webp",
+      "imageInfo": {
+        "date": "Снято: 2 августа 2012",
+        "about": "Фонтан \"Самсон\" в Петергофе",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Samson_fountain_in_Peterhof_02.jpg"
+      }
+    },
+    {
+      "id": "c-aleksandrovskaya-kolonna",
+      "title": "Александровская колонна",
+      "kind": "architecture",
+      "period": "c19",
+      "year": 1834,
+      "authorName": "Огюст Монферран",
+      "summary": "Монумент на Дворцовой площади в честь победы над Наполеоном, открыт в 1834 году; гранитная колонна стоит под собственной тяжестью, без креплений.",
+      "features": [
+        "Дворцовая площадь",
+        "ангел с крестом на вершине",
+        "в честь победы над Наполеоном"
+      ],
+      "importance": 2,
+      "wiki": "Александровская колонна",
+      "image": "images/culture/c-aleksandrovskaya-kolonna.webp",
+      "imageInfo": {
+        "date": "2023",
+        "about": "Изображение: Александровская колонна.",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Alexander_column.jpg"
+      }
+    },
+    {
+      "id": "c-kizhskiy-pogost",
+      "title": "Кижский погост",
+      "kind": "architecture",
+      "period": "c18",
+      "year": 1714,
+      "authorName": "Неизвестные мастера",
+      "summary": "Ансамбль деревянных храмов на острове Кижи в Онежском озере; 22-главая Преображенская церковь (1714) построена, по преданию, без единого гвоздя.",
+      "features": [
+        "22 главы Преображенской церкви",
+        "деревянное зодчество Русского Севера",
+        "Онежское озеро"
+      ],
+      "importance": 2,
+      "wiki": "Кижский погост",
+      "image": "images/culture/c-kizhskiy-pogost.webp",
+      "imageInfo": {
+        "date": "2017",
+        "about": "Вид со стороны на Погост на острове Кижи, республика Карелия (Россия)",
+        "license": "FAL",
+        "source": "https://commons.wikimedia.org/wiki/File:Kizhi_06-2017_img08_Pogost_view.jpg"
+      }
+    },
+    {
+      "id": "c-kazanskiy-sobor-spb",
+      "title": "Казанский собор в Санкт-Петербурге",
+      "kind": "architecture",
+      "period": "c19",
+      "year": 1801,
+      "endYear": 1811,
+      "authorName": "Андрей Воронихин",
+      "summary": "Собор с полукруглой колоннадой на Невском проспекте; после 1812 года стал памятником победы — здесь похоронен М. И. Кутузов.",
+      "features": [
+        "колоннада из 96 колонн",
+        "Невский проспект",
+        "могила М. И. Кутузова"
+      ],
+      "importance": 2,
+      "wiki": "Казанский собор (Санкт-Петербург)",
+      "image": "images/culture/c-kazanskiy-sobor-spb.webp",
+      "imageInfo": {
+        "date": "2015",
+        "about": "Казанский собор в Санкт-Петербурге",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kazan_Cathedral_Saint_Petersburg.jpg"
+      }
+    },
+    {
+      "id": "c-pashkov-dom",
+      "title": "Дом Пашкова",
+      "kind": "architecture",
+      "period": "c18",
+      "year": 1784,
+      "endYear": 1786,
+      "authorName": "Василий Баженов (приписывается)",
+      "summary": "Особняк эпохи классицизма напротив Кремля, приписываемый Баженову; позднее здесь размещались Румянцевский музей и библиотека.",
+      "features": [
+        "Ваганьковский холм напротив Кремля",
+        "Румянцевский музей",
+        "авторство Баженова документально не подтверждено"
+      ],
+      "importance": 2,
+      "wiki": "Дом Пашкова",
+      "image": "images/culture/c-pashkov-dom.webp",
+      "imageInfo": {
+        "author": "Диего Дельсо",
+        "date": "Снято: 3 октября 2016",
+        "about": "Ночной вид на Дом Пашкова в Москве. Здание выполнено в стиле классицизма и сейчас принадлежит Российской государственной библиотеке",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Casa_Pashkov,_Mosc%C3%BA,_Rusia,_2016-10-03,_DD_36-37_HDR.jpg"
+      }
+    },
+    {
+      "id": "c-glavnyy-shtab",
+      "title": "Здание Главного штаба",
+      "kind": "architecture",
+      "period": "c19",
+      "year": 1819,
+      "endYear": 1829,
+      "authorName": "Карл Росси",
+      "summary": "Дугообразное здание на Дворцовой площади с Триумфальной аркой и колесницей Славы — памятник победе 1812 года.",
+      "features": [
+        "арка с колесницей Славы",
+        "Дворцовая площадь",
+        "ампир"
+      ],
+      "importance": 2,
+      "wiki": "Здание Главного штаба",
+      "image": "images/culture/c-glavnyy-shtab.webp",
+      "imageInfo": {
+        "title": "Дворцовая площадь Санкт-Петербурга. Вид из Эрмитажа",
+        "date": "2014",
+        "about": "Главный штаб и Министерства (Санкт-Петербург и Лен.область, Санкт-Петербург, Дворцовая площадь, 6, 8, 10, Невский проспект, 2, Большая Морская улица, 1, 2, р. Мойки наб., 39-47)",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%94%D0%B2%D0%BE%D1%80%D1%86%D0%BE%D0%B2%D0%B0%D1%8F_%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C_%D0%A1%D0%B0%D0%BD%D0%BA%D1%82-%D0%9F%D0%B5%D1%82%D0%B5%D1%80%D0%B1%D1%83%D1%80%D0%B3%D0%B0._%D0%92%D0%B8%D0%B4_%D0%B8%D0%B7_%D0%AD%D1%80%D0%BC%D0%B8%D1%82%D0%B0%D0%B6%D0%B0..JPG"
+      }
+    }
+  ],
+  "links": [
+    {
+      "from": "c-opera-knyaz-igor",
+      "to": "e-pokhod-igorya-na-polovtsev",
+      "type": "related"
+    },
+    {
+      "from": "c-voyna-i-mir",
+      "to": "e-otechestvennaya-voyna-1812",
+      "type": "related"
+    },
+    {
+      "from": "c-pamyatnik-mininu-i-pozharskomu",
+      "to": "e-vtoroe-opolchenie",
+      "type": "related"
+    },
+    {
+      "from": "c-pamyatnik-tysyacheletie-rossii",
+      "to": "e-prizvanie-varyagov",
+      "type": "related"
+    },
+    {
+      "from": "c-samson-petergof",
+      "to": "e-poltavskaya-bitva",
+      "type": "related"
+    },
+    {
+      "from": "c-aleksandrovskaya-kolonna",
+      "to": "e-otechestvennaya-voyna-1812",
+      "type": "related"
+    },
+    {
+      "from": "c-kazanskiy-sobor-spb",
+      "to": "e-otechestvennaya-voyna-1812",
+      "type": "related"
+    },
+    {
+      "from": "c-glavnyy-shtab",
+      "to": "e-otechestvennaya-voyna-1812",
+      "type": "related"
+    }
+  ]
+}

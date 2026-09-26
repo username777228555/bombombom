@@ -5,7 +5,9 @@ and any page errors; the last line must be `errors: []`. Usage: python3 scripts/
 import asyncio
 from playwright.async_api import async_playwright
 
-BASE = "http://127.0.0.1:5173/"
+import os
+
+BASE = os.environ.get("BASE", "http://127.0.0.1:5173/")  # or BASE=http://127.0.0.1:4173/ with `pnpm preview`
 
 
 async def main():

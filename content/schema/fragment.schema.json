@@ -160,6 +160,10 @@
               "low"
             ]
           },
+          "wiki": {
+            "type": "string",
+            "minLength": 1
+          },
           "refs": {
             "type": "array",
             "items": {
@@ -376,6 +380,10 @@
               "low"
             ]
           },
+          "wiki": {
+            "type": "string",
+            "minLength": 1
+          },
           "refs": {
             "type": "array",
             "items": {
@@ -531,6 +539,10 @@
               "medium",
               "low"
             ]
+          },
+          "wiki": {
+            "type": "string",
+            "minLength": 1
           },
           "refs": {
             "type": "array",

@@ -82,7 +82,9 @@ def clean(s: str | None, limit: int = 220) -> str:
     return s if len(s) <= limit else s[:limit - 1].rsplit(' ', 1)[0] + '…'
 
 
-def wiki_title(refs: list[str] | None) -> str | None:
+def wiki_title(refs: list[str] | None, wiki: str | None = None) -> str | None:
+    if wiki:
+        return wiki
     for r in refs or []:
         m = re.match(r'https?://ru\.(?:m\.)?wikipedia\.org/wiki/([^#?]+)', r)
         if m:
@@ -312,7 +314,7 @@ def cmd_fetch(a):
     titles: dict[str, str] = {}
     for x in items:
         it = x['item']
-        t = wiki_title(it.get('refs'))
+        t = wiki_title(it.get('refs'), it.get('wiki'))
         if not t and x['kind'] == 'culture':
             t = search_article(culture_query(it))
             if t:
@@ -430,6 +432,56 @@ def clean_date(date: str, license: str) -> str:
     return d
 
 
+LATIN = re.compile(r'[A-Za-z]')
+CYRILLIC = re.compile(r'[А-Яа-яЁё]')
+BOILERPLATE = re.compile(r'загруж|участник|википеди|wikipedia|собственн|own work|user:|фото:|photo|http|@', re.I)
+ROMAN = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI']
+
+
+def ru_date(date: str) -> str:
+    """English Commons dates → Russian («circa 1830» → «ок. 1830», «17th century» → «XVII век»); otherwise ''."""
+    t = (date or '').strip()
+    t = re.sub(r'\b(circa|ca\.|c\.)\s*', 'ок. ', t, flags=re.I)
+    t = re.sub(r'\bbetween\s+(\d{3,4})\s+and\s+(\d{3,4})', r'\1–\2', t, flags=re.I)
+    t = re.sub(r'\b(\d{3,4})s\b', r'\1-е', t)
+    t = re.sub(r'\bbefore\b', 'до', t, flags=re.I)
+    t = re.sub(r'\bafter\b', 'после', t, flags=re.I)
+
+    def cent(m):
+        pre = (m.group(1) or '').lower().strip()
+        n = int(m.group(2))
+        if n >= len(ROMAN):
+            return m.group(0)
+        prefix = {'early': 'начало ', 'late': 'конец ', 'mid': 'середина ', 'mid-': 'середина ', '1st half of': 'первая половина ',
+                  'first half of': 'первая половина ', '2nd half of': 'вторая половина ', 'second half of': 'вторая половина '}.get(pre, '')
+        return f'{prefix}{ROMAN[n]} {"века" if prefix else "век"}'
+    t = re.sub(r'\b(early|late|mid-?|1st half of|first half of|2nd half of|second half of)?\s*(\d{1,2})(?:st|nd|rd|th)[ -]century', cent, t, flags=re.I)
+    t = re.sub(r'\s+', ' ', t).strip(' ,;')
+    return '' if LATIN.search(t) else t
+
+
+def sanitize_info(info: dict, kind: str, it: dict) -> dict:
+    """Only Russian credits are shown to students: Latin-script authors/titles and Commons boilerplate are dropped."""
+    out: dict = {}
+    title = (info.get('title') or '').strip().strip('«»"')
+    if title and CYRILLIC.search(title) and not LATIN.search(title) and not re.search(r'_|\.(jpe?g|png|tiff?)$', title, re.I):
+        out['title'] = title
+    author = (info.get('author') or '').strip()
+    if author and CYRILLIC.search(author) and not LATIN.search(author) and not BOILERPLATE.search(author):
+        out['author'] = author
+    date = ru_date(info.get('date', ''))
+    if date:
+        out['date'] = date
+    about = re.sub(r'Это фотография объекта культурного наследия[^.]*\.?|Изначально этот файл[^.]*\.?|номер:\s*[\d-]+', '', info.get('about') or '')
+    about = re.sub(r'\s+', ' ', about).strip(' .,;')
+    out['about'] = about if CYRILLIC.search(about) and not re.search(r'[A-Za-z]{4,}', about) else author_line({}, kind, it)
+    if info.get('license'):
+        out['license'] = 'Общественное достояние' if re.search(r'public domain|^pd', info['license'], re.I) else info['license']
+    if info.get('source'):
+        out['source'] = info['source']
+    return out
+
+
 def author_line(meta: dict, kind: str, it: dict) -> str:
     if meta.get('about'):
         return meta['about']
@@ -478,8 +530,9 @@ def cmd_apply(a):
             info['license'] = meta['license']
             info['source'] = meta['source']
             it['imageInfo'] = info
-            if kind == 'culture' and rec.get('found_article') and not wiki_title(it.get('refs')):
-                it.setdefault('refs', []).append('https://ru.wikipedia.org/wiki/' + urllib.parse.quote(rec['found_article'].replace(' ', '_')))
+            if kind == 'culture' and rec.get('found_article') and not wiki_title(it.get('refs'), it.get('wiki')):
+                it['wiki'] = rec['found_article']
+            it['imageInfo'] = sanitize_info(it['imageInfo'], kind, it)
         json.dump(data, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
         open(path, 'a', encoding='utf-8').write('\n')
     json.dump(removed, open(os.path.join(cdir, 'removed.json'), 'w'), ensure_ascii=False, indent=1)

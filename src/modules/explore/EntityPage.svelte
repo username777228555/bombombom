@@ -19,6 +19,19 @@
   import { toast } from '$lib/core/ui.svelte';
 
   const entity = $derived(kb.get(router.params.id ?? ''));
+  // Wikipedia links are not shown (they are long and live in the `wiki` field for scripts/media).
+  const refs = $derived(entity && 'refs' in entity.item ? (entity.item.refs ?? []).filter((r) => !/wiki(pedia|media)\.org/.test(r)) : []);
+  /** «arzamas.academy/courses/20» instead of a long encoded URL. */
+  function shortUrl(u: string): string {
+    try {
+      const x = new URL(u);
+      const path = decodeURIComponent(x.pathname).replace(/\/$/, '');
+      const s = `${x.hostname.replace(/^www\./, '')}${path}`;
+      return s.length > 48 ? `${s.slice(0, 47)}…` : s;
+    } catch {
+      return u;
+    }
+  }
   const period = $derived(entity ? kb.periodOf(entity) : undefined);
 
   function relLabel(n: Neighbor, selfKind: string): string {
@@ -169,12 +182,12 @@
         </section>
       {/each}
 
-      {#if 'refs' in e.item && e.item.refs?.length}
+      {#if refs.length}
         <section class="rel">
           <h2 class="eyebrow">Источники сведений</h2>
           <ul class="refs">
-            {#each e.item.refs as r, i (i)}
-              <li>{#if /^https?:/.test(r)}<a href={r} target="_blank" rel="noreferrer">{r} <ExternalLink size={12} /></a>{:else}{r}{/if}</li>
+            {#each refs as r, i (i)}
+              <li>{#if /^https?:/.test(r)}<a href={r} target="_blank" rel="noreferrer">{shortUrl(r)} <ExternalLink size={12} /></a>{:else}{r}{/if}</li>
             {/each}
           </ul>
         </section>

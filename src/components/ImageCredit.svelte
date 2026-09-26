@@ -7,20 +7,24 @@
   import type { ImageInfo } from '$lib/core/content/schema';
 
   let { info, compact = false, light = false }: { info?: ImageInfo; compact?: boolean; light?: boolean } = $props();
-  const title = $derived(info?.title ? info.title.replace(/^[«"“]+|[»"”]+$/g, '') : '');
+  // Only Russian credits are shown (Latin-script names from Commons are dropped by scripts/media).
+  const ru = (s?: string) => (s && /[А-Яа-яЁё]/.test(s) && !/[A-Za-z]/.test(s) ? s : '');
+  const title = $derived(ru(info?.title?.replace(/^[«"“]+|[»"”]+$/g, '')));
+  const author = $derived(ru(info?.author));
+  const license = $derived(info?.license && /public domain|^pd/i.test(info.license) ? 'общественное достояние' : (info?.license ?? ''));
 </script>
 
-{#if info && (info.author || title)}
+{#if info && (author || title)}
   <div class="credit" class:compact class:light>
     <span class="line">
       <Palette size={13} />
       <span>
-        {#if info.author}<b>{info.author}</b>{/if}{#if title}{info.author ? ' · ' : ''}«{title}»{/if}{#if info.date}{' · '}<span class="num">{info.date}</span>{/if}
+        {#if author}<b>{author}</b>{/if}{#if title}{author ? ' · ' : ''}«{title}»{/if}{#if info.date}{' · '}<span class="num">{info.date}</span>{/if}
       </span>
     </span>
     {#if info.about && !compact}<span class="about">{info.about}</span>{/if}
     {#if info.license && !compact}
-      <span class="lic">{info.license}{#if info.source} · <a href={info.source} target="_blank" rel="noreferrer">источник</a>{/if}</span>
+      <span class="lic">Лицензия: {license}</span>
     {/if}
   </div>
 {/if}
@@ -32,7 +36,6 @@
   b { color: var(--ink-2); font-weight: 650; }
   .about { color: var(--ink-2); }
   .lic { opacity: 0.8; }
-  .lic a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
   .compact .line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .light { color: rgba(243, 234, 219, 0.72); }
   .light b, .light .about { color: #f3eadb; }

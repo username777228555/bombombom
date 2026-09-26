@@ -148,7 +148,7 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
     };
     // Pictures must say who made them and when (shown to students under every image).
     const checkCredit = (file: string, path: string, it: { image?: string; imageInfo?: { author?: string; date?: string } }) => {
-      if (it.image && !it.imageInfo?.author) add('warning', file, path, 'у картинки нет автора (imageInfo.author): заполните вручную или запустите scripts/media/wiki_images.py');
+      if (it.image && !it.imageInfo) add('warning', file, path, 'у картинки нет сведений (imageInfo): заполните вручную или запустите scripts/media/wiki_images.py');
     };
     for (const { file, data: d } of pack.fragments) {
       const ref = (path: string, id: string | undefined, kinds?: EntityKind[]) => {

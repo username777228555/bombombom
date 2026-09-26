@@ -1,0 +1,60 @@
+{
+  "name": "stolypin",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "description": "СТОЛЫПИНЪ — учёба истории: офлайн-приложение для подготовки к олимпиадам по истории России",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json --fail-on-warnings=false && pnpm content:check",
+    "content:check": "tsx scripts/content-check.ts",
+    "content:stats": "tsx scripts/content-check.ts --stats",
+    "content:new": "tsx scripts/content-new.ts",
+    "content:id": "tsx scripts/content-id.ts",
+    "content:schema": "tsx scripts/content-schema.ts",
+    "content:bundle": "tsx scripts/content-bundle.ts",
+    "icons": "tsx scripts/gen-icons.ts",
+    "android:sync": "vite build && cap sync android",
+    "android:apk": "vite build && cap sync android && cd android && ./gradlew assembleRelease"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/app": "^8.1.1",
+    "@capacitor/core": "^8.5.2",
+    "@capacitor/filesystem": "^8.1.3",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/share": "^8.0.2",
+    "@capacitor/splash-screen": "^8.0.2",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/literata": "^5.3.0",
+    "@fontsource/old-standard-tt": "^5.3.0",
+    "@lucide/svelte": "^1.48.0",
+    "cytoscape": "^3.34.3",
+    "cytoscape-fcose": "^2.2.0",
+    "dexie": "^4.4.6",
+    "minisearch": "^7.2.0",
+    "pdfjs-dist": "^6.3.289",
+    "ts-fsrs": "^5.4.2",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.2",
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@types/node": "^26.6.2",
+    "opentype.js": "^2.0.0",
+    "sharp": "^0.35.4",
+    "svelte": "^5.57.1",
+    "svelte-check": "^4.7.6",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp",
+      "esbuild"
+    ]
+  }
+}

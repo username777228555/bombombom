@@ -229,6 +229,17 @@
                   "type": "integer",
                   "minimum": -3000,
                   "maximum": 2100
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "head",
+                    "regent",
+                    "appanage",
+                    "office",
+                    "church",
+                    "foreign"
+                  ]
                 }
               },
               "required": [

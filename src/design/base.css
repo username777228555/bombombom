@@ -11,10 +11,15 @@ html {
   font-size: calc(16px * var(--ui-scale, 1));
 }
 
+html {
+  background: var(--bg);
+}
+
 body {
   margin: 0;
   min-height: 100dvh;
-  background: var(--bg);
+  /* A warm glow at the top of every screen, like lamplight on paper. */
+  background: radial-gradient(120% 60% at 50% -12%, var(--glow) 0%, transparent 62%) no-repeat, var(--bg);
   color: var(--ink);
   font-family: var(--font-ui);
   font-size: var(--text-md);
@@ -180,6 +185,18 @@ input, textarea, select {
 .section-title h2 {
   font-size: var(--text-xl);
 }
+/* A small gilded rhombus after section titles — the recurring ornament of the app. */
+.section-title h2::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 10px;
+  vertical-align: 0.2em;
+  background: var(--gold);
+  transform: rotate(45deg);
+  opacity: 0.75;
+}
 .hscroll {
   display: flex;
   gap: var(--sp-3);
@@ -252,4 +269,18 @@ input, textarea, select {
 }
 .shake {
   animation: shake 420ms var(--ease-out);
+}
+
+/* Gentle entrance for hero blocks: <div class="rise" style="--i: 2">. Reduced motion shortens it globally. */
+.rise {
+  animation: rise-in 620ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes gold-shimmer {
+  from { background-position: -160% 0; }
+  to { background-position: 260% 0; }
 }

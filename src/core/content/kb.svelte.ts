@@ -9,6 +9,7 @@ import {
 } from './schema';
 import { db } from '../db';
 import { settings } from '../settings.svelte';
+import { buildRulers, rulersAt, type Reign } from './rulers';
 
 const periodsModules = import.meta.glob<unknown>('/content/core/periods.json', { eager: true, import: 'default' });
 const manifestLoaders = import.meta.glob<unknown>('/content/packs/*/pack.json', { import: 'default' });
@@ -59,12 +60,7 @@ interface RawPack {
   skipped: number;
 }
 
-export interface Reign {
-  person: PersonItem;
-  title: string;
-  from: number;
-  to: number;
-}
+export type { Reign } from './rulers';
 
 const KIND_LABEL: Record<EntityKindName, string> = {
   event: 'Событие',
@@ -90,6 +86,7 @@ class KnowledgeBase {
   quizzes: (QuizItem & { pack: string })[] = [];
   maps: (MapItem & { pack: string })[] = [];
   edges: Edge[] = [];
+  private rulerList: Reign[] = [];
   byId = new Map<string, Entity>();
   adjacency = new Map<string, Neighbor[]>();
   private raw: RawPack[] = [];
@@ -189,6 +186,7 @@ class KnowledgeBase {
     this.culture = of('culture').sort((a, b) => a.year - b.year);
     this.terms = of('term').sort((a, b) => a.term.localeCompare(b.term, 'ru'));
     this.sources = of('source');
+    this.rulerList = buildRulers(this.persons);
     this.decks = [...decks.values()];
     this.quizzes = [...quizzes.values()];
     this.maps = [...maps.values()];
@@ -284,10 +282,14 @@ class KnowledgeBase {
   termsIn = (period: string) => this.terms.filter((t) => t.periods?.includes(period));
   quizzesIn = (period: string) => this.quizzes.filter((q) => q.period === period);
 
+  /** Heads of the Russian state and regents (no ministers, patriarchs or foreign monarchs), oldest first. */
   rulers(): Reign[] {
-    const out: Reign[] = [];
-    for (const p of this.persons) for (const r of p.reigns ?? []) out.push({ person: p, title: r.title, from: r.from, to: r.to });
-    return out.sort((a, b) => a.from - b.from || a.to - b.to);
+    return this.rulerList;
+  }
+
+  /** Who was on the throne in a given year. */
+  rulersAt(year: number): Reign[] {
+    return rulersAt(this.rulerList, year);
   }
 
   /** True when the entity comes from an AI-generated pack (shows the «сверьте» badge). */

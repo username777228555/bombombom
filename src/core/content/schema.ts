@@ -64,6 +64,13 @@ export const LINK_TYPES = [
   'spouse', 'ally', 'opponent', 'influence', 'related',
 ] as const;
 export const SYMMETRIC_LINKS: ReadonlySet<string> = new Set(['spouse', 'ally', 'opponent', 'related']);
+/**
+ * Kind of a post in `person.reigns`. Only `head` (глава Русского государства) and `regent` get onto the
+ * rulers ladder, the timeline and the «При ком?» game; the rest are shown on the person's page only.
+ * When omitted, the kind is inferred from the title (see `core/content/rulers.ts`).
+ */
+export const REIGN_KINDS = ['head', 'regent', 'appanage', 'office', 'church', 'foreign'] as const;
+export type ReignKind = (typeof REIGN_KINDS)[number];
 
 export const PeriodSchema = z.strictObject({
   id: Id,
@@ -115,7 +122,7 @@ export const PersonSchema = z.strictObject({
   circa: z.boolean().optional(),
   periods: z.array(Id).min(1),
   role: Text,
-  reigns: z.array(z.strictObject({ title: Text, from: Year, to: Year })).optional(),
+  reigns: z.array(z.strictObject({ title: Text, from: Year, to: Year, kind: z.enum(REIGN_KINDS).optional() })).optional(),
   tags: z.array(z.enum(PERSON_TAGS)).optional(),
   importance: Importance.optional(),
   summary: Text,

@@ -766,9 +766,10 @@
     {
       "id": "p-yuriy-dolgorukiy",
       "name": "Юрий Долгорукий",
-      "short": "Юрий Владимирович",
+      "short": "Юрий Долгорукий",
       "aliases": [
-        "Юрий Владимирович Долгорукий"
+        "Юрий Владимирович Долгорукий",
+        "Юрий Владимирович"
       ],
       "born": null,
       "died": 1157,
@@ -809,7 +810,10 @@
       "id": "p-andrey-bogolyubskiy",
       "image": "images/persons/p-andrey-bogolyubskiy.jpg",
       "name": "Андрей Боголюбский",
-      "short": "Андрей Юрьевич",
+      "short": "Андрей Боголюбский",
+      "aliases": [
+        "Андрей Юрьевич"
+      ],
       "born": null,
       "died": 1174,
       "periods": [
@@ -843,7 +847,10 @@
       "id": "p-vsevolod-bolshoe-gnezdo",
       "image": "images/persons/p-vsevolod-bolshoe-gnezdo.jpg",
       "name": "Всеволод Большое Гнездо",
-      "short": "Всеволод Юрьевич",
+      "short": "Всеволод Большое Гнездо",
+      "aliases": [
+        "Всеволод Юрьевич"
+      ],
       "born": 1154,
       "died": 1212,
       "periods": [
@@ -1137,7 +1144,10 @@
       "id": "p-aleksandr-nevskiy",
       "image": "images/persons/p-aleksandr-nevskiy.jpg",
       "name": "Александр Невский",
-      "short": "Александр Ярославич",
+      "short": "Александр Невский",
+      "aliases": [
+        "Александр Ярославич"
+      ],
       "born": 1221,
       "died": 1263,
       "periods": [
@@ -1374,7 +1384,10 @@
       "id": "p-dmitriy-donskoy",
       "image": "images/persons/p-dmitriy-donskoy.jpg",
       "name": "Дмитрий Донской",
-      "short": "Дмитрий Иванович",
+      "short": "Дмитрий Донской",
+      "aliases": [
+        "Дмитрий Иванович"
+      ],
       "born": 1350,
       "died": 1389,
       "periods": [
@@ -1625,7 +1638,11 @@
       "id": "p-vasiliy-ii-temnyy",
       "image": "images/persons/p-vasiliy-ii-temnyy.jpg",
       "name": "Василий II Тёмный",
-      "short": "Василий Васильевич",
+      "short": "Василий Тёмный",
+      "aliases": [
+        "Василий Васильевич",
+        "Василий II"
+      ],
       "born": 1415,
       "died": 1462,
       "periods": [
@@ -1659,7 +1676,10 @@
     {
       "id": "p-dmitriy-shemyaka",
       "name": "Дмитрий Шемяка",
-      "short": "Дмитрий Юрьевич",
+      "short": "Дмитрий Шемяка",
+      "aliases": [
+        "Дмитрий Юрьевич"
+      ],
       "born": null,
       "died": 1453,
       "periods": [

@@ -9,7 +9,7 @@
 <div class="page">
   <PageHeader title="О приложении" back="/profile" />
   <div class="hero">
-    <Emblem size={88} />
+    <Emblem size={88} animate />
     <h1 class="display">СТОЛЫПИНЪ</h1>
     <p class="eyebrow">версия {version}</p>
     <Ornament />

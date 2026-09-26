@@ -9,6 +9,7 @@
   import PeriodTag from '$lib/components/PeriodTag.svelte';
   import ConfidenceNote from '$lib/components/ConfidenceNote.svelte';
   import { kb, type Neighbor } from '$lib/core/content/kb.svelte';
+  import { isThrone } from '$lib/core/content/rulers';
   import { EVENT_TAG_LABELS, PERSON_TAG_LABELS, CULTURE_KIND_LABELS, SOURCE_KIND_LABELS } from '$lib/core/content/schema';
   import { router } from '$lib/core/router.svelte';
   import { formatEventDate, formatLife, formatYear, centuryLabel, formatSpan } from '$lib/core/utils/format';
@@ -120,7 +121,7 @@
             <div><dt>Темы</dt><dd class="row wrap">{#each e.item.tags as t (t)}<Badge>{EVENT_TAG_LABELS[t]}</Badge>{/each}</dd></div>
           {/if}
           {#if e.kind === 'person' && e.item.reigns?.length}
-            <div><dt><Crown size={15} /> Правление</dt><dd>{#each e.item.reigns as r, i (i)}<span class="reign">{r.title}: <b class="num">{r.from}–{r.to}</b></span>{/each}</dd></div>
+            <div><dt><Crown size={15} /> {e.item.reigns.some(isThrone) ? 'Правление' : 'Должности'}</dt><dd>{#each e.item.reigns as r, i (i)}<span class="reign">{r.title}: <b class="num">{r.from === r.to ? r.from : `${r.from}–${r.to}`}</b></span>{/each}</dd></div>
           {/if}
           {#if e.kind === 'person' && e.item.tags?.length}
             <div><dt>Кто</dt><dd class="row wrap">{#each e.item.tags as t (t)}<Badge>{PERSON_TAG_LABELS[t]}</Badge>{/each}</dd></div>

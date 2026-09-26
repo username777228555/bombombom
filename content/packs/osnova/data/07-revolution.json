@@ -905,9 +905,10 @@
       "id": "p-nikolay-ii",
       "image": "images/persons/p-nikolay-ii.jpg",
       "name": "Николай II",
-      "short": "Николай Александрович",
+      "short": "Николай II",
       "aliases": [
-        "Николай Александрович Романов"
+        "Николай Александрович Романов",
+        "Николай Александрович"
       ],
       "born": 1868,
       "died": 1918,
@@ -942,7 +943,10 @@
       "id": "p-vitte",
       "image": "images/persons/p-vitte.jpg",
       "name": "Сергей Витте",
-      "short": "Сергей Юльевич Витте",
+      "short": "Сергей Витте",
+      "aliases": [
+        "Сергей Юльевич Витте"
+      ],
       "born": 1849,
       "died": 1915,
       "periods": [
@@ -982,7 +986,10 @@
       "id": "p-pleve",
       "image": "images/persons/p-pleve.jpg",
       "name": "Вячеслав Плеве",
-      "short": "Вячеслав Константинович Плеве",
+      "short": "Вячеслав Плеве",
+      "aliases": [
+        "Вячеслав Константинович Плеве"
+      ],
       "born": 1846,
       "died": 1904,
       "periods": [
@@ -1016,7 +1023,10 @@
       "id": "p-gapon",
       "image": "images/persons/p-gapon.webp",
       "name": "Георгий Гапон",
-      "short": "Георгий Аполлонович Гапон",
+      "short": "Георгий Гапон",
+      "aliases": [
+        "Георгий Аполлонович Гапон"
+      ],
       "born": 1870,
       "died": 1906,
       "periods": [
@@ -1043,7 +1053,10 @@
       "id": "p-stolypin",
       "image": "images/persons/p-stolypin.jpg",
       "name": "Пётр Столыпин",
-      "short": "Пётр Аркадьевич Столыпин",
+      "short": "Пётр Столыпин",
+      "aliases": [
+        "Пётр Аркадьевич Столыпин"
+      ],
       "born": 1862,
       "died": 1911,
       "periods": [
@@ -1083,7 +1096,10 @@
       "id": "p-rasputin",
       "image": "images/persons/p-rasputin.webp",
       "name": "Григорий Распутин",
-      "short": "Григорий Ефимович Распутин",
+      "short": "Григорий Распутин",
+      "aliases": [
+        "Григорий Ефимович Распутин"
+      ],
       "born": 1869,
       "died": 1916,
       "periods": [
@@ -1110,7 +1126,10 @@
       "id": "p-milyukov",
       "image": "images/persons/p-milyukov.webp",
       "name": "Павел Милюков",
-      "short": "Павел Николаевич Милюков",
+      "short": "Павел Милюков",
+      "aliases": [
+        "Павел Николаевич Милюков"
+      ],
       "born": 1859,
       "died": 1943,
       "periods": [
@@ -1138,7 +1157,10 @@
       "id": "p-guchkov",
       "image": "images/persons/p-guchkov.webp",
       "name": "Александр Гучков",
-      "short": "Александр Иванович Гучков",
+      "short": "Александр Гучков",
+      "aliases": [
+        "Александр Иванович Гучков"
+      ],
       "born": 1862,
       "died": 1936,
       "periods": [
@@ -1166,7 +1188,10 @@
       "id": "p-brusilov",
       "image": "images/persons/p-brusilov.jpg",
       "name": "Алексей Брусилов",
-      "short": "Алексей Алексеевич Брусилов",
+      "short": "Алексей Брусилов",
+      "aliases": [
+        "Алексей Алексеевич Брусилов"
+      ],
       "born": 1853,
       "died": 1926,
       "periods": [
@@ -1200,7 +1225,10 @@
       "id": "p-georgiy-lvov",
       "image": "images/persons/p-georgiy-lvov.jpg",
       "name": "Георгий Львов",
-      "short": "Георгий Евгеньевич Львов",
+      "short": "Георгий Львов",
+      "aliases": [
+        "Георгий Евгеньевич Львов"
+      ],
       "born": 1861,
       "died": 1925,
       "periods": [
@@ -1234,7 +1262,10 @@
       "id": "p-kerenskiy",
       "image": "images/persons/p-kerenskiy.jpg",
       "name": "Александр Керенский",
-      "short": "Александр Фёдорович Керенский",
+      "short": "Александр Керенский",
+      "aliases": [
+        "Александр Фёдорович Керенский"
+      ],
       "born": 1881,
       "died": 1970,
       "periods": [
@@ -1268,7 +1299,10 @@
       "id": "p-kornilov",
       "image": "images/persons/p-kornilov.jpg",
       "name": "Лавр Корнилов",
-      "short": "Лавр Георгиевич Корнилов",
+      "short": "Лавр Корнилов",
+      "aliases": [
+        "Лавр Георгиевич Корнилов"
+      ],
       "born": 1870,
       "died": 1918,
       "periods": [
@@ -1302,11 +1336,12 @@
       "id": "p-lenin",
       "image": "images/persons/p-lenin.jpg",
       "name": "Владимир Ленин",
-      "short": "Владимир Ильич Ульянов",
+      "short": "Владимир Ленин",
       "aliases": [
         "Ульянов",
         "В. И. Ульянов",
-        "Ильич"
+        "Ильич",
+        "Владимир Ильич Ульянов"
       ],
       "born": 1870,
       "died": 1924,
@@ -1319,7 +1354,8 @@
         {
           "title": "Председатель Совета народных комиссаров",
           "from": 1917,
-          "to": 1924
+          "to": 1924,
+          "kind": "head"
         }
       ],
       "tags": [
@@ -1343,9 +1379,10 @@
       "id": "p-martov",
       "image": "images/persons/p-martov.webp",
       "name": "Юлий Мартов",
-      "short": "Юлий Осипович Цедербаум",
+      "short": "Юлий Мартов",
       "aliases": [
-        "Цедербаум"
+        "Цедербаум",
+        "Юлий Осипович Цедербаум"
       ],
       "born": 1873,
       "died": 1923,
@@ -1373,9 +1410,10 @@
       "id": "p-trotskiy",
       "image": "images/persons/p-trotskiy.jpg",
       "name": "Лев Троцкий",
-      "short": "Лев Давидович Бронштейн",
+      "short": "Лев Троцкий",
       "aliases": [
-        "Бронштейн"
+        "Бронштейн",
+        "Лев Давидович Бронштейн"
       ],
       "born": 1879,
       "died": 1940,
@@ -1412,7 +1450,10 @@
       "id": "p-sverdlov",
       "image": "images/persons/p-sverdlov.jpg",
       "name": "Яков Свердлов",
-      "short": "Яков Михайлович Свердлов",
+      "short": "Яков Свердлов",
+      "aliases": [
+        "Яков Михайлович Свердлов"
+      ],
       "born": 1885,
       "died": 1919,
       "periods": [
@@ -1446,7 +1487,10 @@
       "id": "p-dzerzhinskiy",
       "image": "images/persons/p-dzerzhinskiy.jpg",
       "name": "Феликс Дзержинский",
-      "short": "Феликс Эдмундович Дзержинский",
+      "short": "Феликс Дзержинский",
+      "aliases": [
+        "Феликс Эдмундович Дзержинский"
+      ],
       "born": 1877,
       "died": 1926,
       "periods": [
@@ -1482,7 +1526,10 @@
       "id": "p-kolchak",
       "image": "images/persons/p-kolchak.jpg",
       "name": "Александр Колчак",
-      "short": "Александр Васильевич Колчак",
+      "short": "Александр Колчак",
+      "aliases": [
+        "Александр Васильевич Колчак"
+      ],
       "born": 1874,
       "died": 1920,
       "periods": [
@@ -1517,7 +1564,10 @@
       "id": "p-denikin",
       "image": "images/persons/p-denikin.png",
       "name": "Антон Деникин",
-      "short": "Антон Иванович Деникин",
+      "short": "Антон Деникин",
+      "aliases": [
+        "Антон Иванович Деникин"
+      ],
       "born": 1872,
       "died": 1947,
       "periods": [
@@ -1552,7 +1602,10 @@
       "id": "p-yudenich",
       "image": "images/persons/p-yudenich.webp",
       "name": "Николай Юденич",
-      "short": "Николай Николаевич Юденич",
+      "short": "Николай Юденич",
+      "aliases": [
+        "Николай Николаевич Юденич"
+      ],
       "born": 1862,
       "died": 1933,
       "periods": [
@@ -1579,7 +1632,10 @@
       "id": "p-vrangel",
       "image": "images/persons/p-vrangel.jpg",
       "name": "Пётр Врангель",
-      "short": "Пётр Николаевич Врангель",
+      "short": "Пётр Врангель",
+      "aliases": [
+        "Пётр Николаевич Врангель"
+      ],
       "born": 1878,
       "died": 1928,
       "periods": [
@@ -1612,7 +1668,10 @@
     {
       "id": "p-frunze",
       "name": "Михаил Фрунзе",
-      "short": "Михаил Васильевич Фрунзе",
+      "short": "Михаил Фрунзе",
+      "aliases": [
+        "Михаил Васильевич Фрунзе"
+      ],
       "born": 1885,
       "died": 1925,
       "periods": [
@@ -1648,7 +1707,10 @@
       "id": "p-makhno",
       "image": "images/persons/p-makhno.webp",
       "name": "Нестор Махно",
-      "short": "Нестор Иванович Махно",
+      "short": "Нестор Махно",
+      "aliases": [
+        "Нестор Иванович Махно"
+      ],
       "born": 1888,
       "died": 1934,
       "periods": [
@@ -1676,7 +1738,10 @@
       "id": "p-chernov",
       "image": "images/persons/p-chernov.webp",
       "name": "Виктор Чернов",
-      "short": "Виктор Михайлович Чернов",
+      "short": "Виктор Чернов",
+      "aliases": [
+        "Виктор Михайлович Чернов"
+      ],
       "born": 1873,
       "died": 1952,
       "periods": [
@@ -1704,9 +1769,10 @@
       "id": "p-patriarkh-tihon",
       "image": "images/persons/p-patriarkh-tihon.jpg",
       "name": "Патриарх Тихон",
-      "short": "Тихон (Василий Беллавин)",
+      "short": "Патриарх Тихон",
       "aliases": [
-        "Василий Иванович Беллавин"
+        "Василий Иванович Беллавин",
+        "Тихон (Василий Беллавин)"
       ],
       "born": 1865,
       "died": 1925,
@@ -1740,7 +1806,10 @@
     {
       "id": "p-pavlov",
       "name": "Иван Павлов",
-      "short": "Иван Петрович Павлов",
+      "short": "Иван Павлов",
+      "aliases": [
+        "Иван Петрович Павлов"
+      ],
       "born": 1849,
       "died": 1936,
       "periods": [
@@ -1768,7 +1837,10 @@
       "id": "p-zubatov",
       "image": "images/persons/p-zubatov.webp",
       "name": "Сергей Зубатов",
-      "short": "Сергей Васильевич Зубатов",
+      "short": "Сергей Зубатов",
+      "aliases": [
+        "Сергей Васильевич Зубатов"
+      ],
       "born": 1864,
       "died": 1917,
       "periods": [
@@ -1794,7 +1866,10 @@
     {
       "id": "p-antonov",
       "name": "Александр Антонов",
-      "short": "Александр Степанович Антонов",
+      "short": "Александр Антонов",
+      "aliases": [
+        "Александр Степанович Антонов"
+      ],
       "born": 1889,
       "died": 1922,
       "periods": [

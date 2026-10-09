@@ -1931,10 +1931,10 @@
       ],
       "image": "images/persons/p-simon-ushakov.webp",
       "imageInfo": {
-        "date": "2008",
-        "about": "Изображение: Симон Ушаков",
-        "license": "CC BY 2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Simon_Ushakov_3.jpg"
+        "author": "Симон Ушаков",
+        "about": "Икона Симона Ушакова Древо государства Российского",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%A1%D0%B8%D0%BC%D0%BE%D0%BD_%D0%A3%D1%88%D0%B0%D0%BA%D0%BE%D0%B2._%D0%98%D0%BA%D0%BE%D0%BD%D0%B0_%D0%94%D1%80%D0%B5%D0%B2%D0%BE_%D0%B3%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B0_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B3%D0%BE._XVII_%D0%B2%D0%B5%D0%BA.jpg"
       },
       "wiki": "Ушаков, Симон Фёдорович"
     },
@@ -2035,7 +2035,15 @@
         "Подписал с гетманом Жолкевским договор о призвании польского королевича и в октябре 1612 года вышел из Кремля к ополчению."
       ],
       "details": "Многолетний глава Боярской думы. После низложения Василия Шуйского 17 июля 1610 года встал во главе боярского правительства. В августе 1610 года бояре заключили с гетманом Жолкевским договор о призвании на престол королевича Владислава и впустили в Москву польский гарнизон. Когда 26 октября 1612 года гарнизон капитулировал, бояре вышли из Кремля к ополчению Пожарского; при Михаиле Фёдоровиче Мстиславский сохранил высокое положение в думе. Год рождения неизвестен.",
-      "wiki": "Мстиславский, Фёдор Иванович"
+      "wiki": "Мстиславский, Фёдор Иванович",
+      "image": "images/persons/p-fedor-ivanovich-mstislavskiy.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "date": "1673",
+        "about": "Изображение: Фёдор Мстиславский",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Fyodor_Ivanovich_Mstislavsky_showers_Tsar_Michael_with_money_at_the_coronation,_Nikifor_Vasilyevich_Trakhaniotov_holds_a_tray_of_money_2.0.png"
+      }
     }
   ],
   "culture": [

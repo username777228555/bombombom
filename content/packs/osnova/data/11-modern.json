@@ -694,7 +694,14 @@
       "persons": [
         "p-putin"
       ],
-      "wiki": "Вторая чеченская война"
+      "wiki": "Вторая чеченская война",
+      "image": "images/events/e-vtoraya-chechenskaya-kampaniya.webp",
+      "imageInfo": {
+        "date": "между 1999 и 2000",
+        "about": "Коллаж на тему Второй чеченской войны",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Collage_the_Second_Chechen_War.jpg"
+      }
     },
     {
       "id": "e-voyna-na-donbasse",
@@ -713,7 +720,15 @@
       "persons": [
         "p-putin"
       ],
-      "wiki": "Война в Донбассе"
+      "wiki": "Война в Донбассе",
+      "image": "images/events/e-voyna-na-donbasse.webp",
+      "imageInfo": {
+        "title": "Карта боевых действий на Востоке Украины",
+        "date": "2014",
+        "about": "Территория, на которой происходит вооружённый конфликт на востоке Украины. Границы территории могут меняться в ходе военных действий. Эта карта должна регулярно обновляться и отражать текущую ситуацию. Территория под контролем ДНР и ЛНР.…",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%B0%D1%80%D1%82%D0%B0_%D0%B1%D0%BE%D0%B5%D0%B2%D1%8B%D1%85_%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D0%B9_%D0%BD%D0%B0_%D0%92%D0%BE%D1%81%D1%82%D0%BE%D0%BA%D0%B5_%D0%A3%D0%BA%D1%80%D0%B0%D0%B8%D0%BD%D1%8B.svg"
+      }
     },
     {
       "id": "e-minskie-soglasheniya",
@@ -791,7 +806,14 @@
       "persons": [
         "p-putin"
       ],
-      "wiki": "Захват школы в Беслане"
+      "wiki": "Захват школы в Беслане",
+      "image": "images/events/e-terakt-v-beslane.webp",
+      "imageInfo": {
+        "date": "2010",
+        "about": "Православный крест в здании школы № 1 г. Беслана",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Beslan_kollazh.jpg"
+      }
     },
     {
       "id": "e-otmena-pryamykh-vyborov-gubernatorov",
@@ -826,7 +848,14 @@
       "persons": [
         "p-putin"
       ],
-      "wiki": "Мюнхенская речь Путина"
+      "wiki": "Мюнхенская речь Путина",
+      "image": "images/events/e-myunkhenskaya-rech-v-v-putina.webp",
+      "imageInfo": {
+        "date": "2007",
+        "about": "Выступление Владимира Путина в Мюнхене",
+        "license": "CC BY 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Putin_in_Munchen.jpg"
+      }
     },
     {
       "id": "e-gosudarstvennyy-perevorot-v-kieve",

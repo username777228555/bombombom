@@ -3,7 +3,7 @@
   import { onMount, onDestroy, tick } from 'svelte';
   import { settings } from '$lib/core/settings.svelte';
   import { READER_THEMES } from './readerStyles';
-  import { loadPdfjs } from './books';
+  import { loadPdfjs, pdfAssets } from './books';
   import type { RelocateInfo, SelectionInfo, TocItem, SearchGroup } from './types';
 
   interface Props {
@@ -31,7 +31,7 @@
   onMount(async () => {
     try {
       pdfjs = await loadPdfjs();
-      task = pdfjs.getDocument({ data: new Uint8Array(await file.arrayBuffer()) });
+      task = pdfjs.getDocument({ data: new Uint8Array(await file.arrayBuffer()), ...pdfAssets() });
       pdf = await task.promise;
       const first = await pdf.getPage(1);
       const vp = first.getViewport({ scale: 1 });

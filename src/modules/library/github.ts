@@ -39,7 +39,7 @@ export interface RemoteFile {
   size: number;
   kind: 'book' | 'pack';
   /** Where the file lives: a path in the repository or a release asset. */
-  from: { type: 'file'; path: string; ref: string } | { type: 'release'; id: number; tag: string };
+  from: { type: 'file'; path: string; ref: string } | { type: 'release'; id: number; tag: string; url: string };
 }
 
 const BOOK_EXT = /\.(epub|fb2|fbz|fb2\.zip|mobi|azw3?|pdf|cbz|txt)$/i;
@@ -78,7 +78,7 @@ export async function listRemote(s: GithubSource): Promise<RemoteFile[]> {
   const ref = repo.default_branch;
   const [tree, releases] = await Promise.all([
     api<{ tree: { path: string; type: string; size?: number }[]; truncated?: boolean }>(s, `/repos/${s.repo}/git/trees/${encodeURIComponent(ref)}?recursive=1`),
-    api<{ tag_name: string; assets: { id: number; name: string; size: number }[] }[]>(s, `/repos/${s.repo}/releases?per_page=50`).catch(() => []),
+    api<{ tag_name: string; assets: { id: number; name: string; size: number; browser_download_url: string }[] }[]>(s, `/repos/${s.repo}/releases?per_page=50`).catch(() => []),
   ]);
   const prefix = s.folder ? `${s.folder}/` : '';
   const out: RemoteFile[] = [];
@@ -91,7 +91,7 @@ export async function listRemote(s: GithubSource): Promise<RemoteFile[]> {
   for (const rel of releases) {
     for (const a of rel.assets) {
       const kind = kindOf(a.name);
-      if (kind) out.push({ key: `r:${a.id}`, name: a.name, size: a.size, kind, from: { type: 'release', id: a.id, tag: rel.tag_name } });
+      if (kind) out.push({ key: `r:${a.id}`, name: a.name, size: a.size, kind, from: { type: 'release', id: a.id, tag: rel.tag_name, url: a.browser_download_url } });
     }
   }
   return out.sort((a, b) => a.name.localeCompare(b.name, 'ru'));
@@ -136,16 +136,20 @@ async function downloadReleaseAsset(s: GithubSource, f: RemoteFile & { from: { t
   }
   const { Capacitor, CapacitorHttp } = await import('@capacitor/core');
   const { Filesystem, Directory } = await import('@capacitor/filesystem');
-  // The token must not travel to the storage host: first get the signed link, then download it without headers.
-  const head = await CapacitorHttp.request({ method: 'GET', url, headers: headers(s, 'application/octet-stream'), disableRedirects: true });
-  const location = head.headers['Location'] ?? head.headers['location'];
-  if (!location) throw new Error(`GitHub не дал ссылку на файл (ответ ${head.status})`);
-  const path = `github/${f.from.id}-${f.name}`;
+  // Public repository: the public link redirects to storage, the native downloader follows it.
+  // Private one: the token must not travel to the storage host, so get the signed link first, then download it bare.
+  let location = f.from.url;
+  if (s.token) {
+    const head = await CapacitorHttp.request({ method: 'GET', url, headers: headers(s, 'application/octet-stream'), disableRedirects: true });
+    location = head.headers['Location'] ?? head.headers['location'] ?? '';
+    if (!location) throw new Error(`GitHub не дал ссылку на файл (ответ ${head.status})`);
+  }
+  const path = `github-${f.from.id}.bin`;
   const listener = onProgress
     ? await Filesystem.addListener('progress', (p) => p.contentLength && onProgress(Math.min(1, p.bytes / p.contentLength)))
     : null;
   try {
-    await Filesystem.downloadFile({ url: location, path, directory: Directory.Cache, recursive: true, progress: !!onProgress });
+    await Filesystem.downloadFile({ url: location, path, directory: Directory.Cache, progress: !!onProgress, readTimeout: 120_000, connectTimeout: 30_000 });
   } finally {
     await listener?.remove();
   }
@@ -160,5 +164,7 @@ export async function downloadRemote(s: GithubSource, f: RemoteFile, onProgress?
   const blob = f.from.type === 'file'
     ? await downloadRepoFile(s, f as RemoteFile & { from: { type: 'file' } }, onProgress)
     : await downloadReleaseAsset(s, f as RemoteFile & { from: { type: 'release' } }, onProgress);
+  // A cut connection or an HTML error page instead of the book: better say so than import an empty book.
+  if (!blob.size || (f.size && blob.size !== f.size)) throw new Error(`скачалось ${blob.size} из ${f.size} байт — попробуйте ещё раз`);
   return new File([blob], f.name, { type: blob.type || 'application/octet-stream' });
 }

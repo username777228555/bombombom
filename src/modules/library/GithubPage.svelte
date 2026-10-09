@@ -141,7 +141,7 @@
       <summary>Как положить книги</summary>
       <ol>
         <li>В репозитории приложения на github.com откройте папку <code>books</code> → «Add file → Upload files» (файлы до 25 МБ).</li>
-        <li>Большие файлы прикрепите к релизу: «Releases → Draft a new release → Attach files» (до 2 ГБ, скачиваются в приложении на телефоне).</li>
+        <li>Файлы больше 25 МБ сайт в папку не пускает — их кладут в релиз (до 2 ГБ): «Releases → Draft a new release» → в «Choose a tag» впишите <code>books</code> и нажмите «Create new tag» → перетащите книги в «Attach binaries» → «Publish release». Следующие книги добавляйте в тот же релиз: «Releases → books → ✎ Edit». Такие книги скачиваются в приложении на телефоне.</li>
         <li>Здесь нажмите «Обновить список» и «Скачать». Пакеты <code>.stolypin.json</code> оттуда же попадут в «Пакеты».</li>
         <li>Репозиторий открытый: файлы из него может скачать любой. Если сделаете его закрытым, впишите сюда токен (Fine-grained, Contents: Read-only).</li>
       </ol>

@@ -78,11 +78,25 @@ async function downscale(blob: Blob, width = 360): Promise<Blob | undefined> {
   }
 }
 
+/**
+ * pdf.js, legacy build: the modern one calls `Map.prototype.getOrInsertComputed`, which Android WebView and most
+ * browsers don't have yet («getOrInsertComputed is not a function» — every PDF failed to import). The legacy
+ * build ships core-js polyfills for both the page and the worker.
+ */
 export async function loadPdfjs() {
-  const pdfjs = await import('pdfjs-dist');
-  const worker = (await import('pdfjs-dist/build/pdf.worker.min.mjs?url')).default;
+  const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
+  const worker = (await import('pdfjs-dist/legacy/build/pdf.worker.min.mjs?url')).default;
   pdfjs.GlobalWorkerOptions.workerSrc = worker;
   return pdfjs;
+}
+
+/**
+ * Where pdf.js finds its decoders and font data (emitted by the `pdfjs-assets` plugin in vite.config.ts). Absolute
+ * URLs: the worker would resolve relative ones against its own script. Pass to every `getDocument()`.
+ */
+export function pdfAssets() {
+  const base = new URL('pdfjs/', document.baseURI).href;
+  return { wasmUrl: `${base}wasm/`, cMapUrl: `${base}cmaps/`, cMapPacked: true, standardFontDataUrl: `${base}standard_fonts/` };
 }
 
 export async function importBook(original: File): Promise<BookMeta> {
@@ -98,7 +112,7 @@ export async function importBook(original: File): Promise<BookMeta> {
 
   if (format === 'pdf') {
     const pdfjs = await loadPdfjs();
-    const task = pdfjs.getDocument({ data: new Uint8Array(await file.arrayBuffer()) });
+    const task = pdfjs.getDocument({ data: new Uint8Array(await file.arrayBuffer()), ...pdfAssets() });
     const doc = await task.promise;
     const meta = (await doc.getMetadata().catch(() => null))?.info as { Title?: string; Author?: string } | undefined;
     if (meta?.Title?.trim()) title = meta.Title.trim();

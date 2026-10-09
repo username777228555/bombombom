@@ -12,8 +12,13 @@ export interface ReignLike {
   title: string;
   from: number;
   to: number;
+  fromDate?: string;
+  toDate?: string;
   kind?: ReignKind;
+  label?: string;
 }
+
+export type ThroneKind = 'head' | 'regent' | 'council';
 
 /** A continuous stay on the Russian throne (consecutive posts of one person are merged). */
 export interface Reign {
@@ -22,10 +27,21 @@ export interface Reign {
   title: string;
   from: number;
   to: number;
-  kind: 'head' | 'regent';
+  /** «ММ-ДД» of the first / last day when known (old style before 1918, like event dates). */
+  fromDate?: string;
+  toDate?: string;
+  kind: ThroneKind;
+  /** Name shown instead of the person's (collective rule: «Семибоярщина»). */
+  label?: string;
   /** Still in office (no death date and the term reaches the current year). */
   ongoing: boolean;
 }
+
+/** Name of a reign on the ladder and the timeline. */
+export const reignName = (r: Pick<Reign, 'person' | 'label'>) => r.label ?? r.person.short ?? r.person.name;
+
+/** Short Russian label of a non-monarchic throne kind (empty for heads of state). */
+export const THRONE_KIND_LABEL: Record<ThroneKind, string> = { head: '', regent: 'регент', council: 'коллективное правление' };
 
 const HEAD_RULES: RegExp[] = [
   /^велик(ий|ая) княз|^велик(ий|ая) княгин/i, // checked together with HEAD_SEATS below
@@ -59,7 +75,7 @@ export function reignKind(r: ReignLike): ReignKind {
 
 export const isThrone = (r: ReignLike) => {
   const k = reignKind(r);
-  return k === 'head' || k === 'regent';
+  return k === 'head' || k === 'regent' || k === 'council';
 };
 
 /** Rulers ladder: heads of state and regents, consecutive posts of one person merged into one reign. */
@@ -68,7 +84,7 @@ export function buildRulers(persons: readonly PersonItem[], now = new Date().get
   for (const p of persons) {
     const posts = (p.reigns ?? [])
       .filter(isThrone)
-      .map((r) => ({ ...r, kind: reignKind(r) as 'head' | 'regent' }))
+      .map((r) => ({ ...r, kind: reignKind(r) as ThroneKind }))
       .sort((a, b) => a.from - b.from || a.to - b.to);
     let cur: (Reign & { titles: string[] }) | null = null;
     for (const r of posts) {
@@ -77,11 +93,14 @@ export function buildRulers(persons: readonly PersonItem[], now = new Date().get
       // deposed in 1068 and back in 1069) keeps the reigns separate.
       if (cur && cur.kind === r.kind && r.from <= cur.to) {
         if (!cur.titles.includes(r.title)) cur.titles.push(r.title);
-        cur.to = Math.max(cur.to, r.to);
+        if (r.to >= cur.to) {
+          cur.to = r.to;
+          cur.toDate = r.toDate;
+        }
         continue;
       }
       if (cur) out.push(finish(cur));
-      cur = { person: p, title: r.title, titles: [r.title], from: r.from, to: r.to, kind: r.kind, ongoing: false };
+      cur = { person: p, title: r.title, titles: [r.title], from: r.from, to: r.to, fromDate: r.fromDate, toDate: r.toDate, kind: r.kind, label: r.label, ongoing: false };
     }
     if (cur) out.push(finish(cur));
   }
@@ -92,11 +111,51 @@ export function buildRulers(persons: readonly PersonItem[], now = new Date().get
   return out.sort((a, b) => a.from - b.from || a.to - b.to);
 }
 
-/** Rulers on the throne in a given year (regents last). */
-export function rulersAt(rulers: readonly Reign[], year: number): Reign[] {
+/** Position of a calendar day inside its year, 0…1 (day precision is enough for the timeline). */
+const yearFraction = (month: number, day = 1) => (month - 1) / 12 + (day - 1) / 365;
+const parseMonthDay = (md: string) => md.split('-').map(Number) as [number, number];
+
+/** Start of a reign as a fractional year: 1982.86 for «1982, 11-12», the start of the year without a date. */
+export function reignStart(r: Pick<Reign, 'from' | 'fromDate'>): number {
+  return r.fromDate ? r.from + yearFraction(...parseMonthDay(r.fromDate)) : r.from;
+}
+/**
+ * End of a reign as a fractional year. Without a date the whole last year counts (`to + 1`), so a year-only
+ * reign still matches any day of the year it ended in; the timeline draws such bars to the start of `to`.
+ */
+export function reignEnd(r: Pick<Reign, 'to' | 'toDate' | 'ongoing'>, now = new Date().getFullYear()): number {
+  if (r.ongoing) return Math.max(r.to, now) + 1;
+  return r.toDate ? r.to + yearFraction(...parseMonthDay(r.toDate)) : r.to + 1;
+}
+
+const KIND_ORDER: Record<ThroneKind, number> = { head: 0, council: 1, regent: 2 };
+
+/**
+ * Rulers on the throne at a moment: a whole year, a month or an exact day (regents last). With exact reign
+ * dates in the data a transition year resolves to one ruler on a given day: 10 ноября 1982 — Брежнев,
+ * 12 ноября — Андропов.
+ */
+export function rulersAt(rulers: readonly Reign[], year: number, month?: number, day?: number): Reign[] {
+  const a = month ? year + yearFraction(month, day ?? 1) : year;
+  const b = month ? (day ? a : year + yearFraction(month) + 1 / 12) : year + 1;
   return rulers
-    .filter((r) => r.from <= year && year <= (r.ongoing ? Math.max(r.to, year) : r.to))
-    .sort((a, b) => (a.kind === b.kind ? a.from - b.from : a.kind === 'head' ? -1 : 1));
+    .filter((r) => {
+      const s = reignStart(r);
+      const e = reignEnd(r);
+      return day && month ? s <= a && a < e + 1e-9 : s < b && e > a;
+    })
+    .sort((x, y) => KIND_ORDER[x.kind] - KIND_ORDER[y.kind] || x.from - y.from);
+}
+
+/**
+ * Heads of state for a year shown without a specific event (the timeline «Синхронизатор»): the one who
+ * ruled on 1 July when the reign dates are known, otherwise everyone who ruled that year.
+ */
+export function headsOfYear(rulers: readonly Reign[], year: number): Reign[] {
+  const all = rulersAt(rulers, year);
+  if (all.filter((r) => r.kind !== 'regent').length < 2) return all;
+  const mid = rulersAt(rulers, year, 7, 1);
+  return mid.length ? mid : all;
 }
 
 /** Human length of a reign: «14 лет», «меньше года», «с 2012 г.» for the current one. */

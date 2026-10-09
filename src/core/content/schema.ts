@@ -31,6 +31,8 @@ const OptText = z.string().trim().min(1).optional();
 const Year = z.number().int('год — целое число').min(-3000).max(2100);
 const Month = z.number().int().min(1).max(12);
 const Day = z.number().int().min(1).max(31);
+/** Month and day «MM-DD» (до 1918 года — по старому стилю, как у событий). */
+const MonthDay = z.string().regex(/^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/, 'дата в формате «ММ-ДД», например «11-10»');
 /** Relative path inside the pack folder (e.g. "images/petr-i.webp") or an https URL. */
 const Asset = z.string().trim().min(1);
 
@@ -85,12 +87,30 @@ export const LINK_TYPES = [
 ] as const;
 export const SYMMETRIC_LINKS: ReadonlySet<string> = new Set(['spouse', 'ally', 'opponent', 'related']);
 /**
- * Kind of a post in `person.reigns`. Only `head` (глава Русского государства) and `regent` get onto the
- * rulers ladder, the timeline and the «При ком?» game; the rest are shown on the person's page only.
+ * Kind of a post in `person.reigns`. Only `head` (глава Русского государства), `regent` and `council`
+ * (коллективное правление: Семибоярщина, Совет всея земли) get onto the rulers ladder and the timeline; the
+ * «При ком?» game asks about `head` only. The rest are shown on the person's page only.
  * When omitted, the kind is inferred from the title (see `core/content/rulers.ts`).
  */
-export const REIGN_KINDS = ['head', 'regent', 'appanage', 'office', 'church', 'foreign'] as const;
+export const REIGN_KINDS = ['head', 'regent', 'council', 'appanage', 'office', 'church', 'foreign'] as const;
 export type ReignKind = (typeof REIGN_KINDS)[number];
+
+/**
+ * A post held by a person. `fromDate`/`toDate` («ММ-ДД») pin the exact day inside the first and the last year,
+ * so in a transition year (1982: Брежнев → Андропов) the timeline and games know who ruled on the day of an
+ * event. `label` replaces the person's name on the rulers ladder and the timeline for collective rule
+ * (`kind: council`): «Семибоярщина», «Совет всея земли».
+ */
+export const ReignSchema = z.strictObject({
+  title: Text,
+  from: Year,
+  to: Year,
+  fromDate: MonthDay.optional(),
+  toDate: MonthDay.optional(),
+  kind: z.enum(REIGN_KINDS).optional(),
+  label: OptText,
+});
+export type ReignItem = z.infer<typeof ReignSchema>;
 
 export const PeriodSchema = z.strictObject({
   id: Id,
@@ -113,6 +133,12 @@ export const PeriodsFileSchema = z.strictObject({
 export const EventSchema = z.strictObject({
   id: prefixed('event'),
   title: Text,
+  /**
+   * How to name the event in date questions when the title gives the date away and stays ambiguous without it:
+   * «Президентские выборы 1996 года» → «Президентские выборы, на которых Б. Н. Ельцин победил Г. А. Зюганова».
+   * Usually not needed: dates are cut from titles automatically (see `core/content/titles.ts`).
+   */
+  quizTitle: OptText,
   year: Year,
   month: Month.optional(),
   day: Day.optional(),
@@ -130,6 +156,8 @@ export const EventSchema = z.strictObject({
   persons: z.array(Id).optional(),
   image: Asset.optional(),
   imageInfo: ImageInfoSchema.optional(),
+  /** false — the picture gives the answer away (title page, caption, poster): not used in picture quizzes. */
+  imageQuiz: z.boolean().optional(),
   confidence: Confidence.optional(),
   /** Название статьи русской Википедии (для scripts/media/wiki_images.py; в приложении не показывается). */
   wiki: OptText,
@@ -146,7 +174,7 @@ export const PersonSchema = z.strictObject({
   circa: z.boolean().optional(),
   periods: z.array(Id).min(1),
   role: Text,
-  reigns: z.array(z.strictObject({ title: Text, from: Year, to: Year, kind: z.enum(REIGN_KINDS).optional() })).optional(),
+  reigns: z.array(ReignSchema).optional(),
   tags: z.array(z.enum(PERSON_TAGS)).optional(),
   importance: Importance.optional(),
   summary: Text,
@@ -177,6 +205,8 @@ export const CultureSchema = z.strictObject({
   importance: Importance.optional(),
   image: Asset.optional(),
   imageInfo: ImageInfoSchema.optional(),
+  /** false — the picture gives the answer away (title page, caption, portrait of the author): not used in picture quizzes. */
+  imageQuiz: z.boolean().optional(),
   confidence: Confidence.optional(),
   /** Название статьи русской Википедии (для scripts/media/wiki_images.py; в приложении не показывается). */
   wiki: OptText,

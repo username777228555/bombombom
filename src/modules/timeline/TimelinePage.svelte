@@ -6,7 +6,7 @@
   import Chip from '$lib/design/components/Chip.svelte';
   import EntityPreview from '$lib/components/EntityPreview.svelte';
   import { kb, type Reign } from '$lib/core/content/kb.svelte';
-  import { reignSpan } from '$lib/core/content/rulers';
+  import { reignEnd, reignName, reignSpan, reignStart, THRONE_KIND_LABEL } from '$lib/core/content/rulers';
   import { router } from '$lib/core/router.svelte';
   import { openSheet } from '$lib/core/ui.svelte';
   import { toRoman } from '$lib/core/utils/format';
@@ -199,12 +199,14 @@
     void kb.version;
     void meter.version;
     const reigns = kb.rulers().filter((r) => r.to >= start && r.from <= end);
-    const placed = packRows(reigns, ROWS.rulers, (r) => [x(r.from), Math.max(x(r.to), x(r.from) + 4)], 1);
+    // Exact reign dates (when known) place bars by month: Брежнев ends and Андропов starts in November 1982.
+    const barEnd = (r: Reign) => (r.toDate ? reignEnd(r) : r.to);
+    const placed = packRows(reigns, ROWS.rulers, (r) => [x(reignStart(r)), Math.max(x(barEnd(r)), x(reignStart(r)) + 4)], 1);
     return placed.map((p) => {
-      const x0 = Math.max(-4, x(p.item.from));
-      const w = Math.max(4, x(p.item.to) - x0);
+      const x0 = Math.max(-4, x(reignStart(p.item)));
+      const w = Math.max(4, x(barEnd(p.item)) - x0);
       const room = Math.min(w, width - Math.max(0, x0)) - 12;
-      const label = room > 18 ? meter.fit(p.item.person.short ?? p.item.person.name, room, FONT, 650) : '';
+      const label = room > 18 ? meter.fit(reignName(p.item), room, FONT, 650) : '';
       return { ...p, label, x0, w };
     });
   });
@@ -235,16 +237,22 @@
 
   // ——— «Синхронизатор»: what was going on at the centre of the view ———————————
   const centerYear = $derived(Math.round(start + span / 2));
-  const centerRulers = $derived.by(() => {
-    void kb.version;
-    return kb.rulersAt(centerYear);
-  });
   const centerPeriod = $derived(kb.periods.find((p) => centerYear >= p.from && centerYear < p.to));
   const centerEvent = $derived.by(() => {
     const near = visibleEvents
       .filter((e) => e.scope !== 'world' && Math.abs(e.year - centerYear) <= Math.max(1, span * 0.03))
       .sort((a, b) => (b.importance ?? 2) - (a.importance ?? 2) || Math.abs(a.year - centerYear) - Math.abs(b.year - centerYear));
     return near[0];
+  });
+  // The ruler on the day of the event shown next to it; for a bare year — the one who ruled most of it.
+  const centerRulers = $derived.by(() => {
+    void kb.version;
+    const e = centerEvent;
+    if (e && span <= 300 && e.year === centerYear) {
+      const on = kb.rulersOn(e);
+      if (on.length) return on;
+    }
+    return kb.headsOfYear(centerYear);
   });
   const fmtYear = (y: number) => (span > 300 ? `${toRoman(Math.ceil(y / 100))} в.` : `${y} г.`);
 </script>
@@ -307,7 +315,7 @@
       {#if lanes.rulers && layout.top.rulers !== undefined}
         {@const top = layout.top.rulers}
         {#each rulerRows.filter((r) => r.row >= 0) as r, i (r.item.person.id + '-' + r.item.from + '-' + i)}
-          <g class="reign" class:focus={focusId === r.item.person.id} class:regent={r.item.kind === 'regent'} onclick={() => open(r.item.person.id)} role="presentation">
+          <g class="reign" class:focus={focusId === r.item.person.id} class:regent={r.item.kind !== 'head'} onclick={() => open(r.item.person.id)} role="presentation">
             <rect x={r.x0} y={top + 20 + r.row * 26} width={r.w} height="21" rx="6" fill={colorAt(r.item.from)} />
             {#if r.label}<text x={Math.max(r.x0, 0) + 6} y={top + 35 + r.row * 26} class="rtext">{r.label}</text>{/if}
           </g>
@@ -350,7 +358,7 @@
         {#each centerRulers as r (r.person.id + r.from)}
           <button class="sync-ruler" onclick={() => open(r.person.id)}>
             <Crown size={15} />
-            <span><b>{r.person.short ?? r.person.name}</b> <small class="num">{reignSpan(r)}{r.kind === 'regent' ? ' · регент' : ''}</small></span>
+            <span><b>{reignName(r)}</b> <small class="num">{reignSpan(r)}{r.kind !== 'head' ? ` · ${THRONE_KIND_LABEL[r.kind]}` : ''}</small></span>
           </button>
         {/each}
       {:else}

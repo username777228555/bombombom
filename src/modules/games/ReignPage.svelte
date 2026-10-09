@@ -49,7 +49,7 @@
     const heads = kb.rulers().filter((r) => r.kind === 'head');
     const pool = kb.events
       .filter((e) => e.scope !== 'world' && (e.importance ?? 2) >= 2 && (!periods.length || periods.includes(e.period)))
-      .map((e) => ({ e, on: kb.rulersAt(e.year).filter((r) => r.kind === 'head') }))
+      .map((e) => ({ e, on: kb.rulersOn(e).filter((r) => r.kind === 'head') }))
       .filter((x) => x.on.length === 1);
     return sample(pool, Math.min(ROUNDS, pool.length)).map(({ e, on }) => {
       const answer = on[0]!;

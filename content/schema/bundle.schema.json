@@ -103,6 +103,10 @@
                   "type": "string",
                   "minLength": 1
                 },
+                "quizTitle": {
+                  "type": "string",
+                  "minLength": 1
+                },
                 "year": {
                   "type": "integer",
                   "minimum": -3000,
@@ -237,6 +241,9 @@
                   },
                   "additionalProperties": false
                 },
+                "imageQuiz": {
+                  "type": "boolean"
+                },
                 "confidence": {
                   "type": "string",
                   "enum": [
@@ -349,16 +356,29 @@
                         "minimum": -3000,
                         "maximum": 2100
                       },
+                      "fromDate": {
+                        "type": "string",
+                        "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+                      },
+                      "toDate": {
+                        "type": "string",
+                        "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+                      },
                       "kind": {
                         "type": "string",
                         "enum": [
                           "head",
                           "regent",
+                          "council",
                           "appanage",
                           "office",
                           "church",
                           "foreign"
                         ]
+                      },
+                      "label": {
+                        "type": "string",
+                        "minLength": 1
                       }
                     },
                     "required": [
@@ -616,6 +636,9 @@
                     }
                   },
                   "additionalProperties": false
+                },
+                "imageQuiz": {
+                  "type": "boolean"
                 },
                 "confidence": {
                   "type": "string",

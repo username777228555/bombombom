@@ -14,7 +14,7 @@
   import { EVENT_TAG_LABELS, PERSON_TAG_LABELS, CULTURE_KIND_LABELS, SOURCE_KIND_LABELS } from '$lib/core/content/schema';
   import { router, navigate } from '$lib/core/router.svelte';
   import { formatEventDate, formatLife, formatYear, centuryLabel, formatSpan } from '$lib/core/utils/format';
-  import { richText } from '$lib/core/utils/text';
+  import { detailsBeyondSummary, richText } from '$lib/core/utils/text';
   import { enroll } from '$lib/core/srs';
   import { toast } from '$lib/core/ui.svelte';
 
@@ -131,7 +131,8 @@
       {/if}
 
       {#if 'details' in e.item && e.item.details}
-        <div class="rich secondary">{@html richText(e.item.details)}</div>
+        {@const more = detailsBeyondSummary(e.item.summary, e.item.details)}
+        {#if more}<div class="rich secondary">{@html richText(more)}</div>{/if}
       {/if}
 
       <Card padding="md" tone="sunken">

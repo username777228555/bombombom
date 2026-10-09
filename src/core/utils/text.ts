@@ -75,6 +75,24 @@ export function stemRu(word: string): string {
   return pre + rv;
 }
 
+/**
+ * `details` without the repeated `summary`: packs (including imported ones) sometimes copy the summary into
+ * details, and the entity page would show the same text twice. Returns '' when nothing new is left.
+ */
+export function detailsBeyondSummary(summary: string, details: string): string {
+  const flat = (x: string) => x.replace(/\s+/g, ' ').trim();
+  const s = flat(summary);
+  const d = flat(details);
+  if (!d || d === s || s.startsWith(d)) return '';
+  if (s.length > 60 && d.startsWith(s)) {
+    const words = summary.trim().split(/\s+/).map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    const m = new RegExp(`^\\s*${words.join('\\s+')}`).exec(details);
+    const rest = (m ? details.slice(m[0].length) : d.slice(s.length)).trim();
+    return rest.length >= 40 ? rest : '';
+  }
+  return details;
+}
+
 export function escapeHtml(s: string): string {
   return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
 }

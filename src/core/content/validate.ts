@@ -172,6 +172,14 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
     const checkCredit = (file: string, path: string, it: { image?: string; imageInfo?: { author?: string; date?: string } }) => {
       if (it.image && !it.imageInfo) add('warning', file, path, 'у картинки нет сведений (imageInfo): заполните вручную или запустите scripts/media/wiki_images.py');
     };
+    // The entity page shows `details` right under `summary`: a repeated text reads as a glitch.
+    const checkDetails = (file: string, path: string, it: { summary: string; details?: string }) => {
+      if (!it.details) return;
+      const s = it.summary.replace(/\s+/g, ' ').trim();
+      const d = it.details.replace(/\s+/g, ' ').trim();
+      if (d === s || s.startsWith(d)) add('warning', file, path, 'details повторяет summary — удалите details');
+      else if (s.length > 60 && d.startsWith(s)) add('warning', file, path, 'details начинается с текста summary — уберите повтор');
+    };
     for (const { file, data: d } of pack.fragments) {
       findTodos(d, '', (path) => add('error', file, path, 'не заполнено («TODO…»): допишите значение или удалите поле'));
       const ref = (path: string, id: string | undefined, kinds?: EntityKind[]) => {
@@ -197,6 +205,7 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         if (e.day !== undefined && e.month === undefined) add('error', file, `${at}.day`, 'day без month');
         checkAsset(file, `${at}.image`, e.image);
         checkCredit(file, `${at}.imageInfo`, e);
+        checkDetails(file, `${at}.details`, e);
         dup(file, at, e.id, `e|${titleKey(e.title)}|${e.year}`);
         wikiRefs(file, at, e.refs);
       });
@@ -207,6 +216,7 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         if (p.born != null && p.died != null && p.died - p.born > 105) add('warning', file, at, `прожил ${p.died - p.born} лет — проверьте даты`);
         p.reigns?.forEach((r, j) => {
           if (r.to < r.from) add('error', file, `${at}.reigns[${j}]`, 'to раньше from');
+          if (r.to === r.from && r.fromDate && r.toDate && r.toDate < r.fromDate) add('error', file, `${at}.reigns[${j}]`, 'toDate раньше fromDate');
           if ((p.born != null && r.from < p.born) || (p.died != null && r.to > p.died + 1)) {
             add('warning', file, `${at}.reigns[${j}]`, 'правление выходит за годы жизни');
           }
@@ -218,6 +228,7 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         });
         checkAsset(file, `${at}.image`, p.image);
         checkCredit(file, `${at}.imageInfo`, p);
+        checkDetails(file, `${at}.details`, p);
         dup(file, at, p.id, `p|${titleKey(p.name)}`);
         wikiRefs(file, at, p.refs);
         if (p.short && p.short.split(/\s+/).length > p.name.split(/\s+/).length && /(вич|вна|ична)\b/.test(p.short)) {

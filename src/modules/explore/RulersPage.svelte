@@ -9,7 +9,7 @@
   import EpochBanner from '$lib/components/EpochBanner.svelte';
   import { reveal } from '$lib/design/motion';
   import { kb, type Reign } from '$lib/core/content/kb.svelte';
-  import { reignLengthLabel, reignSpan } from '$lib/core/content/rulers';
+  import { reignLengthLabel, reignName, reignSpan, THRONE_KIND_LABEL } from '$lib/core/content/rulers';
   import type { Period } from '$lib/core/content/schema';
   import { navigate } from '$lib/core/router.svelte';
   import { motionOK } from '$lib/core/settings.svelte';
@@ -106,16 +106,16 @@
             <button class="hit" onclick={() => navigate(`/entity/${r.person.id}`)} style:--c={colorOf(r)}>
               <Avatar name={r.person.name} color={colorOf(r)} size={36} image={kb.imageOf(kb.get(r.person.id)!)} />
               <span class="hit-txt">
-                <b>{r.person.short ?? r.person.name}</b>
-                <small>{r.kind === 'regent' ? 'Регент · ' : ''}{spanLabel(r)}</small>
+                <b>{reignName(r)}</b>
+                <small>{r.kind !== 'head' ? `${THRONE_KIND_LABEL[r.kind]} · ` : ''}{spanLabel(r)}</small>
               </span>
             </button>
           {/each}
         {:else if around}
           <p class="gap">
             В {year} г. престол был пуст — это междуцарствие или период, по которому в базе нет правителя.
-            {#if around.before}До этого: <b>{around.before.person.short ?? around.before.person.name}</b> ({spanLabel(around.before)}).{/if}
-            {#if around.after}После: <b>{around.after.person.short ?? around.after.person.name}</b> ({spanLabel(around.after)}).{/if}
+            {#if around.before}До этого: <b>{reignName(around.before)}</b> ({spanLabel(around.before)}).{/if}
+            {#if around.after}После: <b>{reignName(around.after)}</b> ({spanLabel(around.after)}).{/if}
           </p>
         {/if}
         {#if yearEvents.length}
@@ -148,15 +148,15 @@
       </div>
       <ol class="ladder">
         {#each g.items as r, k (keyOf(r))}
-          <li id="r-{keyOf(r)}" use:reveal={{ delay: Math.min(k, 6) * 35, y: 10 }} style:--c={colorOf(r)} class:hit={hitKeys.has(keyOf(r))} class:regent={r.kind === 'regent'}>
+          <li id="r-{keyOf(r)}" use:reveal={{ delay: Math.min(k, 6) * 35, y: 10 }} style:--c={colorOf(r)} class:hit={hitKeys.has(keyOf(r))} class:regent={r.kind !== 'head'}>
             <span class="years num">{r.from}<small>{r.ongoing ? 'н. в.' : r.to}</small></span>
             <span class="node" aria-hidden="true"></span>
             <button class="who" onclick={() => navigate(`/entity/${r.person.id}`)}>
               <Avatar name={r.person.name} color={colorOf(r)} size={42} image={kb.imageOf(kb.get(r.person.id)!)} />
               <span class="txt">
                 <span class="name-row">
-                  <strong>{r.person.short ?? r.person.name}</strong>
-                  {#if r.kind === 'regent'}<span class="tag">регент</span>{/if}
+                  <strong>{reignName(r)}</strong>
+                  {#if r.kind !== 'head'}<span class="tag">{THRONE_KIND_LABEL[r.kind]}</span>{/if}
                 </span>
                 <span class="title">{r.title}</span>
                 <span class="len">

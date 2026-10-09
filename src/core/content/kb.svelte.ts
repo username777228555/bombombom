@@ -9,7 +9,7 @@ import {
 } from './schema';
 import { db } from '../db';
 import { settings } from '../settings.svelte';
-import { buildRulers, rulersAt, type Reign } from './rulers';
+import { buildRulers, headsOfYear, rulersAt, type Reign } from './rulers';
 
 const periodsModules = import.meta.glob<unknown>('/content/core/periods.json', { eager: true, import: 'default' });
 const manifestLoaders = import.meta.glob<unknown>('/content/packs/*/pack.json', { import: 'default' });
@@ -287,9 +287,19 @@ class KnowledgeBase {
     return this.rulerList;
   }
 
-  /** Who was on the throne in a given year. */
-  rulersAt(year: number): Reign[] {
-    return rulersAt(this.rulerList, year);
+  /** Who was on the throne in a given year, month or on a given day (see `rulersAt` in rulers.ts). */
+  rulersAt(year: number, month?: number, day?: number): Reign[] {
+    return rulersAt(this.rulerList, year, month, day);
+  }
+
+  /** Who was on the throne when an event happened (its own date resolves transition years). */
+  rulersOn(e: Pick<EventItem, 'year' | 'month' | 'day'>): Reign[] {
+    return rulersAt(this.rulerList, e.year, e.month, e.day);
+  }
+
+  /** Rulers to show for a year without a particular event: one per transition year when dates are known. */
+  headsOfYear(year: number): Reign[] {
+    return headsOfYear(this.rulerList, year);
   }
 
   /** True when the entity comes from an AI-generated pack (shows the «сверьте» badge). */

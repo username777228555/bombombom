@@ -2,11 +2,11 @@ name: Media (Wikimedia images)
 
 # Downloads illustrations for content packs from Wikimedia Commons (with author, date and licence),
 # crops portraits around faces and commits the images back to the branch. Run it manually or push a commit
-# with «[media]» in its message to a gumball/** or media/** branch. Script: scripts/media/wiki_images.py.
+# with «[media]» in its message to main or a gumball/** / media/** branch. Script: scripts/media/wiki_images.py.
 on:
   workflow_dispatch:
   push:
-    branches: ['gumball/**', 'media/**']
+    branches: [main, 'gumball/**', 'media/**']
 
 permissions:
   contents: write

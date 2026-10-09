@@ -174,7 +174,7 @@ pnpm content:add link    c-tsarevna-sofya e-streletskiy-bunt-1698 --type related
 4. Без интернета или вручную: webp до ~300 КБ в `images/<вид>/<id>.webp`, в `imageInfo` — `title`,
    `author`, `date`, `about`, `license` по-русски. Только общественное достояние или свободные лицензии.
 
-В CI то же самое делает workflow «Media»: коммит с `[media]` в сообщении в ветку `gumball/**` или `media/**`.
+В CI то же самое делает workflow «Media»: коммит с `[media]` в сообщении в `main` или в ветку `gumball/**`/`media/**`.
 
 ### Шаг 5. Проверка
 

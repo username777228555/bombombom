@@ -18,7 +18,7 @@
 | `pnpm content:check [--file f] [--pack id]` | валидация пакетов контента (TODO, дубликаты, битые ссылки — ошибки/предупреждения) |
 | `pnpm content:books` | все файлы из каталога «Книжная полка» распознаются импортом Библиотеки |
 | `pnpm content:rulers` | лестница правителей и классификация должностей (`reigns[].kind`) |
-| `python3 scripts/media/wiki_images.py fetch\|apply\|gc` | картинки с Wikimedia Commons с автором, датой и лицензией (портреты обрезаются по лицу); в CI — workflow «Media» (коммит с `[media]` в ветку `gumball/**`/`media/**`), ручной выбор файла — `scripts/media/overrides.json` |
+| `python3 scripts/media/wiki_images.py fetch\|apply\|gc` | картинки с Wikimedia Commons с автором, датой и лицензией (портреты обрезаются по лицу); в CI — workflow «Media» (коммит с `[media]` в `main` или в ветку `gumball/**`/`media/**`), ручной выбор файла — `scripts/media/overrides.json` |
 | `pnpm content:new <id> "Название"` | заготовка нового пакета |
 | `pnpm content:bundle <id>` | пакет одним файлом для импорта в приложении |
 | `pnpm content:schema` | JSON Schema для редакторов (после правки `schema.ts`) |
@@ -68,7 +68,7 @@ Actions → Android APK → Run workflow.
   `core/content/answers.ts` (любая общепринятая форма имени).
 - `person.short` — имя, под которым человека знают школьники («Дмитрий Донской», «Николай II»), а не отчество.
   Отчество и другие формы — в `aliases`.
-- В правители (лестница, лента времени, игры) попадают только `head` и `regent` из `reigns`.
+- В правители (лестница, лента времени) попадают только `head`, `regent` и `council` (коллективное правление) из `reigns`; точные даты — `fromDate`/`toDate`.
   Министры, патриархи, ханы и иностранные монархи хранятся в `reigns`, но на лестницу не попадают:
   их вид определяется автоматически (`core/content/rulers.ts`) или полем `kind`.
 - Код: TypeScript strict, Svelte 5 runes (`$state`, `$derived`, `$props`), без `any`, если тип известен.

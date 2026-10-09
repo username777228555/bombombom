@@ -7,11 +7,10 @@
   import TextField from '$lib/design/components/TextField.svelte';
   import Ornament from '$lib/design/components/Ornament.svelte';
   import EmptyState from '$lib/design/components/EmptyState.svelte';
-  import { findDeck, type StudyCard } from '$lib/core/content/cards';
+  import { checkTyped, findDeck, typedFormat, type StudyCard } from '$lib/core/content/cards';
   import { router } from '$lib/core/router.svelte';
   import { record, saveResult } from '$lib/core/progress.svelte';
   import { haptic } from '$lib/core/platform';
-  import { answerMatches } from '$lib/core/utils/text';
   import { sample, shuffle } from '$lib/core/utils/random';
   import { burst } from '$lib/design/confetti';
 
@@ -91,13 +90,7 @@
 
   function submit() {
     if (!task || verdict !== null || !typed.trim()) return;
-    const expected = task.reverse ? task.card.front : task.card.back;
-    let ok = answerMatches(typed, [expected]);
-    if (!ok && task.card.kind === 'date' && !task.reverse) {
-      const year = expected.match(/-?\d{3,4}/)?.[0];
-      ok = !!year && typed.replace(/\D/g, '') === year.replace('-', '');
-    }
-    judge(ok);
+    judge(checkTyped(task.card, task.reverse, typed));
   }
 
   function override() {
@@ -153,7 +146,7 @@
             {/each}
           </div>
         {:else}
-          <TextField bind:value={typed} placeholder="Ваш ответ" autofocus onenter={submit} status={verdict === null ? 'none' : verdict ? 'ok' : 'bad'} />
+          <TextField bind:value={typed} placeholder="Ваш ответ" hint={verdict === null ? typedFormat(task.card, task.reverse) : undefined} autofocus onenter={submit} status={verdict === null ? 'none' : verdict ? 'ok' : 'bad'} />
           {#if verdict === false}
             <div class="reveal" in:fly={{ y: 10 }}>
               <span class="eyebrow">Правильный ответ</span>

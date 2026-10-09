@@ -4,6 +4,8 @@
     value: string;
     placeholder?: string;
     label?: string;
+    /** Small note under the field: expected answer format and the like. */
+    hint?: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     icon?: Component<any>;
     multiline?: boolean;
@@ -17,7 +19,7 @@
     el?: HTMLInputElement | HTMLTextAreaElement | null;
   }
   let {
-    value = $bindable(), placeholder = '', label, icon: Icon, multiline = false, rows = 4, type = 'text',
+    value = $bindable(), placeholder = '', label, hint, icon: Icon, multiline = false, rows = 4, type = 'text',
     inputmode, autofocus = false, status = 'none', onenter, oninput, el = $bindable(null),
   }: Props = $props();
 
@@ -47,11 +49,13 @@
       />
     {/if}
   </span>
+  {#if hint}<small class="hint">{hint}</small>{/if}
 </label>
 
 <style>
   .field { display: flex; flex-direction: column; gap: 6px; width: 100%; }
   .lbl { padding-left: 4px; }
+  .hint { padding-left: 4px; font-size: var(--text-xs); color: var(--ink-3); line-height: 1.35; }
   .box { position: relative; display: block; }
   input, textarea {
     width: 100%;

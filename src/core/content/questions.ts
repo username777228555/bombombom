@@ -5,6 +5,7 @@ import { CULTURE_KIND_LABELS } from './schema';
 import { centuryLabel, century, formatEventDate, formatYear, toRoman } from '../utils/format';
 import { pick, sample, shuffle, type Rng } from '../utils/random';
 import { quizTitle as qt } from './titles';
+import { personAnswerForms } from './answers';
 
 export interface GenOptions {
   periods?: string[];
@@ -131,10 +132,9 @@ const G: Record<string, Gen> = {
   hints({ rng, persons }) {
     const p = pick(persons.filter((x) => (x.hints?.length ?? 0) >= 3), rng);
     if (!p) return null;
-    const surname = p.name.split(' ').filter((w) => !/^[IVX]+$/.test(w));
     return {
       type: 'hints', prompt: 'Кто это? Чем меньше подсказок — тем больше баллов', hints: p.hints!,
-      answers: [p.name, ...(p.short ? [p.short] : []), ...(p.aliases ?? []), ...(surname.length > 1 ? [surname.at(-1)!] : [])],
+      answers: [p.short ?? p.name, ...personAnswerForms(p)],
       explain: `${p.name} — ${p.role}. ${p.summary}`, entity: p.id, period: p.periods[0],
     };
   },

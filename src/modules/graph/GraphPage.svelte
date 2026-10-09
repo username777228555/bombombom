@@ -25,6 +25,9 @@
   let cy: Core | null = null;
   let loading = $state(true);
   let counts = $state({ nodes: 0, edges: 0 });
+  /** Materials of the epoch without a single link: hidden by default, shown as a tidy grid under the graph. */
+  let showLonely = $state(false);
+  let lonelyCount = $state(0);
   let shownLabels = $state(0);
 
   const EDGE_COLORS: Record<string, string> = {
@@ -76,9 +79,14 @@
     const edges: ElementDefinition[] = kb.edges
       .filter((ed) => nodes.has(ed.from) && nodes.has(ed.to) && (core.has(ed.from) || core.has(ed.to)))
       .map((ed, i) => ({ data: { id: `e${i}-${ed.from}-${ed.to}`, source: ed.from, target: ed.to, type: ed.type, color: EDGE_COLORS[ed.type] ?? '#9c8f7c', label: LINK_TYPE_LABELS[ed.type as keyof typeof LINK_TYPE_LABELS] ?? '' } }));
-    // Drop isolated faded nodes.
+    // Drop isolated faded nodes; isolated nodes of the epoch itself go to the «без связей» grid (or are hidden).
     const linked = new Set(edges.flatMap((e) => [e.data.source as string, e.data.target as string]));
-    const list = [...nodes.values()].filter((n) => !n.classes?.includes('faded') || linked.has(n.data.id as string));
+    const lonely = new Set([...core].filter((id) => !linked.has(id) && id !== focus));
+    lonelyCount = mode === 'period' ? lonely.size : 0;
+    const list = [...nodes.values()]
+      .filter((n) => !n.classes?.includes('faded') || linked.has(n.data.id as string))
+      .filter((n) => showLonely || !lonely.has(n.data.id as string))
+      .map((n) => (lonely.has(n.data.id as string) ? { ...n, classes: `${n.classes ?? ''} lonely` } : n));
     counts = { nodes: list.length, edges: edges.length };
     return [...list, ...edges];
   }
@@ -172,13 +180,14 @@
         name: 'concentric', concentric: (nd: NodeSingular) => (nd.id() === focus ? 3 : nd.data('faded') ? 1 : 2), levelWidth: () => 1,
         minNodeSpacing: 18, avoidOverlap: true, nodeDimensionsIncludeLabels: true, animate: false, padding: 20,
       } as never)
-      : inst.layout({
+      : inst.elements().not('.lonely').layout({
         name: 'fcose', quality: 'proof', randomize: true, animate: false, nodeDimensionsIncludeLabels: true,
         nodeRepulsion: () => (n > 120 ? 9000 : 6500), idealEdgeLength: () => (n > 120 ? 70 : 55), edgeElasticity: () => 0.4,
         nodeSeparation: 60, gravity: 0.3, gravityRange: 3.2, numIter: 2500, packComponents: true, tile: true, padding: 20,
       } as never);
     layout.one('layoutstop', () => {
       if (cy !== inst) return;
+      placeLonely(inst);
       separate(inst, { pad: 10, fixed: mode === 'focus' ? focus : null });
       inst.fit(undefined, 24);
       const target = inst.$id(focus ?? '');
@@ -207,6 +216,21 @@
         inst.elements().removeClass('dim hl');
         scheduleRelabel(0);
       }
+    });
+  }
+
+  /** Lines the unlinked nodes up in a grid below the connected graph, ordered by year. */
+  function placeLonely(inst: Core) {
+    const lonely = inst.nodes('.lonely');
+    if (lonely.empty()) return;
+    const rest = inst.nodes().not('.lonely');
+    const bb = rest.nonempty() ? rest.boundingBox({}) : { x1: 0, x2: 600, y2: 0, w: 600 };
+    const cellW = LABEL_W + 26;
+    const cellH = 78;
+    const cols = Math.max(3, Math.floor(Math.max(bb.w, cellW * 3) / cellW));
+    const sorted = lonely.sort((a, b) => (kb.yearOf(kb.get(a.id())!) ?? 0) - (kb.yearOf(kb.get(b.id())!) ?? 0));
+    sorted.forEach((nd, i) => {
+      nd.position({ x: bb.x1 + (i % cols) * cellW + cellW / 2, y: bb.y2 + 110 + Math.floor(i / cols) * cellH });
     });
   }
 
@@ -274,6 +298,14 @@
   <p class="muted meta">
     {pluralN(counts.nodes, WORDS.node)} · {pluralN(counts.edges, WORDS.link)} · подписано {shownLabels}. Приблизьте, чтобы увидеть остальные подписи; нажмите на узел, чтобы подсветить его связи.
   </p>
+  {#if lonelyCount}
+    <div class="lonely-row">
+      <Chip size="sm" selected={showLonely} onclick={() => { showLonely = !showLonely; void render(); }}>
+        {showLonely ? 'Скрыть' : 'Показать'} без связей: {lonelyCount}
+      </Chip>
+      <span class="muted small">{showLonely ? 'они собраны внизу графа, по годам' : 'материалы эпохи, у которых пока нет связей'}</span>
+    </div>
+  {/if}
 
   <div class="legend">
     {#each ['cause', 'successor', 'parent', 'leader', 'participant', 'author', 'ally', 'opponent'] as t (t)}
@@ -311,6 +343,8 @@
   }
   .zoom button:active { transform: scale(0.94); }
   .meta { font-size: var(--text-xs); margin-top: var(--sp-2); line-height: 1.45; }
+  .lonely-row { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; margin-top: var(--sp-2); }
+  .lonely-row .small { font-size: var(--text-xs); }
   .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: var(--sp-3); font-size: var(--text-xs); color: var(--ink-3); }
   .legend span { display: inline-flex; align-items: center; gap: 6px; }
   .legend i { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }

@@ -463,6 +463,7 @@
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Volga-Bulgaria.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Волжская Булгария"
     },
     {
@@ -647,6 +648,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:The_instance_Sinodal%60niy_of_Pravda_Ruskaya_page_1_1.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Русская Правда"
     },
     {
@@ -671,6 +673,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:South-eastern_Europe_1040.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Печенеги"
     },
     {
@@ -696,6 +699,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Illarion_ikona.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Иларион Киевский"
     },
     {
@@ -809,6 +813,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Russkaya_Pravda_Akadem_codex_2.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Правда Ярославичей"
     },
     {
@@ -887,6 +892,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Vladimir_monomakh.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Владимир Всеволодович Мономах"
     },
     {
@@ -952,6 +958,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Mstislav_I_of_Rus.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Мстислав Владимирович Великий"
     },
     {
@@ -973,6 +980,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Expansion_of_christianity.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Разделение Католической и Православной церквей"
     }
   ],

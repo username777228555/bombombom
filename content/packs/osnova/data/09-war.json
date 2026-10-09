@@ -140,6 +140,7 @@
         "license": "CC BY-SA 3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Eastern_Front_1941-06_to_1941-09.png"
       },
+      "imageQuiz": false,
       "wiki": "Смоленское сражение (1941)"
     },
     {
@@ -326,6 +327,7 @@
         "license": "CC BY-SA 3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Krym_42-DE.png"
       },
+      "imageQuiz": false,
       "wiki": "Оборона Севастополя и битва за Крым"
     },
     {
@@ -403,6 +405,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Ww2_map22_May7_July_1942.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Харьковская операция (1942)"
     },
     {
@@ -539,6 +542,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Map_Battle_of_Stalingrad-ru.svg"
       },
+      "imageQuiz": false,
       "wiki": "Операция «Уран»"
     },
     {
@@ -806,6 +810,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%B8%D1%81%D0%BB%D0%BE-%D0%9E%D0%B4%D0%B5%D1%80%D1%81%D0%BA%D0%B0%D1%8F_%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Висло-Одерская операция"
     },
     {
@@ -892,6 +897,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:German_instrument_of_surrender2.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Акт о капитуляции Германии"
     },
     {
@@ -1934,6 +1940,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Orden-Pobeda-Marshal_Vasilevsky.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Орден «Победа»"
     },
     {
@@ -1993,6 +2000,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Soviet_Znamya_Pobedy.svg"
       },
+      "imageQuiz": false,
       "wiki": "Знамя Победы"
     }
   ],

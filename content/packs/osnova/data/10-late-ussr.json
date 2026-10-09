@@ -51,6 +51,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%90%D0%BD%D0%B4%D1%80%D0%B5%D0%B9_%D0%96%D0%B4%D0%B0%D0%BD%D0%BE%D0%B2_(1941)_(cropped).jpg"
       },
+      "imageQuiz": false,
       "wiki": "Жданов, Андрей Александрович"
     },
     {
@@ -94,6 +95,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:1rouble1947b.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Денежная реформа в СССР 1947 года"
     },
     {
@@ -120,6 +122,7 @@
         "license": "CC BY-SA 3.0",
         "source": "https://commons.wikimedia.org/wiki/File:BerlinerBlockadeLuftwege.png"
       },
+      "imageQuiz": false,
       "wiki": "Блокада Западного Берлина"
     },
     {
@@ -207,6 +210,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Message-1953.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Дело врачей",
       "persons": [
         "p-stalin"
@@ -236,6 +240,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Stalin_funeral._Stalin_disease_first_reported_by_Pravda.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Смерть Сталина"
     },
     {
@@ -263,6 +268,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Lavrentiy_Beria_portrait_2.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Берия, Лаврентий Павлович"
     },
     {
@@ -383,6 +389,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Georgy_Malenkov_1953_(cropped).jpg"
       },
+      "imageQuiz": false,
       "wiki": "Антипартийная группа"
     },
     {
@@ -457,6 +464,7 @@
         "license": "CC BY 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%BE%D1%81%D1%82%D0%BE%D0%BA-1.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Восток-1"
     },
     {
@@ -564,6 +572,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Nikita_Khrushchev_official_portrait.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Хрущёв, Никита Сергеевич"
     },
     {
@@ -591,6 +600,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Kossygin_Glassboro.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Экономическая реформа 1965 года в СССР"
     },
     {
@@ -615,6 +625,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:1980_CPA_5064.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Восход-2"
     },
     {
@@ -669,6 +680,7 @@
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Schlussakte_Helsinki_1975_(KSZE).jpg"
       },
+      "imageQuiz": false,
       "wiki": "Хельсинкские соглашения"
     },
     {
@@ -767,6 +779,7 @@
         "license": "CC0",
         "source": "https://commons.wikimedia.org/wiki/File:Leonid_Brezjnev,_leider_van_de_Sovjet-Unie,_Bestanddeelnr_925-6564.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Брежнев, Леонид Ильич"
     },
     {
@@ -793,6 +806,7 @@
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:GorbachevMS.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Горбачёв, Михаил Сергеевич"
     },
     {
@@ -876,6 +890,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Credentials_Card_Published_by_the_Smolensk_Regional_Committee_for_the_18th_Conference_of_the_All-Union_Communist_Party_(Bolsheviks).jpg"
       },
+      "imageQuiz": false,
       "wiki": "XIX конференция КПСС"
     },
     {
@@ -996,6 +1011,7 @@
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Changes_in_national_boundaries_after_the_end_of_the_Cold_War.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Распад СССР"
     }
   ],

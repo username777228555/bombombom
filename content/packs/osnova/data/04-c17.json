@@ -25,6 +25,7 @@
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_Boris_Godunov.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Борис Годунов"
     },
     {
@@ -93,6 +94,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Dmitry_Pretender_of_the_Emperor_of_Russia.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Лжедмитрий I"
     },
     {
@@ -119,6 +121,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Vasily_IV.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Василий IV Шуйский"
     },
     {
@@ -247,6 +250,7 @@
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%BE%D1%81%D1%82%D0%BE%D1%87%D0%BD%D0%B0%D1%8F_%D0%95%D0%B2%D1%80%D0%BE%D0%BF%D0%B0_%D0%B2_1600-1648_%D0%B3%D0%B3.gif"
       },
+      "imageQuiz": false,
       "wiki": "Русско-польская война (1609—1618)"
     },
     {
@@ -271,6 +275,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Schmolenska_1610_(126998172)_(cropped).jpg"
       },
+      "imageQuiz": false,
       "wiki": "Оборона Смоленска (1609—1611)"
     },
     {
@@ -294,6 +299,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:POL_K%C5%82uszyn_1610.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Битва при Клушине"
     },
     {
@@ -344,6 +350,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Slaget_vid_Novgorod_1611_(Johan_Hammer)_-_Nationalmuseum_-_35876.tif"
       },
+      "imageQuiz": false,
       "wiki": "Русско-шведская война (1610—1617)"
     },
     {
@@ -443,6 +450,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F_%D0%B2_XVII_%D0%B2%D0%B5%D0%BA%D0%B5.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Столбовский мир",
       "persons": [
         "p-mikhail-fedorovich"
@@ -474,6 +482,7 @@
         "license": "CC BY-SA 3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Truce_of_Deulino_1618-1619.PNG"
       },
+      "imageQuiz": false,
       "wiki": "Деулинское перемирие"
     },
     {
@@ -496,6 +505,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Shturm_Smolenska_1633.JPG"
       },
+      "imageQuiz": false,
       "wiki": "Смоленская война"
     },
     {
@@ -667,6 +677,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:War_between_Muscovy_and_the_Polish-Lithuanian_Commonwealth_of_1654-1667_Montage.png"
       },
+      "imageQuiz": false,
       "wiki": "Русско-польская война (1654—1667)"
     },
     {
@@ -695,6 +706,7 @@
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%B0%D0%BC%D0%B5%D0%BD%D1%8C_%D0%90%D0%BD%D0%B4%D1%80%D1%83%D1%81%D0%BE%D0%B2%D0%BE.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Андрусовское перемирие"
     },
     {
@@ -815,6 +827,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Astrachan2.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Восстание Разина"
     },
     {
@@ -872,6 +885,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Moscow_Uprising_of_1682_(engraving).jpg"
       },
+      "imageQuiz": false,
       "wiki": "Стрелецкий бунт (1682)"
     },
     {
@@ -901,6 +915,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Polish-Russian_peace_treaty_1686.JPG"
       },
+      "imageQuiz": false,
       "wiki": "Вечный мир (1686)"
     },
     {
@@ -929,6 +944,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%9A%D1%80%D1%8B%D0%BC%D1%81%D0%BA%D0%B8%D0%B5_%D0%BF%D0%BE%D1%85%D0%BE%D0%B4%D1%8B_%D0%93%D0%BE%D0%BB%D0%B8%D1%86%D1%8B%D0%BD%D0%B0.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Крымские походы"
     },
     {
@@ -953,6 +969,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Treaty_of_Nerchinsk_(1689).jpg"
       },
+      "imageQuiz": false,
       "wiki": "Нерчинский договор"
     },
     {

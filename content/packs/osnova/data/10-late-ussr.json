@@ -2531,16 +2531,6 @@
       "type": "related"
     },
     {
-      "from": "p-brezhnev",
-      "to": "c-moskva-slezam-ne-verit",
-      "type": "related"
-    },
-    {
-      "from": "p-brezhnev",
-      "to": "c-ostankinskaya-bashnya",
-      "type": "related"
-    },
-    {
       "from": "c-ostankinskaya-bashnya",
       "to": "c-atomnyy-ledokol-lenin",
       "type": "related"

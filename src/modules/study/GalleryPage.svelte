@@ -17,6 +17,7 @@
   import Chip from '$lib/design/components/Chip.svelte';
   import Button from '$lib/design/components/Button.svelte';
   import Painting from '$lib/design/components/Painting.svelte';
+  import ZoomImage from '$lib/design/components/ZoomImage.svelte';
   import Ornament from '$lib/design/components/Ornament.svelte';
   import ImageCredit from '$lib/components/ImageCredit.svelte';
   import { kb } from '$lib/core/content/kb.svelte';
@@ -82,6 +83,8 @@
     open = (i + pics.length) % pics.length;
   }
   let downX = 0;
+  /** The viewer picture is zoomed or being pinched: swipes pan it instead of switching pictures. */
+  let zoomBusy = $state(false);
   function onKey(e: KeyboardEvent) {
     const o = open;
     if (o === null) return;
@@ -219,7 +222,7 @@
     {#key `${mode}-${qi}`}
       <div class="quiz" in:fly={{ y: 20, duration: 300 }}>
         <div class="qhead"><span class="eyebrow">{mode === 'author' ? 'Кто автор?' : 'Что изображено?'} · {qi + 1} из {rounds.length}</span><strong class="num qscore">{score}</strong></div>
-        <Painting src={round.pic.src} alt="" height="min(46dvh, 360px)" />
+        <Painting src={round.pic.src} alt="" height="min(46dvh, 360px)" fit="contain" />
         <div class="opts">
           {#each round.options as o, k (o)}
             {@const ok = picked && o === round.answer}
@@ -247,11 +250,12 @@
 {#if cur && open !== null}
   <div class="viewer" transition:fade={{ duration: 200 }} role="dialog" tabindex="-1" aria-modal="true" aria-label={cur.title}
     onpointerdown={(e) => (downX = e.clientX)}
-    onpointerup={(e) => { const dx = e.clientX - downX; if (Math.abs(dx) > 60) show(open! + (dx < 0 ? 1 : -1)); }}>
+    onpointerup={(e) => { const dx = e.clientX - downX; if (!zoomBusy && Math.abs(dx) > 60) show(open! + (dx < 0 ? 1 : -1)); }}>
     <button class="close" aria-label="Закрыть" onclick={() => (open = null)}><X size={22} /></button>
     {#key cur.id}
       <div class="stage" in:scale={{ start: 0.96, duration: 280 }}>
-        <Painting src={cur.src} alt={cur.title} height="min(62dvh, 560px)" />
+        <ZoomImage src={cur.src} alt={cur.title} height="min(62dvh, 560px)" bind:busy={zoomBusy} />
+        <p class="zoom-tip">Дважды коснитесь или разведите пальцы, чтобы приблизить</p>
         <div class="info" in:fly={{ y: 10, delay: 120 }}>
           <span class="eyebrow light">{kb.periodById.get(cur.period)?.title} · {cur.kind === 'culture' ? 'искусство' : 'событие'}</span>
           <h2>{cur.title}</h2>
@@ -292,6 +296,7 @@
 
   .viewer { position: fixed; inset: 0; z-index: 80; background: radial-gradient(120% 90% at 50% 20%, #2b2016, #0d0906); overflow-y: auto; padding: calc(var(--safe-top) + 56px) var(--sp-4) calc(var(--safe-bottom) + var(--sp-6)); touch-action: pan-y; }
   .stage { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--sp-4); }
+  .zoom-tip { margin: calc(-1 * var(--sp-3)) 0 0; text-align: center; font-size: var(--text-2xs); color: rgba(243, 234, 219, 0.55); }
   .info { color: #f3eadb; display: flex; flex-direction: column; gap: var(--sp-2); align-items: flex-start; }
   .info h2 { font-size: var(--text-2xl); color: #fff8ea; }
   .eyebrow.light { color: rgba(240, 214, 160, 0.8); }

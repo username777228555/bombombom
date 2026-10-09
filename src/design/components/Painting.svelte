@@ -13,12 +13,14 @@
     height?: string;
     frame?: boolean;
     drift?: boolean;
+    /** 'contain' shows the whole picture (wide photos are not cropped; quizzes), 'cover' fills the canvas. */
+    fit?: 'cover' | 'contain';
     /** Overlay content at the bottom (title, date…) on a dark gradient. */
     caption?: Snippet;
     onclick?: () => void;
   }
-  let { src, alt = '', height = '220px', frame = true, drift = true, caption, onclick }: Props = $props();
-  const moving = $derived(drift && motionOK());
+  let { src, alt = '', height = '220px', frame = true, drift = true, fit = 'cover', caption, onclick }: Props = $props();
+  const moving = $derived(drift && fit === 'cover' && motionOK());
   // Every painting drifts in its own direction, so a grid of them does not move in lockstep.
   const seed = $derived([...src].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7));
   const dx = $derived(((seed % 7) - 3) * 1.2);
@@ -38,7 +40,7 @@
   aria-label={onclick ? alt : undefined}
 >
   <span class="canvas">
-    <img {src} {alt} class:moving loading="lazy" decoding="async" />
+    <img {src} {alt} class:moving class:contain={fit === 'contain'} loading="lazy" decoding="async" />
     {#if caption}<span class="cap">{@render caption()}</span>{/if}
   </span>
   {#if frame}
@@ -83,6 +85,7 @@
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
   }
   img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); }
+  img.contain { object-fit: contain; transform: none; }
   img.moving { animation: kb-drift 22s ease-in-out infinite alternate; will-change: transform; }
   @keyframes kb-drift {
     from { transform: scale(1.04) translate(0, 0); }

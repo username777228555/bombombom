@@ -11,7 +11,7 @@
   import { guideFor } from '$lib/core/guides';
   import { EVENT_TAG_LABELS, CULTURE_KIND_LABELS } from '$lib/core/content/schema';
   import { router } from '$lib/core/router.svelte';
-  import { century, toRoman } from '$lib/core/utils/format';
+  import { century, pluralN, toRoman, WORDS } from '$lib/core/utils/format';
 
   type Tab = 'events' | 'persons' | 'culture' | 'terms';
   const period = $derived(kb.periodById.get(router.params.id ?? ''));
@@ -75,7 +75,7 @@
       <div class="stack quizzes">
         {#each quizzes as q (q.id)}
           <Card href="/quiz/run?src=pack&id={q.id}" padding="sm" tone="gold">
-            <div class="row quiz-row"><Sparkles size={18} /><strong class="grow">{q.title}</strong><span class="muted">{q.questions.length} вопр.</span></div>
+            <div class="row quiz-row"><Sparkles size={18} /><strong class="grow">{q.title}</strong><span class="muted">{pluralN(q.questions.length, WORDS.question)}</span></div>
           </Card>
         {/each}
       </div>

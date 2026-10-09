@@ -3,6 +3,7 @@
  * Runs in Node (`pnpm content:check`) and in the app (importing user packs).
  */
 import type { z } from 'zod';
+import { pluralN, WORDS } from '../utils/format';
 import {
   FragmentSchema, PackManifestSchema, PeriodsFileSchema, ID_PREFIX, SYMMETRIC_LINKS,
   type EntityKind, type Fragment, type PackManifest, type Period,
@@ -213,7 +214,7 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         const at = `persons[${i}]`;
         p.periods.forEach((id, j) => period(`${at}.periods[${j}]`, id));
         if (p.born != null && p.died != null && p.died < p.born) add('error', file, at, 'died раньше born');
-        if (p.born != null && p.died != null && p.died - p.born > 105) add('warning', file, at, `прожил ${p.died - p.born} лет — проверьте даты`);
+        if (p.born != null && p.died != null && p.died - p.born > 105) add('warning', file, at, `прожил ${pluralN(p.died - p.born, WORDS.year)} — проверьте даты`);
         p.reigns?.forEach((r, j) => {
           if (r.to < r.from) add('error', file, `${at}.reigns[${j}]`, 'to раньше from');
           if (r.to === r.from && r.fromDate && r.toDate && r.toDate < r.fromDate) add('error', file, `${at}.reigns[${j}]`, 'toDate раньше fromDate');

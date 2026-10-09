@@ -6,6 +6,7 @@
   import Button from '$lib/design/components/Button.svelte';
   import TextField from '$lib/design/components/TextField.svelte';
   import { answerMatches } from '$lib/core/utils/text';
+  import { plural, WORDS } from '$lib/core/utils/format';
   import { haptic } from '$lib/core/platform';
 
   let { q, revealed, onsubmit }: QuestionProps<Extract<Question, { type: 'hints' }>> = $props();
@@ -37,7 +38,7 @@
   {/each}
 </ol>
 {#if !revealed}
-  <p class="muted pts">Сейчас за ответ: {q.hints.length - shown + 1} из {q.hints.length} баллов</p>
+  <p class="muted pts">Сейчас за ответ: {q.hints.length - shown + 1} из {q.hints.length} {plural(q.hints.length, WORDS.score)}</p>
   <div class="wrap" class:shake={wrongTry}>
     <TextField bind:value placeholder="Кто это / что это?" autofocus onenter={check} />
   </div>

@@ -66,6 +66,28 @@ export function plural(n: number, forms: [string, string, string]): string {
 }
 export const pluralN = (n: number, forms: [string, string, string]) => `${n} ${plural(n, forms)}`;
 
+/**
+ * Word forms after numbers (1 / 2–4 / 5+): `pluralN(174, WORDS.term)` → «174 термина». Use these instead of
+ * writing «{n} терминов» in templates — `pnpm check` (scripts/plural-check.ts) flags such hard-coded forms.
+ */
+export const WORDS = {
+  event: ['событие', 'события', 'событий'],
+  person: ['персоналия', 'персоналии', 'персоналий'],
+  monument: ['памятник', 'памятника', 'памятников'],
+  term: ['термин', 'термина', 'терминов'],
+  node: ['узел', 'узла', 'узлов'],
+  link: ['связь', 'связи', 'связей'],
+  card: ['карточка', 'карточки', 'карточек'],
+  question: ['вопрос', 'вопроса', 'вопросов'],
+  point: ['очко', 'очка', 'очков'],
+  score: ['балл', 'балла', 'баллов'],
+  day: ['день', 'дня', 'дней'],
+  year: ['год', 'года', 'лет'],
+  book: ['книга', 'книги', 'книг'],
+  file: ['файл', 'файла', 'файлов'],
+  newCard: ['новая', 'новые', 'новых'],
+} satisfies Record<string, [string, string, string]>;
+
 /** Interval in days → short human label ("10 мин", "3 дн", "2 мес"). */
 export function formatInterval(days: number): string {
   const min = days * 1440;

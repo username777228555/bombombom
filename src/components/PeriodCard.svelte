@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Period } from '$lib/core/content/schema';
   import { kb } from '$lib/core/content/kb.svelte';
-  import { century, toRoman } from '$lib/core/utils/format';
+  import { century, pluralN, toRoman, WORDS } from '$lib/core/utils/format';
   import { navigate } from '$lib/core/router.svelte';
   import { haptic } from '$lib/core/platform';
 
@@ -52,7 +52,7 @@
     <strong>{period.title}</strong>
     {#if variant === 'wide'}
       <span class="desc clamp-2">{period.description}</span>
-      <span class="counts">{counts.events} событий · {counts.persons} персоналий · {counts.culture} памятников</span>
+      <span class="counts">{pluralN(counts.events, WORDS.event)} · {pluralN(counts.persons, WORDS.person)} · {pluralN(counts.culture, WORDS.monument)}</span>
     {/if}
   </div>
 </button>

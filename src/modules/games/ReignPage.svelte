@@ -19,7 +19,7 @@
   import { record, saveResult, bestResult } from '$lib/core/progress.svelte';
   import { haptic } from '$lib/core/platform';
   import { sample, shuffle } from '$lib/core/utils/random';
-  import { centuryLabel, formatEventDate } from '$lib/core/utils/format';
+  import { centuryLabel, formatEventDate, pluralN, WORDS } from '$lib/core/utils/format';
   import { burst } from '$lib/design/confetti';
 
   const ROUNDS = 10;
@@ -133,7 +133,7 @@
         <Trophy size={44} class="gold" />
         <h1>{right} из {rounds.length}</h1>
         <Ornament />
-        <p class="secondary">{score} очков · рекорд {best}</p>
+        <p class="secondary">{pluralN(score, WORDS.point)} · рекорд {best}</p>
         <Button full onclick={start}>Ещё раз</Button>
         <Button full variant="secondary" onclick={() => (phase = 'setup')}>Настройки</Button>
       </div>

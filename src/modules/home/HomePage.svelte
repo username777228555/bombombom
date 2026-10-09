@@ -18,7 +18,7 @@
   import { settings } from '$lib/core/settings.svelte';
   import { buildQueue } from '$lib/core/srs';
   import { db, type BookMeta } from '$lib/core/db';
-  import { greeting, formatDateLong, pluralN, monthGen, formatEventDate, formatSpan } from '$lib/core/utils/format';
+  import { greeting, formatDateLong, pluralN, WORDS, monthGen, formatEventDate, formatSpan } from '$lib/core/utils/format';
   import { hashString, mulberry32, pick } from '$lib/core/utils/random';
   import { navigate } from '$lib/core/router.svelte';
 
@@ -189,7 +189,7 @@
     </Card>
     <Ornament variant="flourish" width={220} />
     <p class="foot muted">
-      {kb.events.length} событий · {kb.persons.length} персоналий · {kb.culture.length} памятников · {kb.terms.length} терминов
+      {pluralN(kb.events.length, WORDS.event)} · {pluralN(kb.persons.length, WORDS.person)} · {pluralN(kb.culture.length, WORDS.monument)} · {pluralN(kb.terms.length, WORDS.term)}
     </p>
   </section>
 </div>

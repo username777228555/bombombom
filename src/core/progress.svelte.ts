@@ -2,7 +2,7 @@
 import { db, emptyDay, type DayActivity, type ResultRow } from './db';
 import { ORDERS, RANKS, rankIndexFor, type Stats } from './achievements';
 import { celebrate } from './ui.svelte';
-import { dayKeyOffset, todayKey } from './utils/format';
+import { dayKeyOffset, pluralN, todayKey, WORDS } from './utils/format';
 import { settings } from './settings.svelte';
 
 export const progress = $state({
@@ -91,7 +91,7 @@ export function record(delta: Partial<Omit<DayActivity, 'date'>>): Promise<void>
       celebrate({ kind: 'rank', title: RANKS[rankAfter]!.title, subtitle: `Произведены в класс ${RANKS[rankAfter]!.cls} Табели о рангах`, rankIndex: rankAfter });
     }
     if (!before.goalDone && row.xp >= settings.dailyGoal) {
-      celebrate({ kind: 'goal', title: 'Цель дня выполнена', subtitle: `${row.xp} очков опыта сегодня. Серия: ${progress.streak} дн.` });
+      celebrate({ kind: 'goal', title: 'Цель дня выполнена', subtitle: `${pluralN(row.xp, WORDS.point)} опыта сегодня. Серия: ${pluralN(progress.streak, WORDS.day)}` });
     }
     await checkOrders();
   });

@@ -13,6 +13,7 @@
   import { openSheet } from '$lib/core/ui.svelte';
   import { isDark, motionOK } from '$lib/core/settings.svelte';
   import { normalize } from '$lib/core/utils/text';
+  import { pluralN, WORDS } from '$lib/core/utils/format';
   import { separate, cullLabels } from './declutter';
 
   const focus = router.query.get('focus');
@@ -271,7 +272,7 @@
     </div>
   </div>
   <p class="muted meta">
-    {counts.nodes} узлов · {counts.edges} связей · подписано {shownLabels}. Приблизьте, чтобы увидеть остальные подписи; нажмите на узел, чтобы подсветить его связи.
+    {pluralN(counts.nodes, WORDS.node)} · {pluralN(counts.edges, WORDS.link)} · подписано {shownLabels}. Приблизьте, чтобы увидеть остальные подписи; нажмите на узел, чтобы подсветить его связи.
   </p>
 
   <div class="legend">

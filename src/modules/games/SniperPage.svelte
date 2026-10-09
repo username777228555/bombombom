@@ -15,6 +15,7 @@
   import { record, saveResult, bestResult } from '$lib/core/progress.svelte';
   import { haptic } from '$lib/core/platform';
   import { sample } from '$lib/core/utils/random';
+  import { pluralN, WORDS } from '$lib/core/utils/format';
   import { burst } from '$lib/design/confetti';
 
   const ROUNDS = 10;
@@ -92,7 +93,7 @@
     {#if phase === 'over'}
       <div class="over" in:scale={{ start: 0.9 }}>
         <Trophy size={44} class="gold" />
-        <h1>{total} очков</h1>
+        <h1>{pluralN(total, WORDS.point)}</h1>
         <Ornament />
         <p class="secondary">Рекорд: {best}</p>
         <Button full onclick={start}>Ещё раз</Button>

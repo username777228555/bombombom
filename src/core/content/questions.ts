@@ -224,7 +224,7 @@ const G: Record<string, Gen> = {
       type: 'errors', prompt: 'Найдите ошибки в тексте (нажмите на неверные фрагменты)',
       segments: [
         { text: `${q(e.title)} — `, wrong: false },
-        { text: `событие ${formatYear(wrongYear ? altYear : e.year)} года`, wrong: wrongYear, fix: `${formatYear(e.year)} год` },
+        { text: `событие ${formatYear(wrongYear ? altYear : e.year)} года`, wrong: wrongYear, fix: `${formatYear(e.year)} год` }, // plural-ok: «1812 года» — год, а не количество
         { text: `, относится к периоду «${period.short}»`, wrong: false },
         { text: `; его участник — ${usePerson ? nameOf(alt) : person}.`, wrong: !!usePerson, fix: person },
       ],

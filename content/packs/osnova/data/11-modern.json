@@ -1726,11 +1726,6 @@
       "type": "opponent"
     },
     {
-      "from": "p-putin",
-      "to": "p-zyuganov",
-      "type": "opponent"
-    },
-    {
       "from": "p-eltsin",
       "to": "p-lebed",
       "type": "ally"
@@ -1849,6 +1844,12 @@
       "from": "e-svo",
       "to": "e-prinyatie-novykh-regionov",
       "type": "cause"
+    },
+    {
+      "from": "p-zyuganov",
+      "to": "e-izbranie-putina",
+      "type": "participant",
+      "label": "кандидат на выборах 2000 года, второе место"
     }
   ],
   "quizzes": [

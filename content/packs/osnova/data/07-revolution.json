@@ -2938,9 +2938,10 @@
       "type": "opponent"
     },
     {
-      "from": "p-frunze",
+      "from": "p-tukhachevskiy",
       "to": "p-antonov",
-      "type": "opponent"
+      "type": "opponent",
+      "label": "подавление Тамбовского восстания, 1921"
     },
     {
       "from": "p-frunze",

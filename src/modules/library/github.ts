@@ -20,6 +20,10 @@ import { isNative } from '$lib/core/platform';
 
 export const GITHUB_KEY = 'github-source';
 
+/** The app's own repository: books go to its `books/` folder (or to a release), the app downloads them from there. */
+export const APP_REPO = 'username777228555/bombombom';
+export const BOOKS_FOLDER = 'books';
+
 export interface GithubSource {
   /** «owner/name». */
   repo: string;
@@ -42,7 +46,11 @@ const BOOK_EXT = /\.(epub|fb2|fbz|fb2\.zip|mobi|azw3?|pdf|cbz|txt)$/i;
 const PACK_EXT = /\.stolypin\.json$/i;
 const API = 'https://api.github.com';
 
-export const loadSource = () => kvGet<GithubSource | null>(GITHUB_KEY, null);
+/** Always the app's repository; only the token (needed if the repository is made private) is configurable. */
+export async function loadSource(): Promise<GithubSource> {
+  const saved = await kvGet<GithubSource | null>(GITHUB_KEY, null);
+  return { repo: APP_REPO, folder: BOOKS_FOLDER, token: saved?.token };
+}
 export const saveSource = (s: GithubSource) =>
   kvSet(GITHUB_KEY, { repo: s.repo.trim().replace(/^https?:\/\/github\.com\//, '').replace(/\.git$/, '').replace(/\/+$/, ''), folder: s.folder?.trim().replace(/^\/+|\/+$/g, '') || undefined, token: s.token?.trim() || undefined });
 

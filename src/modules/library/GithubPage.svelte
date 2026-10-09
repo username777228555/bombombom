@@ -25,6 +25,7 @@
   import { downloadRemote, listRemote, loadSource, saveSource, type GithubSource, type RemoteFile } from './github';
 
   let source = $state<GithubSource | null>(null);
+  // Books come only from the app's own repository (books/ folder and releases); the form edits just the token.
   let editing = $state(false);
   let form = $state({ repo: '', folder: '', token: '' });
   let files = $state<RemoteFile[]>([]);
@@ -62,10 +63,8 @@
   onMount(async () => {
     source = await loadSource();
     await refreshHave();
-    if (source) {
-      form = { repo: source.repo, folder: source.folder ?? '', token: source.token ?? '' };
-      await load();
-    } else editing = true;
+    form = { repo: source.repo, folder: source.folder ?? '', token: source.token ?? '' };
+    await load();
   });
 
   async function save() {
@@ -129,24 +128,22 @@
   {#if editing}
     <Card padding="md">
       <div class="form">
-        <TextField label="Репозиторий" bind:value={form.repo} placeholder="владелец/название" icon={FolderGit2} />
-        <TextField label="Папка (необязательно)" bind:value={form.folder} placeholder="books" hint="Если книги лежат в одной папке репозитория" />
         <TextField label="Токен (для закрытого репозитория)" bind:value={form.token} type="password" placeholder="github_pat_…" icon={KeyRound}
           hint="Хранится только на этом телефоне и не попадает в резервную копию" />
         <div class="row gap">
           <div class="grow"><Button full onclick={save}>Сохранить</Button></div>
-          {#if source}<Button variant="ghost" onclick={() => (editing = false)}>Отмена</Button>{/if}
+          <Button variant="ghost" onclick={() => (editing = false)}>Отмена</Button>
         </div>
         {#if source?.token}<button class="linkish" onclick={forgetToken}>Удалить токен с устройства</button>{/if}
       </div>
     </Card>
     <details class="howto">
-      <summary>Как это настроить</summary>
+      <summary>Как положить книги</summary>
       <ol>
-        <li>На github.com создайте <b>закрытый</b> (Private) репозиторий, например <code>stolypin-books</code>. Купленные книги не кладите в открытый репозиторий: их сможет скачать кто угодно.</li>
-        <li>Загрузите книги: «Add file → Upload files» (файлы до 25 МБ). Большие файлы прикрепите к релизу: «Releases → Draft a new release → Attach files» (до 2 ГБ; скачиваются только в приложении на телефоне).</li>
-        <li>Создайте токен: Settings → Developer settings → Fine-grained tokens → Generate. Доступ — только к этому репозиторию, право <b>Contents: Read-only</b>.</li>
-        <li>Впишите сюда репозиторий и токен. Пакеты материалов (<code>.stolypin.json</code>) из того же репозитория попадут в «Пакеты».</li>
+        <li>В репозитории приложения на github.com откройте папку <code>books</code> → «Add file → Upload files» (файлы до 25 МБ).</li>
+        <li>Большие файлы прикрепите к релизу: «Releases → Draft a new release → Attach files» (до 2 ГБ, скачиваются в приложении на телефоне).</li>
+        <li>Здесь нажмите «Обновить список» и «Скачать». Пакеты <code>.stolypin.json</code> оттуда же попадут в «Пакеты».</li>
+        <li>Репозиторий открытый: файлы из него может скачать любой. Если сделаете его закрытым, впишите сюда токен (Fine-grained, Contents: Read-only).</li>
       </ol>
       <p class="muted">Приложение только скачивает файлы по нажатию: ничего не отправляет и не следит за обновлениями.</p>
     </details>

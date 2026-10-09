@@ -711,7 +711,8 @@
       "summary": "Преподобный Антоний поселился в пещере на берегу Днепра; вокруг неё выросла обитель. Киево-Печерский монастырь стал главным духовным и книжным центром Руси. Одна из важнейших православных святынь и объект всемирного наследия ЮНЕСКО.",
       "place": "Киев",
       "persons": [
-        "p-antoniy-pecherskiy"
+        "p-antoniy-pecherskiy",
+        "p-feodosiy-pecherskiy"
       ],
       "details": "Ки́ево-Пече́рская ла́вра (укр. Києво-Печерська лавра) — один из первых по времени основания монастырей Киевской Руси. Одна из важнейших православных святынь. Объект всемирного наследия ЮНЕСКО. С 15 сентября 2023 года в списке всемирного наследия, находящегося под угрозой в связи с опасностью для памятников из-за российского вторжения. Принято считать, что Печерский монастырь был основан в 1051 году при Ярославе Мудром монахом Антонием родом из Любеча и его учеником Феодосием. С монастырём связаны имена Илариона Русина, летописца Нестора (автора «Повести временных лет»), художника Алипия.",
       "image": "images/events/e-osnovanie-kiyevo-pecherskogo-monastyrya.webp",
@@ -2663,6 +2664,56 @@
       "to": "e-kreshchenie-rusi",
       "type": "influence",
       "label": "первая христианка в княжеской семье"
+    },
+    {
+      "from": "p-svyatoslav-yaroslavich",
+      "to": "c-izbornik-1076",
+      "type": "related"
+    },
+    {
+      "from": "c-mozaiki-sofii-kievskoy",
+      "to": "c-sofia-kiyevskaya",
+      "type": "part-of"
+    },
+    {
+      "from": "p-izyaslav-yaroslavich",
+      "to": "c-ostromirovo-evangeliye",
+      "type": "related"
+    },
+    {
+      "from": "c-sofia-kiyevskaya",
+      "to": "c-sofiyskiy-sobor-novgorod",
+      "type": "influence"
+    },
+    {
+      "from": "p-mstislav-velikiy",
+      "to": "c-vladimirskaya-ikona",
+      "type": "related"
+    },
+    {
+      "from": "p-andrey-bogolyubskiy",
+      "to": "c-vladimirskaya-ikona",
+      "type": "related"
+    },
+    {
+      "from": "c-vladimirskaya-ikona",
+      "to": "c-uspenskiy-sobor-vo-vladimire",
+      "type": "related"
+    },
+    {
+      "from": "p-antoniy-pecherskiy",
+      "to": "p-feodosiy-pecherskiy",
+      "type": "influence"
+    },
+    {
+      "from": "p-nestor",
+      "to": "p-feodosiy-pecherskiy",
+      "type": "related"
+    },
+    {
+      "from": "c-sofiyskiy-sobor-novgorod",
+      "to": "c-tserkov-spasa-na-nereditse",
+      "type": "related"
     }
   ],
   "quizzes": [

@@ -654,7 +654,8 @@
       "persons": [
         "p-ekaterina-ii",
         "p-petr-iii",
-        "p-grigoriy-orlov"
+        "p-grigoriy-orlov",
+        "p-dashkova"
       ],
       "details": "Причиной переворота стали полгода резких мер Петра III: сепаратный мир с Фридрихом II, подготовка войны с Данией, ограничение церковных имуществ и муштра гвардии по-прусски. Екатерина, поддержанная Орловыми, Паниным, Дашковой и гвардейскими полками, в отсутствие мужа выехала в Петербург и была провозглашена самодержавной императрицей. Пётр в Ораниенбауме не решился сопротивляться и подписал отречение, после чего был отправлен в Ропшу, где 6 июля скончался при невыясненных обстоятельствах. Итогом стали воцарение Екатерины II на 34 года, укрепление гвардии как вершителя судеб трона и отказ от пропрусского курса в пользу самостоятельных завоеваний.",
       "imageInfo": {
@@ -2768,6 +2769,46 @@
       "to": "p-radishchev",
       "type": "influence",
       "label": "просветительская традиция"
+    },
+    {
+      "from": "p-petr-i",
+      "to": "c-kunstkamera",
+      "type": "author"
+    },
+    {
+      "from": "c-kunstkamera",
+      "to": "c-peterburgskaya-akademiya-nauk",
+      "type": "related"
+    },
+    {
+      "from": "p-petr-i",
+      "to": "c-petropavlovskiy-sobor",
+      "type": "author"
+    },
+    {
+      "from": "c-petropavlovskiy-sobor",
+      "to": "e-osnovanie-peterburga",
+      "type": "related"
+    },
+    {
+      "from": "p-biron",
+      "to": "p-anna-ioannovna",
+      "type": "influence"
+    },
+    {
+      "from": "p-biron",
+      "to": "p-ivan-vi",
+      "type": "related"
+    },
+    {
+      "from": "p-dashkova",
+      "to": "p-ekaterina-ii",
+      "type": "ally"
+    },
+    {
+      "from": "p-dashkova",
+      "to": "c-peterburgskaya-akademiya-nauk",
+      "type": "related"
     }
   ],
   "quizzes": [

@@ -2232,6 +2232,56 @@
       "to": "t-sotsialisticheskiy-realizm",
       "type": "influence",
       "label": "доклад на I съезде писателей задал канон метода"
+    },
+    {
+      "from": "c-film-chapaev",
+      "to": "e-grazhdanskaya-voyna",
+      "type": "related"
+    },
+    {
+      "from": "c-kak-zakalyalas-stal",
+      "to": "e-grazhdanskaya-voyna",
+      "type": "related"
+    },
+    {
+      "from": "e-smert-lenina",
+      "to": "c-mavzoley-lenina",
+      "type": "cause"
+    },
+    {
+      "from": "c-moskovskoe-metro",
+      "to": "e-pervaya-pyatiletka",
+      "type": "related"
+    },
+    {
+      "from": "c-poema-vo-ves-golos",
+      "to": "c-dvenadtsat",
+      "type": "related"
+    },
+    {
+      "from": "c-poema-vo-ves-golos",
+      "to": "e-pervaya-pyatiletka",
+      "type": "related"
+    },
+    {
+      "from": "e-x-sezd-rkpb",
+      "to": "e-denezhnaya-reforma-1922-1924",
+      "type": "cause"
+    },
+    {
+      "from": "p-lenin",
+      "to": "e-likvidatsiya-negramotnosti",
+      "type": "related"
+    },
+    {
+      "from": "e-vstuplenie-sssr-v-ligu-natsiy",
+      "to": "e-vii-kongress-kominterna",
+      "type": "related"
+    },
+    {
+      "from": "e-otdelenie-cerkvi-ot-gosudarstva",
+      "to": "e-zakon-o-religioznykh-obedineniyakh-1929",
+      "type": "cause"
     }
   ],
   "quizzes": [

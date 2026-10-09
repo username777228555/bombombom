@@ -212,7 +212,11 @@
       "importance": 1,
       "summary": "Насильственные выселения народов: немцев Поволжья (1941), калмыков, чеченцев и ингушей (февраль 1944), крымских татар (май 1944) и других. Одна из трагических страниц военного времени; автономии восстанавливались начиная с 1957 года. Основными особенностями депортаций как репрессий был их внесудебный, поголовный, принудительный и общественно опасный характер — перемещение больших масс людей в географически отдалённую, непривычную для них и часто рискованную среду обитания. Довоенные депортации, например выселение с Дальнего Востока, описывались советской властью как «добровольное переселение», так как партийные чиновники из выселяемых народов участвовали в подготовке операции, а на новом месте также получили партийные и правительственные посты.",
       "confidence": "medium",
-      "wiki": "Депортации народов в СССР"
+      "wiki": "Депортации народов в СССР",
+      "persons": [
+        "p-stalin",
+        "p-beriya"
+      ]
     },
     {
       "id": "e-nachalo-blokady-leningrada",
@@ -502,7 +506,9 @@
       "importance": 1,
       "summary": "Распоряжение ГКО об организации работ по урану стало началом атомного проекта под руководством И. Курчатова. После бомбардировок Хиросимы и Нагасаки программа была форсирована. Создание советской атомной бомбы (военная часть атомного проекта СССР) — фундаментальные исследования, разработка технологий и практическая их реализация в Советском Союзе в период с 1942 по 1950 годы, направленные на создание оружия массового поражения с использованием ядерной энергии. Мероприятия в немалой степени были стимулированы деятельностью в этом направлении научных учреждений и военной промышленности других стран, в первую очередь нацистской Германии (немецкая ядерная программа) и США (проект «Манхэттен»).",
       "place": "Москва",
-      "persons": [],
+      "persons": [
+        "p-kurchatov"
+      ],
       "wiki": "Создание советской атомной бомбы"
     },
     {
@@ -584,7 +590,8 @@
       "persons": [
         "p-zhukov",
         "p-vasilevskiy",
-        "p-konev"
+        "p-konev",
+        "p-kozhedub"
       ],
       "wiki": "Курская битва"
     },
@@ -661,7 +668,10 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%9F%D0%B0%D1%82%D1%80%D0%B8%D0%B0%D1%80%D1%85_%D0%A1%D0%B5%D1%80%D0%B3%D0%B8%D0%B9.jpg"
       },
-      "wiki": "Сергий (патриарх Московский)"
+      "wiki": "Сергий (патриарх Московский)",
+      "persons": [
+        "p-stalin"
+      ]
     },
     {
       "id": "e-tegeranskaya-konferentsiya",
@@ -2370,6 +2380,101 @@
       "from": "p-fridrikh-paulyus",
       "to": "p-chuykov",
       "type": "opponent"
+    },
+    {
+      "from": "c-dnevnik-tani-savichevoy",
+      "to": "e-nachalo-blokady-leningrada",
+      "type": "related"
+    },
+    {
+      "from": "c-molodaya-gvardiya",
+      "to": "e-partizanskoe-dvizhenie",
+      "type": "related"
+    },
+    {
+      "from": "p-zhukov",
+      "to": "c-orden-pobeda",
+      "type": "related"
+    },
+    {
+      "from": "e-napadenie-germanii-na-sssr",
+      "to": "c-rodina-mat-zovet",
+      "type": "cause"
+    },
+    {
+      "from": "e-napadenie-germanii-na-sssr",
+      "to": "c-svyashchennaya-voyna",
+      "type": "cause"
+    },
+    {
+      "from": "c-svyashchennaya-voyna",
+      "to": "e-parad-pobedy",
+      "type": "related"
+    },
+    {
+      "from": "c-volokolamskoe-shosse",
+      "to": "e-bitva-za-moskvu",
+      "type": "related"
+    },
+    {
+      "from": "p-panfilov",
+      "to": "c-volokolamskoe-shosse",
+      "type": "related"
+    },
+    {
+      "from": "c-znamya-pobedy",
+      "to": "e-berlinskaya-operatsiya",
+      "type": "related"
+    },
+    {
+      "from": "c-znamya-pobedy",
+      "to": "e-parad-pobedy",
+      "type": "related"
+    },
+    {
+      "from": "p-zoya-kosmodemyanskaya",
+      "to": "c-zoya",
+      "type": "related"
+    },
+    {
+      "from": "e-atomnyy-proekt",
+      "to": "e-ispytanie-atomnoy-bomby-1949",
+      "type": "cause"
+    },
+    {
+      "from": "e-napadenie-germanii-na-sssr",
+      "to": "e-oborona-odessy",
+      "type": "cause"
+    },
+    {
+      "from": "e-oborona-odessy",
+      "to": "e-oborona-sevastopolya",
+      "type": "cause"
+    },
+    {
+      "from": "e-oborona-sevastopolya-1854",
+      "to": "e-oborona-sevastopolya",
+      "type": "related"
+    },
+    {
+      "from": "p-pokryshkin",
+      "to": "p-kozhedub",
+      "type": "related"
+    },
+    {
+      "from": "p-matrosov",
+      "to": "p-gastello",
+      "type": "related"
+    },
+    {
+      "from": "p-matrosov",
+      "to": "p-zoya-kosmodemyanskaya",
+      "type": "related"
+    },
+    {
+      "from": "c-rodina-mat-zovet",
+      "to": "c-rodina-mat-zovyot",
+      "type": "related"
     }
   ],
   "quizzes": [

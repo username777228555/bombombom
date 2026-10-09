@@ -1660,6 +1660,321 @@
       "from": "c-voennyy-sovet-v-filyakh",
       "to": "e-otechestvennaya-voyna-1812",
       "type": "related"
+    },
+    {
+      "from": "c-apofeoz-voyny",
+      "to": "c-napoleon-na-borodinskikh-vysotakh",
+      "type": "related"
+    },
+    {
+      "from": "p-petr-i",
+      "to": "c-portret-napolnogo-getmana",
+      "type": "related"
+    },
+    {
+      "from": "c-avtoportret-s-zhenoy",
+      "to": "c-portret-napolnogo-getmana",
+      "type": "related"
+    },
+    {
+      "from": "e-vojny-s-pechenegami-pri-vladimire",
+      "to": "c-bogatyri",
+      "type": "related"
+    },
+    {
+      "from": "c-vityaz-na-rasputye",
+      "to": "c-bogatyri",
+      "type": "related"
+    },
+    {
+      "from": "c-vityaz-na-rasputye",
+      "to": "c-posle-poboishcha-igorya",
+      "type": "related"
+    },
+    {
+      "from": "e-oktyabrskaya-revoluciya",
+      "to": "c-bolshevik",
+      "type": "related"
+    },
+    {
+      "from": "c-kupchikha-za-chaem",
+      "to": "c-bolshevik",
+      "type": "related"
+    },
+    {
+      "from": "c-boyarskiy-svadebnyy-pir",
+      "to": "c-moskovskaya-ulitsa-xvii-veka",
+      "type": "related"
+    },
+    {
+      "from": "e-otmena-krepostnogo-prava-1861",
+      "to": "c-burlaki-na-volge",
+      "type": "related"
+    },
+    {
+      "from": "e-otmena-krepostnogo-prava-1861",
+      "to": "c-troyka-perova",
+      "type": "related"
+    },
+    {
+      "from": "e-otmena-krepostnogo-prava-1861",
+      "to": "c-krestnyy-khod-kursk",
+      "type": "related"
+    },
+    {
+      "from": "e-russko-tureckaya-voyna-1768-1774",
+      "to": "c-chesmenskiy-boy",
+      "type": "related"
+    },
+    {
+      "from": "c-devyatyy-val",
+      "to": "c-chesmenskiy-boy",
+      "type": "related"
+    },
+    {
+      "from": "c-dama-v-golubom",
+      "to": "c-elizaveta-v-tsarskom-sele",
+      "type": "related"
+    },
+    {
+      "from": "c-dama-v-golubom",
+      "to": "c-russkie-sezony",
+      "type": "related"
+    },
+    {
+      "from": "p-elizaveta-petrovna",
+      "to": "c-elizaveta-v-tsarskom-sele",
+      "type": "related"
+    },
+    {
+      "from": "c-devochka-s-persikami",
+      "to": "c-petr-i-serova",
+      "type": "related"
+    },
+    {
+      "from": "p-petr-i",
+      "to": "c-petr-i-serova",
+      "type": "related"
+    },
+    {
+      "from": "e-osnovanie-peterburga",
+      "to": "c-petr-i-serova",
+      "type": "related"
+    },
+    {
+      "from": "p-ekaterina-ii",
+      "to": "c-ekaterina-na-progulke",
+      "type": "related"
+    },
+    {
+      "from": "p-pushkin",
+      "to": "c-ekaterina-na-progulke",
+      "type": "related"
+    },
+    {
+      "from": "c-grachi-prileteli",
+      "to": "c-petr-i-doprashivaet-alekseya",
+      "type": "related"
+    },
+    {
+      "from": "c-grachi-prileteli",
+      "to": "c-nad-vechnym-pokoem",
+      "type": "related"
+    },
+    {
+      "from": "p-ivan-iv",
+      "to": "c-ivan-groznyy-i-syn",
+      "type": "related"
+    },
+    {
+      "from": "p-aleksandr-iii",
+      "to": "c-ivan-groznyy-i-syn",
+      "type": "related"
+    },
+    {
+      "from": "c-khristos-v-pustyne",
+      "to": "c-yavlenie-khrista-narodu",
+      "type": "related"
+    },
+    {
+      "from": "c-khristos-v-pustyne",
+      "to": "c-neizvestnaya",
+      "type": "related"
+    },
+    {
+      "from": "c-knyazhna-tarakanova",
+      "to": "p-ekaterina-ii",
+      "type": "related"
+    },
+    {
+      "from": "c-kruzhevnitsa",
+      "to": "c-na-pashne-vesna",
+      "type": "related"
+    },
+    {
+      "from": "c-svatovstvo-mayora",
+      "to": "c-kruzhevnitsa",
+      "type": "related"
+    },
+    {
+      "from": "c-troyka-perova",
+      "to": "c-svatovstvo-mayora",
+      "type": "related"
+    },
+    {
+      "from": "c-kupanie-krasnogo-konya",
+      "to": "e-oktyabrskaya-revoluciya",
+      "type": "related"
+    },
+    {
+      "from": "c-lenin-v-smolnom",
+      "to": "p-lenin",
+      "type": "related"
+    },
+    {
+      "from": "c-lenin-v-smolnom",
+      "to": "e-oktyabrskaya-revoluciya",
+      "type": "related"
+    },
+    {
+      "from": "c-menshikov-v-berezove",
+      "to": "p-menshikov",
+      "type": "related"
+    },
+    {
+      "from": "c-menshikov-v-berezove",
+      "to": "p-petr-ii",
+      "type": "related"
+    },
+    {
+      "from": "c-utro-streletskoy-kazni",
+      "to": "p-petr-i",
+      "type": "related"
+    },
+    {
+      "from": "c-utro-streletskoy-kazni",
+      "to": "p-sofya-alekseevna",
+      "type": "related"
+    },
+    {
+      "from": "c-vzyatie-snezhnogo-gorodka",
+      "to": "c-pokorenie-sibiri-ermakom",
+      "type": "related"
+    },
+    {
+      "from": "c-ne-zhdali",
+      "to": "e-khozhdenie-v-narod-1874",
+      "type": "related"
+    },
+    {
+      "from": "c-ne-zhdali",
+      "to": "e-narodnaya-volya-1879",
+      "type": "related"
+    },
+    {
+      "from": "c-vsyudu-zhizn",
+      "to": "c-ne-zhdali",
+      "type": "related"
+    },
+    {
+      "from": "c-vladimirka",
+      "to": "c-vsyudu-zhizn",
+      "type": "related"
+    },
+    {
+      "from": "c-vladimirka",
+      "to": "c-nad-vechnym-pokoem",
+      "type": "related"
+    },
+    {
+      "from": "c-petr-i-doprashivaet-alekseya",
+      "to": "p-petr-i",
+      "type": "related"
+    },
+    {
+      "from": "c-portret-davydova",
+      "to": "e-otechestvennaya-voyna-1812",
+      "type": "related"
+    },
+    {
+      "from": "c-portret-pushkina-kiprenskogo",
+      "to": "p-pushkin",
+      "type": "related"
+    },
+    {
+      "from": "c-portret-lopukhinoy",
+      "to": "p-karamzin",
+      "type": "related"
+    },
+    {
+      "from": "c-portret-lopukhinoy",
+      "to": "c-ekaterina-na-progulke",
+      "type": "related"
+    },
+    {
+      "from": "c-portret-struyskoy",
+      "to": "c-smolyanki",
+      "type": "related"
+    },
+    {
+      "from": "c-smolyanki",
+      "to": "p-ekaterina-ii",
+      "type": "related"
+    },
+    {
+      "from": "c-rabochiy-i-kolkhoznitsa",
+      "to": "e-pervaya-pyatiletka",
+      "type": "related"
+    },
+    {
+      "from": "c-rabochiy-i-kolkhoznitsa",
+      "to": "e-kollektivizatsiya",
+      "type": "related"
+    },
+    {
+      "from": "c-ty-zapisalsya-dobrovoltsem",
+      "to": "e-grazhdanskaya-voyna",
+      "type": "related"
+    },
+    {
+      "from": "c-ty-zapisalsya-dobrovoltsem",
+      "to": "c-rodina-mat-zovet",
+      "type": "related"
+    },
+    {
+      "from": "c-vladimir-i-rogneda",
+      "to": "p-vladimir-i",
+      "type": "related"
+    },
+    {
+      "from": "c-videnie-otroku-varfolomeyu",
+      "to": "p-sergiy-radonezhskiy",
+      "type": "related"
+    },
+    {
+      "from": "c-zaporozhtsy",
+      "to": "e-pereyaslavskaya-rada",
+      "type": "related"
+    },
+    {
+      "from": "c-zasedanie-gossoveta",
+      "to": "p-speranskiy",
+      "type": "related"
+    },
+    {
+      "from": "c-zasedanie-gossoveta",
+      "to": "p-nikolay-ii",
+      "type": "related"
+    },
+    {
+      "from": "c-utro-v-sosnovom-lesu",
+      "to": "c-grachi-prileteli",
+      "type": "related"
+    },
+    {
+      "from": "c-lunnaya-noch-na-dnepre",
+      "to": "c-utro-v-sosnovom-lesu",
+      "type": "related"
     }
   ]
 }

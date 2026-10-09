@@ -440,7 +440,10 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F_%D0%B2_XVII_%D0%B2%D0%B5%D0%BA%D0%B5.jpg"
       },
-      "wiki": "Столбовский мир"
+      "wiki": "Столбовский мир",
+      "persons": [
+        "p-mikhail-fedorovich"
+      ]
     },
     {
       "id": "e-deulinskoe-peremirie",
@@ -2655,6 +2658,96 @@
       "from": "p-stepan-razin",
       "to": "p-aleksey-mikhaylovich",
       "type": "opponent"
+    },
+    {
+      "from": "c-grammatika-smotritskogo",
+      "to": "p-lomonosov",
+      "type": "influence"
+    },
+    {
+      "from": "c-novyy-letopisets",
+      "to": "e-zemskiy-sobor-1613",
+      "type": "related"
+    },
+    {
+      "from": "c-kiyevo-pecherskiy-monastyr",
+      "to": "c-sinopsis-gizelya",
+      "type": "related"
+    },
+    {
+      "from": "c-skazanie-palitsyna",
+      "to": "e-tushinskiy-lager",
+      "type": "related"
+    },
+    {
+      "from": "p-aleksey-mikhaylovich",
+      "to": "c-teatr-alekseya-mikhaylovicha",
+      "type": "author"
+    },
+    {
+      "from": "p-mikhail-fedorovich",
+      "to": "c-teremnoy-dvorets",
+      "type": "author"
+    },
+    {
+      "from": "c-vremennik-timofeeva",
+      "to": "e-oprichnina-1565",
+      "type": "related"
+    },
+    {
+      "from": "c-vremennik-timofeeva",
+      "to": "e-lzhedmitriy-i",
+      "type": "related"
+    },
+    {
+      "from": "p-mikhail-fedorovich",
+      "to": "e-belgorodskaya-cherta",
+      "type": "related"
+    },
+    {
+      "from": "e-zakhvat-novgoroda-shvedami",
+      "to": "e-stolbovskiy-mir",
+      "type": "cause"
+    },
+    {
+      "from": "e-stolbovskiy-mir",
+      "to": "e-severnaya-voyna",
+      "type": "cause"
+    },
+    {
+      "from": "e-golod-1601-1603",
+      "to": "e-vosstanie-khlopka",
+      "type": "cause"
+    },
+    {
+      "from": "e-vosstanie-khlopka",
+      "to": "e-vosstanie-bolotnikova",
+      "type": "related"
+    },
+    {
+      "from": "p-boyarynya-morozova",
+      "to": "p-avvakum",
+      "type": "ally"
+    },
+    {
+      "from": "p-boyarynya-morozova",
+      "to": "p-aleksey-mikhaylovich",
+      "type": "opponent"
+    },
+    {
+      "from": "p-boyarynya-morozova",
+      "to": "c-boyarynya-morozova",
+      "type": "related"
+    },
+    {
+      "from": "p-susanin",
+      "to": "p-mikhail-fedorovich",
+      "type": "related"
+    },
+    {
+      "from": "c-tserkov-troitsy-nikitniki",
+      "to": "c-tserkov-ili-proroka-yaroslavle",
+      "type": "related"
     }
   ],
   "quizzes": [

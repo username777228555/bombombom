@@ -788,7 +788,8 @@
       "summary": "Война за Балканы после расправы Турции над восстаниями славян: переправа через Дунай (июнь 1877), Шипка, три штурма и осада Плевны, зимний переход через Балканы и победоносное завершение у стен Константинополя. Высшее достижение внешней политики Александра II.",
       "persons": [
         "p-aleksandr-ii",
-        "p-dmitriy-milyutin"
+        "p-dmitriy-milyutin",
+        "p-loris-melikov"
       ],
       "details": "Причины — расправа Турции с восстаниями славян на Балканах, Восточный кризис, стремление России помочь единоверцам. Ход: после манифеста 12 апреля 1877 года армия переправилась через Дунай, держала Шипку, осадила Плевну, а зимой перешла Балканы и вышла к Константинополю; на Кавказе взят Карс. Итоги: Сан-Стефанский мир дал независимость Сербии, Румынии и Черногории и автономию Болгарии, но был ужат Берлинским конгрессом. Война стала вершиной внешней политики Александра II.",
       "image": "images/events/e-russko-turetskaya-voyna-1877-1878.webp",
@@ -2831,6 +2832,81 @@
       "from": "p-aleksandr-iii",
       "to": "e-russko-frantsuzskiy-soyuz-1891",
       "type": "leader"
+    },
+    {
+      "from": "c-borodino",
+      "to": "e-borodinskoe-srazhenie-1812",
+      "type": "related"
+    },
+    {
+      "from": "p-aleksandr-i",
+      "to": "c-isaakievskiy-sobor",
+      "type": "related"
+    },
+    {
+      "from": "c-isaakievskiy-sobor",
+      "to": "c-aleksandrovskaya-kolonna",
+      "type": "related"
+    },
+    {
+      "from": "e-otechestvennaya-voyna-1812",
+      "to": "c-khram-khrista-spasitelya",
+      "type": "cause"
+    },
+    {
+      "from": "c-mertvye-dushi",
+      "to": "e-otmena-krepostnogo-prava-1861",
+      "type": "related"
+    },
+    {
+      "from": "c-zapiski-okhotnika",
+      "to": "e-otmena-krepostnogo-prava-1861",
+      "type": "influence"
+    },
+    {
+      "from": "c-zhizn-za-tsarya",
+      "to": "p-susanin",
+      "type": "related"
+    },
+    {
+      "from": "c-posledniy-den-pompei",
+      "to": "c-vsadnitsa",
+      "type": "related"
+    },
+    {
+      "from": "p-pushkin",
+      "to": "c-posledniy-den-pompei",
+      "type": "related"
+    },
+    {
+      "from": "c-yavlenie-khrista-narodu",
+      "to": "c-posledniy-den-pompei",
+      "type": "related"
+    },
+    {
+      "from": "p-loris-melikov",
+      "to": "p-pobedonostsev",
+      "type": "opponent"
+    },
+    {
+      "from": "p-loris-melikov",
+      "to": "p-aleksandr-ii",
+      "type": "ally"
+    },
+    {
+      "from": "p-loris-melikov",
+      "to": "e-manifest-o-nezyblemosti-samoderzhaviya-1881",
+      "type": "related"
+    },
+    {
+      "from": "c-borodino",
+      "to": "c-geroy-nashego-vremeni",
+      "type": "related"
+    },
+    {
+      "from": "c-zhizn-za-tsarya",
+      "to": "c-opera-ruslan-i-lyudmila",
+      "type": "related"
     }
   ],
   "quizzes": [

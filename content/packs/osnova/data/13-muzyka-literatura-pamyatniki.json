@@ -470,6 +470,66 @@
       "from": "c-glavnyy-shtab",
       "to": "e-otechestvennaya-voyna-1812",
       "type": "related"
+    },
+    {
+      "from": "c-balet-lebedinoe-ozero",
+      "to": "c-rekonstruktsiya-bolshogo-teatra",
+      "type": "related"
+    },
+    {
+      "from": "c-balet-lebedinoe-ozero",
+      "to": "c-russkie-sezony",
+      "type": "related"
+    },
+    {
+      "from": "p-nikolay-i",
+      "to": "c-geroy-nashego-vremeni",
+      "type": "related"
+    },
+    {
+      "from": "e-kavkazskaya-voyna",
+      "to": "c-geroy-nashego-vremeni",
+      "type": "related"
+    },
+    {
+      "from": "c-gore-ot-uma",
+      "to": "e-vosstanie-dekabristov-1825",
+      "type": "related"
+    },
+    {
+      "from": "c-kizhskiy-pogost",
+      "to": "c-cerkov-vozneseniya-kolomenskoe",
+      "type": "related"
+    },
+    {
+      "from": "p-pushkin",
+      "to": "c-opera-ruslan-i-lyudmila",
+      "type": "related"
+    },
+    {
+      "from": "c-opera-sadko",
+      "to": "c-opera-boris-godunov",
+      "type": "related"
+    },
+    {
+      "from": "c-opera-sadko",
+      "to": "e-novgorodskoe-vosstanie-1136",
+      "type": "related"
+    },
+    {
+      "from": "c-prestuplenie-i-nakazanie",
+      "to": "p-chernyshevskiy",
+      "type": "related"
+    },
+    {
+      "from": "p-nikolay-i",
+      "to": "c-revizor",
+      "type": "related"
+    },
+    {
+      "from": "c-revizor",
+      "to": "c-mertvye-dushi",
+      "type": "related"
     }
   ]
 }

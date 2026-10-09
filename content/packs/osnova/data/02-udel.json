@@ -643,7 +643,8 @@
       "summary": "Дмитрий Иванович (Донской) получил ярлык на великое княжение Владимирское. С этого момента московские князья фактически не теряли великий стол. Сын князя Ивана II Красного и его второй жены, княгини Александры.",
       "place": "Москва",
       "persons": [
-        "p-dmitriy-donskoy"
+        "p-dmitriy-donskoy",
+        "p-mitropolit-aleksiy"
       ],
       "details": "Дми́трий Ива́нович (прозванный Донско́й; др.-рус. Дмитрей Ивановичь; 12 октября 1350, Москва — 19 мая 1389, там же) — князь Московский (с 1359 года) и великий князь Владимирский (с 1362 года). Сын князя Ивана II Красного и его второй жены, княгини Александры. Прозван «Донским» за победу в Куликовской битве (1380) близ реки Дон. В правление Дмитрия Ивановича Московское княжество укрепило свои позиции в качестве одного из главных центров объединения русских земель. Были одержаны первые крупные военные победы над войсками Золотой Орды (в битвах на Воже и Куликовском поле), а в самой Москве был построен первый белокаменный Московский Кремль.",
       "image": "images/events/e-velikoe-knyazhenie-zakrepilos-za-moskvoy.webp",
@@ -2650,6 +2651,121 @@
     {
       "from": "p-feofan-grek",
       "to": "p-andrey-rublev",
+      "type": "influence"
+    },
+    {
+      "from": "p-dmitriy-donskoy",
+      "to": "c-belokamennyy-moskovskiy-kreml",
+      "type": "author"
+    },
+    {
+      "from": "e-nashestvie-edygeya",
+      "to": "c-belokamennyy-moskovskiy-kreml",
+      "type": "related"
+    },
+    {
+      "from": "c-belokamennyy-moskovskiy-kreml",
+      "to": "e-perestroyka-moskovskogo-kremlya",
+      "type": "related"
+    },
+    {
+      "from": "p-vsevolod-bolshoe-gnezdo",
+      "to": "c-dmitrievskiy-sobor-vo-vladimire",
+      "type": "author"
+    },
+    {
+      "from": "c-povest-vremennyh-let",
+      "to": "c-lavrentevskaya-letopis",
+      "type": "part-of"
+    },
+    {
+      "from": "c-pouchenie-detyam",
+      "to": "c-lavrentevskaya-letopis",
+      "type": "part-of"
+    },
+    {
+      "from": "p-andrey-bogolyubskiy",
+      "to": "c-tserkov-pokrova-na-nerli",
+      "type": "author"
+    },
+    {
+      "from": "p-andrey-bogolyubskiy",
+      "to": "c-uspenskiy-sobor-vo-vladimire",
+      "type": "author"
+    },
+    {
+      "from": "p-vsevolod-bolshoe-gnezdo",
+      "to": "c-uspenskiy-sobor-vo-vladimire",
+      "type": "author"
+    },
+    {
+      "from": "c-uspenskiy-sobor-vo-vladimire",
+      "to": "c-uspenskiy-sobor",
+      "type": "influence"
+    },
+    {
+      "from": "p-andrey-bogolyubskiy",
+      "to": "c-zolotye-vorota-vo-vladimire",
+      "type": "author"
+    },
+    {
+      "from": "c-zolotye-vorota-kieva",
+      "to": "c-zolotye-vorota-vo-vladimire",
+      "type": "influence"
+    },
+    {
+      "from": "p-vasiliy-i",
+      "to": "e-nashestvie-edygeya",
+      "type": "related"
+    },
+    {
+      "from": "p-vitovt",
+      "to": "e-obrazovanie-velikogo-knyazhestva-litovskogo",
+      "type": "related"
+    },
+    {
+      "from": "e-obrazovanie-velikogo-knyazhestva-litovskogo",
+      "to": "e-voyna-s-vkl-1500-1503",
+      "type": "related"
+    },
+    {
+      "from": "e-padenie-konstantinopolya",
+      "to": "e-brak-s-sofey-paleolog",
+      "type": "cause"
+    },
+    {
+      "from": "e-padenie-konstantinopolya",
+      "to": "e-avtokefaliya-russkoy-tserkvi",
+      "type": "related"
+    },
+    {
+      "from": "p-chingiskhan",
+      "to": "e-bitva-na-kalke",
+      "type": "related"
+    },
+    {
+      "from": "p-chingiskhan",
+      "to": "p-batyy",
+      "type": "influence"
+    },
+    {
+      "from": "p-evpatiy-kolovrat",
+      "to": "p-batyy",
+      "type": "opponent"
+    },
+    {
+      "from": "p-evpatiy-kolovrat",
+      "to": "c-povest-o-razorenii-ryazani-batyem",
+      "type": "related"
+    },
+    {
+      "from": "p-mikhail-tverskoy",
+      "to": "e-tverskoe-vosstanie-1327",
+      "type": "related"
+    },
+    {
+      "from": "p-mitropolit-aleksiy",
+      "to": "p-dmitriy-donskoy",
       "type": "influence"
     }
   ],

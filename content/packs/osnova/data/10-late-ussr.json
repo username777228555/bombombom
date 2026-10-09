@@ -206,7 +206,10 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Message-1953.jpg"
       },
-      "wiki": "Дело врачей"
+      "wiki": "Дело врачей",
+      "persons": [
+        "p-stalin"
+      ]
     },
     {
       "id": "e-smert-stalina",
@@ -549,7 +552,8 @@
       "place": "Москва",
       "persons": [
         "p-khrushchev",
-        "p-brezhnev"
+        "p-brezhnev",
+        "p-suslov"
       ],
       "image": "images/events/e-otstavka-khrushcheva.webp",
       "imageInfo": {
@@ -2476,6 +2480,106 @@
       "to": "c-obninskaya-aes",
       "type": "influence",
       "label": "атомный проект дал технологию"
+    },
+    {
+      "from": "c-atomnyy-ledokol-lenin",
+      "to": "c-obninskaya-aes",
+      "type": "related"
+    },
+    {
+      "from": "c-atomnyy-ledokol-lenin",
+      "to": "e-zapusk-pervogo-sputnika",
+      "type": "related"
+    },
+    {
+      "from": "c-ottepel-povest",
+      "to": "e-xx-sezd-kpss",
+      "type": "related"
+    },
+    {
+      "from": "c-letyat-zhuravli",
+      "to": "c-ottepel-povest",
+      "type": "related"
+    },
+    {
+      "from": "c-letyat-zhuravli",
+      "to": "e-festival-molodezhi-1957",
+      "type": "related"
+    },
+    {
+      "from": "e-festival-molodezhi-1957",
+      "to": "e-xx-sezd-kpss",
+      "type": "related"
+    },
+    {
+      "from": "c-teatr-na-taganke",
+      "to": "c-letyat-zhuravli",
+      "type": "related"
+    },
+    {
+      "from": "e-osnovanie-moskovskogo-universiteta",
+      "to": "c-mgu-na-vorobyovyh-gorah",
+      "type": "related"
+    },
+    {
+      "from": "p-stalin",
+      "to": "c-mgu-na-vorobyovyh-gorah",
+      "type": "related"
+    },
+    {
+      "from": "p-brezhnev",
+      "to": "c-moskva-slezam-ne-verit",
+      "type": "related"
+    },
+    {
+      "from": "p-brezhnev",
+      "to": "c-ostankinskaya-bashnya",
+      "type": "related"
+    },
+    {
+      "from": "c-ostankinskaya-bashnya",
+      "to": "c-atomnyy-ledokol-lenin",
+      "type": "related"
+    },
+    {
+      "from": "c-rodina-mat-zovyot",
+      "to": "e-stalingradskaya-bitva",
+      "type": "related"
+    },
+    {
+      "from": "e-leningradskoe-delo",
+      "to": "e-delo-vrachey",
+      "type": "related"
+    },
+    {
+      "from": "e-chetvertaya-pyatiletka",
+      "to": "e-denezhnaya-reforma-1947",
+      "type": "related"
+    },
+    {
+      "from": "p-khrushchev",
+      "to": "e-novocherkasskie-sobytiya",
+      "type": "related"
+    },
+    {
+      "from": "p-shevardnadze",
+      "to": "p-gorbachev",
+      "type": "ally"
+    },
+    {
+      "from": "p-yakovlev",
+      "to": "p-gorbachev",
+      "type": "ally"
+    },
+    {
+      "from": "p-shevardnadze",
+      "to": "p-yakovlev",
+      "type": "ally"
+    },
+    {
+      "from": "p-suslov",
+      "to": "p-brezhnev",
+      "type": "ally"
     }
   ],
   "quizzes": [

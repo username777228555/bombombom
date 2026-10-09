@@ -887,7 +887,8 @@
         "p-denikin",
         "p-yudenich",
         "p-vrangel",
-        "p-frunze"
+        "p-frunze",
+        "p-dzerzhinskiy"
       ],
       "imageInfo": {
         "about": "коллаж из фотографий Гражданской войны",
@@ -2952,6 +2953,136 @@
       "from": "p-rasputin",
       "to": "p-nikolay-ii",
       "type": "influence"
+    },
+    {
+      "from": "c-chernyy-kvadrat",
+      "to": "c-kompozitsiya-vii",
+      "type": "related"
+    },
+    {
+      "from": "c-ciolkovskiy-1903",
+      "to": "p-korolev",
+      "type": "influence"
+    },
+    {
+      "from": "c-ciolkovskiy-1903",
+      "to": "e-zapusk-pervogo-sputnika",
+      "type": "influence"
+    },
+    {
+      "from": "c-izobretenie-radio",
+      "to": "c-ciolkovskiy-1903",
+      "type": "related"
+    },
+    {
+      "from": "c-dvenadtsat",
+      "to": "e-oktyabrskaya-revoluciya",
+      "type": "related"
+    },
+    {
+      "from": "c-metropol",
+      "to": "c-yaroslavskiy-vokzal",
+      "type": "related"
+    },
+    {
+      "from": "c-metropol",
+      "to": "c-demon-sidyashchiy",
+      "type": "related"
+    },
+    {
+      "from": "c-yaroslavskiy-vokzal",
+      "to": "e-nachalo-transsiba-1891",
+      "type": "related"
+    },
+    {
+      "from": "c-mht",
+      "to": "c-vishnevyy-sad",
+      "type": "related"
+    },
+    {
+      "from": "c-mht",
+      "to": "c-na-dne",
+      "type": "related"
+    },
+    {
+      "from": "p-gorkiy",
+      "to": "c-na-dne",
+      "type": "author"
+    },
+    {
+      "from": "c-zhar-ptitsa",
+      "to": "c-russkie-sezony",
+      "type": "part-of"
+    },
+    {
+      "from": "c-russkie-sezony",
+      "to": "c-opera-boris-godunov",
+      "type": "related"
+    },
+    {
+      "from": "e-ubiystvo-aleksandra-ii-1881",
+      "to": "c-spas-na-krovi",
+      "type": "cause"
+    },
+    {
+      "from": "p-aleksandr-iii",
+      "to": "c-spas-na-krovi",
+      "type": "author"
+    },
+    {
+      "from": "e-russko-frantsuzskiy-soyuz-1891",
+      "to": "e-anglo-russkoe-soglashenie",
+      "type": "cause"
+    },
+    {
+      "from": "e-anglo-russkoe-soglashenie",
+      "to": "e-nachalo-pervoy-mirovoy",
+      "type": "cause"
+    },
+    {
+      "from": "e-manifest-17-oktyabrya",
+      "to": "e-i-gosduma",
+      "type": "cause"
+    },
+    {
+      "from": "e-osnovnye-zakony-1906",
+      "to": "e-i-gosduma",
+      "type": "related"
+    },
+    {
+      "from": "p-kerenskiy",
+      "to": "e-lenskiy-rasstrel",
+      "type": "related"
+    },
+    {
+      "from": "p-nikolay-ii",
+      "to": "e-perepis-1897",
+      "type": "related"
+    },
+    {
+      "from": "e-krovavoe-voskresenye",
+      "to": "e-vosstanie-na-potemkine",
+      "type": "cause"
+    },
+    {
+      "from": "p-dzerzhinskiy",
+      "to": "p-lenin",
+      "type": "ally"
+    },
+    {
+      "from": "p-pleve",
+      "to": "e-nachalo-russko-yaponskoy-voyny",
+      "type": "related"
+    },
+    {
+      "from": "p-pleve",
+      "to": "e-osnovanie-psr",
+      "type": "related"
+    },
+    {
+      "from": "p-pleve",
+      "to": "p-vitte",
+      "type": "opponent"
     }
   ],
   "quizzes": [

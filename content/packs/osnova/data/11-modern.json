@@ -229,7 +229,8 @@
       "place": "Чечня",
       "persons": [
         "p-eltsin",
-        "p-lebed"
+        "p-lebed",
+        "p-chernomyrdin"
       ],
       "image": "images/events/e-pervaya-chechenskaya-kampaniya.webp",
       "imageInfo": {
@@ -491,7 +492,10 @@
       "importance": 2,
       "summary": "В ночь на 8 августа 2008 года грузинские войска обстреляли Цхинвали; Россия ввела войска и за пять дней боевых действий вытеснила грузинские силы из региона. 26 августа 2008 года Россия признала независимость Южной Осетии и Абхазии. В начале 2008 года произошло серьёзное ухудшение российско-грузинских отношений. В ночь с 7 на 8 августа, когда Грузия ввела войска в объявившие о независимости территории и подвергла артобстрелу столицу Южной Осетии и позиции российских миротворцев, находившихся на линии разграничения сторон, а затем приступила к установлению контроля над мятежным регионом, начался крупномасштабный вооружённый конфликт, ставший кульминацией предшествовавшей напряжённости.",
       "place": "Цхинвали",
-      "persons": [],
+      "persons": [
+        "p-medvedev",
+        "p-putin"
+      ],
       "image": "images/events/e-vooruzhennyy-konflikt-v-yuzhnoy-osetii.webp",
       "imageInfo": {
         "date": "2014",
@@ -580,7 +584,9 @@
       "importance": 2,
       "summary": "29 мая 2014 года в Астане подписан договор о создании Евразийского экономического союза, вступивший в силу 1 января 2015 года. Первые участники — Россия, Белоруссия и Казахстан, позднее присоединились Армения и Киргизия. На Едином экономическом пространстве ЕАЭС функционируют сходные (сопоставимые) и однотипные механизмы регулирования экономики. ЕАЭС арм@Т@ Եվրասիական տնտեսական միություն, бел@Т@ Еўразійскі эканамічны саюз, каз@Т@ Еуразиялық экономикалық одақ, кирг.",
       "place": "Астана",
-      "persons": [],
+      "persons": [
+        "p-putin"
+      ],
       "details": "Право Всемирной торговой организации является частью правовой системы Таможенного союза ЕАЭС.",
       "wiki": "Евразийский экономический союз"
     },
@@ -599,7 +605,10 @@
       "importance": 2,
       "summary": "Федеральный закон от 3 октября 2018 года с 2019 года поэтапно повышает пенсионный возраст до 60 лет для женщин и 65 лет для мужчин. Правовой базой реформы является закон о совершенствовании пенсионного законодательства (соответствующий законопроект был принят Госдумой в окончательном чтении 27 сентября 2018 года, одобрен Советом Федерации 3 октября, в тот же день подписан президентом и опубликован). По данным ВЦИОМ, реформа оценивалась как событие номер один в стране и годом ранее (2018), когда закон о ней ещё только был принят; тогда более 90 % россиян выступили против реформы. Реформа пока не предполагает изменений для граждан, занятых на тяжёлых работах и вредных производствах (Списки № 1 и № 2).",
       "place": "Россия",
-      "persons": [],
+      "persons": [
+        "p-putin",
+        "p-medvedev"
+      ],
       "wiki": "Пенсионная реформа в России (2019—2028)"
     },
     {
@@ -1618,6 +1627,81 @@
     {
       "from": "p-medvedev",
       "to": "p-putin",
+      "type": "successor"
+    },
+    {
+      "from": "c-film-brat",
+      "to": "e-pervaya-chechenskaya-kampaniya",
+      "type": "related"
+    },
+    {
+      "from": "e-prinyatie-kryma",
+      "to": "c-krymskiy-most",
+      "type": "cause"
+    },
+    {
+      "from": "p-putin",
+      "to": "c-krymskiy-most",
+      "type": "related"
+    },
+    {
+      "from": "e-kapitulyatsiya-germanii",
+      "to": "c-memorial-na-poklonnoy-gore",
+      "type": "related"
+    },
+    {
+      "from": "p-eltsin",
+      "to": "c-memorial-na-poklonnoy-gore",
+      "type": "related"
+    },
+    {
+      "from": "c-nobelevskaya-premiya-alferova",
+      "to": "c-nobelevskaya-premiya-pavlova",
+      "type": "related"
+    },
+    {
+      "from": "e-pervoe-upominanie-moskvy",
+      "to": "c-park-zaryade",
+      "type": "related"
+    },
+    {
+      "from": "p-putin",
+      "to": "c-park-zaryade",
+      "type": "related"
+    },
+    {
+      "from": "p-medvedev",
+      "to": "c-rekonstruktsiya-bolshogo-teatra",
+      "type": "related"
+    },
+    {
+      "from": "c-vosstanovlenie-khrama-khrista-spasitelya",
+      "to": "c-khram-khrista-spasitelya",
+      "type": "related"
+    },
+    {
+      "from": "p-putin",
+      "to": "e-monetizatsiya-lgot",
+      "type": "related"
+    },
+    {
+      "from": "e-monetizatsiya-lgot",
+      "to": "e-pensionnaya-reforma",
+      "type": "related"
+    },
+    {
+      "from": "p-putin",
+      "to": "e-vstuplenie-v-vto",
+      "type": "related"
+    },
+    {
+      "from": "p-chernomyrdin",
+      "to": "p-eltsin",
+      "type": "ally"
+    },
+    {
+      "from": "p-kirienko",
+      "to": "p-chernomyrdin",
       "type": "successor"
     }
   ],

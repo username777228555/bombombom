@@ -16,6 +16,7 @@
 | `pnpm check` | svelte-check + склонения после чисел (`plural:check`) + проверка контента |
 | `pnpm content:add <event\|person\|culture\|term\|link> "Название" --year N` | заготовка нового материала: id, период и структура — автоматически, `TODO` нужно заполнить |
 | `pnpm content:check [--file f] [--pack id]` | валидация пакетов контента (TODO, дубликаты, битые ссылки — ошибки/предупреждения) |
+| `pnpm content:brief <период> [--persons]` · `pnpm content:merge` | пакетное пополнение периода дешёвой моделью: сводка «что уже есть» одной строкой на запись → новый файл `NN-<период>-plus.json` → проверка → слияние в файл периода. Инструкция для модели: `.agents/skills/add-content/BATCH.md` |
 | `pnpm content:books` | все файлы из каталога «Книжная полка» распознаются импортом Библиотеки |
 | `pnpm content:rulers` | лестница правителей и классификация должностей (`reigns[].kind`) |
 | `python3 scripts/media/wiki_images.py fetch\|apply\|gc` | картинки с Wikimedia Commons с автором, датой и лицензией (портреты обрезаются по лицу); в CI — workflow «Media» (коммит с `[media]` в `main` или в ветку `gumball/**`/`media/**`), ручной выбор файла — `scripts/media/overrides.json` |

@@ -12,6 +12,7 @@
     "plural:check": "tsx scripts/plural-check.ts",
     "content:check": "tsx scripts/content-check.ts",
     "content:brief": "tsx scripts/content-brief.ts",
+    "content:merge": "tsx scripts/content-merge.ts",
     "content:stats": "tsx scripts/content-check.ts --stats",
     "content:new": "tsx scripts/content-new.ts",
     "content:add": "tsx scripts/content-add.ts",

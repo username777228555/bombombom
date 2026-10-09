@@ -2091,13 +2091,13 @@
       "label": "перекачка средств из деревни усилила голод"
     },
     {
-      "from": "e-pervaya-pyatiletka",
-      "to": "e-dneproges",
+      "from": "e-dneproges",
+      "to": "e-pervaya-pyatiletka",
       "type": "part-of"
     },
     {
-      "from": "e-pervaya-pyatiletka",
-      "to": "e-magnitogorskiy-kombinat",
+      "from": "e-magnitogorskiy-kombinat",
+      "to": "e-pervaya-pyatiletka",
       "type": "part-of"
     },
     {

@@ -331,6 +331,22 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
     if (pack.manifest.cover) checkAsset(`${pack.manifest.id}/pack.json`, 'cover', pack.manifest.cover);
   }
 
+  // Links that contradict the dates: a cause after its effect, a part (event) outside the span of the whole.
+  const eventById = new Map(allEventsFor(validated).map((e) => [e.id, e]));
+  for (const pack of validated) {
+    for (const { file, data } of pack.fragments) {
+      data.links?.forEach((l, i) => {
+        const a = eventById.get(l.from);
+        const b = eventById.get(l.to);
+        if (!a || !b) return;
+        if (l.type === 'cause' && a.year > (b.endYear ?? b.year)) add('warning', file, `links[${i}]`, `причина «${a.title}» (${a.year}) позже следствия «${b.title}» (${b.year}) — перепутано направление?`);
+        if (l.type === 'part-of' && (a.year < b.year - 1 || a.year > (b.endYear ?? b.year) + 1)) {
+          add('warning', file, `links[${i}]`, `«${a.title}» (${a.year}) — часть «${b.title}» (${b.year}${b.endYear ? `–${b.endYear}` : ''})? Проверьте направление part-of`);
+        }
+      });
+    }
+  }
+
   // Date questions show titles without years: «Русско-турецкая война 1768–1774 годов» and «… 1787–1791 годов»
   // would both read «Русско-турецкая война». Such events need `quizTitle`.
   const eventFile = new Map<string, string>();
@@ -341,6 +357,10 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
 
   const filtered = opts.onlyFile ? issues.filter((i) => opts.onlyFile!(i.file)) : issues;
   return { issues: filtered, periods, packs: validated };
+}
+
+function allEventsFor(packs: { fragments: { data: { events?: { id: string; title: string; year: number; endYear?: number }[] } }[] }[]) {
+  return packs.flatMap((p) => p.fragments.flatMap((f) => f.data.events ?? []));
 }
 
 export const idKindOf = (id: string): EntityKind | undefined =>

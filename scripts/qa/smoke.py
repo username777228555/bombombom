@@ -32,7 +32,7 @@ async def main():
         print("1480 →", await page.locator(".answer .hit b").all_inner_texts(), "| events:", (await page.locator(".yev").all_inner_texts())[:2])
         await page.fill(".finder input", "1611")
         await page.wait_for_timeout(400)
-        print("1611 →", (await page.locator(".answer .gap").inner_text())[:140])
+        print("1611 →", await page.locator(".answer .hit b").all_inner_texts(), "(коллективное правление)")
 
         # Timeline synchronizer
         await go("/timeline?period=muscovy", 2200)

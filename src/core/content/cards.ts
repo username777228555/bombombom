@@ -4,6 +4,7 @@ import { userData } from './userdecks.svelte';
 import type { CultureItem, EventItem, PersonItem, TermItem } from './schema';
 import { CULTURE_KIND_LABELS } from './schema';
 import { centuryLabel, formatEventDate, formatLife, formatYear } from '../utils/format';
+import { quizTitle } from './titles';
 
 export type CardKind = 'date' | 'person' | 'term' | 'culture' | 'custom';
 export interface StudyCard {
@@ -41,7 +42,8 @@ export interface DeckInfo {
 export const eventCard = (e: EventItem): StudyCard => ({
   id: `a:e:${e.id}`,
   kind: 'date',
-  front: e.title,
+  // Without the years: «Русско-шведская война 1808–1809 годов» would give the answer away.
+  front: quizTitle(e),
   frontSub: 'Когда это было?',
   back: formatEventDate(e),
   backSub: e.summary,

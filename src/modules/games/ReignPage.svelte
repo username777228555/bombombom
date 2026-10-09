@@ -13,6 +13,7 @@
   import Avatar from '$lib/design/components/Avatar.svelte';
   import GameSetup from './GameSetup.svelte';
   import { kb, type Reign } from '$lib/core/content/kb.svelte';
+  import { quizTitle } from '$lib/core/content/titles';
   import { reignSpan } from '$lib/core/content/rulers';
   import type { EventItem } from '$lib/core/content/schema';
   import { router } from '$lib/core/router.svelte';
@@ -141,7 +142,7 @@
       {#key i}
         <article class="event" in:fly={{ y: 24, duration: 320 }}>
           <span class="eyebrow">Событие {i + 1} из {rounds.length}</span>
-          <h2>{current.event.title}</h2>
+          <h2>{quizTitle(current.event)}</h2>
           {#if picked}
             <p class="date num" in:fly={{ y: 6 }}>{formatEventDate(current.event)}</p>
             <p class="sum" in:fly={{ y: 6, delay: 80 }}>{current.event.summary}</p>

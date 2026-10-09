@@ -170,6 +170,7 @@
     {
       "id": "e-voyna-s-vkl-1500-1503",
       "title": "Война с Великим княжеством Литовским (1500–1503)",
+      "quizTitle": "Война с Литвой, по итогам которой к Москве отошли Чернигово-Северские земли",
       "year": 1500,
       "endYear": 1503,
       "period": "muscovy",
@@ -378,6 +379,7 @@
       "id": "e-moskovskoe-vosstanie-1547",
       "image": "images/events/e-moskovskoe-vosstanie-1547.webp",
       "title": "Московское восстание 1547 года",
+      "quizTitle": "Московское восстание после великого пожара в начале правления Ивана IV",
       "year": 1547,
       "month": 6,
       "period": "muscovy",

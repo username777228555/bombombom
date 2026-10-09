@@ -4,6 +4,7 @@ import type { EventItem, PersonItem, Question, QuestionType } from './schema';
 import { CULTURE_KIND_LABELS } from './schema';
 import { centuryLabel, century, formatEventDate, formatYear, toRoman } from '../utils/format';
 import { pick, sample, shuffle, type Rng } from '../utils/random';
+import { quizTitle as qt } from './titles';
 
 export interface GenOptions {
   periods?: string[];
@@ -57,7 +58,7 @@ const G: Record<string, Gen> = {
     if (!e) return null;
     const opts = yearOptions(e.year, events, rng);
     return {
-      type: 'single', prompt: `В каком году: ${q(e.title)}?`, options: opts.map((y) => formatYear(y)),
+      type: 'single', prompt: `В каком году: ${q(qt(e))}?`, options: opts.map((y) => formatYear(y)),
       answer: opts.indexOf(e.year), explain: `${formatEventDate(e)}. ${e.summary}`, entity: e.id, period: e.period,
     };
   },
@@ -65,7 +66,7 @@ const G: Record<string, Gen> = {
     const e = pick(events.filter((x) => imp(x) >= 2), rng) ?? pick(events, rng);
     if (!e) return null;
     return {
-      type: 'year', prompt: `Укажите год: ${q(e.title)}`, answer: e.year, tolerance: e.circa ? 3 : 0,
+      type: 'year', prompt: `Укажите год: ${q(qt(e))}`, answer: e.year, tolerance: e.circa ? 3 : 0,
       explain: `${formatEventDate(e)}. ${e.summary}`, entity: e.id, period: e.period,
     };
   },
@@ -74,7 +75,7 @@ const G: Record<string, Gen> = {
     if (!set) return null;
     const first = set.reduce((a, b) => (a.year <= b.year ? a : b));
     return {
-      type: 'single', prompt: 'Какое из этих событий произошло раньше остальных?', options: set.map((e) => e.title),
+      type: 'single', prompt: 'Какое из этих событий произошло раньше остальных?', options: set.map(qt),
       answer: set.indexOf(first), explain: [...set].sort((a, b) => a.year - b.year).map((e) => `${formatYear(e.year)} — ${e.title}`).join('; '),
     };
   },
@@ -87,7 +88,7 @@ const G: Record<string, Gen> = {
     if (!set) return null;
     const sorted = [...set].sort((a, b) => a.year - b.year);
     return {
-      type: 'order', prompt: 'Расположите события в хронологическом порядке', items: sorted.map((e) => e.title),
+      type: 'order', prompt: 'Расположите события в хронологическом порядке', items: sorted.map(qt),
       explain: sorted.map((e) => `${formatYear(e.year)} — ${e.title}`).join('; '),
     };
   },
@@ -96,8 +97,8 @@ const G: Record<string, Gen> = {
     if (!set) return null;
     return {
       type: 'match', prompt: 'Установите соответствие между событиями и годами',
-      pairs: set.map((e) => [e.title, formatYear(e.year)] as [string, string]),
-      explain: set.map((e) => `${e.title} — ${formatYear(e.year)}`).join('; '),
+      pairs: set.map((e) => [qt(e), formatYear(e.year)] as [string, string]),
+      explain: set.map((e) => `${qt(e)} — ${formatYear(e.year)}`).join('; '),
     };
   },
   matchPersons({ rng, events }) {
@@ -204,9 +205,9 @@ const G: Record<string, Gen> = {
     const opts = shuffle([...ins, ...outs], rng);
     const period = kb.periodById.get(target)!;
     return {
-      type: 'multiple', prompt: `Какие события относятся к периоду ${q(period.title)} (${period.range})?`, options: opts.map((e) => e.title),
+      type: 'multiple', prompt: `Какие события относятся к периоду ${q(period.title)} (${period.range})?`, options: opts.map(qt),
       answers: opts.map((e, i) => (ins.includes(e) ? i : -1)).filter((i) => i >= 0),
-      explain: opts.map((e) => `${e.title} — ${formatYear(e.year)}`).join('; '),
+      explain: opts.map((e) => `${qt(e)} — ${formatYear(e.year)}`).join('; '),
     };
   },
   errors({ rng, events, persons }) {
@@ -223,7 +224,7 @@ const G: Record<string, Gen> = {
     return {
       type: 'errors', prompt: 'Найдите ошибки в тексте (нажмите на неверные фрагменты)',
       segments: [
-        { text: `${q(e.title)} — `, wrong: false },
+        { text: `${q(qt(e))} — `, wrong: false },
         { text: `событие ${formatYear(wrongYear ? altYear : e.year)} года`, wrong: wrongYear, fix: `${formatYear(e.year)} год` }, // plural-ok: «1812 года» — год, а не количество
         { text: `, относится к периоду «${period.short}»`, wrong: false },
         { text: `; его участник — ${usePerson ? nameOf(alt) : person}.`, wrong: !!usePerson, fix: person },

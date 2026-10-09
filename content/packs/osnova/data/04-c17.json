@@ -30,6 +30,7 @@
     {
       "id": "e-golod-1601-1603",
       "title": "Голод 1601–1603 годов",
+      "quizTitle": "Великий голод при Борисе Годунове",
       "year": 1601,
       "endYear": 1603,
       "period": "c17",
@@ -390,6 +391,7 @@
       "id": "e-zemskiy-sobor-1613",
       "image": "images/events/e-zemskiy-sobor-1613.webp",
       "title": "Земский собор 1613 года",
+      "quizTitle": "Земский собор, избравший на царство Михаила Романова",
       "year": 1613,
       "month": 2,
       "day": 21,
@@ -636,6 +638,7 @@
     {
       "id": "e-voyna-s-rechyu-pospolitoy-1654",
       "title": "Русско-польская война 1654–1667 годов",
+      "quizTitle": "Русско-польская война, завершённая Андрусовским перемирием",
       "year": 1654,
       "endYear": 1667,
       "period": "c17",
@@ -839,6 +842,7 @@
       "id": "e-streletskiy-bunt-1682",
       "image": "images/events/e-streletskiy-bunt-1682.webp",
       "title": "Стрелецкий бунт 1682 года",
+      "quizTitle": "Стрелецкий бунт, после которого правительницей стала царевна Софья",
       "year": 1682,
       "month": 5,
       "day": 15,

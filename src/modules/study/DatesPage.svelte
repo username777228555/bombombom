@@ -12,6 +12,7 @@
   import EntityPreview from '$lib/components/EntityPreview.svelte';
   import EpochBanner from '$lib/components/EpochBanner.svelte';
   import { kb } from '$lib/core/content/kb.svelte';
+  import { quizTitle } from '$lib/core/content/titles';
   import { openSheet } from '$lib/core/ui.svelte';
   import { haptic } from '$lib/core/platform';
   import { formatEventDate } from '$lib/core/utils/format';
@@ -87,7 +88,7 @@
               <button class="title hidden" onclick={() => toggle(e.id)}>Что произошло? <span>нажмите, чтобы проверить</span></button>
             {:else}
               <button class="title" onclick={() => (mode === 'events' && shown ? toggle(e.id) : preview(e.id))}>
-                <b>{e.title}</b>
+                <b>{mode === 'years' && !shown ? quizTitle(e) : e.title}</b>
                 <small class="muted">{formatEventDate(e)}</small>
               </button>
             {/if}

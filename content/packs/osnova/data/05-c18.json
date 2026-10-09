@@ -638,6 +638,7 @@
       "id": "e-dvorcovyy-perevorot-1762",
       "image": "images/events/e-dvorcovyy-perevorot-1762.webp",
       "title": "Дворцовый переворот 1762 года",
+      "quizTitle": "Дворцовый переворот, приведший к власти Екатерину II",
       "year": 1762,
       "month": 6,
       "day": 28,
@@ -690,6 +691,7 @@
     {
       "id": "e-russko-tureckaya-voyna-1768-1774",
       "title": "Русско-турецкая война 1768–1774 годов",
+      "quizTitle": "Русско-турецкая война, завершённая Кючук-Кайнарджийским миром",
       "year": 1768,
       "endYear": 1774,
       "period": "c18",
@@ -860,6 +862,7 @@
     {
       "id": "e-russko-tureckaya-voyna-1787-1791",
       "title": "Русско-турецкая война 1787–1791 годов",
+      "quizTitle": "Русско-турецкая война, завершённая Ясским миром",
       "year": 1787,
       "endYear": 1791,
       "period": "c18",

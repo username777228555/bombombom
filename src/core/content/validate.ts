@@ -4,6 +4,7 @@
  */
 import type { z } from 'zod';
 import { pluralN, WORDS } from '../utils/format';
+import { undatedCollisions } from './titles';
 import {
   FragmentSchema, PackManifestSchema, PeriodsFileSchema, ID_PREFIX, SYMMETRIC_LINKS,
   type EntityKind, type Fragment, type PackManifest, type Period,
@@ -328,6 +329,14 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
       });
     }
     if (pack.manifest.cover) checkAsset(`${pack.manifest.id}/pack.json`, 'cover', pack.manifest.cover);
+  }
+
+  // Date questions show titles without years: «Русско-турецкая война 1768–1774 годов» and «… 1787–1791 годов»
+  // would both read «Русско-турецкая война». Such events need `quizTitle`.
+  const eventFile = new Map<string, string>();
+  const allEvents = validated.flatMap((pack) => pack.fragments.flatMap(({ file, data }) => (data.events ?? []).map((e) => (eventFile.set(e.id, file), e))));
+  for (const [title, ids] of undatedCollisions(allEvents)) {
+    add('warning', eventFile.get(ids[0]!) ?? '', ids.join(', '), `без года названия совпадают («${title}»): добавьте quizTitle — как спрашивать о дате, не выдавая её`);
   }
 
   const filtered = opts.onlyFile ? issues.filter((i) => opts.onlyFile!(i.file)) : issues;

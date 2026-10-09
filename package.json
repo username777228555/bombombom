@@ -19,6 +19,7 @@
     "content:bundle": "tsx scripts/content-bundle.ts",
     "content:books": "tsx scripts/book-titles.ts",
     "content:rulers": "tsx scripts/rulers-check.ts",
+    "quizlet": "tsx scripts/quizlet/quizlet.ts",
     "icons": "tsx scripts/gen-icons.ts",
     "android:sync": "vite build && cap sync android",
     "android:apk": "vite build && cap sync android && cd android && ./gradlew assembleRelease"

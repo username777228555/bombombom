@@ -182,6 +182,13 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
       if (d === s || s.startsWith(d)) add('warning', file, path, 'details повторяет summary — удалите details');
       else if (s.length > 60 && d.startsWith(s)) add('warning', file, path, 'details начинается с текста summary — уберите повтор');
     };
+    // A lowercase Latin word between Russian words is a translation slip («подстрекательство Франции, pushed Турцию»);
+    // foreign names and quotes («лат. iustitia», «Lena Goldfields», «liberum veto») don't match.
+    const SLIP = /[а-яё][,;:]?\s([a-z]{3,})\s[а-яёА-ЯЁ]/u;
+    const checkLatin = (file: string, path: string, text: string | undefined) => {
+      const m = text && SLIP.exec(text);
+      if (m) add('warning', file, path, `английское слово «${m[1]}» посреди русского текста — переведите`);
+    };
     for (const { file, data: d } of pack.fragments) {
       findTodos(d, '', (path) => add('error', file, path, 'не заполнено («TODO…»): допишите значение или удалите поле'));
       const ref = (path: string, id: string | undefined, kinds?: EntityKind[]) => {
@@ -208,6 +215,8 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         checkAsset(file, `${at}.image`, e.image);
         checkCredit(file, `${at}.imageInfo`, e);
         checkDetails(file, `${at}.details`, e);
+        checkLatin(file, `${at}.summary`, e.summary);
+        checkLatin(file, `${at}.details`, e.details);
         dup(file, at, e.id, `e|${titleKey(e.title)}|${e.year}`);
         wikiRefs(file, at, e.refs);
       });
@@ -231,6 +240,8 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         checkAsset(file, `${at}.image`, p.image);
         checkCredit(file, `${at}.imageInfo`, p);
         checkDetails(file, `${at}.details`, p);
+        checkLatin(file, `${at}.summary`, p.summary);
+        checkLatin(file, `${at}.details`, p.details);
         dup(file, at, p.id, `p|${titleKey(p.name)}`);
         wikiRefs(file, at, p.refs);
         if (p.short && p.short.split(/\s+/).length > p.name.split(/\s+/).length && /(вич|вна|ична)\b/.test(p.short)) {
@@ -246,8 +257,10 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         checkCredit(file, `${at}.imageInfo`, c);
         dup(file, at, c.id, `c|${titleKey(c.title)}`);
         wikiRefs(file, at, c.refs);
+        checkLatin(file, `${at}.summary`, c.summary);
       });
       d.terms?.forEach((t, i) => {
+        checkLatin(file, `terms[${i}].definition`, t.definition);
         t.periods?.forEach((id, j) => period(`terms[${i}].periods[${j}]`, id));
         t.related?.forEach((id, j) => ref(`terms[${i}].related[${j}]`, id));
       });
@@ -280,6 +293,7 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
           if (ids.has(c.id)) add('error', file, `decks[${i}].cards[${j}].id`, `повтор id карточки «${c.id}»`);
           ids.add(c.id);
           checkAsset(file, `decks[${i}].cards[${j}].image`, c.image);
+          ref(`decks[${i}].cards[${j}].entity`, c.entity, ['event', 'person', 'culture', 'term']);
         });
       });
       d.quizzes?.forEach((quiz, i) => {

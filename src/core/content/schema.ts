@@ -256,6 +256,8 @@ export const CardSchema = z.strictObject({
   hint: OptText,
   image: Asset.optional(),
   tags: z.array(Text).optional(),
+  /** Knowledge-base entry the card is about: the card links to its article (set by the Quizlet import). */
+  entity: Id.optional(),
 });
 export const DeckSchema = z.strictObject({
   id: prefixed('deck'),

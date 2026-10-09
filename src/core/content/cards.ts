@@ -106,6 +106,18 @@ export function autoDecks(): DeckInfo[] {
   return out;
 }
 
+type PackDeck = (typeof kb.decks)[number];
+const packCard = (d: PackDeck, c: PackDeck['cards'][number]): StudyCard => ({
+  id: `k:${d.id}:${c.id}`,
+  kind: 'custom',
+  front: c.front,
+  back: c.back,
+  hint: c.hint,
+  image: kb.assetUrl(d.pack, c.image),
+  entity: c.entity,
+  period: d.period,
+});
+
 export function packDecks(): DeckInfo[] {
   return kb.decks.map((d) => ({
     id: `pack:${d.id}`,
@@ -114,16 +126,7 @@ export function packDecks(): DeckInfo[] {
     period: d.period,
     source: 'pack' as const,
     size: d.cards.length,
-    cards: () =>
-      d.cards.map((c) => ({
-        id: `k:${d.id}:${c.id}`,
-        kind: 'custom' as const,
-        front: c.front,
-        back: c.back,
-        hint: c.hint,
-        image: kb.assetUrl(d.pack, c.image),
-        period: d.period,
-      })),
+    cards: () => d.cards.map((c) => packCard(d, c)),
   }));
 }
 
@@ -198,7 +201,7 @@ export function resolveCard(id: string): StudyCard | undefined {
     const [deckId, cardId] = rest;
     const d = kb.decks.find((x) => x.id === deckId);
     const c = d?.cards.find((x) => x.id === cardId);
-    return d && c ? { id, kind: 'custom', front: c.front, back: c.back, hint: c.hint, image: kb.assetUrl(d.pack, c.image), period: d.period } : undefined;
+    return d && c ? packCard(d, c) : undefined;
   }
   if (kind === 'u') {
     const c = userData.cards.find((x) => x.id === ref);

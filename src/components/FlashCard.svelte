@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { StudyCard } from '$lib/core/content/cards';
+  import { navigate } from '$lib/core/router.svelte';
   import PeriodTag from './PeriodTag.svelte';
 
   interface Props {
@@ -34,6 +35,11 @@
       <div class="top"><span class="eyebrow">{card.front.length > 60 ? card.front.slice(0, 60) + '…' : card.front}</span></div>
       <p class="main answer" class:long={longBack}>{card.back}</p>
       {#if card.backSub}<p class="sub">{card.backSub}</p>{/if}
+      {#if card.kind === 'custom' && card.entity}
+        <!-- Pack cards (Quizlet import) link to the full article; the click must not flip or drag the card. -->
+        <button class="more" tabindex={flipped ? 0 : -1} onpointerdown={(e) => e.stopPropagation()}
+          onclick={(e) => { e.stopPropagation(); navigate(`/entity/${card.entity}`); }}>Статья →</button>
+      {/if}
     </div>
   </div>
 </div>
@@ -82,5 +88,6 @@
   .sub { font-family: var(--font-read); font-size: var(--text-md); line-height: 1.5; color: var(--ink-2); max-width: 40ch; overflow-y: auto; max-height: 45%; }
   img { max-height: 40%; border-radius: var(--r-md); }
   .hint { font-size: var(--text-sm); }
+  .more { position: absolute; bottom: var(--sp-5); border: 0; background: none; color: var(--accent); font-size: var(--text-sm); font-weight: 600; cursor: pointer; padding: 4px 8px; }
   .tap { position: absolute; bottom: var(--sp-5); font-size: var(--text-xs); letter-spacing: 0.05em; }
 </style>

@@ -23,6 +23,8 @@ export const GITHUB_KEY = 'github-source';
 /** The app's own repository: books go to its `books/` folder (or to a release), the app downloads them from there. */
 export const APP_REPO = 'username777228555/bombombom';
 export const BOOKS_FOLDER = 'books';
+/** Release whose assets are books too (files over 25 MB, which github.com won't put into a folder). */
+export const BOOKS_RELEASE = 'books';
 
 export interface GithubSource {
   /** «owner/name». */
@@ -72,7 +74,7 @@ async function api<T>(s: GithubSource, path: string): Promise<T> {
 const kindOf = (name: string): RemoteFile['kind'] | null => (PACK_EXT.test(name) ? 'pack' : BOOK_EXT.test(name) ? 'book' : null);
 const encodePath = (p: string) => p.split('/').map(encodeURIComponent).join('/');
 
-/** Books and packs in the repository (files of the default branch inside `folder`) and in its releases. */
+/** Books and packs in the repository (files of the default branch inside `folder`) and in the «books» release. */
 export async function listRemote(s: GithubSource): Promise<RemoteFile[]> {
   const repo = await api<{ default_branch: string }>(s, `/repos/${s.repo}`);
   const ref = repo.default_branch;
@@ -88,7 +90,8 @@ export async function listRemote(s: GithubSource): Promise<RemoteFile[]> {
     const kind = kindOf(name);
     if (kind) out.push({ key: `f:${t.path}`, name, size: t.size ?? 0, kind, from: { type: 'file', path: t.path, ref } });
   }
-  for (const rel of releases) {
+  // Only the «books» release: other releases hold APKs and import material (e.g. Quizlet printouts in «import»).
+  for (const rel of releases.filter((r) => r.tag_name === BOOKS_RELEASE)) {
     for (const a of rel.assets) {
       const kind = kindOf(a.name);
       if (kind) out.push({ key: `r:${a.id}`, name: a.name, size: a.size, kind, from: { type: 'release', id: a.id, tag: rel.tag_name, url: a.browser_download_url } });

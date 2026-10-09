@@ -28,3 +28,7 @@ dist-packs/
 материалы)/
 .cache/
 __pycache__/
+
+# Quizlet import: pictures and previews are rebuilt by scripts/quizlet/extract.py
+import/quizlet/work/img/
+import/quizlet/work/preview/

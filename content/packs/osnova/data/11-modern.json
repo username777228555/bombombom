@@ -771,6 +771,78 @@
       "persons": [
         "p-putin"
       ]
+    },
+    {
+      "id": "e-terakt-v-beslane",
+      "title": "Теракт в Беслане",
+      "year": 2004,
+      "month": 9,
+      "day": 1,
+      "endYear": 2004,
+      "endMonth": 9,
+      "endDay": 3,
+      "period": "modern",
+      "tags": [
+        "society"
+      ],
+      "importance": 2,
+      "summary": "1–3 сентября 2004 года террористы захватили школу № 1 в Беслане (Северная Осетия), в заложниках оказались более тысячи человек, в основном дети. Погибли 334 человека, из них 186 детей. После теракта В. В. Путин объявил о мерах по укреплению государственного управления, в том числе об отмене прямых выборов губернаторов.",
+      "place": "Беслан",
+      "persons": [
+        "p-putin"
+      ],
+      "wiki": "Захват школы в Беслане"
+    },
+    {
+      "id": "e-otmena-pryamykh-vyborov-gubernatorov",
+      "title": "Отмена прямых выборов губернаторов",
+      "year": 2004,
+      "month": 12,
+      "day": 11,
+      "period": "modern",
+      "tags": [
+        "politics",
+        "law"
+      ],
+      "importance": 2,
+      "summary": "Федеральный закон от 11 декабря 2004 года заменил всенародные выборы глав регионов наделением полномочиями по представлению президента законодательным собранием региона. Часть курса на укрепление «вертикали власти»; прямые выборы губернаторов вернули в 2012 году.",
+      "persons": [
+        "p-putin"
+      ]
+    },
+    {
+      "id": "e-myunkhenskaya-rech-v-v-putina",
+      "title": "Мюнхенская речь В. В. Путина",
+      "year": 2007,
+      "month": 2,
+      "day": 10,
+      "period": "modern",
+      "tags": [
+        "foreign"
+      ],
+      "importance": 2,
+      "summary": "Выступление на Мюнхенской конференции по безопасности 10 февраля 2007 года: В. В. Путин отверг однополярный мир во главе с США, раскритиковал расширение НАТО на восток и размещение элементов ПРО в Европе. Считается поворотом к более самостоятельной внешней политике России.",
+      "place": "Мюнхен",
+      "persons": [
+        "p-putin"
+      ],
+      "wiki": "Мюнхенская речь Путина"
+    },
+    {
+      "id": "e-gosudarstvennyy-perevorot-v-kieve",
+      "title": "Государственный переворот в Киеве",
+      "year": 2014,
+      "month": 2,
+      "day": 22,
+      "period": "modern",
+      "tags": [
+        "foreign",
+        "politics"
+      ],
+      "importance": 3,
+      "summary": "После массовых протестов (Евромайдан), начавшихся в ноябре 2013 года, 22 февраля 2014 года президент В. Ф. Янукович был отстранён от власти в обход конституционной процедуры. Новую власть не признали Крым и Донбасс: события стали прологом к воссоединению Крыма с Россией и к войне на Донбассе.",
+      "place": "Киев",
+      "wiki": "Смена власти на Украине (2014)"
     }
   ],
   "persons": [
@@ -1860,6 +1932,36 @@
       "to": "e-izbranie-putina",
       "type": "participant",
       "label": "кандидат на выборах 2000 года, второе место"
+    },
+    {
+      "from": "e-terakt-v-beslane",
+      "to": "e-otmena-pryamykh-vyborov-gubernatorov",
+      "type": "cause"
+    },
+    {
+      "from": "e-vtoraya-chechenskaya-kampaniya",
+      "to": "e-terakt-v-beslane",
+      "type": "related"
+    },
+    {
+      "from": "e-federalnye-okruga",
+      "to": "e-otmena-pryamykh-vyborov-gubernatorov",
+      "type": "related"
+    },
+    {
+      "from": "e-gosudarstvennyy-perevorot-v-kieve",
+      "to": "e-prinyatie-kryma",
+      "type": "cause"
+    },
+    {
+      "from": "e-gosudarstvennyy-perevorot-v-kieve",
+      "to": "e-voyna-na-donbasse",
+      "type": "cause"
+    },
+    {
+      "from": "e-myunkhenskaya-rech-v-v-putina",
+      "to": "e-vooruzhennyy-konflikt-v-yuzhnoy-osetii",
+      "type": "related"
     }
   ],
   "quizzes": [

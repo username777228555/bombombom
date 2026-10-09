@@ -5,7 +5,9 @@
    *   · «Смотреть» — grid + full-screen viewer (swipe, arrows, Esc);
    *   · «Что изображено?» — guess the event or the work by the picture;
    *   · «Кто автор?» — attribution of works of art (a classic olympiad task).
-   * Grows automatically when agents add pictures to content packs.
+   * Grows automatically when agents add pictures to content packs. Quizzes skip pictures that give the answer
+   * away: title pages, posters, manuscripts, maps and portraits standing in for a book or an event — only
+   * QUIZ_KINDS of culture are asked, and any item can opt out with `imageQuiz: false`.
    */
   import { onMount } from 'svelte';
   import { fade, fly, scale } from 'svelte/transition';
@@ -39,7 +41,14 @@
     summary: string;
     /** Author of a work of art (culture) — used by «Кто автор?». */
     author?: string;
+    /** May be asked in «Что изображено?» (the picture itself does not name the answer). */
+    quiz: boolean;
+    /** May be asked in «Кто автор?» (a work whose style tells the author: painting, icon, sculpture, building). */
+    attributable: boolean;
   }
+  /** Culture kinds whose pictures show the work itself; books, scores and documents show a title page instead. */
+  const QUIZ_KINDS = new Set(['painting', 'icon', 'sculpture', 'architecture', 'applied']);
+  const AUTHOR_KINDS = new Set(['painting', 'icon', 'sculpture', 'architecture']);
   let mode = $state<'look' | 'quiz' | 'author'>('look');
   let what = $state<'all' | 'event' | 'culture'>('all');
   let period = $state<string | null>(null);
@@ -50,14 +59,15 @@
     for (const e of kb.events) {
       const ent = kb.get(e.id);
       const src = e.image && ent ? kb.imageOf(ent) : undefined;
-      if (src) out.push({ id: e.id, kind: 'event', title: e.title, year: e.year, date: formatEventDate(e), period: e.period, src, info: e.imageInfo, summary: e.summary });
+      if (src) out.push({ id: e.id, kind: 'event', title: e.title, year: e.year, date: formatEventDate(e), period: e.period, src, info: e.imageInfo, summary: e.summary, quiz: e.imageQuiz !== false, attributable: false });
     }
     for (const c of kb.culture) {
       const ent = kb.get(c.id);
       const src = c.image && ent ? kb.imageOf(ent) : undefined;
       if (!src) continue;
       const author = c.authorName ?? (c.authors?.length ? c.authors.map((a) => kb.title(a)).join(', ') : undefined);
-      out.push({ id: c.id, kind: 'culture', title: c.title, year: c.year, date: formatSpan(c.year, c.endYear, c.circa), period: c.period, src, info: c.imageInfo, summary: c.summary, author });
+      const quiz = c.imageQuiz !== false && QUIZ_KINDS.has(c.kind);
+      out.push({ id: c.id, kind: 'culture', title: c.title, year: c.year, date: formatSpan(c.year, c.endYear, c.circa), period: c.period, src, info: c.imageInfo, summary: c.summary, author, quiz, attributable: quiz && !!author && AUTHOR_KINDS.has(c.kind) });
     }
     return out.sort((a, b) => a.year - b.year);
   });
@@ -104,21 +114,22 @@
 
   function buildRounds(): Round[] {
     if (mode === 'author') {
-      const pool = (pics.filter((p) => p.author).length >= 4 ? pics : all).filter((p) => p.author);
-      const authors = [...new Set(all.filter((p) => p.author).map((p) => p.author!))];
+      const pool = (pics.filter((p) => p.attributable).length >= 4 ? pics : all).filter((p) => p.attributable);
+      const authors = [...new Set(all.filter((p) => p.attributable).map((p) => p.author!))];
       return sample(pool, Math.min(ROUNDS, pool.length)).map((pic) => {
         // Distractors from the same century when possible — telling Surikov from Vasnetsov is the skill.
         const near = shuffle(authors.filter((a) => a !== pic.author)).sort((a, b) => {
-          const ya = all.find((p) => p.author === a)!.year;
-          const yb = all.find((p) => p.author === b)!.year;
+          const ya = all.find((p) => p.attributable && p.author === a)!.year;
+          const yb = all.find((p) => p.attributable && p.author === b)!.year;
           return Math.abs(ya - pic.year) - Math.abs(yb - pic.year);
         });
         return { pic, answer: pic.author!, options: shuffle([pic.author!, ...near.slice(0, 3)]) };
       });
     }
-    const pool = pics.length >= 4 ? pics : all;
+    const quizPics = pics.filter((p) => p.quiz);
+    const pool = quizPics.length >= 4 ? quizPics : all.filter((p) => p.quiz);
     return sample(pool, Math.min(ROUNDS, pool.length)).map((pic) => {
-      const near = all.filter((p) => p.id !== pic.id && p.kind === pic.kind).sort((a, b) => Math.abs(a.year - pic.year) - Math.abs(b.year - pic.year));
+      const near = all.filter((p) => p.id !== pic.id && p.kind === pic.kind && p.title !== pic.title).sort((a, b) => Math.abs(a.year - pic.year) - Math.abs(b.year - pic.year));
       return { pic, answer: pic.title, options: shuffle([pic.title, ...sample(near.slice(0, 12), 3).map((p) => p.title)]) };
     });
   }
@@ -207,7 +218,7 @@
   {:else if round}
     {#key `${mode}-${qi}`}
       <div class="quiz" in:fly={{ y: 20, duration: 300 }}>
-        <div class="qhead"><span class="eyebrow">{mode === 'author' ? 'Кто написал эту картину?' : 'Что изображено?'} · {qi + 1} из {rounds.length}</span><strong class="num qscore">{score}</strong></div>
+        <div class="qhead"><span class="eyebrow">{mode === 'author' ? 'Кто автор?' : 'Что изображено?'} · {qi + 1} из {rounds.length}</span><strong class="num qscore">{score}</strong></div>
         <Painting src={round.pic.src} alt="" height="min(46dvh, 360px)" />
         <div class="opts">
           {#each round.options as o, k (o)}

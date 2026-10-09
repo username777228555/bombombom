@@ -78,6 +78,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Marten%27s_Poltava.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Северная война"
     },
     {
@@ -450,6 +451,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Pravda_voli_monarshej.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Указ о престолонаследии (1722)"
     },
     {
@@ -939,6 +941,7 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Ukaz_o_trekhdnevnoy_barschine.jpg"
       },
+      "imageQuiz": false,
       "wiki": "Манифест о трёхдневной барщине"
     },
     {

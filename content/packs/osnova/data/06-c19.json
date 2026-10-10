@@ -3729,7 +3729,14 @@
         "последний роман писателя"
       ],
       "importance": 3,
-      "wiki": "Братья Карамазовы"
+      "wiki": "Братья Карамазовы",
+      "image": "images/culture/c-bratya-karamazovy.webp",
+      "imageInfo": {
+        "date": "1880-11",
+        "about": "Изображение: Роман «Братья Карамазовы»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Dostoevsky-Brothers_Karamazov.jpg"
+      }
     },
     {
       "id": "c-pamyatnik-pushkinu-moskva",

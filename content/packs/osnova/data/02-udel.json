@@ -4215,7 +4215,13 @@
         "упоминает изорников и огородников"
       ],
       "importance": 2,
-      "wiki": "Псковская судная грамота"
+      "wiki": "Псковская судная грамота",
+      "image": "images/culture/c-pskovskaya-sudnaya-gramota.webp",
+      "imageInfo": {
+        "about": "Изображение: Псковская судная грамота",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Pskov_Judicial_Chapter_page_1.png"
+      }
     },
     {
       "id": "c-zhitie-sergiya-radonezhskogo",

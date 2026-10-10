@@ -3521,7 +3521,15 @@
         "служила справочником для воевод"
       ],
       "importance": 2,
-      "wiki": "Книга Большому чертежу"
+      "wiki": "Книга Большому чертежу",
+      "image": "images/culture/c-kniga-bolshomu-chertezhu.webp",
+      "imageInfo": {
+        "title": "Книга Большому Чертежу",
+        "date": "2012",
+        "about": "Изображение: «Книга Большому чертежу».",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BD%D0%B8%D0%B3%D0%B0_%D0%91%D0%BE%D0%BB%D1%8C%D1%88%D0%BE%D0%BC%D1%83_%D0%A7%D0%B5%D1%80%D1%82%D0%B5%D0%B6%D1%83.png"
+      }
     },
     {
       "id": "c-tserkov-ioanna-predtechi-v-tolchkove",

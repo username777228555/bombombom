@@ -62,7 +62,7 @@ async def main():
         await go("/essay")
         print("essay guide sections:", await page.locator(".sec").count())
         await page.locator(".sec .head").first.click()
-        await page.get_by_role("tab", name="План по правлению").click()
+        await page.get_by_role("tab", name="Материал").click()
         await page.wait_for_timeout(300)
         await page.select_option("select", index=40)
         await page.wait_for_timeout(700)
@@ -88,6 +88,14 @@ async def main():
         print("art quiz options:", await page.locator(".opt").count())
         await go("/quiz/probes", 1500)
         print("probes page:", (await page.locator("h1").first.inner_text()))
+        await go("/quiz/map", 1200)
+        print("knowledge map cells:", await page.locator(".cell").count())
+        await go("/sources", 1500)
+        print("sources:", await page.locator(".doc").count())
+        await go("/essay", 1500)
+        await page.get_by_role("tab", name="Тренажёр").click()
+        await page.wait_for_timeout(400)
+        print("essay trainer fields:", await page.locator(".trainer textarea").count())
 
         # Home
         await go("/", 2500)

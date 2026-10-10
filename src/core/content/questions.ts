@@ -33,6 +33,23 @@ const imp = (x: { importance?: number }) => x.importance ?? 2;
 /** Wraps a title in guillemets unless it already has them (book titles often do). */
 const q = (s: string) => (/^«.*»$/.test(s.trim()) ? s.trim() : `«${s.trim()}»`);
 const nameOf = (p: PersonItem) => p.short ?? p.name;
+const causesOf = (id: string) => kb.edges.filter((ed) => ed.type === 'cause' && ed.to === id).map((ed) => ed.from);
+
+/** «Почему?» — the causes of one event as an extended-answer question (null if the graph knows no cause of it). */
+export function whyQuestion(eventId: string): GeneratedQuestion | null {
+  const ent = kb.get(eventId);
+  if (ent?.kind !== 'event') return null;
+  const e = ent.item;
+  const causes = causesOf(e.id).slice(0, 6);
+  if (!causes.length) return null;
+  return {
+    type: 'open', prompt: `Назовите причины события ${q(qt(e))} (${formatYear(e.year)}) и кратко поясните, как каждая из них к нему привела.`,
+    answer: `Причины:\n${causes.map((c, i) => `${i + 1}. ${brief(c)}`).join('\n')}\n\n${e.summary}`,
+    criteria: [...causes.map((c) => `Названа причина: ${kb.title(c)}`), ...(causes.length < 3 ? ['Объяснено, как причины привели к событию'] : [])],
+    explain: e.summary, entity: e.id, period: e.period, skill: 'analysis',
+  };
+}
+
 /** People linked to an event (its `persons` and participant/leader links). */
 function peopleOf(e: EventItem): PersonItem[] {
   const ids = new Set([...(e.persons ?? []), ...kb.edges.filter((ed) => ed.to === e.id && (ed.type === 'participant' || ed.type === 'leader')).map((ed) => ed.from)]);
@@ -256,15 +273,8 @@ const G: Record<string, Gen> = {
   },
   // ——— Развёрнутый ответ: criteria come from the graph (cause links, events of a person) ———
   openCauses({ rng, events }) {
-    const withCauses = events.filter((e) => kb.edges.filter((ed) => ed.type === 'cause' && ed.to === e.id).length >= 2);
-    const e = pick(withCauses, rng);
-    if (!e) return null;
-    const causes = kb.edges.filter((ed) => ed.type === 'cause' && ed.to === e.id).map((ed) => ed.from).slice(0, 6);
-    return {
-      type: 'open', prompt: `Назовите причины события ${q(qt(e))} (${formatYear(e.year)}) и кратко поясните, как каждая из них к нему привела.`,
-      answer: `Причины:\n${causes.map((c, i) => `${i + 1}. ${brief(c)}`).join('\n')}\n\n${e.summary}`,
-      criteria: causes.map((c) => `Названа причина: ${kb.title(c)}`), explain: e.summary, entity: e.id, period: e.period,
-    };
+    const e = pick(events.filter((x) => causesOf(x.id).length >= 2), rng);
+    return e ? whyQuestion(e.id) : null;
   },
   openResults({ rng, events }) {
     const withResults = events.filter((e) => kb.edges.filter((ed) => ed.type === 'cause' && ed.from === e.id).length >= 2);

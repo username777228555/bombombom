@@ -15,7 +15,7 @@
   import { noteAnswer } from './mistakes';
   import { kb } from '$lib/core/content/kb.svelte';
   import { logAnswer, skillOf } from '$lib/core/mastery';
-  import type { GeneratedQuestion } from '$lib/core/content/questions';
+  import { whyQuestion, type GeneratedQuestion } from '$lib/core/content/questions';
   import { router, navigate } from '$lib/core/router.svelte';
   import { record, saveResult } from '$lib/core/progress.svelte';
   import { haptic } from '$lib/core/platform';
@@ -88,6 +88,20 @@
     await record({ quizzes: 1, questions: answered, xp });
     await saveResult({ kind: 'quiz', ref: spec.ref, score: correctCount, total: n, ms: Date.now() - startedAt });
     if (correctCount / n >= 0.7) setTimeout(() => burst(), 250);
+  }
+
+  // «Почему?»: after a right answer about an event, one tap adds its causes as the next (extended) question.
+  let whyAdded = $state(new Set<number>());
+  const why = $derived.by(() => {
+    if (!revealed || lastScore < 0.999 || !current) return null;
+    const q = current as GeneratedQuestion;
+    if (q.type === 'open' || !q.entity || kb.get(q.entity)?.kind !== 'event') return null;
+    return whyQuestion(q.entity);
+  });
+  function addWhy() {
+    if (!spec || !why) return;
+    spec.questions.splice(index + 1, 0, why);
+    whyAdded = new Set([...whyAdded, index]);
   }
 
   function periodOfEntity(id: string): string | undefined {
@@ -169,6 +183,9 @@
               <span class="v">{#if verdict === 'ok'}<Check size={18} /> Верно{:else if verdict === 'part'}Частично верно · {Math.round(lastScore * 100)}%{:else}Неверно{/if}</span>
             </div>
             {#if current.explain}<div class="rich exp">{@html richText(current.explain)}</div>{/if}
+            {#if why && !whyAdded.has(index)}
+              <button class="why" onclick={addWhy}>Почему это произошло? <small>добавить следующим развёрнутое задание о причинах</small></button>
+            {/if}
             <Button full iconRight={ArrowRight} onclick={next}>{index + 1 >= spec.questions.length ? 'Результаты' : 'Далее'}</Button>
           </div>
         {/if}
@@ -192,6 +209,8 @@
   .q { display: flex; flex-direction: column; gap: var(--sp-3); padding-top: var(--sp-2); }
   .meta { gap: var(--sp-2); }
   .prompt { font-size: var(--text-2xl); line-height: 1.2; }
+  .why { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; margin: 0 0 var(--sp-3); padding: 10px 14px; border-radius: var(--r-md); border: 1.5px dashed var(--accent); background: none; color: var(--accent); font-weight: 650; text-align: left; cursor: pointer; }
+  .why small { font-weight: 400; color: var(--ink-3); font-size: var(--text-xs); }
   blockquote { white-space: pre-line; margin: 0; padding: var(--sp-4); border-left: 3px solid var(--gold); background: var(--gold-soft); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-read); font-size: var(--text-md); line-height: 1.55; }
   .feedback { display: flex; flex-direction: column; gap: var(--sp-3); padding: var(--sp-4); border-radius: var(--r-lg); border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow-2); margin-top: var(--sp-2); }
   .feedback .v { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }

@@ -46,7 +46,9 @@ let queue: Promise<void> = Promise.resolve();
  * Records one answer; serialized so quick answers in a row do not overwrite each other.
  * Resolves to what the question was before: 'check' (a due delayed check), 'mistake' or null.
  */
-export function noteAnswer(q: Question, ok: boolean): Promise<'check' | 'mistake' | null> {
+export function noteAnswer(question: Question, ok: boolean): Promise<'check' | 'mistake' | null> {
+  // Questions come from reactive quiz state (Svelte proxies), which IndexedDB cannot clone: store a plain copy.
+  const q = JSON.parse(JSON.stringify(question)) as Question;
   const run = queue.then(async () => {
     const list = await load();
     const key = questionKey(q);

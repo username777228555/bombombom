@@ -3662,12 +3662,12 @@
     {
       "from": "e-pravda-yaroslavichey",
       "to": "e-russkaya-pravda-yaroslava",
-      "type": "part-of"
+      "type": "related"
     },
     {
       "from": "e-ustav-vladimira-monomakha",
       "to": "e-russkaya-pravda-yaroslava",
-      "type": "part-of"
+      "type": "related"
     },
     {
       "from": "c-tmutarakanskiy-kamen",

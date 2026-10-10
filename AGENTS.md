@@ -16,7 +16,7 @@
 | `pnpm check` | svelte-check + склонения после чисел (`plural:check`) + проверка контента и пробников |
 | `pnpm content:add <event\|person\|culture\|term\|link> "Название" --year N` | заготовка нового материала: id, период и структура — автоматически, `TODO` нужно заполнить |
 | `pnpm content:check [--file f] [--pack id]` | валидация пакетов контента (TODO, дубликаты, битые ссылки — ошибки/предупреждения) |
-| `pnpm content:brief <период> [--persons]` · `pnpm content:merge` | пакетное пополнение периода дешёвой моделью: сводка «что уже есть» одной строкой на запись → новый файл `NN-<период>-plus.json` → проверка → слияние в файл периода. Инструкция для модели: `.agents/skills/add-content/BATCH.md` |
+| `pnpm content:brief <период> [--persons]` · `pnpm content:merge` | пакетное пополнение периода дешёвой моделью: сводка «что уже есть» одной строкой на запись → новый файл `NN-<период>-plus.json` → проверка → слияние в файл периода. Инструкции для модели: `.agents/skills/add-content/BATCH.md` (события, люди, термины), `OPEN.md` (тест «Развёрнутые ответы»), `SOURCES.md` (хрестоматия: отрывки источников) |
 | `pnpm content:books` | все файлы из каталога «Книжная полка» распознаются импортом Библиотеки |
 | `pnpm content:rulers` | лестница правителей и классификация должностей (`reigns[].kind`) |
 | `python3 scripts/media/wiki_images.py fetch\|apply\|gc` | картинки с Wikimedia Commons с автором, датой и лицензией (портреты обрезаются по лицу); в CI — workflow «Media» (коммит с `[media]` в `main` или в ветку `gumball/**`/`media/**`), ручной выбор файла — `scripts/media/overrides.json` |
@@ -62,6 +62,7 @@ Actions → Android APK → Run workflow.
 | Новый экран или игра | папка/страница в `src/modules/…` + маршрут и плитка в `module.ts` (пример: `modules/study/module.ts`) |
 | Новый тип вопроса | `schema.ts` → компонент в `components/questions/` → `registry.ts` → генератор в `questions.ts` |
 | Орден (достижение) | запись в `ORDERS` (`core/achievements.ts`) |
+| Честный прогресс | каждый ответ пишется в `db.answers` (`core/mastery.ts`: эпоха, навык, балл) → «Карта знаний» и «План на сегодня». Новый генератор вопросов — укажите его навык в `SKILL_OF` (`questions.ts`) |
 | Тема или акцент | CSS-переменные в `src/design/themes.css` |
 
 ## Правила

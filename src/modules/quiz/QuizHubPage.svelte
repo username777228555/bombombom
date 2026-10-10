@@ -11,7 +11,7 @@
   import { kb } from '$lib/core/content/kb.svelte';
   import { QUESTION_TYPES, type QuestionType } from '$lib/core/content/schema';
   import { QUESTION_TYPE_INFO } from '$lib/components/questions/registry';
-  import { getMistakes } from './mistakes';
+  import { mistakesStats } from './mistakes';
   import { db } from '$lib/core/db';
   import { todayKey } from '$lib/core/utils/format';
   import { navigate } from '$lib/core/router.svelte';
@@ -20,11 +20,11 @@
   let types = $state<QuestionType[]>([]);
   let count = $state<'5' | '10' | '20'>('10');
   let exam = $state(false);
-  let mistakes = $state(0);
+  let mistakes = $state({ due: 0, total: 0 });
   let dailyDone = $state<{ score: number; total: number } | null>(null);
 
   onMount(async () => {
-    mistakes = (await getMistakes()).length;
+    mistakes = await mistakesStats();
     const r = await db.results.where('ref').equals(`daily:${todayKey()}`).last();
     if (r) dailyDone = { score: r.score, total: r.total };
   });
@@ -53,9 +53,13 @@
     </div>
   </Card>
 
-  {#if mistakes}
+  {#if mistakes.total}
     <Card href="/quiz/run?src=mistakes" padding="md" class="mist">
-      <div class="row"><RotateCcw size={20} class="acc" /><strong class="grow">Работа над ошибками</strong><Badge tone="danger">{mistakes}</Badge></div>
+      <div class="row">
+        <RotateCcw size={20} class="acc" />
+        <span class="grow"><strong>Работа над ошибками</strong><small class="muted mist-sub">{mistakes.due ? 'пора повторить' : 'ошибки вернутся по расписанию'} · всего {mistakes.total}</small></span>
+        {#if mistakes.due}<Badge tone="danger">{mistakes.due}</Badge>{/if}
+      </div>
     </Card>
   {/if}
 
@@ -115,6 +119,7 @@
   .daily p { font-size: var(--text-sm); }
   .seal { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); border: 2px solid color-mix(in srgb, var(--gold) 50%, transparent); flex: 0 0 auto; }
   :global(.mist) { margin-top: var(--sp-3); }
+  .mist-sub { display: block; font-size: var(--text-xs); }
   :global(.acc) { color: var(--accent); }
   .fmt { display: flex; flex-direction: column; gap: 4px; }
   .fmt strong { font-weight: 650; }

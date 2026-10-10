@@ -6,7 +6,7 @@ import { kb } from '$lib/core/content/kb.svelte';
 import { resolveBookTitle, looksLikeFileName, type CatalogBook } from './bookTitle';
 
 /** Books described in content packs (the «Книжная полка» catalog): used to recognise imported files. */
-export const catalog = (): CatalogBook[] => kb.sources.filter((s) => s.kind === 'literature' || !!s.note);
+export const catalog = (): CatalogBook[] => kb.sources.filter((s) => !!s.note);
 
 export const BOOK_ACCEPT = '.epub,.fb2,.fbz,.zip,.mobi,.azw,.azw3,.pdf,.cbz,.txt,application/epub+zip,application/pdf,application/x-fictionbook+xml,text/plain';
 

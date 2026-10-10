@@ -12,7 +12,10 @@
   import { QUESTION_TYPE_LABELS, type Question } from '$lib/core/content/schema';
   import ZoomImage from '$lib/design/components/ZoomImage.svelte';
   import { buildQuiz, type QuizSpec } from './sources';
-  import { updateMistakes } from './mistakes';
+  import { noteAnswer } from './mistakes';
+  import { kb } from '$lib/core/content/kb.svelte';
+  import { logAnswer, skillOf } from '$lib/core/mastery';
+  import type { GeneratedQuestion } from '$lib/core/content/questions';
   import { router, navigate } from '$lib/core/router.svelte';
   import { record, saveResult } from '$lib/core/progress.svelte';
   import { haptic } from '$lib/core/platform';
@@ -54,6 +57,13 @@
   function submit(score: number) {
     scores[index] = score;
     revealed = true;
+    // Every answer goes to the log («Карта знаний») and to the mistakes schedule — right away, not at the end.
+    if (spec && current) {
+      const q = current as GeneratedQuestion;
+      const pid = q.period ?? spec.period ?? (q.entity ? periodOfEntity(q.entity) : undefined);
+      logAnswer({ period: pid, skill: skillOf(q), entity: q.entity, type: q.type, score, src: spec.ref.split(':')[0] });
+      void noteAnswer(current as Question, score >= 0.999);
+    }
     haptic(score >= 0.999 ? 'success' : score > 0 ? 'tap' : 'error');
   }
 
@@ -72,12 +82,16 @@
     const answered = scores.length;
     const perfect = correctCount === n;
     const xp = Math.round(points * 5) + (perfect ? 10 : 0);
-    const wrong = spec.questions.filter((_, i) => i < answered && (scores[i] ?? 0) < 0.999);
-    const right = spec.questions.filter((_, i) => (scores[i] ?? 0) >= 0.999);
-    await updateMistakes(wrong as Question[], right as Question[]);
     await record({ quizzes: 1, questions: answered, xp });
     await saveResult({ kind: 'quiz', ref: spec.ref, score: correctCount, total: n, ms: Date.now() - startedAt });
     if (correctCount / n >= 0.7) setTimeout(() => burst(), 250);
+  }
+
+  function periodOfEntity(id: string): string | undefined {
+    const e = kb.get(id);
+    if (!e) return undefined;
+    const it = e.item as { period?: string; periods?: string[] };
+    return it.period ?? it.periods?.[0];
   }
 
   const verdict = $derived(lastScore >= 0.999 ? 'ok' : lastScore > 0 ? 'part' : 'bad');

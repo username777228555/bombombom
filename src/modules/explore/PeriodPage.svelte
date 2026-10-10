@@ -24,7 +24,10 @@
   const culture = $derived(period ? kb.cultureIn(period.id) : []);
   const terms = $derived(period ? kb.termsIn(period.id) : []);
   const quizzes = $derived(period ? kb.quizzesIn(period.id) : []);
-  const books = $derived(period ? kb.sources.filter((s) => s.period === period.id) : []);
+  // Sources are either books of the «Книжная полка» (a file name in `note`) or excerpts of historical documents (хрестоматия).
+  const isBook = (s: { note?: string }) => !!s.note;
+  const books = $derived(period ? kb.sources.filter((s) => s.period === period.id && isBook(s)) : []);
+  const docs = $derived(period ? kb.sources.filter((s) => s.period === period.id && !isBook(s)).sort((a, b) => (a.year ?? 0) - (b.year ?? 0)) : []);
   const guide = $derived(period ? guideFor(period.id) : null);
   const hasPlan = $derived(!!guide && (guide.read.length + guide.watch.length + guide.do.length > 0));
 
@@ -78,6 +81,18 @@
             <div class="row quiz-row"><Sparkles size={18} /><strong class="grow">{q.title}</strong><span class="muted">{pluralN(q.questions.length, WORDS.question)}</span></div>
           </Card>
         {/each}
+      </div>
+    {/if}
+
+    {#if docs.length}
+      <div class="stack books">
+        <div class="section-title"><h2>Источники</h2></div>
+        <Card padding="sm">
+          {#each docs as d (d.id)}
+            {@const de = kb.get(d.id)}
+            {#if de}<EntityRow entity={de} />{/if}
+          {/each}
+        </Card>
       </div>
     {/if}
 

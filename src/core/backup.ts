@@ -10,7 +10,7 @@ import { todayKey } from './utils/format';
 /** kv rows that stay on the device: they hold credentials (see modules/library/github.ts). */
 const PRIVATE_KV = new Set(['github-source']);
 
-const TABLES = ['kv', 'srs', 'reviews', 'activity', 'results', 'annotations', 'userDecks', 'userCards', 'userPacks', 'unlocks', 'stars'] as const;
+const TABLES = ['kv', 'srs', 'reviews', 'activity', 'results', 'annotations', 'userDecks', 'userCards', 'userPacks', 'unlocks', 'stars', 'answers'] as const;
 
 export async function exportBackup(): Promise<void> {
   const data: Record<string, unknown[]> = {};
@@ -38,7 +38,7 @@ export async function importBackup(file: File): Promise<void> {
 }
 
 export async function resetProgress(): Promise<void> {
-  await db.transaction('rw', [db.srs, db.reviews, db.activity, db.results, db.unlocks], async () => {
-    await Promise.all([db.srs.clear(), db.reviews.clear(), db.activity.clear(), db.results.clear(), db.unlocks.clear()]);
+  await db.transaction('rw', [db.srs, db.reviews, db.activity, db.results, db.unlocks, db.answers], async () => {
+    await Promise.all([db.srs.clear(), db.reviews.clear(), db.activity.clear(), db.results.clear(), db.unlocks.clear(), db.answers.clear()]);
   });
 }

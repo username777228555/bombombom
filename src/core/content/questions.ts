@@ -1,21 +1,24 @@
 /** Olympiad-style question generators over the knowledge base. */
 import { kb } from './kb.svelte';
-import type { EventItem, PersonItem, Question, QuestionType } from './schema';
+import type { EventItem, PersonItem, Question, QuestionType, SourceItem } from './schema';
 import { CULTURE_KIND_LABELS } from './schema';
 import { centuryLabel, century, formatEventDate, formatYear, toRoman } from '../utils/format';
 import { pick, sample, shuffle, type Rng } from '../utils/random';
 import { quizTitle as qt } from './titles';
 import { personAnswerForms } from './answers';
+import type { Skill } from '../mastery';
 
 export interface GenOptions {
   periods?: string[];
   count: number;
   types?: QuestionType[];
+  /** Only generators training these skills («Карта знаний» → train a weak cell). */
+  skills?: Skill[];
   rng?: Rng;
   minImportance?: 1 | 2 | 3;
 }
 
-export type GeneratedQuestion = Question & { entity?: string; period?: string };
+export type GeneratedQuestion = Question & { entity?: string; period?: string; skill?: Skill };
 
 type Gen = (ctx: Ctx) => GeneratedQuestion | null;
 
@@ -30,6 +33,12 @@ const imp = (x: { importance?: number }) => x.importance ?? 2;
 /** Wraps a title in guillemets unless it already has them (book titles often do). */
 const q = (s: string) => (/^«.*»$/.test(s.trim()) ? s.trim() : `«${s.trim()}»`);
 const nameOf = (p: PersonItem) => p.short ?? p.name;
+/** Excerpts of historical documents (хрестоматия); books of the «Книжная полка» (with a file name in `note`) are not sources to quiz on. */
+const docs = (periods: string[] | undefined): SourceItem[] =>
+  kb.sources.filter((s) => !s.note && s.excerpt && (!periods?.length || periods.includes(s.period)));
+/** «Повесть временных лет (о дани хазарам)» → «Повесть временных лет»: several excerpts of one document share the answer. */
+const baseTitle = (t: string) => t.replace(/\s*\([^)]*\)\s*$/, '').trim();
+const aboutSource = (s: SourceItem) => `${baseTitle(s.title)}${s.year ? `, ${s.circa ? 'около ' : ''}${formatYear(s.year)}` : ''}${s.authorName ? `. ${s.authorName}` : ''}.`;
 /** «Название (год) — первое предложение статьи»: a line of a model answer built from the knowledge base. */
 function brief(id: string): string {
   const x = kb.get(id);
@@ -282,16 +291,76 @@ const G: Record<string, Gen> = {
       explain: p.summary, entity: p.id, period: p.periods[0],
     };
   },
+  // ——— Источники (хрестоматия): узнать документ, год, автора, событие по отрывку ———
+  sourceWhich({ rng, periods }) {
+    const pool = docs(periods);
+    const src = pick(pool, rng);
+    if (!src) return null;
+    const right = baseTitle(src.title);
+    const others = [...new Set(docs(undefined).filter((d) => baseTitle(d.title) !== right).sort((a, b) => Math.abs((a.year ?? 0) - (src.year ?? 0)) - Math.abs((b.year ?? 0) - (src.year ?? 0))).slice(0, 10).map((d) => baseTitle(d.title)))];
+    if (others.length < 3) return null;
+    const options = shuffle([right, ...sample(others, 3, rng)], rng);
+    return {
+      type: 'single', prompt: 'Из какого источника этот отрывок?', excerpt: src.excerpt, options, answer: options.indexOf(right),
+      explain: aboutSource(src), entity: src.id, period: src.period,
+    };
+  },
+  sourceYear({ rng, periods }) {
+    const src = pick(docs(periods).filter((d) => d.year), rng);
+    if (!src?.year) return null;
+    return {
+      type: 'year', prompt: 'Когда создан источник, из которого взят этот отрывок?', excerpt: src.excerpt, answer: src.year,
+      tolerance: src.circa ? 15 : src.year < 1700 ? 5 : 2, explain: aboutSource(src), entity: src.id, period: src.period,
+    };
+  },
+  sourceAuthor({ rng, periods }) {
+    const src = pick(docs(periods).filter((d) => d.author && kb.get(d.author)?.kind === 'person'), rng);
+    const person = src?.author ? kb.get(src.author) : undefined;
+    if (!src || person?.kind !== 'person') return null;
+    return {
+      type: 'text', prompt: 'Кто автор этого источника (или по чьему повелению он создан)?', excerpt: src.excerpt,
+      answers: personAnswerForms(person.item), explain: aboutSource(src), entity: src.id, period: src.period,
+    };
+  },
+  sourceEvent({ rng, periods }) {
+    const withEvent = docs(periods).flatMap((d) => kb.edges.filter((ed) => ed.from === d.id && kb.get(ed.to)?.kind === 'event').map((ed) => ({ d, e: kb.get(ed.to)!.item as EventItem })));
+    const hit = pick(withEvent, rng);
+    if (!hit) return null;
+    const near = kb.events.filter((e) => e.id !== hit.e.id && e.scope !== 'world').sort((a, b) => Math.abs(a.year - hit.e.year) - Math.abs(b.year - hit.e.year)).slice(0, 10);
+    const options = shuffle([qt(hit.e), ...sample(near, 3, rng).map(qt)], rng);
+    return {
+      type: 'single', prompt: 'С каким событием связан этот источник?', excerpt: hit.d.excerpt, options, answer: options.indexOf(qt(hit.e)),
+      explain: `${aboutSource(hit.d)} Событие: ${qt(hit.e)} (${formatYear(hit.e.year)}).`, entity: hit.d.id, period: hit.d.period,
+    };
+  },
+  sourceByClues({ rng, periods }) {
+    const src = pick(docs(periods).filter((d) => (d.clues?.length ?? 0) >= 2), rng);
+    if (!src) return null;
+    return {
+      type: 'hints', prompt: 'Узнайте источник по подсказкам', hints: src.clues!.slice(0, 5), answers: [baseTitle(src.title)],
+      explain: aboutSource(src), entity: src.id, period: src.period,
+    };
+  },
+};
+
+/** What each generator trains — logged with the answer, filters «train this skill». */
+const SKILL_OF: Record<keyof typeof G, Skill> = {
+  yearChoice: 'dates', yearInput: 'dates', earliest: 'dates', order: 'dates', matchYears: 'dates', multiplePeriod: 'dates', errors: 'dates',
+  matchPersons: 'persons', whoByHints: 'persons', hints: 'persons', openPerson: 'persons',
+  termChoice: 'terms', termText: 'terms',
+  cultureCentury: 'culture', cultureAuthor: 'culture',
+  openCauses: 'analysis', openResults: 'analysis',
+  sourceWhich: 'sources', sourceYear: 'sources', sourceAuthor: 'sources', sourceEvent: 'sources', sourceByClues: 'sources',
 };
 
 const BY_TYPE: Record<QuestionType, (keyof typeof G)[]> = {
-  single: ['yearChoice', 'earliest', 'whoByHints', 'termChoice', 'cultureCentury', 'cultureAuthor'],
+  single: ['yearChoice', 'earliest', 'whoByHints', 'termChoice', 'cultureCentury', 'cultureAuthor', 'sourceWhich', 'sourceEvent'],
   multiple: ['multiplePeriod'],
   order: ['order'],
   match: ['matchYears', 'matchPersons'],
-  year: ['yearInput'],
-  text: ['termText'],
-  hints: ['hints'],
+  year: ['yearInput', 'sourceYear'],
+  text: ['termText', 'sourceAuthor'],
+  hints: ['hints', 'sourceByClues'],
   errors: ['errors'],
   open: ['openCauses', 'openResults', 'openPerson'],
 };
@@ -304,19 +373,20 @@ export function generateQuestions(opts: GenOptions): GeneratedQuestion[] {
   const persons = kb.persons.filter((p) => inPeriods(p) && imp(p) >= (opts.minImportance ?? 1));
   const ctx: Ctx = { rng, events, persons, periods: opts.periods?.length ? opts.periods : undefined };
   const types = opts.types?.length ? opts.types : (Object.keys(BY_TYPE) as QuestionType[]);
-  const gens = types.flatMap((t) => BY_TYPE[t]);
+  const gens = types.flatMap((t) => BY_TYPE[t]).filter((g) => !opts.skills?.length || opts.skills.includes(SKILL_OF[g]));
   const out: GeneratedQuestion[] = [];
   const seen = new Set<string>();
   let attempts = 0;
   while (out.length < opts.count && attempts < opts.count * 25) {
     attempts++;
-    const g = G[pick(gens, rng)];
+    const name = pick(gens, rng);
+    const g = name ? G[name] : undefined;
     const q = g?.(ctx);
     if (!q) continue;
     const key = q.prompt + ('excerpt' in q ? q.excerpt ?? '' : '') + JSON.stringify('options' in q ? q.options : 'items' in q ? q.items : 'pairs' in q ? q.pairs : '');
     if (seen.has(key)) continue;
     seen.add(key);
-    out.push(q);
+    out.push({ ...q, skill: SKILL_OF[name!] });
   }
   return out;
 }

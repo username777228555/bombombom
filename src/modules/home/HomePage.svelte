@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Search, Flame, Layers, Swords, UserSearch, Crosshair, ChartGantt, Network, Sparkles, BookOpen, ArrowRight, CalendarDays, Crown, CalendarCheck, Download, X } from '@lucide/svelte';
+  import { Search, Flame, Layers, Swords, UserSearch, Crosshair, ChartGantt, Network, Sparkles, BookOpen, ArrowRight, CalendarDays, Crown, CalendarCheck, Download, X, RotateCcw, Target, Feather } from '@lucide/svelte';
   import Emblem from '$lib/design/components/Emblem.svelte';
   import IconButton from '$lib/design/components/IconButton.svelte';
   import ProgressRing from '$lib/design/components/ProgressRing.svelte';
@@ -22,16 +22,23 @@
   import { hashString, mulberry32, pick } from '$lib/core/utils/random';
   import { navigate } from '$lib/core/router.svelte';
   import { update, dismissUpdate } from '$lib/core/update.svelte';
+  import { mistakesStats } from '$lib/modules/quiz/mistakes';
+  import { masteryMap, weakest, SKILL_LABELS, type Skill, type Cell } from '$lib/core/mastery';
 
   let due = $state(0);
   let fresh = $state(0);
   let lastBook = $state<BookMeta | null>(null);
+  // «План на сегодня»: what actually moves results — due mistakes, the weakest cell of the knowledge map, an extended answer.
+  let mist = $state({ due: 0, total: 0 });
+  let weak = $state<{ period: string; skill: Skill; cell?: Cell } | null>(null);
 
   onMount(async () => {
     const q = await buildQueue({ newLimit: settings.newPerDay });
     due = q.due.length;
     fresh = q.fresh.length;
     lastBook = (await db.books.orderBy('openedAt').reverse().first()) ?? null;
+    mist = await mistakesStats();
+    weak = weakest(await masteryMap(), kb.periods.map((p) => p.id));
   });
 
   const now = new Date();
@@ -117,6 +124,32 @@
       {:else}
         <Button variant="gold" full icon={Sparkles} href="/cards">Выбрать колоду и начать</Button>
       {/if}
+    </div>
+  </section>
+
+  <section class="section plan">
+    <div class="section-title">
+      <h2>План на сегодня</h2>
+      <a href="#/quiz/map" class="more">Карта знаний <ArrowRight size={14} /></a>
+    </div>
+    <div class="stack plan-list">
+      {#if mist.due}
+        <Card href="/quiz/run?src=mistakes" padding="sm">
+          <div class="row pl"><RotateCcw size={20} /><span class="grow"><strong>Ошибки к повторению</strong><small>вернулись по расписанию — проверьте, запомнилось ли</small></span><span class="num cnt">{mist.due}</span></div>
+        </Card>
+      {/if}
+      {#if weak}
+        <Card href="/quiz/run?src=gen&count=10&periods={weak.period}&skills={weak.skill}" padding="sm">
+          <div class="row pl"><Target size={20} /><span class="grow"><strong>Слабое место: {SKILL_LABELS[weak.skill].title.toLowerCase()}</strong><small>{kb.periodById.get(weak.period)?.short} · {weak.cell?.score != null ? `${Math.round(weak.cell.score * 100)}% верных` : 'ещё не проверяли'}</small></span><ArrowRight size={16} /></div>
+        </Card>
+      {:else}
+        <Card href="/quiz/run?src=gen&count=20" padding="sm">
+          <div class="row pl"><Target size={20} /><span class="grow"><strong>Проверка по всем эпохам</strong><small>20 вопросов — карта знаний покажет, с чего начать</small></span><ArrowRight size={16} /></div>
+        </Card>
+      {/if}
+      <Card href="/quiz/run?src=type&t=open&count=2" padding="sm">
+        <div class="row pl"><Feather size={20} /><span class="grow"><strong>Развёрнутый ответ</strong><small>2 задания: причины, последствия, деятельность — как на олимпиаде</small></span><ArrowRight size={16} /></div>
+      </Card>
     </div>
   </section>
 
@@ -207,6 +240,11 @@
 </div>
 
 <style>
+  .plan-list { --gap: var(--sp-2); }
+  .pl { gap: var(--sp-3); color: var(--accent); }
+  .pl .grow { display: flex; flex-direction: column; color: var(--ink); }
+  .pl small { color: var(--ink-3); font-size: var(--text-xs); line-height: 1.3; }
+  .pl .cnt { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--danger); }
   .update { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3) var(--sp-3) var(--sp-3) var(--sp-4); margin-bottom: var(--sp-3); border-radius: var(--r-lg); background: var(--success-soft); color: var(--success); border: 1px solid color-mix(in srgb, var(--success) 35%, transparent); }
   .update a { display: flex; flex-direction: column; color: var(--ink); text-decoration: none; }
   .update small { color: var(--ink-3); font-size: var(--text-xs); }

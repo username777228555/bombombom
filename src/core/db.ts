@@ -43,6 +43,21 @@ export interface DayActivity {
   readSec: number;
 }
 
+/** One answered question (core/mastery.ts): the «Карта знаний» is computed from these. */
+export interface AnswerRow {
+  id?: number;
+  ts: number;
+  period?: string;
+  /** Skill from core/mastery.ts SKILLS. */
+  skill?: string;
+  entity?: string;
+  type: string;
+  /** 0…1 (partial credit for multi-part and extended answers). */
+  score: number;
+  /** Where it was asked: 'daily', 'gen', 'pack:…', 'mistakes'… */
+  src?: string;
+}
+
 export interface ResultRow {
   id?: number;
   kind: 'quiz' | 'game' | 'match' | 'learn';
@@ -134,6 +149,7 @@ class StolypinDB extends Dexie {
   userPacks!: Table<UserPack, string>;
   unlocks!: Table<Unlock, string>;
   stars!: Table<Star, string>;
+  answers!: Table<AnswerRow, number>;
 
   constructor() {
     super('stolypin');
@@ -152,6 +168,7 @@ class StolypinDB extends Dexie {
       unlocks: 'id',
       stars: 'id',
     });
+    this.version(2).stores({ answers: '++id, ts, period, skill' });
   }
 }
 

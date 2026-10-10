@@ -13,7 +13,7 @@
 |---------|-----------|
 | `pnpm dev` | dev-сервер (http://localhost:5173) |
 | `pnpm build` | сборка веб-части в `dist/` |
-| `pnpm check` | svelte-check + склонения после чисел (`plural:check`) + проверка контента |
+| `pnpm check` | svelte-check + склонения после чисел (`plural:check`) + проверка контента и пробников |
 | `pnpm content:add <event\|person\|culture\|term\|link> "Название" --year N` | заготовка нового материала: id, период и структура — автоматически, `TODO` нужно заполнить |
 | `pnpm content:check [--file f] [--pack id]` | валидация пакетов контента (TODO, дубликаты, битые ссылки — ошибки/предупреждения) |
 | `pnpm content:brief <период> [--persons]` · `pnpm content:merge` | пакетное пополнение периода дешёвой моделью: сводка «что уже есть» одной строкой на запись → новый файл `NN-<период>-plus.json` → проверка → слияние в файл периода. Инструкция для модели: `.agents/skills/add-content/BATCH.md` |
@@ -21,6 +21,7 @@
 | `pnpm content:rulers` | лестница правителей и классификация должностей (`reigns[].kind`) |
 | `python3 scripts/media/wiki_images.py fetch\|apply\|gc` | картинки с Wikimedia Commons с автором, датой и лицензией (портреты обрезаются по лицу); в CI — workflow «Media» (коммит с `[media]` в `main` или в ветку `gumball/**`/`media/**`), ручной выбор файла — `scripts/media/overrides.json` |
 | `python3 scripts/quizlet/extract.py` · `pnpm quizlet match\|tasks\|check\|apply\|status` | импорт Quizlet: PDF-распечатка или текстовый экспорт → колоды пакета `quizlet` и дополнения базы; задания для модели — маленькие пачки по `scripts/quizlet/MODEL.md` (Haiku/Sonnet). Регламент: `scripts/quizlet/README.md` |
+| `pnpm olympiads [--check]` | пробники олимпиад: `olympiads/src/<id>.json` → `olympiads/<id>.stolypin.json`, приложение скачивает их по кнопке («Практика → Пробники»). Регламент: `olympiads/README.md` |
 | `pnpm content:new <id> "Название"` | заготовка нового пакета |
 | `pnpm content:bundle <id>` | пакет одним файлом для импорта в приложении |
 | `pnpm content:schema` | JSON Schema для редакторов (после правки `schema.ts`) |
@@ -77,7 +78,8 @@ Actions → Android APK → Run workflow.
   У каждого нового файла короткий комментарий-шапка: зачем он и как им пользоваться.
 - UI-тексты на русском. Анимации проверяют `motionOK()` или гасятся глобальным правилом «Меньше анимаций».
 - Пользовательские данные хранятся только локально (Dexie/IndexedDB). Сеть — только скачивание по кнопке
-  из своего репозитория GitHub («Библиотека → Скачать с GitHub», `modules/library/github.ts`): приложение ничего
+  из своего репозитория GitHub («Библиотека → Скачать с GitHub», «Пробники», `modules/library/github.ts`) и раз в день
+  вопрос «есть ли новая версия» (`core/update.svelte.ts`, выключается в настройках): приложение ничего
   не отправляет, токен хранится на устройстве и не попадает в резервную копию.
 - Число со словом — только через `pluralN(n, WORDS.…)` (`core/utils/format.ts`), не «{n} терминов».
 - Массовую работу с материалами режьте на маленькие задания, где скрипт заранее собрал всё нужное (пример — импорт

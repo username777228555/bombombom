@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json --fail-on-warnings=false && pnpm plural:check && pnpm content:check",
+    "check": "svelte-check --tsconfig ./tsconfig.json --fail-on-warnings=false && pnpm plural:check && pnpm content:check && pnpm olympiads --check",
     "plural:check": "tsx scripts/plural-check.ts",
     "content:check": "tsx scripts/content-check.ts",
     "content:brief": "tsx scripts/content-brief.ts",

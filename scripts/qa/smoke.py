@@ -12,7 +12,7 @@ BASE = os.environ.get("BASE", "http://127.0.0.1:5173/")  # or BASE=http://127.0.
 
 async def main():
     async with async_playwright() as p:
-        b = await p.chromium.launch(args=["--no-sandbox"])
+        b = await p.chromium.launch(args=["--no-sandbox"], executable_path=os.environ.get("PW_CHROMIUM") or None)
         page = await (await b.new_context(viewport={"width": 390, "height": 844})).new_page()
         errs = []
         page.on("pageerror", lambda e: errs.append(str(e)[:300]))
@@ -60,6 +60,10 @@ async def main():
 
         # Essay builder
         await go("/essay")
+        print("essay guide sections:", await page.locator(".sec").count())
+        await page.locator(".sec .head").first.click()
+        await page.get_by_role("tab", name="План по правлению").click()
+        await page.wait_for_timeout(300)
         await page.select_option("select", index=40)
         await page.wait_for_timeout(700)
         plan = await page.locator(".plan pre").inner_text()
@@ -78,6 +82,12 @@ async def main():
         await page.get_by_role("tab", name="Кто автор?").click()
         await page.wait_for_timeout(800)
         print("gallery author quiz options:", await page.locator(".opt").count(), "|", (await page.locator(".opt").all_inner_texts())[:4])
+
+        # «Практика → Искусство» and «Пробники»
+        await go("/art-quiz", 1200)
+        print("art quiz options:", await page.locator(".opt").count())
+        await go("/quiz/probes", 1500)
+        print("probes page:", (await page.locator("h1").first.inner_text()))
 
         # Home
         await go("/", 2500)

@@ -5,6 +5,7 @@ Timeline: bounding boxes of all SVG <text> for the whole history and every perio
 Graph: Cytoscape label boxes for every period; labels must not touch each other or labelled nodes.
 Usage: python3 scripts/qa/overlap_audit.py [timeline|graph|both]   → every line should report 0 overlaps.
 """
+import os
 import asyncio, json, os, sys
 from playwright.async_api import async_playwright
 
@@ -77,7 +78,7 @@ GRAPH_JS = r"""
 
 async def main():
     async with async_playwright() as p:
-        b = await p.chromium.launch(args=["--no-sandbox"])
+        b = await p.chromium.launch(args=["--no-sandbox"], executable_path=os.environ.get("PW_CHROMIUM") or None)
         ctx = await b.new_context(viewport={"width": W, "height": H}, device_scale_factor=1)
         page = await ctx.new_page()
         errs = []

@@ -44,4 +44,9 @@ jobs:
           git add -A content
           if git diff --cached --quiet; then echo "Nothing to commit"; exit 0; fi
           git commit -m "Иллюстрации с Wikimedia Commons: портреты, события, живопись (scripts/media)"
-          git push
+          # The run takes minutes; main may have moved meanwhile — rebase onto it and retry.
+          for i in 1 2 3; do
+            git push && exit 0
+            git pull --rebase origin "${GITHUB_REF_NAME}" || exit 1
+          done
+          exit 1

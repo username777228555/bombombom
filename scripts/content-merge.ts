@@ -7,7 +7,7 @@
  */
 import { existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { FRAGMENT_KEYS } from '../src/core/content/schema';
+import { FRAGMENT_KEYS, SYMMETRIC_LINKS } from '../src/core/content/schema';
 import { PACKS, rel } from './lib/content-fs';
 
 const args = process.argv.slice(2);
@@ -17,6 +17,9 @@ const only = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--pac
 const dir = join(PACKS, pack, 'data');
 
 type Fragment = Record<string, unknown[]>;
+type Link = { from: string; to: string; type: string };
+const sameLink = (a: Link, b: Link) =>
+  a.type === b.type && ((a.from === b.from && a.to === b.to) || (SYMMETRIC_LINKS.has(a.type) && a.from === b.to && a.to === b.from));
 const read = (f: string) => JSON.parse(readFileSync(f, 'utf8')) as Fragment;
 
 let merged = 0;
@@ -32,8 +35,10 @@ for (const name of readdirSync(dir).filter((n) => n.endsWith('-plus.json') && wa
   const main = read(target);
   const added: string[] = [];
   for (const key of FRAGMENT_KEYS) {
-    const items = plus[key];
+    let items = plus[key];
     if (!items?.length) continue;
+    // A batch may repeat a link the period file already has (in either direction for symmetric types).
+    if (key === 'links') items = items.filter((l) => !(main.links ?? []).some((m) => sameLink(m as Link, l as Link)));
     main[key] = [...(main[key] ?? []), ...items];
     added.push(`${key} +${items.length}`);
   }

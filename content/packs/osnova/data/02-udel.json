@@ -4493,19 +4493,9 @@
       "label": "соперники искали поддержки хана"
     },
     {
-      "from": "p-andrey-aleksandrovich-gorodetskiy",
-      "to": "p-dmitriy-aleksandrovich-pereyaslavskiy",
-      "type": "opponent"
-    },
-    {
       "from": "e-bortenevskaya-bitva",
       "to": "e-kazn-mikhaila-tverskogo-1318",
       "type": "cause"
-    },
-    {
-      "from": "p-mikhail-tverskoy",
-      "to": "p-yuriy-danilovich-moskovskiy",
-      "type": "opponent"
     },
     {
       "from": "e-kazn-mikhaila-tverskogo-1318",

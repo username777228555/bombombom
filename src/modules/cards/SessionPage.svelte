@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { logAnswer, type Skill } from '$lib/core/mastery';
   import { onMount } from 'svelte';
   import { fly, scale } from 'svelte/transition';
   import { X, Check, RotateCcw } from '@lucide/svelte';
@@ -17,6 +18,9 @@
   import { haptic } from '$lib/core/platform';
   import { burst } from '$lib/design/confetti';
   import { pluralN } from '$lib/core/utils/format';
+
+  /** Skill of a card for the «Карта знаний» (custom cards have none). */
+  const CARD_SKILL: Partial<Record<string, Skill>> = { date: 'dates', person: 'persons', term: 'terms', culture: 'culture' };
 
   interface Item {
     rec: SrsRecord;
@@ -70,6 +74,9 @@
     if (ok) stats.correct++;
     stats.xp += xp;
     void record({ reviews: 1, correct: ok ? 1 : 0, xp, newCards: wasNew ? 1 : 0 });
+    // A review (not the first sight of a new card) is a recall test: it counts for the «Карта знаний».
+    const skill = CARD_SKILL[item.card.kind];
+    if (!wasNew && skill) logAnswer({ period: item.card.period, skill, entity: item.card.entity, type: 'card', score: g === Rating.Again ? 0 : g === Rating.Hard ? 0.6 : 1, src: 'cards' });
     flipped = false;
     dragX = 0;
     const rest = queue.slice(1);

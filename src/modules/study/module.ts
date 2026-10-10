@@ -19,6 +19,6 @@ export default defineModule({
   entries: [
     { hub: 'explore', title: 'Ключевые даты', description: 'Шпаргалка и самопроверка по эпохам', icon: CalendarCheck, href: '/dates', order: 35, tint: '#8e2430' },
     { hub: 'explore', title: 'Галерея', description: 'История в картинах и викторина', icon: Images, href: '/gallery', order: 45, tint: '#a87b2b' },
-    { hub: 'practice', title: 'Сочинение', description: 'План исторического сочинения по правлению', icon: Feather, href: '/essay', order: 30, tint: '#4f6b3a' },
+    { hub: 'practice', title: 'Историческое эссе', description: 'Материал и план эссе по правлению', icon: Feather, href: '/essay', order: 30, tint: '#4f6b3a' },
   ],
 });

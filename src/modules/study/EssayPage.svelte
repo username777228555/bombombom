@@ -1,6 +1,6 @@
 <script lang="ts">
   /**
-   * «Историческое сочинение» — a plan builder for an essay about one reign. Everything is derived from the
+   * «Историческое эссе» — a plan builder for an essay about one reign. Everything is derived from the
    * knowledge base: events inside the reign, people linked to the chosen events, cause → effect links from
    * the graph, culture of the time and the epoch's terms. The student picks events; the plan updates live.
    */
@@ -102,7 +102,7 @@
     if (!reign) return '';
     const picked = chosen.map((id) => kb.get(id)).filter((e) => e?.kind === 'event').map((e) => e!.item as { title: string; year: number });
     const lines = [
-      `Историческое сочинение: ${reign.person.short ?? reign.person.name} (${reignSpan(reign)})`,
+      `Историческое эссе: ${reign.person.short ?? reign.person.name} (${reignSpan(reign)})`,
       '',
       `1. Вступление: ${reign.title.toLowerCase()}, эпоха «${periodAt(reign.from)?.title ?? ''}».`,
       ...picked.map((e, i) => `${i + 2}. Событие: ${e.title} (${e.year}). Кто участвовал и что сделал: ${people.filter((p) => p.via === e.title).map((p) => p.name).join(', ') || '…'}.`),
@@ -128,10 +128,10 @@
 </script>
 
 <div class="page">
-  <PageHeader title="Сочинение" eyebrow="Конструктор плана" back="/practice" />
+  <PageHeader title="Историческое эссе" eyebrow="Конструктор плана" back="/practice" />
   <div class="intro" use:reveal>
     <span class="ico"><Feather size={22} /></span>
-    <p>Выберите правление — приложение соберёт события, участников, причины и следствия, культуру и термины. Отметьте 2–3 события, и план сочинения сложится сам.</p>
+    <p>Выберите правление — приложение соберёт события, участников, причины и следствия, культуру и термины. Отметьте 2–3 события, и план эссе сложится сам.</p>
   </div>
 
   <label class="pick">

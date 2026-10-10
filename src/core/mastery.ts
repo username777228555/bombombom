@@ -65,6 +65,12 @@ export async function masteryMap(days = 90): Promise<Map<string, Cell>> {
   return out;
 }
 
+/** Share of right answers in delayed checks (questions answered right a week earlier): what stayed in memory. */
+export async function retention(days = 90): Promise<{ score: number | null; n: number }> {
+  const rows = await db.answers.where('ts').above(Date.now() - days * DAY).filter((r) => r.src === 'check').toArray();
+  return { n: rows.length, score: rows.length >= MIN_ANSWERS ? rows.reduce((s, r) => s + r.score, 0) / rows.length : null };
+}
+
 /** The cell to train next: the lowest known score; an untouched cell of a period you work on comes first. */
 export function weakest(cells: Map<string, Cell>, periods: string[]): { period: string; skill: Skill; cell?: Cell } | null {
   let best: { period: string; skill: Skill; cell?: Cell; rank: number } | null = null;

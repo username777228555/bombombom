@@ -61,8 +61,11 @@
     if (spec && current) {
       const q = current as GeneratedQuestion;
       const pid = q.period ?? spec.period ?? (q.entity ? periodOfEntity(q.entity) : undefined);
-      logAnswer({ period: pid, skill: skillOf(q), entity: q.entity, type: q.type, score, src: spec.ref.split(':')[0] });
-      void noteAnswer(current as Question, score >= 0.999);
+      const src = spec.ref.split(':')[0];
+      // A due delayed check is logged as 'check': those answers are the «удержание» of the knowledge map.
+      void noteAnswer(current as Question, score >= 0.999).then((was) =>
+        logAnswer({ period: pid, skill: skillOf(q), entity: q.entity, type: q.type, score, src: was === 'check' ? 'check' : src }),
+      );
     }
     haptic(score >= 0.999 ? 'success' : score > 0 ? 'tap' : 'error');
   }

@@ -10,13 +10,15 @@
   import Card from '$lib/design/components/Card.svelte';
   import Button from '$lib/design/components/Button.svelte';
   import { kb } from '$lib/core/content/kb.svelte';
-  import { masteryMap, weakest, SKILLS, SKILL_LABELS, type Cell, type Skill } from '$lib/core/mastery';
+  import { masteryMap, retention, weakest, SKILLS, SKILL_LABELS, type Cell, type Skill } from '$lib/core/mastery';
   import { navigate } from '$lib/core/router.svelte';
   import { pluralN, WORDS } from '$lib/core/utils/format';
 
   let cells = $state<Map<string, Cell>>(new Map());
   let loaded = $state(false);
+  let kept = $state<{ score: number | null; n: number }>({ score: null, n: 0 });
   onMount(async () => {
+    kept = await retention();
     cells = await masteryMap();
     loaded = true;
   });
@@ -48,6 +50,7 @@
           <Button icon={Target} onclick={() => train(weak.period, weak.skill)}>Слабое место</Button>
         {/if}
       </div>
+      <p class="muted small keep">Удержание через неделю: <b>{kept.score != null ? `${Math.round(kept.score * 100)}%` : '—'}</b> · {kept.n ? pluralN(kept.n, WORDS.check) : 'часть верных ответов вернётся на проверку через 7 дней'}</p>
       {#if weak}<p class="muted small">{SKILL_LABELS[weak.skill].title} · {kb.periodById.get(weak.period)?.short}{weak.cell?.score != null ? ` — ${pct(weak.cell)}%` : ' — ещё не проверяли'}</p>{/if}
     </Card>
 

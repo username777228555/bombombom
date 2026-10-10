@@ -20,7 +20,7 @@
   let types = $state<QuestionType[]>([]);
   let count = $state<'5' | '10' | '20'>('10');
   let exam = $state(false);
-  let mistakes = $state({ due: 0, total: 0 });
+  let mistakes = $state({ due: 0, total: 0, checks: 0 });
   let dailyDone = $state<{ score: number; total: number } | null>(null);
 
   onMount(async () => {
@@ -53,11 +53,11 @@
     </div>
   </Card>
 
-  {#if mistakes.total}
+  {#if mistakes.total || mistakes.due}
     <Card href="/quiz/run?src=mistakes" padding="md" class="mist">
       <div class="row">
         <RotateCcw size={20} class="acc" />
-        <span class="grow"><strong>Работа над ошибками</strong><small class="muted mist-sub">{mistakes.due ? 'пора повторить' : 'ошибки вернутся по расписанию'} · всего {mistakes.total}</small></span>
+        <span class="grow"><strong>Работа над ошибками</strong><small class="muted mist-sub">{mistakes.due ? `пора повторить${mistakes.checks ? ', среди них проверки через неделю' : ''}` : 'ошибки вернутся по расписанию'} · ошибок: {mistakes.total}</small></span>
         {#if mistakes.due}<Badge tone="danger">{mistakes.due}</Badge>{/if}
       </div>
     </Card>

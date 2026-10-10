@@ -29,7 +29,7 @@
   let fresh = $state(0);
   let lastBook = $state<BookMeta | null>(null);
   // «План на сегодня»: what actually moves results — due mistakes, the weakest cell of the knowledge map, an extended answer.
-  let mist = $state({ due: 0, total: 0 });
+  let mist = $state({ due: 0, total: 0, checks: 0 });
   let weak = $state<{ period: string; skill: Skill; cell?: Cell } | null>(null);
 
   onMount(async () => {
@@ -135,7 +135,7 @@
     <div class="stack plan-list">
       {#if mist.due}
         <Card href="/quiz/run?src=mistakes" padding="sm">
-          <div class="row pl"><RotateCcw size={20} /><span class="grow"><strong>Ошибки к повторению</strong><small>вернулись по расписанию — проверьте, запомнилось ли</small></span><span class="num cnt">{mist.due}</span></div>
+          <div class="row pl"><RotateCcw size={20} /><span class="grow"><strong>Повторение по расписанию</strong><small>{mist.checks ? 'ошибки и проверки недельной давности — запомнилось ли?' : 'ошибки вернулись — проверьте, запомнилось ли'}</small></span><span class="num cnt">{mist.due}</span></div>
         </Card>
       {/if}
       {#if weak}

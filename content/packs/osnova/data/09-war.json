@@ -1399,7 +1399,8 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%9F%D0%A0%D0%90%D0%92%D0%94%D0%90%D0%BE%D0%B1%D1%80%D0%B0%D1%89%D0%B5%D0%BD%D0%B8%D0%B5%D1%81%D1%82%D0%B0%D0%BB%D0%B8%D0%BD%D0%B0.jpg"
       },
-      "wiki": "Выступление Сталина по радио 3 июля 1941 года"
+      "wiki": "Выступление Сталина по радио 3 июля 1941 года",
+      "imageQuiz": false
     },
     {
       "id": "e-narodnoe-opolchenie-1941",
@@ -1483,7 +1484,8 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:1944_CPA_887.jpg"
       },
-      "wiki": "Молодая гвардия (подпольная организация)"
+      "wiki": "Молодая гвардия (подпольная организация)",
+      "imageQuiz": false
     },
     {
       "id": "e-karpatskiy-reyd-kovpaka",
@@ -1552,7 +1554,8 @@
         "license": "CC BY 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BE%D1%80%D1%81%D1%83%D0%BD%D1%8C-%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F_%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F.jpg"
       },
-      "wiki": "Корсунь-Шевченковская операция"
+      "wiki": "Корсунь-Шевченковская операция",
+      "imageQuiz": false
     },
     {
       "id": "e-lvovsko-sandomirskaya-operatsiya",
@@ -1582,7 +1585,8 @@
         "license": "CC BY 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Lvov-Sandomierz_Offensive.jpg"
       },
-      "wiki": "Львовско-Сандомирская операция"
+      "wiki": "Львовско-Сандомирская операция",
+      "imageQuiz": false
     },
     {
       "id": "e-moskovskoe-peremirie-s-finlyandiey",
@@ -2724,15 +2728,7 @@
         "С 1942 года командовал всеми ВВС Красной армии.",
         "Арестован в 1946 году по «авиационному делу», освобождён в 1953 году."
       ],
-      "wiki": "Новиков, Александр Александрович (маршал авиации)",
-      "image": "images/persons/p-aleksandr-novikov.webp",
-      "imageInfo": {
-        "author": "Дмитрий Голубович",
-        "date": "2016",
-        "about": "Изображение: Александр Новиков",
-        "license": "CC BY-SA 3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Aleksandr_Aleksandrovich_Novikov_2016.jpg"
-      }
+      "wiki": "Новиков, Александр Александрович (маршал авиации)"
     },
     {
       "id": "p-ponomarenko",

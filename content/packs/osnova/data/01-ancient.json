@@ -1487,7 +1487,8 @@
         "about": "Иллюстрация к событию «Поход Ярослава и Мстислава на червенские города»",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Grody_czerwienskie.png"
-      }
+      },
+      "imageQuiz": false
     },
     {
       "id": "e-gorod-yaroslava-v-kieve-1037",
@@ -3527,7 +3528,8 @@
         "about": "Фрагмент книги «Житие и хождение игумена Даниила из Русской земли»",
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Hozhdenie_igumena_Daniila.gif"
-      }
+      },
+      "imageQuiz": false
     }
   ],
   "terms": [

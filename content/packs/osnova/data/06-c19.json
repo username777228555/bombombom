@@ -1724,7 +1724,8 @@
         "about": "Карта военных действий в Закавказском крае с 1809 по 1817 год, с границами по Гюлистанскому договору и Бухарестскому миру",
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:%D0%97%D0%B0%D0%BA%D0%B0%D0%B2%D0%BA%D0%B0%D0%B7%D1%81%D0%BA%D0%B8%D0%B9_%D0%BA%D1%80%D0%B0%D0%B9_(1809%E2%80%951817).jpg"
-      }
+      },
+      "imageQuiz": false
     },
     {
       "id": "e-ustav-ob-inorodtsakh-1822",
@@ -3707,7 +3708,8 @@
         "about": "Титульный лист второго издания (Лейпциг, Германия, 1880)",
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Fathers_and_Sons_cover_-_retouched.jpg"
-      }
+      },
+      "imageQuiz": false
     },
     {
       "id": "c-bratya-karamazovy",

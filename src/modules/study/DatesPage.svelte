@@ -112,7 +112,7 @@
   .group { margin-top: var(--sp-5); }
   .gh { margin-bottom: var(--sp-3); }
   ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-  li { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: var(--sp-2); align-items: stretch; }
+  li { content-visibility: auto; contain-intrinsic-size: auto 56px; display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: var(--sp-2); align-items: stretch; }
   .year, .title { border: 1px solid var(--line); background: var(--surface); border-radius: var(--r-md); cursor: pointer; box-shadow: var(--shadow-1); transition: transform var(--dur-1) var(--ease-out), background-color var(--dur-2), border-color var(--dur-2); }
   .year:active, .title:active { transform: scale(0.98); }
   .year { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); color: color-mix(in srgb, var(--c) 80%, var(--ink)); display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.05; padding: 6px 4px; }

@@ -5,7 +5,7 @@ export default defineModule({
   id: 'quiz',
   title: 'Тесты',
   entries: [
-    { hub: 'practice', title: 'Пробники', description: 'ВсОШ, Высшая проба, Изумрудный город', icon: ScrollText, href: '/quiz/probes', order: 22, tint: '#2b4f8c' },
+    { hub: 'practice', title: 'Пробники', description: 'ВсОШ, «Высшая проба», «Изумруд», РАНХиГС', icon: ScrollText, href: '/quiz/probes', order: 22, tint: '#2b4f8c' },
     { hub: 'practice', title: 'Тесты', description: 'Олимпиадные форматы, тест дня, конструктор', icon: Sparkles, href: '/quiz', order: 20, tint: '#a87a28' },
   ],
   routes: [

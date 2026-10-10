@@ -11,7 +11,7 @@
   import { openSheet } from '$lib/core/ui.svelte';
   import { toRoman } from '$lib/core/utils/format';
   import { haptic } from '$lib/core/platform';
-  import { createTextMeter } from './textMeasure.svelte';
+  import { textMeter } from './textMeasure.svelte';
   import { packRows, type Placed } from './pack';
 
   const MIN_SPAN = 6;
@@ -26,7 +26,7 @@
   let focusId = $state<string | null>(router.query.get('focus'));
   let lanes = $state({ rulers: true, events: true, culture: true, world: true });
   let svgEl: SVGSVGElement | undefined = $state();
-  const meter = createTextMeter();
+  const meter = textMeter();
 
   const x = (year: number) => ((year - start) / span) * width;
   const end = $derived(start + span);
@@ -175,8 +175,28 @@
       const right = px + 9 + (label ? meter.width(label, FONT, weight) : 0);
       const barEnd = e.endYear && e.endYear > e.year ? x(e.endYear) : px;
       return [px - 6, Math.max(right, barEnd)];
-    }, 10);
+    }, 10, (e) => {
+      // The shortest a label can get is «Абв…» — if not even that fits anywhere, skip measuring this title.
+      const px = x(e.year);
+      return [px - 6, Math.max(px + 9 + 24, e.endYear && e.endYear > e.year ? x(e.endYear) : px)];
+    });
     return placed.map((p) => ({ ...p, label: labels.get(p.item.id) ?? '' }));
+  }
+
+  /** Unlabelled points of a lane grouped by colour into single SVG paths (small dots or diamonds). */
+  function overflowPaths(rows: PointPlaced[], top: number, shape: 'dot' | 'diamond'): { color: string; d: string }[] {
+    const by = new Map<string, string[]>();
+    for (const { item: e, row } of rows) {
+      if (row >= 0) continue;
+      const px = x(e.year);
+      const y = pointY(top, row);
+      const c = colorAt(e.year);
+      const d = shape === 'diamond'
+        ? `M${px} ${y - 4.2}l4.2 4.2l-4.2 4.2l-4.2 -4.2z`
+        : `M${px - 2.5} ${y}a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0`;
+      (by.get(c) ?? by.set(c, []).get(c)!).push(d);
+    }
+    return [...by].map(([color, ds]) => ({ color, d: ds.join('') }));
   }
 
   const visibleEvents = $derived.by(() => {
@@ -323,7 +343,9 @@
       {/if}
 
       {#snippet points(rows: PointPlaced[], top: number, shape: 'dot' | 'diamond')}
-        {#each rows as { item: e, row, label } (e.id)}
+        <!-- Points without room for a label: one path per colour instead of hundreds of elements. -->
+        {#each overflowPaths(rows, top, shape) as o (o.color)}<path d={o.d} fill={o.color} opacity="0.5" class="over-dots" />{/each}
+        {#each rows.filter((r) => r.row >= 0) as { item: e, row, label } (e.id)}
           {@const px = x(e.year)}
           {@const y = pointY(top, row)}
           <g class="ev" class:focus={focusId === e.id} class:key={(e.importance ?? 2) >= 3} class:over={row < 0} onclick={() => open(e.id)} role="presentation">

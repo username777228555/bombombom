@@ -1,6 +1,6 @@
 <script lang="ts">
   /**
-   * «Пробники» — olympiad mock papers (Высшая проба, Изумрудный город, ВсОШ…) kept in the app's repository,
+   * «Пробники» — olympiad mock papers (Высшая проба, «Изумруд», ВсОШ…) kept in the app's repository,
    * folder `olympiads/` (built by `pnpm olympiads`). Downloaded by button and installed as packs; their tests
    * are listed here and in «Тесты из материалов». Same GitHub source and token as the library downloads.
    * On top — «Олимпиадный вариант»: a paper assembled from the packs' quizzes (quiz/sources.ts, src=variant).

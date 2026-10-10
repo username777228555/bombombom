@@ -16,6 +16,8 @@ export function createTextMeter(): TextMeter {
   let ctx: CanvasRenderingContext2D | null = null;
   let family = "'Inter Variable', Inter, system-ui, sans-serif";
   const cache = new Map<string, number>();
+  const fits = new Map<string, string>();
+  let font = '';
 
   function ensure() {
     if (ctx || typeof document === 'undefined') return;
@@ -30,7 +32,9 @@ export function createTextMeter(): TextMeter {
     if (w !== undefined) return w;
     ensure();
     if (ctx) {
-      ctx.font = `${weight} ${size}px ${family}`;
+      const f = `${weight} ${size}px ${family}`;
+      // Assigning ctx.font re-parses the font: only when it changes.
+      if (f !== font) ctx.font = font = f;
       w = ctx.measureText(text).width;
     } else {
       w = text.length * size * 0.6;
@@ -42,6 +46,15 @@ export function createTextMeter(): TextMeter {
   function fit(text: string, max: number, size: number, weight = 400): string {
     if (max <= 0) return '';
     if (width(text, size, weight) <= max) return text;
+    const key = `${max}|${weight}|${size}|${text}`;
+    const done = fits.get(key);
+    if (done !== undefined) return done;
+    const out = fitSlow(text, max, size, weight);
+    fits.set(key, out);
+    return out;
+  }
+
+  function fitSlow(text: string, max: number, size: number, weight: number): string {
     let lo = 0;
     let hi = text.length - 1;
     while (lo < hi) {
@@ -58,12 +71,23 @@ export function createTextMeter(): TextMeter {
     },
     init() {
       ensure();
-      void document.fonts?.ready.then(() => {
-        cache.clear();
-        version++;
-      });
+      // Re-measure once the web fonts arrive — only if they were not loaded yet (otherwise every visit laid out twice).
+      if (document.fonts && document.fonts.status !== 'loaded') {
+        void document.fonts.ready.then(() => {
+          cache.clear();
+          fits.clear();
+          font = '';
+          version++;
+        });
+      }
     },
     width,
     fit,
   };
+}
+
+let shared: TextMeter | undefined;
+/** One meter for the app: its width cache survives leaving and reopening the timeline. */
+export function textMeter(): TextMeter {
+  return (shared ??= createTextMeter());
 }

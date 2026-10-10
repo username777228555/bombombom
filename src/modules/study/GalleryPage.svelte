@@ -28,7 +28,7 @@
   import { sample, shuffle } from '$lib/core/utils/random';
   import { record, saveResult, bestResult } from '$lib/core/progress.svelte';
   import { haptic } from '$lib/core/platform';
-  import { reveal } from '$lib/design/motion';
+  import { reveal, more } from '$lib/design/motion';
   import { burst } from '$lib/design/confetti';
 
   interface Pic {
@@ -76,6 +76,14 @@
     return out.sort((a, b) => a.year - b.year);
   });
   const pics = $derived(all.filter((p) => (what === 'all' || p.kind === what) && (!period || p.period === period)));
+  // The grid renders in portions while scrolling: hundreds of paintings at once freeze the phone for a second.
+  const STEP = 24;
+  let limit = $state(STEP);
+  $effect(() => {
+    void what;
+    void period;
+    limit = STEP;
+  });
   const colorOf = (pid: string) => kb.periodById.get(pid)?.color ?? 'var(--accent)';
 
   // ——— Viewer ———
@@ -206,7 +214,7 @@
 
   {#if mode === 'look'}
     <div class="grid">
-      {#each pics as p, i (p.id)}
+      {#each pics.slice(0, limit) as p, i (p.id)}
         <div use:reveal={{ delay: (i % 6) * 40 }}>
           <Painting src={p.src} alt={p.title} height="150px" frame={false} drift={false} onclick={() => show(i)}>
             {#snippet caption()}
@@ -217,6 +225,7 @@
         </div>
       {/each}
     </div>
+    {#if limit < pics.length}<div class="more" use:more={() => (limit += STEP)}></div>{/if}
     {#if !pics.length}<p class="muted empty"><Images size={18} /> Здесь пока нет изображений.</p>{/if}
   {:else if over}
     <div class="over" in:scale={{ start: 0.92 }}>
@@ -284,6 +293,7 @@
   .what { display: flex; gap: 6px; }
   .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); margin-top: var(--sp-1); }
   @media (min-width: 640px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .more { height: 1px; }
   .cap-t { font-size: var(--text-xs); font-weight: 650; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .grid small { font-size: var(--text-2xs); font-weight: 700; filter: brightness(1.7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .empty { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: var(--sp-6); text-align: center; }

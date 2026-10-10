@@ -14,7 +14,8 @@ export interface Settings {
   haptics: boolean;
   dailyGoal: number;
   newPerDay: number;
-  showConfidence: boolean;
+  /** Once a day ask GitHub whether a newer APK is out (core/update.svelte.ts). */
+  checkUpdates: boolean;
   name: string;
   onboarded: boolean;
   packs: Record<string, boolean>;
@@ -36,7 +37,7 @@ const DEFAULTS: Settings = {
   haptics: true,
   dailyGoal: 50,
   newPerDay: 20,
-  showConfidence: true,
+  checkUpdates: true,
   name: '',
   onboarded: false,
   packs: {},

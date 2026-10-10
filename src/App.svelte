@@ -9,6 +9,7 @@
   import { loadProgress } from '$lib/core/progress.svelte';
   import { loadUserDecks } from '$lib/core/content/userdecks.svelte';
   import { initPlatform, setHapticsEnabled } from '$lib/core/platform';
+  import { checkForUpdate } from '$lib/core/update.svelte';
   import TabBar from '$lib/app/TabBar.svelte';
   import SheetHost from '$lib/app/SheetHost.svelte';
   import Overlays from '$lib/app/Overlays.svelte';
@@ -28,6 +29,7 @@
       booted = true;
       void initPlatform(() => router.handleHardwareBack());
       void navigator.storage?.persist?.();
+      void checkForUpdate();
     } catch (e) {
       console.error(e);
       failure = e instanceof Error ? e.message : String(e);

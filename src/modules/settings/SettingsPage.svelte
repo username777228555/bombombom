@@ -83,7 +83,6 @@
       <div class="stack inner">
         <div class="field"><span>Цель дня (опыт)</span><Segmented bind:value={goal} options={[{ value: '20', label: '20' }, { value: '50', label: '50' }, { value: '100', label: '100' }, { value: '150', label: '150' }]} /></div>
         <div class="field"><span>Новых карточек в день</span><Segmented bind:value={perDay} options={[{ value: '10', label: '10' }, { value: '20', label: '20' }, { value: '30', label: '30' }, { value: '50', label: '50' }]} /></div>
-        <label class="line"><span class="grow">Пометки «сверьте с учебником»<small>для данных, собранных ИИ, и спорных дат</small></span><Toggle bind:checked={settings.showConfidence} label="Пометки" /></label>
       </div>
     </Card>
   </section>
@@ -95,6 +94,7 @@
     </Card>
     <Card padding="md">
       <div class="stack inner">
+        <label class="line"><span class="grow">Сообщать о новой версии<small>раз в день спрашивает GitHub, есть ли свежий APK</small></span><Toggle bind:checked={settings.checkUpdates} label="Сообщать о новой версии" /></label>
         <p class="muted small">Прогресс хранится только на этом устройстве. Делайте резервную копию, чтобы перенести его на другой телефон. Файлы книг в копию не входят.</p>
         <Button variant="secondary" full icon={Download} onclick={doExport}>Сохранить резервную копию</Button>
         <Button variant="secondary" full icon={Upload} onclick={doImport}>Восстановить из копии</Button>

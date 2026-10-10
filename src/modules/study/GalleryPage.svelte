@@ -8,6 +8,7 @@
    * Grows automatically when agents add pictures to content packs. Quizzes skip pictures that give the answer
    * away: title pages, posters, manuscripts, maps and portraits standing in for a book or an event — only
    * QUIZ_KINDS of culture are asked, and any item can opt out with `imageQuiz: false`.
+   * The same page under `/art-quiz` is «Практика → Искусство»: quizzes only, works of art by default.
    */
   import { onMount } from 'svelte';
   import { fade, fly, scale } from 'svelte/transition';
@@ -50,8 +51,10 @@
   /** Culture kinds whose pictures show the work itself; books, scores and documents show a title page instead. */
   const QUIZ_KINDS = new Set(['painting', 'icon', 'sculpture', 'architecture', 'applied']);
   const AUTHOR_KINDS = new Set(['painting', 'icon', 'sculpture', 'architecture']);
-  let mode = $state<'look' | 'quiz' | 'author'>('look');
-  let what = $state<'all' | 'event' | 'culture'>('all');
+  /** Opened from «Практика»: no viewing grid, works of art first. */
+  const practice = router.path === '/art-quiz';
+  let mode = $state<'look' | 'quiz' | 'author'>(practice ? 'author' : 'look');
+  let what = $state<'all' | 'event' | 'culture'>(practice ? 'culture' : 'all');
   let period = $state<string | null>(null);
 
   const all = $derived.by((): Pic[] => {
@@ -178,8 +181,13 @@
 <svelte:window onkeydown={onKey} />
 
 <div class="page">
-  <PageHeader title="Галерея" eyebrow="История в картинах" back="/explore" />
-  <Segmented bind:value={mode} options={[{ value: 'look', label: 'Смотреть', count: pics.length }, { value: 'quiz', label: 'Что это?' }, { value: 'author', label: 'Кто автор?' }]} />
+  {#if practice}
+    <PageHeader title="Искусство" eyebrow="Угадай картину и автора" back="/practice" />
+    <Segmented bind:value={mode} options={[{ value: 'author', label: 'Кто автор?' }, { value: 'quiz', label: 'Что изображено?' }]} />
+  {:else}
+    <PageHeader title="Галерея" eyebrow="История в картинах" back="/explore" />
+    <Segmented bind:value={mode} options={[{ value: 'look', label: 'Смотреть', count: pics.length }, { value: 'quiz', label: 'Что это?' }, { value: 'author', label: 'Кто автор?' }]} />
+  {/if}
   <div class="filters">
     {#if mode !== 'author'}
       <div class="what">

@@ -1,6 +1,7 @@
 <script lang="ts">
   /**
-   * «Историческое эссе» — a plan builder for an essay about one reign. Everything is derived from the
+   * «Историческое эссе». Tab «Как писать» — the owner's handbook (EssayGuide). Tab «План» — a plan builder for an
+   * essay about one reign, laid out the way the handbook teaches (problem → tasks → views of historians → conclusions). Everything is derived from the
    * knowledge base: events inside the reign, people linked to the chosen events, cause → effect links from
    * the graph, culture of the time and the epoch's terms. The student picks events; the plan updates live.
    */
@@ -11,7 +12,9 @@
   import Button from '$lib/design/components/Button.svelte';
   import Avatar from '$lib/design/components/Avatar.svelte';
   import Ornament from '$lib/design/components/Ornament.svelte';
+  import Segmented from '$lib/design/components/Segmented.svelte';
   import EntityPreview from '$lib/components/EntityPreview.svelte';
+  import EssayGuide, { guide } from './EssayGuide.svelte';
   import { kb, type Reign } from '$lib/core/content/kb.svelte';
   import { reignSpan } from '$lib/core/content/rulers';
   import { openSheet, toast } from '$lib/core/ui.svelte';
@@ -28,6 +31,7 @@
     return kb.rulers().filter((r) => r.kind === 'head' && kb.events.filter((e) => e.scope !== 'world' && inside(e.year, r)).length >= 2);
   });
   let selected = $state<string>(router.query.get('ruler') ?? '');
+  let tab = $state<'guide' | 'plan'>(router.query.get('ruler') ? 'plan' : 'guide');
   const reign = $derived(reigns.find((r) => keyOf(r) === selected || r.person.id === selected));
 
   const events = $derived.by(() => {
@@ -88,27 +92,29 @@
     return pid ? kb.termsIn(pid).slice(0, 10) : [];
   });
 
-  const CHECKS = [
-    'Названы минимум два события периода с датами',
-    'Для каждой личности указаны конкретные действия, а не только имя',
-    'Показаны причины и последствия (минимум две связи)',
-    'Дана оценка итогов периода с опорой на факты',
-    'Использованы термины эпохи',
-    'Нет ошибок в датах и именах',
-  ];
+  const CHECKS = guide.checklist;
   let done = $state<boolean[]>(CHECKS.map(() => false));
 
   const planText = $derived.by(() => {
     if (!reign) return '';
     const picked = chosen.map((id) => kb.get(id)).filter((e) => e?.kind === 'event').map((e) => e!.item as { title: string; year: number });
+    const who = reign.person.short ?? reign.person.name;
     const lines = [
-      `Историческое эссе: ${reign.person.short ?? reign.person.name} (${reignSpan(reign)})`,
+      `Историческое эссе: ${who} (${reignSpan(reign)})`,
       '',
-      `1. Вступление: ${reign.title.toLowerCase()}, эпоха «${periodAt(reign.from)?.title ?? ''}».`,
-      ...picked.map((e, i) => `${i + 2}. Событие: ${e.title} (${e.year}). Кто участвовал и что сделал: ${people.filter((p) => p.via === e.title).map((p) => p.name).join(', ') || '…'}.`),
-      `${picked.length + 2}. Причины и следствия: ${causes.slice(0, 3).map((c) => `${c.a} → ${c.b}`).join('; ') || '…'}.`,
-      `${picked.length + 3}. Культура эпохи: ${culture.slice(0, 3).map((c) => c.title).join(', ') || '…'}.`,
-      `${picked.length + 4}. Итог и оценка: что изменилось в стране к ${reign.ongoing ? 'нашим дням' : `${reign.to} году`}?`,
+      `Введение. Почему выбрана эта тема: ${reign.title.toLowerCase()}, эпоха «${periodAt(reign.from)?.title ?? ''}». Чем период интересен и спорен?`,
+      `Проблема: …(один общий вопрос, который объединяет задачи).`,
+      '',
+      ...picked.flatMap((e, i) => [
+        `Задача ${i + 1}. Какую роль сыграло событие «${e.title}» (${e.year})?`,
+        `  Тезис: …`,
+        `  Аргументы (факт + анализ + вывод): ${people.filter((p) => p.via === e.title).map((p) => p.name).join(', ') || '…'}; ${causes.filter((c) => c.a === e.title || c.b === e.title).map((c) => `${c.a} → ${c.b}`).join('; ') || '…'}.`,
+        `  Точка зрения историка: автор, работа, его мысль — …`,
+        `  Вывод по задаче: …`,
+      ]),
+      '',
+      `Фон: причины и следствия — ${causes.slice(0, 3).map((c) => `${c.a} → ${c.b}`).join('; ') || '…'}; культура — ${culture.slice(0, 3).map((c) => c.title).join(', ') || '…'}.`,
+      `Выводы: по каждой задаче и итоговый — ответ на проблему; что изменилось к ${reign.ongoing ? 'нашим дням' : `${reign.to} году`}?`,
       '',
       `Термины: ${terms.slice(0, 6).map((t) => t.term).join(', ')}`,
     ];
@@ -123,12 +129,16 @@
       toast('Не удалось скопировать — сохраните файлом', 'error');
     }
   }
-  const save = () => exportFile(`Сочинение — ${reign?.person.short ?? 'план'}.txt`, planText, 'text/plain');
+  const save = () => exportFile(`Эссе — ${reign?.person.short ?? 'план'}.txt`, planText, 'text/plain');
   const preview = (id: string) => openSheet({ component: EntityPreview, props: { id } });
 </script>
 
 <div class="page">
-  <PageHeader title="Историческое эссе" eyebrow="Конструктор плана" back="/practice" />
+  <PageHeader title="Историческое эссе" eyebrow="Пособие и конструктор плана" back="/practice" />
+  <Segmented bind:value={tab} options={[{ value: 'guide', label: 'Как писать' }, { value: 'plan', label: 'План по правлению' }]} />
+  {#if tab === 'guide'}
+    <EssayGuide />
+  {:else}
   <div class="intro" use:reveal>
     <span class="ico"><Feather size={22} /></span>
     <p>Выберите правление — приложение соберёт события, участников, причины и следствия, культуру и термины. Отметьте 2–3 события, и план эссе сложится сам.</p>
@@ -220,6 +230,7 @@
         <Ornament variant="flourish" width={200} />
       </div>
     {/key}
+  {/if}
   {/if}
 </div>
 

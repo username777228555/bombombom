@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Search, Flame, Layers, Swords, UserSearch, Crosshair, ChartGantt, Network, Sparkles, BookOpen, ArrowRight, CalendarDays, Crown, CalendarCheck } from '@lucide/svelte';
+  import { Search, Flame, Layers, Swords, UserSearch, Crosshair, ChartGantt, Network, Sparkles, BookOpen, ArrowRight, CalendarDays, Crown, CalendarCheck, Download, X } from '@lucide/svelte';
   import Emblem from '$lib/design/components/Emblem.svelte';
   import IconButton from '$lib/design/components/IconButton.svelte';
   import ProgressRing from '$lib/design/components/ProgressRing.svelte';
@@ -21,6 +21,7 @@
   import { greeting, formatDateLong, pluralN, WORDS, monthGen, formatEventDate, formatSpan } from '$lib/core/utils/format';
   import { hashString, mulberry32, pick } from '$lib/core/utils/random';
   import { navigate } from '$lib/core/router.svelte';
+  import { update, dismissUpdate } from '$lib/core/update.svelte';
 
   let due = $state(0);
   let fresh = $state(0);
@@ -80,6 +81,17 @@
     <h1>{greeting()}{settings.name ? `, ${settings.name}` : ''}</h1>
     <p class="muted">{formatDateLong(now)}</p>
   </section>
+
+  {#if update.available}
+    <div class="update" role="status">
+      <Download size={20} />
+      <a class="grow" href={update.available.url} target="_blank" rel="noreferrer">
+        <strong>Вышла версия {update.available.version}</strong>
+        <small>Нажмите, чтобы скачать и обновить</small>
+      </a>
+      <IconButton icon={X} label="Позже" onclick={dismissUpdate} />
+    </div>
+  {/if}
 
   <section class="hero">
     {#if heroCover}<img class="hero-art" src={heroCover} alt="" aria-hidden="true" />{/if}
@@ -195,6 +207,9 @@
 </div>
 
 <style>
+  .update { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3) var(--sp-3) var(--sp-3) var(--sp-4); margin-bottom: var(--sp-3); border-radius: var(--r-lg); background: var(--success-soft); color: var(--success); border: 1px solid color-mix(in srgb, var(--success) 35%, transparent); }
+  .update a { display: flex; flex-direction: column; color: var(--ink); text-decoration: none; }
+  .update small { color: var(--ink-3); font-size: var(--text-xs); }
   .top { display: flex; align-items: center; justify-content: space-between; padding: calc(var(--safe-top) + var(--sp-4)) 0 var(--sp-2); }
   .brand { display: flex; align-items: center; gap: var(--sp-3); }
   .brand strong { display: block; font-size: var(--text-lg); letter-spacing: 0.14em; line-height: 1.1; }

@@ -361,6 +361,8 @@ export const PackBundleSchema = z.strictObject({
   version: z.literal(1),
   pack: PackManifestSchema,
   fragments: z.array(FragmentSchema),
+  /** Pictures shared by several questions: file name → data URL; a question refers to one as `image: "asset:<name>"`. */
+  assets: z.record(z.string(), z.string()).optional(),
 });
 
 export type Period = z.infer<typeof PeriodSchema>;

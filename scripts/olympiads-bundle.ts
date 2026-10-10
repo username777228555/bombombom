@@ -2,7 +2,7 @@
  * pnpm olympiads — builds the «Пробники» (olympiad mock papers) that the app downloads by button.
  * Sources: `olympiads/src/<id>.json` = { "pack": {manifest}, "quizzes": [...] } (one pack per olympiad or year).
  * Pictures of tasks lie in `olympiads/src/<id>/` and are referenced by file name in a question's `image`;
- * the bundle embeds them as data URLs, so a downloaded probe works offline.
+ * the bundle embeds each once as a data URL (`assets`, questions point to `asset:<file>`), so a probe works offline.
  * Output: `olympiads/<id>.stolypin.json` — the app lists that folder (Практика → Пробники) and installs a
  * file as a pack, so its quizzes appear among the tests. Not built into the APK: the folder is outside content/.
  *
@@ -29,8 +29,10 @@ for (const name of (existsSync(srcDir) ? readdirSync(srcDir) : []).filter((n) =>
   const src = readJson(file) as { pack: { id: string }; quizzes: { questions: { image?: string }[] }[] };
   const imgDir = join(DIR, 'src', name.replace(/\.json$/, ''));
   let missing = 0;
+  // Each picture goes into the bundle once (`assets`), questions refer to it as `asset:<file>`.
+  const assets: Record<string, string> = {};
   for (const q of src.quizzes.flatMap((x) => x.questions)) {
-    if (!q.image || /^(data:|https?:)/.test(q.image)) continue;
+    if (!q.image || /^(data:|https?:|asset:)/.test(q.image)) continue;
     const img = join(imgDir, q.image);
     if (!existsSync(img)) {
       console.error(`✖ ${rel(file)}: нет картинки ${rel(img)}`);
@@ -38,13 +40,14 @@ for (const name of (existsSync(srcDir) ? readdirSync(srcDir) : []).filter((n) =>
       continue;
     }
     const mime = q.image.endsWith('.png') ? 'image/png' : q.image.endsWith('.webp') ? 'image/webp' : 'image/jpeg';
-    q.image = `data:${mime};base64,${readFileSync(img).toString('base64')}`;
+    assets[q.image] ??= `data:${mime};base64,${readFileSync(img).toString('base64')}`;
+    q.image = `asset:${q.image}`;
   }
   if (missing) {
     bad++;
     continue;
   }
-  const bundle = { format: 'stolypin-pack', version: 1, pack: { generated: 'human', ...src.pack }, fragments: [{ quizzes: src.quizzes }] };
+  const bundle = { format: 'stolypin-pack', version: 1, pack: { generated: 'human', ...src.pack }, fragments: [{ quizzes: src.quizzes }], ...(Object.keys(assets).length ? { assets } : {}) };
   const parsed = PackBundleSchema.safeParse(bundle);
   if (!parsed.success) {
     for (const i of parsed.error.issues.slice(0, 5)) console.error(`✖ ${rel(file)} › ${i.path.join('.')}: ${i.message}`);

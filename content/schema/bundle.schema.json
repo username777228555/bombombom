@@ -1601,6 +1601,15 @@
         },
         "additionalProperties": false
       }
+    },
+    "assets": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
     }
   },
   "required": [

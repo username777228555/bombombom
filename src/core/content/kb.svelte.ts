@@ -5,7 +5,7 @@
 import {
   FragmentSchema, PackManifestSchema, PeriodsFileSchema, SYMMETRIC_LINKS,
   type CultureItem, type DeckItem, type EventItem, type Fragment, type LinkItem, type MapItem,
-  type PackManifest, type Period, type PersonItem, type QuizItem, type SourceItem, type TermItem, type ImageInfo,
+  type PackBundle, type PackManifest, type Period, type PersonItem, type QuizItem, type SourceItem, type TermItem, type ImageInfo,
 } from './schema';
 import { db } from '../db';
 import { settings } from '../settings.svelte';
@@ -69,6 +69,22 @@ const KIND_LABEL: Record<EntityKindName, string> = {
   term: 'Термин',
   source: 'Источник',
 };
+
+
+/** An imported pack: `image: "asset:<name>"` of its questions point into the bundle's shared `assets` (one copy per picture). */
+function userPack(u: { bundle: PackBundle }): RawPack {
+  const assets = u.bundle.assets;
+  const fragments = !assets
+    ? u.bundle.fragments
+    : u.bundle.fragments.map((f) => ({
+        ...f,
+        quizzes: f.quizzes?.map((q) => ({
+          ...q,
+          questions: q.questions.map((x) => (x.image?.startsWith('asset:') ? { ...x, image: assets[x.image.slice(6)] ?? x.image } : x)),
+        })),
+      }));
+  return { manifest: u.bundle.pack, source: 'user', fragments, skipped: 0 };
+}
 
 class KnowledgeBase {
   ready = $state(false);
@@ -137,18 +153,14 @@ class KnowledgeBase {
         return { manifest: m.data, source: 'builtin', dir, fragments: fragments.filter((f): f is Fragment => !!f), skipped };
       }),
     );
-    const user = (await db.userPacks.toArray()).map(
-      (u): RawPack => ({ manifest: u.bundle.pack, source: 'user', fragments: u.bundle.fragments, skipped: 0 }),
-    );
+    const user = (await db.userPacks.toArray()).map(userPack);
     this.raw = [...builtin.filter((p): p is RawPack => !!p), ...user];
     this.build();
   }
 
   /** Re-merges packs (after enabling/disabling or importing). */
   async reload(): Promise<void> {
-    const user = (await db.userPacks.toArray()).map(
-      (u): RawPack => ({ manifest: u.bundle.pack, source: 'user', fragments: u.bundle.fragments, skipped: 0 }),
-    );
+    const user = (await db.userPacks.toArray()).map(userPack);
     this.raw = [...this.raw.filter((p) => p.source === 'builtin'), ...user];
     this.build();
   }

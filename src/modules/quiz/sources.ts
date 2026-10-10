@@ -57,6 +57,20 @@ export async function buildQuiz(p: URLSearchParams): Promise<QuizSpec | null> {
       });
       return { title: `Тест: ${deck.title}`, ref: `deck:${deck.id}`, questions, exam };
     }
+    case 'variant': {
+      // «Олимпиадный вариант»: like a real paper — a test part and extended answers, from the packs' own quizzes.
+      const pool = kb.quizzes.filter((q) => !periods?.length || (q.period && periods.includes(q.period))).flatMap((q) => q.questions);
+      const short = sample(pool.filter((q) => q.type !== 'open'), 12);
+      const open = sample(pool.filter((q) => q.type === 'open'), 4);
+      if (!short.length && !open.length) return null;
+      const names = periods?.map((id) => kb.periodById.get(id)?.short).filter(Boolean);
+      return {
+        title: names?.length ? `Олимпиадный вариант: ${names.join(', ')}` : 'Олимпиадный вариант',
+        ref: `variant:${periods?.join(',') ?? 'all'}`,
+        questions: [...short, ...open],
+        exam: p.get('exam') !== '0',
+      };
+    }
     case 'mistakes': {
       const list = await getMistakes();
       return { title: 'Работа над ошибками', ref: 'mistakes', questions: shuffle(list).slice(0, count), exam, fromMistakes: true };

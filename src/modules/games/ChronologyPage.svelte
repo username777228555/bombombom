@@ -10,6 +10,7 @@
   import PeriodTag from '$lib/components/PeriodTag.svelte';
   import GameSetup from './GameSetup.svelte';
   import { kb } from '$lib/core/content/kb.svelte';
+  import { quizTitle } from '$lib/core/content/titles';
   import { router } from '$lib/core/router.svelte';
   import { record, saveResult, bestResult } from '$lib/core/progress.svelte';
   import { haptic } from '$lib/core/platform';
@@ -43,7 +44,7 @@
       return kb.rulers().filter((r) => inP(r.person.periods[0])).map((r) => ({ id: `${r.person.id}-${r.from}`, title: r.person.short ?? r.person.name, year: r.from, period: r.person.periods[0], sub: r.title }));
     }
     if (mode === 'culture') return kb.culture.filter((c) => inP(c.period)).map((c) => ({ id: c.id, title: c.title, year: c.year, period: c.period }));
-    return kb.events.filter((e) => inP(e.period)).map((e) => ({ id: e.id, title: e.title, year: e.year, period: e.period }));
+    return kb.events.filter((e) => inP(e.period)).map((e) => ({ id: e.id, title: quizTitle(e), year: e.year, period: e.period }));
   }
 
   function start() {

@@ -3,6 +3,8 @@
  * Runs in Node (`pnpm content:check`) and in the app (importing user packs).
  */
 import type { z } from 'zod';
+import { pluralN, WORDS } from '../utils/format';
+import { undatedCollisions } from './titles';
 import {
   FragmentSchema, PackManifestSchema, PeriodsFileSchema, ID_PREFIX, SYMMETRIC_LINKS,
   type EntityKind, type Fragment, type PackManifest, type Period,
@@ -138,6 +140,28 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
     validated.push(pack);
   }
 
+  // Guards for hand-added materials (see docs/agent-guide.md):
+  //  · «TODO» placeholders left by `pnpm content:add` are errors — a half-filled stub must not ship;
+  //  · the same title/name under a different id is probably a duplicate;
+  //  · Wikipedia links belong to the short `wiki` field, not to `refs`;
+  //  · `short` is the famous name («Дмитрий Донской»), not a name with patronymic.
+  const titleKey = (s: string) => norm(s).replace(/[«»"“”„.,:;!?()]/g, '').replace(/\s+/g, ' ').trim();
+  const seenTitles = new Map<string, { id: string; file: string }>();
+  const dup = (file: string, path: string, id: string, key: string) => {
+    const prev = seenTitles.get(key);
+    if (prev && prev.id !== id) add('warning', file, path, `похоже на дубликат «${prev.id}» (${prev.file}) — проверьте, не добавлено ли это уже`);
+    else if (!prev) seenTitles.set(key, { id, file });
+  };
+  const wikiRefs = (file: string, path: string, refs: string[] | undefined) => {
+    if (refs?.some((r) => /wiki(pedia|media)\.org/.test(r))) add('warning', file, `${path}.refs`, 'ссылка на Википедию: перенесите название статьи в поле wiki');
+  };
+  const findTodos = (value: unknown, path: string, report: (path: string) => void): void => {
+    if (typeof value === 'string') {
+      if (/\bTODO\b/.test(value)) report(path);
+    } else if (Array.isArray(value)) value.forEach((x, i) => findTodos(x, `${path}[${i}]`, report));
+    else if (value && typeof value === 'object') for (const [k, x] of Object.entries(value)) findTodos(x, path ? `${path}.${k}` : k, report);
+  };
+
   // 2. References and sanity checks.
   const refLevel: IssueLevel = opts.lenientRefs ? 'warning' : 'error';
   for (const [pi, pack] of validated.entries()) {
@@ -146,7 +170,20 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
       if (!asset || /^https?:\/\//.test(asset) || !assetExists) return;
       if (!assetExists(asset)) add('error', file, path, `файл «${asset}» не найден в папке пакета`);
     };
+    // Pictures must say who made them and when (shown to students under every image).
+    const checkCredit = (file: string, path: string, it: { image?: string; imageInfo?: { author?: string; date?: string } }) => {
+      if (it.image && !it.imageInfo) add('warning', file, path, 'у картинки нет сведений (imageInfo): заполните вручную или запустите scripts/media/wiki_images.py');
+    };
+    // The entity page shows `details` right under `summary`: a repeated text reads as a glitch.
+    const checkDetails = (file: string, path: string, it: { summary: string; details?: string }) => {
+      if (!it.details) return;
+      const s = it.summary.replace(/\s+/g, ' ').trim();
+      const d = it.details.replace(/\s+/g, ' ').trim();
+      if (d === s || s.startsWith(d)) add('warning', file, path, 'details повторяет summary — удалите details');
+      else if (s.length > 60 && d.startsWith(s)) add('warning', file, path, 'details начинается с текста summary — уберите повтор');
+    };
     for (const { file, data: d } of pack.fragments) {
+      findTodos(d, '', (path) => add('error', file, path, 'не заполнено («TODO…»): допишите значение или удалите поле'));
       const ref = (path: string, id: string | undefined, kinds?: EntityKind[]) => {
         if (!id) return;
         const hit = registry.get(id);
@@ -169,14 +206,19 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         if (e.endYear !== undefined && e.endYear < e.year) add('error', file, `${at}.endYear`, 'endYear раньше year');
         if (e.day !== undefined && e.month === undefined) add('error', file, `${at}.day`, 'day без month');
         checkAsset(file, `${at}.image`, e.image);
+        checkCredit(file, `${at}.imageInfo`, e);
+        checkDetails(file, `${at}.details`, e);
+        dup(file, at, e.id, `e|${titleKey(e.title)}|${e.year}`);
+        wikiRefs(file, at, e.refs);
       });
       d.persons?.forEach((p, i) => {
         const at = `persons[${i}]`;
         p.periods.forEach((id, j) => period(`${at}.periods[${j}]`, id));
         if (p.born != null && p.died != null && p.died < p.born) add('error', file, at, 'died раньше born');
-        if (p.born != null && p.died != null && p.died - p.born > 105) add('warning', file, at, `прожил ${p.died - p.born} лет — проверьте даты`);
+        if (p.born != null && p.died != null && p.died - p.born > 105) add('warning', file, at, `прожил ${pluralN(p.died - p.born, WORDS.year)} — проверьте даты`);
         p.reigns?.forEach((r, j) => {
           if (r.to < r.from) add('error', file, `${at}.reigns[${j}]`, 'to раньше from');
+          if (r.to === r.from && r.fromDate && r.toDate && r.toDate < r.fromDate) add('error', file, `${at}.reigns[${j}]`, 'toDate раньше fromDate');
           if ((p.born != null && r.from < p.born) || (p.died != null && r.to > p.died + 1)) {
             add('warning', file, `${at}.reigns[${j}]`, 'правление выходит за годы жизни');
           }
@@ -187,6 +229,13 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
           if (hit) add('warning', file, `${at}.hints[${j}]`, `подсказка выдаёт имя («${hit}…»)`);
         });
         checkAsset(file, `${at}.image`, p.image);
+        checkCredit(file, `${at}.imageInfo`, p);
+        checkDetails(file, `${at}.details`, p);
+        dup(file, at, p.id, `p|${titleKey(p.name)}`);
+        wikiRefs(file, at, p.refs);
+        if (p.short && p.short.split(/\s+/).length > p.name.split(/\s+/).length && /(вич|вна|ична)\b/.test(p.short)) {
+          add('warning', file, `${at}.short`, 'short — это известное имя без отчества («Дмитрий Донской»); полное имя с отчеством положите в aliases');
+        }
       });
       d.culture?.forEach((c, i) => {
         const at = `culture[${i}]`;
@@ -194,6 +243,9 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         c.authors?.forEach((id, j) => ref(`${at}.authors[${j}]`, id, ['person']));
         if (c.endYear !== undefined && c.endYear < c.year) add('error', file, `${at}.endYear`, 'endYear раньше year');
         checkAsset(file, `${at}.image`, c.image);
+        checkCredit(file, `${at}.imageInfo`, c);
+        dup(file, at, c.id, `c|${titleKey(c.title)}`);
+        wikiRefs(file, at, c.refs);
       });
       d.terms?.forEach((t, i) => {
         t.periods?.forEach((id, j) => period(`terms[${i}].periods[${j}]`, id));
@@ -277,6 +329,14 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
       });
     }
     if (pack.manifest.cover) checkAsset(`${pack.manifest.id}/pack.json`, 'cover', pack.manifest.cover);
+  }
+
+  // Date questions show titles without years: «Русско-турецкая война 1768–1774 годов» and «… 1787–1791 годов»
+  // would both read «Русско-турецкая война». Such events need `quizTitle`.
+  const eventFile = new Map<string, string>();
+  const allEvents = validated.flatMap((pack) => pack.fragments.flatMap(({ file, data }) => (data.events ?? []).map((e) => (eventFile.set(e.id, file), e))));
+  for (const [title, ids] of undatedCollisions(allEvents)) {
+    add('warning', eventFile.get(ids[0]!) ?? '', ids.join(', '), `без года названия совпадают («${title}»): добавьте quizTitle — как спрашивать о дате, не выдавая её`);
   }
 
   const filtered = opts.onlyFile ? issues.filter((i) => opts.onlyFile!(i.file)) : issues;

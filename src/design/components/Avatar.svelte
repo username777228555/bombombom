@@ -33,5 +33,6 @@
     background: color-mix(in srgb, var(--c) 15%, var(--surface));
     border: 1.5px solid color-mix(in srgb, var(--c) 35%, transparent);
   }
-  img { width: 100%; height: 100%; object-fit: cover; }
+  /* Portraits are pre-cropped around the face (scripts/media); for other images keep the head in frame. */
+  img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
 </style>

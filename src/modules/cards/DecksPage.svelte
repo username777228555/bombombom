@@ -13,7 +13,7 @@
   import { settings } from '$lib/core/settings.svelte';
   import { db } from '$lib/core/db';
   import { navigate } from '$lib/core/router.svelte';
-  import { pluralN } from '$lib/core/utils/format';
+  import { plural, pluralN, WORDS } from '$lib/core/utils/format';
 
   let due = $state(0);
   let fresh = $state(0);
@@ -57,7 +57,7 @@
       <div class="grow">
         <span class="eyebrow light">Сегодня</span>
         <p class="big display">{pluralN(due + fresh, ['карточка', 'карточки', 'карточек'])}</p>
-        <span class="light-muted">{due} на повторение · {fresh} новых (лимит {settings.newPerDay} в день)</span>
+        <span class="light-muted">{due} на повторение · {fresh} {plural(fresh, WORDS.newCard)} (лимит {settings.newPerDay} в день)</span>
       </div>
       <Layers size={40} strokeWidth={1.4} class="deco" />
     </div>

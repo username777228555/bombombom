@@ -2,6 +2,11 @@
 import { db, type BookMeta } from '$lib/core/db';
 import { uid } from '$lib/core/utils/random';
 import { escapeHtml } from '$lib/core/utils/text';
+import { kb } from '$lib/core/content/kb.svelte';
+import { resolveBookTitle, looksLikeFileName, type CatalogBook } from './bookTitle';
+
+/** Books described in content packs (the «Книжная полка» catalog): used to recognise imported files. */
+export const catalog = (): CatalogBook[] => kb.sources.filter((s) => s.kind === 'literature' || !!s.note);
 
 export const BOOK_ACCEPT = '.epub,.fb2,.fbz,.zip,.mobi,.azw,.azw3,.pdf,.cbz,.txt,application/epub+zip,application/pdf,application/x-fictionbook+xml,text/plain';
 
@@ -87,7 +92,7 @@ export async function importBook(original: File): Promise<BookMeta> {
     file = await txtToFb2(original);
     format = 'fb2';
   }
-  let title = original.name.replace(/\.[^.]+$/, '');
+  let title = '';
   let author = '';
   let cover: Blob | undefined;
 
@@ -115,14 +120,31 @@ export async function importBook(original: File): Promise<BookMeta> {
     if (raw) cover = await downscale(raw);
   }
 
+  // Catalog title > sensible metadata > cleaned-up file name (see bookTitle.ts).
+  const named = resolveBookTitle(original.name, { title, author }, catalog());
   const meta: BookMeta = {
-    id: uid(), title, author: author || undefined, format, fileName: file.name, size: file.size, addedAt: Date.now(), cover,
+    id: uid(), title: named.title, author: named.author || undefined, format, fileName: file.name, size: file.size, addedAt: Date.now(), cover,
   };
   await db.transaction('rw', db.books, db.bookFiles, async () => {
     await db.bookFiles.put({ id: meta.id, blob: file });
     await db.books.put(meta);
   });
   return meta;
+}
+
+/** Repairs titles of books imported by older versions that still show raw file names. Safe to run on every start. */
+export async function repairBookTitles(): Promise<number> {
+  const books = await db.books.toArray();
+  let n = 0;
+  for (const b of books) {
+    if (!looksLikeFileName(b.title)) continue;
+    const named = resolveBookTitle(b.fileName ?? b.title, { author: b.author }, catalog());
+    if (named.title !== b.title || named.author !== b.author) {
+      await db.books.update(b.id, { title: named.title, author: named.author });
+      n++;
+    }
+  }
+  return n;
 }
 
 export async function deleteBook(id: string): Promise<void> {

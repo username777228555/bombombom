@@ -20,7 +20,7 @@
     },
     {
       "id": "s-book-pchelov-ryurik-oleg",
-      "title": "Рюрик; Олег Вещий",
+      "title": "Рюрик · Олег Вещий",
       "kind": "literature",
       "period": "ancient",
       "authorName": "Пчелов Е.",
@@ -29,7 +29,7 @@
     },
     {
       "id": "s-book-ranchin-boris-gleb-nestor",
-      "title": "Борис и Глеб; Нестор Летописец",
+      "title": "Борис и Глеб · Нестор Летописец",
       "kind": "literature",
       "period": "ancient",
       "authorName": "Ранчин А.",
@@ -90,7 +90,7 @@
     },
     {
       "id": "s-book-borisov-tverskoy-kalita-donskoy-sergiy",
-      "title": "Михаил Тверской; Иван Калита; Дмитрий Донской; Сергий Радонежский",
+      "title": "Михаил Тверской · Иван Калита · Дмитрий Донской · Сергий Радонежский",
       "kind": "literature",
       "period": "udel",
       "authorName": "Борисов Н.С.",
@@ -142,7 +142,7 @@
     },
     {
       "id": "s-book-borisov-vasiliy-temnyy-ivan-iii",
-      "title": "Василий Тёмный; Иван III",
+      "title": "Василий Тёмный · Иван III",
       "kind": "literature",
       "period": "muscovy",
       "authorName": "Борисов Н.",

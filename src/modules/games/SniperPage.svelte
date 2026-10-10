@@ -10,11 +10,13 @@
   import PeriodTag from '$lib/components/PeriodTag.svelte';
   import GameSetup from './GameSetup.svelte';
   import { kb } from '$lib/core/content/kb.svelte';
+  import { quizTitle } from '$lib/core/content/titles';
   import type { EventItem } from '$lib/core/content/schema';
   import { router } from '$lib/core/router.svelte';
   import { record, saveResult, bestResult } from '$lib/core/progress.svelte';
   import { haptic } from '$lib/core/platform';
   import { sample } from '$lib/core/utils/random';
+  import { pluralN, WORDS } from '$lib/core/utils/format';
   import { burst } from '$lib/design/confetti';
 
   const ROUNDS = 10;
@@ -92,7 +94,7 @@
     {#if phase === 'over'}
       <div class="over" in:scale={{ start: 0.9 }}>
         <Trophy size={44} class="gold" />
-        <h1>{total} очков</h1>
+        <h1>{pluralN(total, WORDS.point)}</h1>
         <Ornament />
         <p class="secondary">Рекорд: {best}</p>
         <Button full onclick={start}>Ещё раз</Button>
@@ -102,7 +104,7 @@
       {#key i}
         <div class="card" in:fly={{ x: 40, duration: 300 }}>
           <PeriodTag id={current.period} />
-          <h2>{current.title}</h2>
+          <h2>{quizTitle(current)}</h2>
           {#if revealed}<p class="secondary sum" in:fly={{ y: 8 }}>{current.summary}</p>{/if}
         </div>
       {/key}

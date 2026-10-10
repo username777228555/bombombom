@@ -18,6 +18,10 @@
             "type": "string",
             "minLength": 1
           },
+          "quizTitle": {
+            "type": "string",
+            "minLength": 1
+          },
           "year": {
             "type": "integer",
             "minimum": -3000,
@@ -122,6 +126,39 @@
             "type": "string",
             "minLength": 1
           },
+          "imageInfo": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "author": {
+                "type": "string",
+                "minLength": 1
+              },
+              "date": {
+                "type": "string",
+                "minLength": 1
+              },
+              "about": {
+                "type": "string",
+                "minLength": 1
+              },
+              "license": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          },
+          "imageQuiz": {
+            "type": "boolean"
+          },
           "confidence": {
             "type": "string",
             "enum": [
@@ -129,6 +166,10 @@
               "medium",
               "low"
             ]
+          },
+          "wiki": {
+            "type": "string",
+            "minLength": 1
           },
           "refs": {
             "type": "array",
@@ -229,6 +270,30 @@
                   "type": "integer",
                   "minimum": -3000,
                   "maximum": 2100
+                },
+                "fromDate": {
+                  "type": "string",
+                  "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+                },
+                "toDate": {
+                  "type": "string",
+                  "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "head",
+                    "regent",
+                    "council",
+                    "appanage",
+                    "office",
+                    "church",
+                    "foreign"
+                  ]
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1
                 }
               },
               "required": [
@@ -297,6 +362,36 @@
             "type": "string",
             "minLength": 1
           },
+          "imageInfo": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "author": {
+                "type": "string",
+                "minLength": 1
+              },
+              "date": {
+                "type": "string",
+                "minLength": 1
+              },
+              "about": {
+                "type": "string",
+                "minLength": 1
+              },
+              "license": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          },
           "confidence": {
             "type": "string",
             "enum": [
@@ -304,6 +399,10 @@
               "medium",
               "low"
             ]
+          },
+          "wiki": {
+            "type": "string",
+            "minLength": 1
           },
           "refs": {
             "type": "array",
@@ -423,6 +522,39 @@
             "type": "string",
             "minLength": 1
           },
+          "imageInfo": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "author": {
+                "type": "string",
+                "minLength": 1
+              },
+              "date": {
+                "type": "string",
+                "minLength": 1
+              },
+              "about": {
+                "type": "string",
+                "minLength": 1
+              },
+              "license": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          },
+          "imageQuiz": {
+            "type": "boolean"
+          },
           "confidence": {
             "type": "string",
             "enum": [
@@ -430,6 +562,10 @@
               "medium",
               "low"
             ]
+          },
+          "wiki": {
+            "type": "string",
+            "minLength": 1
           },
           "refs": {
             "type": "array",

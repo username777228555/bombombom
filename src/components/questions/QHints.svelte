@@ -6,6 +6,8 @@
   import Button from '$lib/design/components/Button.svelte';
   import TextField from '$lib/design/components/TextField.svelte';
   import { answerMatches } from '$lib/core/utils/text';
+  import { answerFormat, expandAnswers } from '$lib/core/content/answers';
+  import { plural, WORDS } from '$lib/core/utils/format';
   import { haptic } from '$lib/core/platform';
 
   let { q, revealed, onsubmit }: QuestionProps<Extract<Question, { type: 'hints' }>> = $props();
@@ -13,10 +15,12 @@
   let value = $state('');
   let ok = $state(false);
   let wrongTry = $state(false);
+  const accepted = $derived(expandAnswers(q.answers));
+  const format = $derived(answerFormat(q.answers));
 
   function check() {
     if (!value.trim()) return;
-    ok = answerMatches(value, q.answers);
+    ok = answerMatches(value, accepted);
     if (ok) {
       onsubmit((q.hints.length - shown + 1) / q.hints.length);
     } else if (shown < q.hints.length) {
@@ -37,9 +41,9 @@
   {/each}
 </ol>
 {#if !revealed}
-  <p class="muted pts">Сейчас за ответ: {q.hints.length - shown + 1} из {q.hints.length} баллов</p>
+  <p class="muted pts">Сейчас за ответ: {q.hints.length - shown + 1} из {q.hints.length} {plural(q.hints.length, WORDS.score)}</p>
   <div class="wrap" class:shake={wrongTry}>
-    <TextField bind:value placeholder="Кто это / что это?" autofocus onenter={check} />
+    <TextField bind:value placeholder="Кто это / что это?" hint={format} autofocus onenter={check} />
   </div>
   <div class="row">
     {#if shown < q.hints.length}

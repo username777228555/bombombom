@@ -4,6 +4,9 @@ import { userData } from './userdecks.svelte';
 import type { CultureItem, EventItem, PersonItem, TermItem } from './schema';
 import { CULTURE_KIND_LABELS } from './schema';
 import { centuryLabel, formatEventDate, formatLife, formatYear } from '../utils/format';
+import { quizTitle } from './titles';
+import { answerFormat, expandAnswers, personAnswerForms } from './answers';
+import { answerMatches } from '../utils/text';
 
 export type CardKind = 'date' | 'person' | 'term' | 'culture' | 'custom';
 export interface StudyCard {
@@ -41,7 +44,8 @@ export interface DeckInfo {
 export const eventCard = (e: EventItem): StudyCard => ({
   id: `a:e:${e.id}`,
   kind: 'date',
-  front: e.title,
+  // Without the years: «Русско-шведская война 1808–1809 годов» would give the answer away.
+  front: quizTitle(e),
   frontSub: 'Когда это было?',
   back: formatEventDate(e),
   backSub: e.summary,
@@ -135,6 +139,42 @@ export function userDecks(): DeckInfo[] {
       cards: () => cards.map((c) => ({ id: `u:${c.id}`, kind: 'custom' as const, front: c.front, back: c.back, hint: c.hint })),
     };
   });
+}
+
+/** Years typed by the student: «1808–1809 гг.» → [1808, 1809]. */
+const typedYears = (s: string) => (s.match(/\d{3,4}/g) ?? []).map(Number);
+const yearsOk = (typed: string, year: number, endYear?: number) => {
+  const ys = typedYears(typed);
+  return ys[0] === year && (ys.length < 2 || !endYear || ys[1] === endYear);
+};
+
+/**
+ * Checks a typed answer in the «Письмо» / «Заучивание» modes. `reverse` — the student sees the back and types
+ * the front. Persons are accepted under any common form («Нахимов», «П. С. Нахимов»), dates by the year
+ * («1808» or «1808–1809»), works of art by the year or the author.
+ */
+export function checkTyped(card: StudyCard, reverse: boolean, typed: string): boolean {
+  const expected = reverse ? card.front : card.back;
+  if (answerMatches(typed, [expected])) return true;
+  const ent = card.entity ? kb.get(card.entity) : undefined;
+  if (ent?.kind === 'event' && !reverse) return yearsOk(typed, ent.item.year, ent.item.endYear);
+  if (ent?.kind === 'person' && reverse) return answerMatches(typed, personAnswerForms(ent.item));
+  if (ent?.kind === 'culture' && !reverse) {
+    const c = ent.item;
+    const authors = c.authors?.length ? c.authors.flatMap((id) => expandAnswers([kb.title(id)])) : c.authorName ? expandAnswers([c.authorName]) : [];
+    return yearsOk(typed, c.year, c.endYear) || (authors.length > 0 && answerMatches(typed, authors));
+  }
+  return answerMatches(typed, expandAnswers([expected]));
+}
+
+/** Hint under the input field: what form of the answer is expected. */
+export function typedFormat(card: StudyCard, reverse: boolean): string | undefined {
+  const ent = card.entity ? kb.get(card.entity) : undefined;
+  if (ent?.kind === 'event' && !reverse) return 'Год, например 1812; для войн и реформ можно «1808–1809»';
+  if (ent?.kind === 'person' && reverse) return answerFormat([ent.item.name]);
+  if (ent?.kind === 'term' && reverse) return 'Термин — одним-двумя словами, регистр и «ё» не важны';
+  if (ent?.kind === 'culture' && !reverse) return 'Год создания или автор';
+  return answerFormat([reverse ? card.front : card.back]);
 }
 
 export const allDecks = (): DeckInfo[] => [...userDecks(), ...packDecks(), ...autoDecks()];

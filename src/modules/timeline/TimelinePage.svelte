@@ -1,15 +1,18 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { ZoomIn, ZoomOut, Maximize } from '@lucide/svelte';
+  import { ZoomIn, ZoomOut, Maximize, Crown } from '@lucide/svelte';
   import PageHeader from '$lib/design/components/PageHeader.svelte';
   import IconButton from '$lib/design/components/IconButton.svelte';
   import Chip from '$lib/design/components/Chip.svelte';
   import EntityPreview from '$lib/components/EntityPreview.svelte';
-  import { kb } from '$lib/core/content/kb.svelte';
+  import { kb, type Reign } from '$lib/core/content/kb.svelte';
+  import { reignEnd, reignName, reignSpan, reignStart, THRONE_KIND_LABEL } from '$lib/core/content/rulers';
   import { router } from '$lib/core/router.svelte';
   import { openSheet } from '$lib/core/ui.svelte';
   import { toRoman } from '$lib/core/utils/format';
   import { haptic } from '$lib/core/platform';
+  import { createTextMeter } from './textMeasure.svelte';
+  import { packRows, type Placed } from './pack';
 
   const MIN_SPAN = 6;
   const MAX_SPAN = 1400;
@@ -23,6 +26,7 @@
   let focusId = $state<string | null>(router.query.get('focus'));
   let lanes = $state({ rulers: true, events: true, culture: true, world: true });
   let svgEl: SVGSVGElement | undefined = $state();
+  const meter = createTextMeter();
 
   const x = (year: number) => ((year - start) / span) * width;
   const end = $derived(start + span);
@@ -72,6 +76,7 @@
     const fy = fe ? kb.yearOf(fe) : undefined;
     if (fy !== undefined) setView(fy - 20, 40);
     else if (pid) fitPeriod(pid);
+    meter.init();
   });
 
   // Pointer pan + pinch zoom.
@@ -141,59 +146,115 @@
     return { step, out };
   });
 
-  // Layout helpers: greedy row packing by pixel extents.
-  function pack<T>(items: T[], extent: (it: T) => [number, number], maxRows: number): { item: T; row: number }[] {
-    const rowsEnd: number[] = [];
-    const out: { item: T; row: number }[] = [];
-    for (const it of items) {
-      const [a, b] = extent(it);
-      let row = rowsEnd.findIndex((e) => e + 6 < a);
-      if (row < 0 && rowsEnd.length < maxRows) row = rowsEnd.length;
-      if (row < 0) {
-        out.push({ item: it, row: -1 });
-        continue;
-      }
-      rowsEnd[row] = b;
-      out.push({ item: it, row });
-    }
-    return out;
+  // ——— Layout ————————————————————————————————————————————————————————————————
+  const FONT = 11;
+  const LABEL_MAX = $derived(Math.min(190, Math.max(96, width * 0.42)));
+  const ROWS = { rulers: 3, events: 5, culture: 2, world: 2 } as const;
+
+  interface PointItem {
+    id: string;
+    year: number;
+    endYear?: number;
+    title: string;
+    importance?: number;
   }
-  const textW = (s: string, px = 11) => Math.min(170, s.length * px * 0.55 + 10);
+  interface PointPlaced extends Placed<PointItem> {
+    label: string;
+  }
+
+  /** Places labelled points: the most important first, each into the first row where its label fits. */
+  function layoutPoints(items: PointItem[], rows: number): PointPlaced[] {
+    void meter.version;
+    const sorted = [...items].sort((a, b) => (b.importance ?? 2) - (a.importance ?? 2) || a.year - b.year);
+    const labels = new Map<string, string>();
+    const placed = packRows(sorted, rows, (e) => {
+      const px = x(e.year);
+      const weight = (e.importance ?? 2) >= 3 ? 650 : 450;
+      const label = meter.fit(e.title, LABEL_MAX, FONT, weight);
+      labels.set(e.id, label);
+      const right = px + 9 + (label ? meter.width(label, FONT, weight) : 0);
+      const barEnd = e.endYear && e.endYear > e.year ? x(e.endYear) : px;
+      return [px - 6, Math.max(right, barEnd)];
+    }, 10);
+    return placed.map((p) => ({ ...p, label: labels.get(p.item.id) ?? '' }));
+  }
 
   const visibleEvents = $derived.by(() => {
     void kb.version;
     return kb.events.filter((e) => (e.endYear ?? e.year) >= start - 5 && e.year <= end + 5);
   });
-
-  const rulerRows = $derived.by(() => {
-    const reigns = kb.rulers().filter((r) => r.to >= start && r.from <= end);
-    return pack(reigns, (r) => [x(r.from), Math.max(x(r.to), x(r.from) + 4)], 3);
-  });
-  const eventRows = $derived(
-    pack(visibleEvents.filter((e) => e.scope !== 'world').sort((a, b) => (b.importance ?? 2) - (a.importance ?? 2) || a.year - b.year).sort((a, b) => a.year - b.year),
-      (e) => [x(e.year) - 4, x(e.year) + textW(e.title)], 4),
-  );
-  const worldRows = $derived(pack(visibleEvents.filter((e) => e.scope === 'world'), (e) => [x(e.year) - 4, x(e.year) + textW(e.title)], 2));
+  const eventRows = $derived(layoutPoints(visibleEvents.filter((e) => e.scope !== 'world'), ROWS.events));
+  const worldRows = $derived(layoutPoints(visibleEvents.filter((e) => e.scope === 'world'), ROWS.world));
   const cultureRows = $derived.by(() => {
     void kb.version;
-    const list = kb.culture.filter((c) => c.year >= start - 5 && c.year <= end + 5);
-    return pack(list, (c) => [x(c.year) - 5, x(c.year) + textW(c.title)], 2);
+    return layoutPoints(kb.culture.filter((c) => c.year >= start - 5 && c.year <= end + 5), ROWS.culture);
   });
 
-  const LANE = { rulers: 3 * 26 + 14, events: 4 * 30 + 24, world: 2 * 30 + 24, culture: 2 * 30 + 24 };
-  type Layout = { rulers?: number; events?: number; culture?: number; world?: number; height: number };
-  const layout = $derived.by((): Layout => {
-    let y = 40;
-    const out: Omit<Layout, 'height'> = {};
-    for (const k of ['rulers', 'events', 'culture', 'world'] as const) {
-      if (!lanes[k]) continue;
-      out[k] = y;
-      y += LANE[k];
-    }
-    return { ...out, height: y + 8 };
+  interface ReignPlaced extends Placed<Reign> {
+    label: string;
+    x0: number;
+    w: number;
+  }
+  const rulerRows = $derived.by((): ReignPlaced[] => {
+    void kb.version;
+    void meter.version;
+    const reigns = kb.rulers().filter((r) => r.to >= start && r.from <= end);
+    // Exact reign dates (when known) place bars by month: Брежнев ends and Андропов starts in November 1982.
+    const barEnd = (r: Reign) => (r.toDate ? reignEnd(r) : r.to);
+    const placed = packRows(reigns, ROWS.rulers, (r) => [x(reignStart(r)), Math.max(x(barEnd(r)), x(reignStart(r)) + 4)], 1);
+    return placed.map((p) => {
+      const x0 = Math.max(-4, x(reignStart(p.item)));
+      const w = Math.max(4, x(barEnd(p.item)) - x0);
+      const room = Math.min(w, width - Math.max(0, x0)) - 12;
+      const label = room > 18 ? meter.fit(reignName(p.item), room, FONT, 650) : '';
+      return { ...p, label, x0, w };
+    });
   });
-  const LABELS: Record<string, string> = { rulers: 'Правители', events: 'События', culture: 'Культура', world: 'Мир' };
+
+  const usedRows = (list: { row: number }[], min = 1) => Math.max(min, ...list.map((p) => p.row + 1));
+  const HEAD = 40;
+  const laneHeight = $derived({
+    rulers: 22 + usedRows(rulerRows) * 26 + 6,
+    events: 44 + (usedRows(eventRows) - 1) * 28 + 16,
+    culture: 44 + (usedRows(cultureRows) - 1) * 28 + 16,
+    world: 44 + (usedRows(worldRows) - 1) * 28 + 16,
+  });
+  type LaneKey = 'rulers' | 'events' | 'culture' | 'world';
+  const ORDER: LaneKey[] = ['rulers', 'events', 'culture', 'world'];
+  const layout = $derived.by(() => {
+    let y = HEAD;
+    const top: Partial<Record<LaneKey, number>> = {};
+    for (const k of ORDER) {
+      if (!lanes[k]) continue;
+      top[k] = y;
+      y += laneHeight[k];
+    }
+    return { top, height: y + 6 };
+  });
+  const LABELS: Record<LaneKey, string> = { rulers: 'Правители', events: 'События', culture: 'Культура', world: 'Мир' };
   const colorAt = (year: number) => kb.periods.find((p) => year >= p.from && year < p.to)?.color ?? 'var(--accent)';
+  const pointY = (top: number, row: number) => (row >= 0 ? top + 40 + row * 28 : top + 24);
+
+  // ——— «Синхронизатор»: what was going on at the centre of the view ———————————
+  const centerYear = $derived(Math.round(start + span / 2));
+  const centerPeriod = $derived(kb.periods.find((p) => centerYear >= p.from && centerYear < p.to));
+  const centerEvent = $derived.by(() => {
+    const near = visibleEvents
+      .filter((e) => e.scope !== 'world' && Math.abs(e.year - centerYear) <= Math.max(1, span * 0.03))
+      .sort((a, b) => (b.importance ?? 2) - (a.importance ?? 2) || Math.abs(a.year - centerYear) - Math.abs(b.year - centerYear));
+    return near[0];
+  });
+  // The ruler on the day of the event shown next to it; for a bare year — the one who ruled most of it.
+  const centerRulers = $derived.by(() => {
+    void kb.version;
+    const e = centerEvent;
+    if (e && span <= 300 && e.year === centerYear) {
+      const on = kb.rulersOn(e);
+      if (on.length) return on;
+    }
+    return kb.headsOfYear(centerYear);
+  });
+  const fmtYear = (y: number) => (span > 300 ? `${toRoman(Math.ceil(y / 100))} в.` : `${y} г.`);
 </script>
 
 <div class="page wide">
@@ -211,7 +272,7 @@
     {/each}
   </div>
 
-  <div class="viewport surface" bind:clientWidth={width}>
+  <div class="viewport" bind:clientWidth={width}>
     <svg
       bind:this={svgEl}
       width={width}
@@ -226,10 +287,12 @@
       aria-label="Лента времени: перетаскивайте и масштабируйте"
     >
       {#each kb.periods.filter((p) => p.to >= start && p.from <= end) as p (p.id)}
-        <rect x={x(p.from)} y="0" width={Math.max(0, x(p.to) - x(p.from))} height={layout.height} fill={p.color} opacity="0.07" />
+        {@const px0 = Math.max(0, x(p.from))}
+        {@const pw = Math.min(width, x(p.to)) - px0}
+        <rect x={x(p.from)} y="0" width={Math.max(0, x(p.to) - x(p.from))} height={layout.height} fill={p.color} opacity="0.06" />
         <line x1={x(p.from)} x2={x(p.from)} y1="0" y2={layout.height} stroke={p.color} stroke-opacity="0.35" />
-        {#if Math.min(width, x(p.to)) - Math.max(0, x(p.from)) > p.short.length * 7.5 + 12}
-          <text x={Math.max(x(p.from), 0) + 6} y="30" class="plabel" fill={p.color}>{p.short}</text>
+        {#if pw > meter.width(p.short, 13, 700) + 14}
+          <text x={px0 + 6} y="31" class="plabel" fill={p.color}>{p.short}</text>
         {/if}
       {/each}
 
@@ -240,76 +303,134 @@
         {/each}
       </g>
 
-      {#each Object.entries(LABELS) as [k, label] (k)}
-        {#if lanes[k as keyof typeof lanes] && layout[k as keyof typeof layout] !== undefined}
-          <text class="lane" x="8" y={(layout[k as keyof typeof layout] as number) + 6}>{label}</text>
-          <line class="sep" x1="0" x2={width} y1={(layout[k as keyof typeof layout] as number) - 4} y2={(layout[k as keyof typeof layout] as number) - 4} />
+      <line class="cursor" x1={width / 2} x2={width / 2} y1={HEAD - 4} y2={layout.height} />
+
+      {#each ORDER as k (k)}
+        {#if lanes[k] && layout.top[k] !== undefined}
+          <line class="sep" x1="0" x2={width} y1={layout.top[k]! - 2} y2={layout.top[k]! - 2} />
+          <text class="lane" x="8" y={layout.top[k]! + 12}>{LABELS[k]}</text>
         {/if}
       {/each}
 
-      {#if lanes.rulers && layout.rulers !== undefined}
-        {#each rulerRows.filter((r) => r.row >= 0) as { item: r, row } (r.person.id + r.from)}
-          {@const x0 = Math.max(-4, x(r.from))}
-          {@const w = Math.max(4, x(r.to) - x(r.from) - (x0 - x(r.from)))}
-          <g class="reign" class:focus={focusId === r.person.id} onclick={() => open(r.person.id)} role="presentation">
-            <rect x={x0} y={layout.rulers + 16 + row * 26} width={w} height="21" rx="6" fill={colorAt(r.from)} />
-            {#if w > 40}<text x={x0 + 6} y={layout.rulers + 31 + row * 26} class="rtext">{(r.person.short ?? r.person.name).slice(0, Math.floor(w / 6.5))}</text>{/if}
+      {#if lanes.rulers && layout.top.rulers !== undefined}
+        {@const top = layout.top.rulers}
+        {#each rulerRows.filter((r) => r.row >= 0) as r, i (r.item.person.id + '-' + r.item.from + '-' + i)}
+          <g class="reign" class:focus={focusId === r.item.person.id} class:regent={r.item.kind !== 'head'} onclick={() => open(r.item.person.id)} role="presentation">
+            <rect x={r.x0} y={top + 20 + r.row * 26} width={r.w} height="21" rx="6" fill={colorAt(r.item.from)} />
+            {#if r.label}<text x={Math.max(r.x0, 0) + 6} y={top + 35 + r.row * 26} class="rtext">{r.label}</text>{/if}
           </g>
         {/each}
       {/if}
 
-      {#snippet points(rows: { item: { id: string; year: number; endYear?: number; title: string; importance?: number }; row: number }[], top: number, shape: 'dot' | 'diamond')}
-        {#each rows as { item: e, row } (e.id)}
+      {#snippet points(rows: PointPlaced[], top: number, shape: 'dot' | 'diamond')}
+        {#each rows as { item: e, row, label } (e.id)}
           {@const px = x(e.year)}
-          {@const y = row >= 0 ? top + 30 + row * 30 : top + 15}
-          <g class="ev" class:focus={focusId === e.id} class:key={(e.importance ?? 2) >= 3} onclick={() => open(e.id)} role="presentation">
-            {#if e.endYear && e.endYear > e.year}
-              <rect x={px} y={y - 3} width={Math.max(2, x(e.endYear) - px)} height="6" rx="3" fill={colorAt(e.year)} opacity="0.35" />
+          {@const y = pointY(top, row)}
+          <g class="ev" class:focus={focusId === e.id} class:key={(e.importance ?? 2) >= 3} class:over={row < 0} onclick={() => open(e.id)} role="presentation">
+            {#if e.endYear && e.endYear > e.year && row >= 0}
+              <rect x={px} y={y - 3} width={Math.max(2, x(e.endYear) - px)} height="6" rx="3" fill={colorAt(e.year)} opacity="0.3" />
             {/if}
+            {#if row >= 0}<circle class="hit" cx={px} cy={y} r="13" />{/if}
             {#if shape === 'diamond'}
-              <rect x={px - 5} y={y - 5} width="10" height="10" transform="rotate(45 {px} {y})" fill={colorAt(e.year)} />
+              <rect x={px - (row < 0 ? 3 : 5)} y={y - (row < 0 ? 3 : 5)} width={row < 0 ? 6 : 10} height={row < 0 ? 6 : 10} transform="rotate(45 {px} {y})" fill={colorAt(e.year)} opacity={row < 0 ? 0.5 : 1} />
             {:else}
-              <circle cx={px} cy={y} r={row < 0 ? 3 : (e.importance ?? 2) >= 3 ? 6 : 4.5} fill={colorAt(e.year)} opacity={row < 0 ? 0.55 : 1} />
+              <circle cx={px} cy={y} r={row < 0 ? 2.5 : (e.importance ?? 2) >= 3 ? 6 : 4.5} fill={colorAt(e.year)} opacity={row < 0 ? 0.5 : 1} />
             {/if}
-            {#if row >= 0}<text x={px + 9} y={y + 4} class="etext">{e.title.length > 28 ? e.title.slice(0, 27) + '…' : e.title}</text>{/if}
+            {#if row >= 0 && label}<text x={px + 9} y={y + 4} class="etext">{label}</text>{/if}
           </g>
         {/each}
       {/snippet}
 
-      {#if lanes.events && layout.events !== undefined}{@render points(eventRows, layout.events, 'dot')}{/if}
-      {#if lanes.culture && layout.culture !== undefined}{@render points(cultureRows, layout.culture, 'diamond')}{/if}
-      {#if lanes.world && layout.world !== undefined}{@render points(worldRows, layout.world, 'dot')}{/if}
+      {#if lanes.events && layout.top.events !== undefined}{@render points(eventRows, layout.top.events, 'dot')}{/if}
+      {#if lanes.culture && layout.top.culture !== undefined}{@render points(cultureRows, layout.top.culture, 'diamond')}{/if}
+      {#if lanes.world && layout.top.world !== undefined}{@render points(worldRows, layout.top.world, 'dot')}{/if}
     </svg>
   </div>
 
+  <div class="sync" aria-live="polite">
+    <div class="sync-year" style:--c={centerPeriod?.color ?? 'var(--accent)'}>
+      <span class="eyebrow">В центре ленты</span>
+      <strong class="num">{fmtYear(centerYear)}</strong>
+      {#if centerPeriod}<span class="sync-period">{centerPeriod.short}</span>{/if}
+    </div>
+    <div class="sync-body">
+      {#if centerRulers.length}
+        {#each centerRulers as r (r.person.id + r.from)}
+          <button class="sync-ruler" onclick={() => open(r.person.id)}>
+            <Crown size={15} />
+            <span><b>{reignName(r)}</b> <small class="num">{reignSpan(r)}{r.kind !== 'head' ? ` · ${THRONE_KIND_LABEL[r.kind]}` : ''}</small></span>
+          </button>
+        {/each}
+      {:else}
+        <span class="muted small">Правитель не указан</span>
+      {/if}
+      {#if centerEvent && span <= 300}
+        <button class="sync-event" onclick={() => open(centerEvent.id)}><span class="num">{centerEvent.year}</span> {centerEvent.title}</button>
+      {/if}
+    </div>
+  </div>
+
   <div class="row wrap lanes">
-    {#each Object.entries(LABELS) as [k, label] (k)}
-      <Chip size="sm" selected={lanes[k as keyof typeof lanes]} onclick={() => (lanes[k as keyof typeof lanes] = !lanes[k as keyof typeof lanes])}>{label}</Chip>
+    {#each ORDER as k (k)}
+      <Chip size="sm" selected={lanes[k]} onclick={() => (lanes[k] = !lanes[k])}>{LABELS[k]}</Chip>
     {/each}
   </div>
-  <p class="muted hint">Перетаскивайте ленту пальцем, масштабируйте щипком или колёсиком. Нажмите на событие, чтобы открыть карточку.</p>
+  <p class="muted hint">Перетаскивайте ленту пальцем, масштабируйте щипком или колёсиком. Нажмите на событие, чтобы открыть карточку. Мелкие точки — события, которым не хватило места: приблизьте ленту, и подписи появятся.</p>
 </div>
 
 <style>
   .wide { max-width: 1100px; }
   .chips { margin-bottom: var(--sp-2); }
-  .viewport { border-radius: var(--r-lg); overflow: hidden; touch-action: none; user-select: none; }
-  svg { display: block; cursor: grab; }
+  .viewport {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    touch-action: none;
+    user-select: none;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-1), inset 0 1px 0 color-mix(in srgb, #fff 40%, transparent);
+  }
+  svg { display: block; cursor: grab; font-family: var(--font-ui); }
   svg:active { cursor: grabbing; }
-  .plabel { font-family: var(--font-display); font-weight: 700; font-size: 13px; opacity: 0.8; }
+  .plabel { font-family: var(--font-display); font-weight: 700; font-size: 13px; opacity: 0.85; }
   .axis line { stroke: var(--ink-3); stroke-opacity: 0.5; }
   .axis text { font-size: 10px; fill: var(--ink-3); font-variant-numeric: tabular-nums; }
-  .lane { font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; fill: var(--ink-3); }
+  .lane { font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; fill: var(--ink-3); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
   .sep { stroke: var(--line); stroke-dasharray: 2 4; }
+  .cursor { stroke: var(--ink-2); stroke-opacity: 0.35; stroke-dasharray: 3 3; pointer-events: none; }
   .reign { cursor: pointer; }
-  .reign rect { opacity: 0.85; }
+  .reign rect { opacity: 0.88; }
+  .reign.regent rect { opacity: 0.45; stroke: var(--ink-3); stroke-dasharray: 3 2; }
   .reign.focus rect { stroke: var(--ink); stroke-width: 2; opacity: 1; }
   .rtext { font-size: 11px; font-weight: 650; fill: #fff; pointer-events: none; }
+  .reign.regent .rtext { fill: var(--ink); }
   .ev { cursor: pointer; }
-  .etext { font-size: 11px; fill: var(--ink-2); }
+  .ev .hit { fill: transparent; }
+  .etext { font-size: 11px; font-weight: 450; fill: var(--ink-2); paint-order: stroke; stroke: var(--surface); stroke-width: 3.5px; stroke-linejoin: round; }
   .ev.key .etext { font-weight: 650; fill: var(--ink); }
-  .ev.focus circle, .ev.focus rect { stroke: var(--ink); stroke-width: 2.5; }
+  .ev.focus circle:not(.hit), .ev.focus rect { stroke: var(--ink); stroke-width: 2.5; }
   .ev.focus .etext { fill: var(--accent); font-weight: 700; }
+
+  .sync {
+    display: flex;
+    gap: var(--sp-3);
+    align-items: stretch;
+    margin-top: var(--sp-3);
+    padding: var(--sp-3);
+    border-radius: var(--r-lg);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+  }
+  .sync-year { display: flex; flex-direction: column; justify-content: center; min-width: 96px; padding-right: var(--sp-3); border-right: 1px solid var(--line); }
+  .sync-year strong { font-family: var(--font-display); font-size: var(--text-2xl); line-height: 1.05; color: color-mix(in srgb, var(--c) 80%, var(--ink)); }
+  .sync-period { font-size: var(--text-2xs); color: var(--ink-3); }
+  .sync-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; justify-content: center; }
+  .sync-ruler { display: flex; align-items: center; gap: 6px; border: 0; background: none; padding: 2px 0; text-align: left; cursor: pointer; color: var(--gold); }
+  .sync-ruler b { color: var(--ink); font-weight: 650; }
+  .sync-ruler small { color: var(--ink-3); font-size: var(--text-xs); }
+  .sync-event { border: 0; background: none; padding: 2px 0; text-align: left; cursor: pointer; font-size: var(--text-sm); color: var(--ink-2); line-height: 1.3; }
+  .sync-event .num { font-weight: 700; color: var(--accent); margin-right: 4px; }
+  .small { font-size: var(--text-sm); }
   .lanes { gap: 6px; margin-top: var(--sp-3); }
-  .hint { font-size: var(--text-xs); margin-top: var(--sp-2); }
+  .hint { font-size: var(--text-xs); margin-top: var(--sp-2); line-height: 1.45; }
 </style>

@@ -15,6 +15,7 @@
   import { haptic } from '$lib/core/platform';
   import { sample } from '$lib/core/utils/random';
   import { normalize } from '$lib/core/utils/text';
+  import { pluralN, WORDS } from '$lib/core/utils/format';
   import { burst } from '$lib/design/confetti';
 
   const ROUNDS = 10;
@@ -104,7 +105,7 @@
     {#if phase === 'over'}
       <div class="over" in:scale={{ start: 0.9 }}>
         <Trophy size={44} class="gold" />
-        <h1>{total} очков</h1>
+        <h1>{pluralN(total, WORDS.point)}</h1>
         <Ornament />
         <p class="secondary">Рекорд: {best}</p>
         <Button full onclick={start}>Ещё раз</Button>
@@ -131,7 +132,7 @@
         </div>
         <Button full size="lg" iconRight={ArrowRight} onclick={next}>{i + 1 >= rounds.length ? 'Итоги' : 'Следующий'}</Button>
       {:else}
-        <p class="muted pts">За ответ сейчас: {(current.hints!.length - shown + 1) * 10} очков</p>
+        <p class="muted pts">За ответ сейчас: {pluralN((current.hints!.length - shown + 1) * 10, WORDS.point)}</p>
         <TextField bind:value={query} placeholder="Начните вводить имя…" autofocus />
         {#if suggestions.length}
           <div class="sugg" in:fly={{ y: -6, duration: 160 }}>

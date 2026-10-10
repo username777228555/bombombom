@@ -22,15 +22,29 @@ export function levenshtein(a: string, b: string): number {
   return prev[b.length]!;
 }
 
-/** Lenient answer check: case/ё/punctuation-insensitive with a small typo budget. */
+/** Drops initials: «П. С. Нахимов» → «нахимов» (input is already normalized). */
+const withoutInitials = (s: string) =>
+  s
+    .split(' ')
+    .filter((w) => w.length > 1 || /\d/.test(w))
+    .join(' ');
+
+/**
+ * Lenient answer check: case/ё/punctuation-insensitive with a small typo budget; initials are optional
+ * («Л. П. Берия» = «Берия»). Pass answers through `expandAnswers()` (core/content/answers.ts) first so that
+ * every accepted form of a person or term is in the list.
+ */
 export function answerMatches(input: string, answers: readonly string[]): boolean {
   const x = normalize(input);
   if (!x) return false;
+  const xi = withoutInitials(x);
   return answers.some((ans) => {
     const y = normalize(ans);
     if (x === y) return true;
+    const yi = withoutInitials(y);
+    if (xi && xi === yi) return true;
     const budget = y.length >= 12 ? 2 : y.length >= 5 ? 1 : 0;
-    return levenshtein(x, y) <= budget;
+    return levenshtein(x, y) <= budget || (!!xi && !!yi && levenshtein(xi, yi) <= budget);
   });
 }
 
@@ -73,6 +87,24 @@ export function stemRu(word: string): string {
     rv = temp;
   }
   return pre + rv;
+}
+
+/**
+ * `details` without the repeated `summary`: packs (including imported ones) sometimes copy the summary into
+ * details, and the entity page would show the same text twice. Returns '' when nothing new is left.
+ */
+export function detailsBeyondSummary(summary: string, details: string): string {
+  const flat = (x: string) => x.replace(/\s+/g, ' ').trim();
+  const s = flat(summary);
+  const d = flat(details);
+  if (!d || d === s || s.startsWith(d)) return '';
+  if (s.length > 60 && d.startsWith(s)) {
+    const words = summary.trim().split(/\s+/).map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    const m = new RegExp(`^\\s*${words.join('\\s+')}`).exec(details);
+    const rest = (m ? details.slice(m[0].length) : d.slice(s.length)).trim();
+    return rest.length >= 40 ? rest : '';
+  }
+  return details;
 }
 
 export function escapeHtml(s: string): string {

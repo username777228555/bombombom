@@ -32,3 +32,8 @@ __pycache__/
 # Quizlet import: pictures and previews are rebuilt by scripts/quizlet/extract.py
 import/quizlet/work/img/
 import/quizlet/work/preview/
+
+# Olympiad PDFs (14 MB) stay local; the probes built from them live in olympiads/
+import/olympiads/*.pdf
+import/olympiads/txt/
+import/olympiads/png/

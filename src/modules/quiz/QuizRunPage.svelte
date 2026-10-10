@@ -10,6 +10,7 @@
   import Badge from '$lib/design/components/Badge.svelte';
   import { QUESTION_COMPONENTS } from '$lib/components/questions/registry';
   import { QUESTION_TYPE_LABELS, type Question } from '$lib/core/content/schema';
+  import ZoomImage from '$lib/design/components/ZoomImage.svelte';
   import { buildQuiz, type QuizSpec } from './sources';
   import { updateMistakes } from './mistakes';
   import { router, navigate } from '$lib/core/router.svelte';
@@ -141,6 +142,7 @@
           {#if current.points && current.points > 1}<Badge tone="gold">{pluralN(current.points, ['балл', 'балла', 'баллов'])}</Badge>{/if}
         </div>
         <h2 class="prompt">{current.prompt}</h2>
+        {#if current.image && /^(data:|https?:)/.test(current.image)}<ZoomImage src={current.image} height="min(46dvh, 420px)" />{/if}
         {#if current.excerpt}<blockquote>{current.excerpt}</blockquote>{/if}
         <QC q={current} {revealed} onsubmit={submit} />
 
@@ -173,7 +175,7 @@
   .q { display: flex; flex-direction: column; gap: var(--sp-3); padding-top: var(--sp-2); }
   .meta { gap: var(--sp-2); }
   .prompt { font-size: var(--text-2xl); line-height: 1.2; }
-  blockquote { margin: 0; padding: var(--sp-4); border-left: 3px solid var(--gold); background: var(--gold-soft); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-read); font-size: var(--text-md); line-height: 1.55; }
+  blockquote { white-space: pre-line; margin: 0; padding: var(--sp-4); border-left: 3px solid var(--gold); background: var(--gold-soft); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-read); font-size: var(--text-md); line-height: 1.55; }
   .feedback { display: flex; flex-direction: column; gap: var(--sp-3); padding: var(--sp-4); border-radius: var(--r-lg); border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow-2); margin-top: var(--sp-2); }
   .feedback .v { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
   .feedback.ok .v { color: var(--success); }

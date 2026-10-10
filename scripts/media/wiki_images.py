@@ -109,6 +109,17 @@ def search_article(query: str) -> str | None:
     return hits[0]['title'] if hits else None
 
 
+def _stems(s: str) -> set[str]:
+    words = re.findall(r'[а-яёa-z0-9]+', s.lower().replace('ё', 'е'))
+    return {w[:5] for w in words if len(w) > 3 and w not in ('года', 'годов', 'годы')}
+
+
+def same_name(name: str, article: str) -> bool:
+    """At least 60 % of the entry's words are in the article title («Иваново-Вознесенская стачка» ↔ «… стачка (1905)»)."""
+    a, b = _stems(name), _stems(article)
+    return bool(a) and len(a & b) / len(a) >= 0.6
+
+
 def culture_query(it: dict) -> str:
     t = re.sub(r'[«»"“”]', '', it['title'])
     return f"{t} {it.get('authorName', '')}".strip()
@@ -319,6 +330,14 @@ def cmd_fetch(a):
             t = search_article(culture_query(it))
             if t:
                 x['found_article'] = t
+            time.sleep(0.2)
+        elif not t and x['kind'] in ('events', 'persons'):
+            # No `wiki` (the author wasn't sure of the article title): search, but take the hit only when it
+            # repeats the entry's own name — a wrong article would bring a wrong picture.
+            name = it.get('title') or it.get('name') or ''
+            hit = search_article(name)
+            if hit and same_name(name, hit):
+                t = x['found_article'] = hit
             time.sleep(0.2)
         if t:
             titles[it['id']] = t
@@ -532,7 +551,7 @@ def cmd_apply(a):
             info['license'] = meta['license']
             info['source'] = meta['source']
             it['imageInfo'] = info
-            if kind == 'culture' and rec.get('found_article') and not wiki_title(it.get('refs'), it.get('wiki')):
+            if rec.get('found_article') and not wiki_title(it.get('refs'), it.get('wiki')):
                 it['wiki'] = rec['found_article']
             it['imageInfo'] = sanitize_info(it['imageInfo'], kind, it)
         json.dump(data, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)

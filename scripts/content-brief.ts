@@ -4,6 +4,7 @@
  *
  *   pnpm content:brief c19            events (year · title · id), persons, terms, culture, quizzes of the period
  *   pnpm content:brief c19 --persons  plus every person of other periods (name · years · id) — to link to them
+ *   pnpm content:brief c19 --causes   events with the number of known causes (← N) and effects (→ N) from `cause` links
  *
  * Batch filling of a period by a cheaper model: .agents/skills/add-content/BATCH.md.
  */
@@ -23,6 +24,7 @@ const persons: PersonItem[] = [];
 const terms: TermItem[] = [];
 const culture: CultureItem[] = [];
 const quizzes: QuizItem[] = [];
+const causeLinks: { from: string; to: string }[] = [];
 for (const dir of listPackDirs()) {
   for (const file of walkJson(dir)) {
     const d = readJson(file) as Record<string, unknown[] | undefined>;
@@ -31,6 +33,7 @@ for (const dir of listPackDirs()) {
     terms.push(...((d.terms ?? []) as TermItem[]));
     culture.push(...((d.culture ?? []) as CultureItem[]));
     quizzes.push(...((d.quizzes ?? []) as QuizItem[]));
+    for (const l of (d.links ?? []) as { from: string; to: string; type: string }[]) if (l.type === 'cause') causeLinks.push(l);
   }
 }
 
@@ -39,7 +42,9 @@ const mine = <T>(list: T[], periodsOf: (x: T) => string[]) => list.filter((x) =>
 const out: string[] = [`# ${p.title} (${p.from}–${p.to})`];
 
 const ev = mine(events, (e) => [e.period]).sort((a, b) => a.year - b.year);
-out.push('', `## События (${ev.length})`, ...ev.map((e) => `${e.year}${e.endYear && e.endYear !== e.year ? `–${e.endYear}` : ''} · ${e.title} · ${e.id}`));
+const withCauses = flags.includes('--causes');
+const causeMark = (id: string) => (withCauses ? ` · ←${causeLinks.filter((l) => l.to === id).length} →${causeLinks.filter((l) => l.from === id).length}` : '');
+out.push('', `## События (${ev.length})`, ...ev.map((e) => `${e.year}${e.endYear && e.endYear !== e.year ? `–${e.endYear}` : ''} · ${e.title} · ${e.id}${withCauses ? ` · важность ${e.importance ?? 2}` : ''}${causeMark(e.id)}`));
 const pe = mine(persons, (x) => x.periods).sort((a, b) => (a.born ?? 0) - (b.born ?? 0));
 out.push('', `## Персоналии (${pe.length})`, ...pe.map((x) => `${x.name} · ${life(x)} · ${x.id}`));
 const te = mine(terms, (t) => t.periods ?? []);

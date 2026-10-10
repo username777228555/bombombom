@@ -7,7 +7,6 @@
   import Avatar from '$lib/design/components/Avatar.svelte';
   import EntityRow from '$lib/components/EntityRow.svelte';
   import PeriodTag from '$lib/components/PeriodTag.svelte';
-  import ConfidenceNote from '$lib/components/ConfidenceNote.svelte';
   import ImageCredit from '$lib/components/ImageCredit.svelte';
   import { kb, type Neighbor } from '$lib/core/content/kb.svelte';
   import { isThrone } from '$lib/core/content/rulers';
@@ -119,7 +118,6 @@
     </article>
 
     <div class="stack body">
-      <ConfidenceNote confidence={'confidence' in e.item ? e.item.confidence : undefined} ai={kb.isAi(e)} />
 
       {#if e.kind === 'term'}
         <p class="lead">{e.item.definition}</p>

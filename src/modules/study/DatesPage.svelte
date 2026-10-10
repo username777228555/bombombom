@@ -89,7 +89,7 @@
             {:else}
               <button class="title" onclick={() => (mode === 'events' && shown ? toggle(e.id) : preview(e.id))}>
                 <b>{mode === 'years' && !shown ? quizTitle(e) : e.title}</b>
-                <small class="muted">{formatEventDate(e)}</small>
+                {#if !(mode === 'years' && !shown)}<small class="muted">{formatEventDate(e)}</small>{/if}
               </button>
             {/if}
           </li>

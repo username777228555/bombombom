@@ -2,7 +2,6 @@
   import { ArrowRight, Network, ChartGantt } from '@lucide/svelte';
   import Button from '$lib/design/components/Button.svelte';
   import PeriodTag from './PeriodTag.svelte';
-  import ConfidenceNote from './ConfidenceNote.svelte';
   import { kb } from '$lib/core/content/kb.svelte';
   import { formatEventDate, formatLife, formatYear, centuryLabel } from '$lib/core/utils/format';
   import { CULTURE_KIND_LABELS } from '$lib/core/content/schema';
@@ -30,7 +29,6 @@
     <div class="row"><span class="eyebrow">{kb.kindLabel(e.kind)}</span>{#if period}<PeriodTag id={period.id} />{/if}</div>
     <h2>{kb.title(id)}</h2>
     {#if date}<p class="date">{date}</p>{/if}
-    <ConfidenceNote confidence={'confidence' in e.item ? e.item.confidence : undefined} />
     <p class="sum">{e.kind === 'term' ? e.item.definition : e.kind === 'source' ? e.item.excerpt : e.item.summary}</p>
     <div class="row wrap actions">
       <Button iconRight={ArrowRight} onclick={() => go(`/entity/${id}`)}>Подробнее</Button>

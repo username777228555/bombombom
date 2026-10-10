@@ -30,6 +30,14 @@ const imp = (x: { importance?: number }) => x.importance ?? 2;
 /** Wraps a title in guillemets unless it already has them (book titles often do). */
 const q = (s: string) => (/^«.*»$/.test(s.trim()) ? s.trim() : `«${s.trim()}»`);
 const nameOf = (p: PersonItem) => p.short ?? p.name;
+/** «Название (год) — первое предложение статьи»: a line of a model answer built from the knowledge base. */
+function brief(id: string): string {
+  const x = kb.get(id);
+  if (!x) return kb.title(id);
+  const it = x.item as { summary?: string; definition?: string; year?: number };
+  const text = (it.summary ?? it.definition ?? '').match(/^.+?[.!?](?=\s|$)/)?.[0] ?? '';
+  return `${kb.title(id)}${it.year ? ` (${formatYear(it.year)})` : ''}${text ? ` — ${text}` : ''}`;
+}
 
 function distinctYears(events: EventItem[], n: number, rng: Rng, minGap = 1): EventItem[] | null {
   const out: EventItem[] = [];
@@ -232,6 +240,48 @@ const G: Record<string, Gen> = {
       explain: `${formatEventDate(e)}. ${e.summary}`, entity: e.id, period: e.period,
     };
   },
+  // ——— Развёрнутый ответ: criteria come from the graph (cause links, events of a person) ———
+  openCauses({ rng, events }) {
+    const withCauses = events.filter((e) => kb.edges.filter((ed) => ed.type === 'cause' && ed.to === e.id).length >= 2);
+    const e = pick(withCauses, rng);
+    if (!e) return null;
+    const causes = kb.edges.filter((ed) => ed.type === 'cause' && ed.to === e.id).map((ed) => ed.from).slice(0, 6);
+    return {
+      type: 'open', prompt: `Назовите причины события ${q(qt(e))} (${formatYear(e.year)}) и кратко поясните, как каждая из них к нему привела.`,
+      answer: `Причины:\n${causes.map((c, i) => `${i + 1}. ${brief(c)}`).join('\n')}\n\n${e.summary}`,
+      criteria: causes.map((c) => `Названа причина: ${kb.title(c)}`), explain: e.summary, entity: e.id, period: e.period,
+    };
+  },
+  openResults({ rng, events }) {
+    const withResults = events.filter((e) => kb.edges.filter((ed) => ed.type === 'cause' && ed.from === e.id).length >= 2);
+    const e = pick(withResults, rng);
+    if (!e) return null;
+    const results = kb.edges.filter((ed) => ed.type === 'cause' && ed.from === e.id).map((ed) => ed.to).slice(0, 6);
+    return {
+      type: 'open', prompt: `Каковы последствия события ${q(qt(e))} (${formatYear(e.year)})? Назовите их и объясните связь.`,
+      answer: `${e.summary}\n\nПоследствия:\n${results.map((r, i) => `${i + 1}. ${brief(r)}`).join('\n')}`,
+      criteria: results.map((r) => `Названо последствие: ${kb.title(r)}`), explain: e.summary, entity: e.id, period: e.period,
+    };
+  },
+  openPerson({ rng, persons }) {
+    const deeds = (p: PersonItem) => {
+      const ids = new Set([
+        ...kb.events.filter((e) => e.persons?.includes(p.id)).map((e) => e.id),
+        ...kb.edges.filter((ed) => (ed.type === 'leader' || ed.type === 'participant') && ed.from === p.id).map((ed) => ed.to),
+      ]);
+      return [...ids].map((id) => kb.get(id)).filter((x) => x?.kind === 'event').map((x) => x!.item as EventItem).sort((a, b) => a.year - b.year);
+    };
+    const p = pick(persons.filter((x) => deeds(x).length >= 3), rng);
+    if (!p) return null;
+    const list = deeds(p);
+    const shown = sample(list, Math.min(5, list.length), rng).sort((a, b) => a.year - b.year);
+    return {
+      type: 'open', prompt: `Охарактеризуйте деятельность исторического лица: ${p.name}. Назовите не менее трёх связанных событий и оцените роль в истории.`,
+      answer: `${p.summary}\n\n${shown.map((e, i) => `${i + 1}. ${brief(e.id)}`).join('\n')}`,
+      criteria: [...shown.map((e) => `Названо событие: ${qt(e)} (${formatYear(e.year)})`), 'Дана оценка роли с опорой на факты'],
+      explain: p.summary, entity: p.id, period: p.periods[0],
+    };
+  },
 };
 
 const BY_TYPE: Record<QuestionType, (keyof typeof G)[]> = {
@@ -243,6 +293,7 @@ const BY_TYPE: Record<QuestionType, (keyof typeof G)[]> = {
   text: ['termText'],
   hints: ['hints'],
   errors: ['errors'],
+  open: ['openCauses', 'openResults', 'openPerson'],
 };
 
 export function generateQuestions(opts: GenOptions): GeneratedQuestion[] {

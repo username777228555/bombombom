@@ -34,7 +34,8 @@
   onMount(async () => {
     spec = await buildQuiz(router.query);
     loading = false;
-    if (spec?.exam) timeLimit = spec.questions.length * 45_000;
+    // Развёрнутый ответ needs minutes, not seconds.
+    if (spec?.exam) timeLimit = spec.questions.reduce((t, q) => t + (q.type === 'open' ? 300_000 : 45_000), 0);
     startedAt = Date.now();
     tick = setInterval(() => {
       elapsed = Date.now() - startedAt;

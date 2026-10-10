@@ -9,6 +9,7 @@ import QYear from './QYear.svelte';
 import QText from './QText.svelte';
 import QHints from './QHints.svelte';
 import QErrors from './QErrors.svelte';
+import QOpen from './QOpen.svelte';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const QUESTION_COMPONENTS: Record<QuestionType, Component<any>> = {
@@ -20,6 +21,7 @@ export const QUESTION_COMPONENTS: Record<QuestionType, Component<any>> = {
   text: QText,
   hints: QHints,
   errors: QErrors,
+  open: QOpen,
 };
 
 export const QUESTION_TYPE_INFO: Record<QuestionType, { title: string; description: string }> = {
@@ -31,4 +33,5 @@ export const QUESTION_TYPE_INFO: Record<QuestionType, { title: string; descripti
   text: { title: 'Термин', description: 'Назовите понятие по определению' },
   hints: { title: 'По подсказкам', description: 'Узнайте деятеля за минимум подсказок' },
   errors: { title: 'Найди ошибки', description: 'Отметьте неверные факты в тексте' },
+  open: { title: 'Развёрнутый ответ', description: 'Причины, итоги, деятельность — сверка с эталоном' },
 };

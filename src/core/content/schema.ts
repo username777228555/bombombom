@@ -287,8 +287,10 @@ const QErrors = z.strictObject({
   ...qBase,
   segments: z.array(z.strictObject({ text: Text, wrong: z.boolean().optional(), fix: OptText })).min(3),
 });
-export const QuestionSchema = z.discriminatedUnion('type', [QSingle, QMultiple, QOrder, QMatch, QYear, QText, QHints, QErrors]);
-export const QUESTION_TYPES = ['single', 'multiple', 'order', 'match', 'year', 'text', 'hints', 'errors'] as const;
+/** Развёрнутый ответ: the student writes, then compares with `answer` and ticks the `criteria` they covered (self-check). */
+const QOpen = z.strictObject({ type: z.literal('open'), ...qBase, answer: Text, criteria: z.array(Text).min(1).max(12) });
+export const QuestionSchema = z.discriminatedUnion('type', [QSingle, QMultiple, QOrder, QMatch, QYear, QText, QHints, QErrors, QOpen]);
+export const QUESTION_TYPES = ['single', 'multiple', 'order', 'match', 'year', 'text', 'hints', 'errors', 'open'] as const;
 
 export const QuizSchema = z.strictObject({
   id: prefixed('quiz'),
@@ -406,5 +408,5 @@ export const LINK_TYPE_LABELS: Record<(typeof LINK_TYPES)[number], string> = {
 };
 export const QUESTION_TYPE_LABELS: Record<QuestionType, string> = {
   single: 'Один ответ', multiple: 'Несколько ответов', order: 'Хронология', match: 'Соответствие',
-  year: 'Год', text: 'Ответ словом', hints: 'По подсказкам', errors: 'Найди ошибки',
+  year: 'Год', text: 'Ответ словом', hints: 'По подсказкам', errors: 'Найди ошибки', open: 'Развёрнутый ответ',
 };

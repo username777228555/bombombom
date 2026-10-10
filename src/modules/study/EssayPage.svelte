@@ -15,6 +15,7 @@
   import Segmented from '$lib/design/components/Segmented.svelte';
   import EntityPreview from '$lib/components/EntityPreview.svelte';
   import EssayGuide, { guide } from './EssayGuide.svelte';
+  import EssayTrainer from './EssayTrainer.svelte';
   import { kb, type Reign } from '$lib/core/content/kb.svelte';
   import { reignSpan } from '$lib/core/content/rulers';
   import { openSheet, toast } from '$lib/core/ui.svelte';
@@ -31,7 +32,7 @@
     return kb.rulers().filter((r) => r.kind === 'head' && kb.events.filter((e) => e.scope !== 'world' && inside(e.year, r)).length >= 2);
   });
   let selected = $state<string>(router.query.get('ruler') ?? '');
-  let tab = $state<'guide' | 'plan'>(router.query.get('ruler') ? 'plan' : 'guide');
+  let tab = $state<'guide' | 'plan' | 'write'>(router.query.get('ruler') ? 'plan' : 'guide');
   const reign = $derived(reigns.find((r) => keyOf(r) === selected || r.person.id === selected));
 
   const events = $derived.by(() => {
@@ -135,9 +136,11 @@
 
 <div class="page">
   <PageHeader title="Историческое эссе" eyebrow="Пособие и конструктор плана" back="/practice" />
-  <Segmented bind:value={tab} options={[{ value: 'guide', label: 'Как писать' }, { value: 'plan', label: 'План по правлению' }]} />
+  <Segmented bind:value={tab} options={[{ value: 'guide', label: 'Как писать' }, { value: 'write', label: 'Тренажёр' }, { value: 'plan', label: 'Материал' }]} />
   {#if tab === 'guide'}
     <EssayGuide />
+  {:else if tab === 'write'}
+    <EssayTrainer />
   {:else}
   <div class="intro" use:reveal>
     <span class="ico"><Feather size={22} /></span>

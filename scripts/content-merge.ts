@@ -3,7 +3,7 @@
  * .agents/skills/add-content/BATCH.md) into the period's main file `data/NN-<period>.json` and deletes them.
  * Run after `pnpm content:check` is clean. Collections are appended in order; nothing is rewritten.
  *
- *   pnpm content:merge [--pack osnova] [--dry]
+ *   pnpm content:merge [period…] [--pack osnova] [--dry]     e.g. `pnpm content:merge udel c17` — only these periods
  */
 import { existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -13,13 +13,15 @@ import { PACKS, rel } from './lib/content-fs';
 const args = process.argv.slice(2);
 const pack = args.includes('--pack') ? args[args.indexOf('--pack') + 1]! : 'osnova';
 const dry = args.includes('--dry');
+const only = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--pack');
 const dir = join(PACKS, pack, 'data');
 
 type Fragment = Record<string, unknown[]>;
 const read = (f: string) => JSON.parse(readFileSync(f, 'utf8')) as Fragment;
 
 let merged = 0;
-for (const name of readdirSync(dir).filter((n) => n.endsWith('-plus.json')).sort()) {
+const wanted = (n: string) => !only.length || only.some((p) => n.endsWith(`-${p}-plus.json`));
+for (const name of readdirSync(dir).filter((n) => n.endsWith('-plus.json') && wanted(n)).sort()) {
   const target = join(dir, name.replace(/-plus\.json$/, '.json'));
   if (!existsSync(target)) {
     console.log(`✖ ${name}: нет файла ${rel(target)}`);

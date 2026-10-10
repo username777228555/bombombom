@@ -33,6 +33,11 @@ const imp = (x: { importance?: number }) => x.importance ?? 2;
 /** Wraps a title in guillemets unless it already has them (book titles often do). */
 const q = (s: string) => (/^«.*»$/.test(s.trim()) ? s.trim() : `«${s.trim()}»`);
 const nameOf = (p: PersonItem) => p.short ?? p.name;
+/** People linked to an event (its `persons` and participant/leader links). */
+function peopleOf(e: EventItem): PersonItem[] {
+  const ids = new Set([...(e.persons ?? []), ...kb.edges.filter((ed) => ed.to === e.id && (ed.type === 'participant' || ed.type === 'leader')).map((ed) => ed.from)]);
+  return [...ids].map((id) => kb.get(id)).filter((x) => x?.kind === 'person').map((x) => x!.item as PersonItem);
+}
 /** Excerpts of historical documents (хрестоматия); books of the «Книжная полка» (with a file name in `note`) are not sources to quiz on. */
 const docs = (periods: string[] | undefined): SourceItem[] =>
   kb.sources.filter((s) => !s.note && s.excerpt && (!periods?.length || periods.includes(s.period)));
@@ -341,6 +346,51 @@ const G: Record<string, Gen> = {
       explain: aboutSource(src), entity: src.id, period: src.period,
     };
   },
+  // ——— Ряды (классика ВсОШ): что объединяет, кто или что лишнее ———
+  seriesEvent({ rng, events }) {
+    const withPeople = events.filter((e) => e.scope !== 'world').map((e) => ({ e, ps: peopleOf(e) })).filter((x) => x.ps.length >= 3);
+    const hit = pick(withPeople, rng);
+    if (!hit) return null;
+    const names = sample(hit.ps, 3, rng).map(nameOf);
+    const near = kb.events.filter((e) => e.id !== hit.e.id && e.scope !== 'world').sort((a, b) => Math.abs(a.year - hit.e.year) - Math.abs(b.year - hit.e.year)).slice(0, 10);
+    const options = shuffle([qt(hit.e), ...sample(near, 3, rng).map(qt)], rng);
+    return {
+      type: 'single', prompt: `Что объединяет этот ряд: ${names.join(', ')}?`, options, answer: options.indexOf(qt(hit.e)),
+      explain: `Все они — участники события ${q(qt(hit.e))} (${formatYear(hit.e.year)}).`, entity: hit.e.id, period: hit.e.period,
+    };
+  },
+  oddPerson({ rng, events }) {
+    const withPeople = events.filter((e) => e.scope !== 'world').map((e) => ({ e, ps: peopleOf(e) })).filter((x) => x.ps.length >= 3);
+    const hit = pick(withPeople, rng);
+    if (!hit) return null;
+    const three = sample(hit.ps, 3, rng);
+    const lo = Math.min(...three.map((p) => p.born ?? hit.e.year - 40));
+    // The odd one lived in another time, so the row has a single answer.
+    const odd = pick(kb.persons.filter((p) => !hit.ps.includes(p) && p.born && (p.born > hit.e.year + 10 || (p.died ?? p.born + 60) < lo)), rng);
+    if (!odd) return null;
+    const options = shuffle([...three, odd].map(nameOf), rng);
+    return {
+      type: 'single', prompt: 'Кто лишний в ряду?', options, answer: options.indexOf(nameOf(odd)),
+      explain: `${three.map(nameOf).join(', ')} — участники события ${q(qt(hit.e))} (${formatYear(hit.e.year)}); ${nameOf(odd)} жил в другое время (${odd.born ?? '?'}–${odd.died ?? '?'}).`,
+      entity: hit.e.id, period: hit.e.period,
+    };
+  },
+  oddTerm({ rng, periods }) {
+    const pool = kb.terms.filter((t) => t.periods?.length);
+    const pid = pick(periods ?? kb.periods.map((p) => p.id), rng);
+    const own = pool.filter((t) => t.periods!.includes(pid!));
+    const period = kb.periodById.get(pid ?? '');
+    if (own.length < 3 || !period) return null;
+    const far = pool.filter((t) => t.periods!.every((x) => { const p = kb.periodById.get(x); return p && (p.from > period.to + 50 || p.to < period.from - 50); }));
+    const odd = pick(far, rng);
+    if (!odd) return null;
+    const three = sample(own, 3, rng);
+    const options = shuffle([...three, odd].map((t) => t.term), rng);
+    return {
+      type: 'single', prompt: `Какое понятие лишнее в ряду (не относится к эпохе «${period.short}»)?`, options, answer: options.indexOf(odd.term),
+      explain: `${odd.term} — ${odd.definition}`, entity: odd.id, period: pid,
+    };
+  },
 };
 
 /** What each generator trains — logged with the answer, filters «train this skill». */
@@ -350,11 +400,12 @@ const SKILL_OF: Record<keyof typeof G, Skill> = {
   termChoice: 'terms', termText: 'terms',
   cultureCentury: 'culture', cultureAuthor: 'culture',
   openCauses: 'analysis', openResults: 'analysis',
+  seriesEvent: 'persons', oddPerson: 'persons', oddTerm: 'terms',
   sourceWhich: 'sources', sourceYear: 'sources', sourceAuthor: 'sources', sourceEvent: 'sources', sourceByClues: 'sources',
 };
 
 const BY_TYPE: Record<QuestionType, (keyof typeof G)[]> = {
-  single: ['yearChoice', 'earliest', 'whoByHints', 'termChoice', 'cultureCentury', 'cultureAuthor', 'sourceWhich', 'sourceEvent'],
+  single: ['yearChoice', 'earliest', 'whoByHints', 'termChoice', 'cultureCentury', 'cultureAuthor', 'sourceWhich', 'sourceEvent', 'seriesEvent', 'oddPerson', 'oddTerm'],
   multiple: ['multiplePeriod'],
   order: ['order'],
   match: ['matchYears', 'matchPersons'],

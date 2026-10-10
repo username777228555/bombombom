@@ -1354,7 +1354,8 @@
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:FMIB_46520_Yakutsk_in_the_Seventeenth_Century.jpeg"
       },
-      "wiki": "Якутский острог"
+      "wiki": "Якутский острог",
+      "imageQuiz": false
     }
   ],
   "persons": [
@@ -2417,15 +2418,7 @@
         "Я собрал ополчение, которое впервые двинулось освобождать Москву от поляков.",
         "Меня убили казаки в 1611 году, после чего Первое ополчение распалось."
       ],
-      "wiki": "Ляпунов, Прокопий Петрович",
-      "image": "images/persons/p-lyapunov.webp",
-      "imageInfo": {
-        "author": "Чориков Б. А",
-        "date": "1836-1844",
-        "about": "Изображение: Прокопий Ляпунов",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Leaders_of_the_1610_rebellion.jpg"
-      }
+      "wiki": "Ляпунов, Прокопий Петрович"
     },
     {
       "id": "p-zarutskiy",
@@ -2479,16 +2472,7 @@
         "Мои соратники были растерзаны толпой, а я отправлен в ссылку в монастырь.",
         "Против моей политики налога на соль поднялся бунт 1648 года."
       ],
-      "wiki": "Морозов, Борис Иванович",
-      "image": "images/persons/p-morozov-boris.webp",
-      "imageInfo": {
-        "title": "БМ",
-        "author": "Неизвестный автор",
-        "date": "1913",
-        "about": "Кадр из фильма \"300-летие царствования дома Романовых\" (1913)",
-        "license": "Общественное достояние",
-        "source": "https://commons.wikimedia.org/wiki/File:%D0%91%D0%9C.jpg"
-      }
+      "wiki": "Морозов, Борис Иванович"
     },
     {
       "id": "p-rtishchev",

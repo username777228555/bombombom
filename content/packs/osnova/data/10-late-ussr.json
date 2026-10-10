@@ -1067,7 +1067,8 @@
         "about": "Стенографический отчёт сессии ВАСХНИЛ 1948 г",
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:1948-VASHNIL.jpg"
-      }
+      },
+      "imageQuiz": false
     },
     {
       "id": "e-sozdanie-sev",
@@ -1197,7 +1198,8 @@
         "about": "Берлинская стена и граница Западного Берлина до 1989 года",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Karte_berliner_mauer_ru.png"
-      }
+      },
+      "imageQuiz": false
     },
     {
       "id": "e-xxii-sezd-kpss",
@@ -1338,7 +1340,8 @@
         "about": "Оригинал первой страницы Декларации о государственном суверенитете РСФСР",
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:RSFSR_deklaraciya_suverenitet.jpg"
-      }
+      },
+      "imageQuiz": false
     },
     {
       "id": "e-referendum-o-sohranenii-sssr",

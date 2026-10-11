@@ -11,6 +11,7 @@
   import { kb } from '$lib/core/content/kb.svelte';
   import { QUESTION_TYPES, type QuestionType } from '$lib/core/content/schema';
   import { QUESTION_TYPE_INFO } from '$lib/components/questions/registry';
+  import { DRILLS } from '$lib/core/content/questions';
   import { mistakesStats } from './mistakes';
   import { db } from '$lib/core/db';
   import { todayKey } from '$lib/core/utils/format';
@@ -62,6 +63,17 @@
       </div>
     </Card>
   {/if}
+
+  <section class="section">
+    <div class="section-title"><h2>Тренировки</h2></div>
+    <div class="grid-2">
+      {#each Object.entries(DRILLS) as [id, d] (id)}
+        <Card href="/quiz/run?src=drill&d={id}&count=12" padding="md">
+          <div class="fmt"><strong>{d.title}</strong><span class="muted">{d.description}</span></div>
+        </Card>
+      {/each}
+    </div>
+  </section>
 
   <section class="section">
     <div class="section-title"><h2>Олимпиадные форматы</h2></div>

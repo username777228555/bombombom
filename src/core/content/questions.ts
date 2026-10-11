@@ -6,6 +6,7 @@ import { centuryLabel, century, formatEventDate, formatYear, toRoman } from '../
 import { pick, sample, shuffle, type Rng } from '../utils/random';
 import { quizTitle as qt } from './titles';
 import { personAnswerForms } from './answers';
+import { reignName } from './rulers';
 import type { Skill } from '../mastery';
 
 export interface GenOptions {
@@ -14,6 +15,8 @@ export interface GenOptions {
   types?: QuestionType[];
   /** Only generators training these skills («Карта знаний» → train a weak cell). */
   skills?: Skill[];
+  /** Only these generators (a drill, see DRILLS). */
+  gens?: string[];
   rng?: Rng;
   minImportance?: 1 | 2 | 3;
 }
@@ -401,6 +404,57 @@ const G: Record<string, Gen> = {
       explain: `${odd.term} — ${odd.definition}`, entity: odd.id, period: pid,
     };
   },
+  // ——— Синхронизация с всемирной историей: что происходило в мире в те же годы ———
+  syncWorld({ rng, events }) {
+    const world = kb.events.filter((e) => e.scope === 'world');
+    const pairs = events.filter((e) => e.scope !== 'world' && imp(e) >= 2)
+      .map((r) => ({ r, near: world.filter((w) => Math.abs(w.year - r.year) <= 3) })).filter((x) => x.near.length);
+    const hit = pick(pairs, rng);
+    if (!hit) return null;
+    const w = pick(hit.near, rng)!;
+    const others = distinctYears(world.filter((x) => Math.abs(x.year - hit.r.year) >= 25), 3, rng, 5);
+    if (!others) return null;
+    const set = shuffle([w, ...others], rng);
+    return {
+      type: 'single', prompt: `Какое событие всемирной истории произошло в те же годы, что и ${q(qt(hit.r))}?`, options: set.map(qt), answer: set.indexOf(w),
+      explain: `${formatYear(hit.r.year)} — ${hit.r.title}. ${[...set].sort((a, b) => a.year - b.year).map((e) => `${formatYear(e.year)} — ${e.title}`).join('; ')}.`,
+      entity: hit.r.id, period: hit.r.period,
+    };
+  },
+  syncReign({ rng, periods }) {
+    const world = kb.events.filter((e) => e.scope === 'world');
+    const reigns = kb.rulers().filter((r) => r.kind === 'head' && r.to - r.from >= 3 && (!periods || r.person.periods.some((x) => periods.includes(x)))
+      && world.some((w) => w.year > r.from && w.year < r.to));
+    const r = pick(reigns, rng);
+    if (!r) return null;
+    const w = pick(world.filter((x) => x.year > r.from && x.year < r.to), rng)!;
+    const others = distinctYears(world.filter((x) => x.year < r.from - 15 || x.year > r.to + 15), 3, rng, 5);
+    if (!others) return null;
+    const set = shuffle([w, ...others], rng);
+    return {
+      type: 'single', prompt: `Какое событие всемирной истории произошло в правление: ${reignName(r)}?`, options: set.map(qt), answer: set.indexOf(w),
+      explain: `${reignName(r)} — ${formatYear(r.from)}–${formatYear(r.to)}. ${[...set].sort((a, b) => a.year - b.year).map((e) => `${formatYear(e.year)} — ${e.title}`).join('; ')}.`,
+      entity: r.person.id, period: r.person.periods[0],
+    };
+  },
+  syncOrder({ rng, events }) {
+    const world = kb.events.filter((e) => e.scope === 'world');
+    const home = pick(events.filter((e) => e.scope !== 'world' && imp(e) >= 2), rng);
+    if (!home) return null;
+    // Two events of Russia and two of the world within a few decades: the order is not obvious from the eras.
+    const win = (e: EventItem) => Math.abs(e.year - home.year) <= 40;
+    const ru = distinctYears(events.filter((e) => e.scope !== 'world' && e.id !== home.id && win(e)), 1, rng, 1);
+    const wo = distinctYears(world.filter(win), 2, rng, 3);
+    if (!ru || !wo) return null;
+    const set = [home, ...ru, ...wo];
+    if (new Set(set.map((e) => e.year)).size < 4 || set.some((a) => set.some((b) => a !== b && Math.abs(a.year - b.year) < 2))) return null;
+    const sorted = [...set].sort((a, b) => a.year - b.year);
+    return {
+      type: 'order', prompt: 'Расположите события истории России и всемирной истории в хронологическом порядке', items: sorted.map(qt),
+      explain: sorted.map((e) => `${formatYear(e.year)} — ${e.title}${e.scope === 'world' ? ' (всемирная история)' : ''}`).join('; '),
+      entity: home.id, period: home.period,
+    };
+  },
 };
 
 /** What each generator trains — logged with the answer, filters «train this skill». */
@@ -411,13 +465,14 @@ const SKILL_OF: Record<keyof typeof G, Skill> = {
   cultureCentury: 'culture', cultureAuthor: 'culture',
   openCauses: 'analysis', openResults: 'analysis',
   seriesEvent: 'persons', oddPerson: 'persons', oddTerm: 'terms',
+  syncWorld: 'dates', syncReign: 'dates', syncOrder: 'dates',
   sourceWhich: 'sources', sourceYear: 'sources', sourceAuthor: 'sources', sourceEvent: 'sources', sourceByClues: 'sources',
 };
 
 const BY_TYPE: Record<QuestionType, (keyof typeof G)[]> = {
-  single: ['yearChoice', 'earliest', 'whoByHints', 'termChoice', 'cultureCentury', 'cultureAuthor', 'sourceWhich', 'sourceEvent', 'seriesEvent', 'oddPerson', 'oddTerm'],
+  single: ['yearChoice', 'earliest', 'whoByHints', 'termChoice', 'cultureCentury', 'cultureAuthor', 'sourceWhich', 'sourceEvent', 'seriesEvent', 'oddPerson', 'oddTerm', 'syncWorld', 'syncReign'],
   multiple: ['multiplePeriod'],
-  order: ['order'],
+  order: ['order', 'syncOrder'],
   match: ['matchYears', 'matchPersons'],
   year: ['yearInput', 'sourceYear'],
   text: ['termText', 'sourceAuthor'],
@@ -426,15 +481,26 @@ const BY_TYPE: Record<QuestionType, (keyof typeof G)[]> = {
   open: ['openCauses', 'openResults', 'openPerson'],
 };
 
+/** Drills: one olympiad format from every generator that makes it (`/quiz/run?src=drill&d=world`). */
+export const DRILLS = {
+  world: { title: 'Россия и мир', description: 'Что происходило в мире в те же годы и в то же правление', gens: ['syncWorld', 'syncReign', 'syncOrder'] },
+  series: { title: 'Ряды', description: 'Что объединяет ряд, кто или что в нём лишнее', gens: ['seriesEvent', 'oddPerson', 'oddTerm'] },
+  chrono: { title: 'Хронология', description: 'Порядок событий, что раньше, год по событию', gens: ['order', 'earliest', 'matchYears', 'yearInput', 'syncOrder'] },
+  sources: { title: 'Источники', description: 'Документ, автор, год и событие по отрывку', gens: ['sourceWhich', 'sourceYear', 'sourceAuthor', 'sourceEvent', 'sourceByClues'] },
+} satisfies Record<string, { title: string; description: string; gens: (keyof typeof G)[] }>;
+export type DrillId = keyof typeof DRILLS;
+
 export function generateQuestions(opts: GenOptions): GeneratedQuestion[] {
   const rng = opts.rng ?? Math.random;
   const inPeriods = <T extends { period?: string; periods?: string[] }>(x: T) =>
     !opts.periods?.length || (x.period ? opts.periods.includes(x.period) : x.periods?.some((p) => opts.periods!.includes(p)));
-  const events = kb.events.filter((e) => inPeriods(e) && imp(e) >= (opts.minImportance ?? 1));
+  // World history only through its links to Russia (Ялтинская конференция); the rest serves the «синхронизация» generators.
+  const events = kb.events.filter((e) => inPeriods(e) && imp(e) >= (opts.minImportance ?? 1) && (e.scope !== 'world' || kb.neighbors(e.id).length > 0));
   const persons = kb.persons.filter((p) => inPeriods(p) && imp(p) >= (opts.minImportance ?? 1));
   const ctx: Ctx = { rng, events, persons, periods: opts.periods?.length ? opts.periods : undefined };
   const types = opts.types?.length ? opts.types : (Object.keys(BY_TYPE) as QuestionType[]);
-  const gens = types.flatMap((t) => BY_TYPE[t]).filter((g) => !opts.skills?.length || opts.skills.includes(SKILL_OF[g]));
+  const gens = (opts.gens?.length ? opts.gens.filter((g): g is keyof typeof G => g in G) : types.flatMap((t) => BY_TYPE[t]))
+    .filter((g) => !opts.skills?.length || opts.skills.includes(SKILL_OF[g]));
   const out: GeneratedQuestion[] = [];
   const seen = new Set<string>();
   let attempts = 0;

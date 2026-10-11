@@ -1,6 +1,6 @@
 import { kb } from '$lib/core/content/kb.svelte';
 import { findDeck } from '$lib/core/content/cards';
-import { generateQuestions, type GeneratedQuestion } from '$lib/core/content/questions';
+import { DRILLS, generateQuestions, type DrillId, type GeneratedQuestion } from '$lib/core/content/questions';
 import { QUESTION_TYPES, type Question, type QuestionType } from '$lib/core/content/schema';
 import { hashString, mulberry32, sample, shuffle } from '$lib/core/utils/random';
 import { todayKey } from '$lib/core/utils/format';
@@ -49,6 +49,12 @@ export async function buildQuiz(p: URLSearchParams): Promise<QuizSpec | null> {
         questions: skills?.length ? withPackQuestions(generateQuestions({ count, periods, types, skills }), count, periods, skills) : generateQuestions({ count, periods, types }),
         exam,
       };
+    }
+    case 'drill': {
+      const id = p.get('d') ?? '';
+      const d = id in DRILLS ? DRILLS[id as DrillId] : null;
+      if (!d) return null;
+      return { title: d.title, ref: `drill:${id}`, questions: generateQuestions({ count, periods, gens: d.gens }), exam };
     }
     case 'type': {
       const t = (p.get('t') ?? 'single') as QuestionType;

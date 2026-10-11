@@ -4,6 +4,8 @@
    * folder `olympiads/` (built by `pnpm olympiads`). Downloaded by button and installed as packs; their tests
    * are listed here and in «Тесты из материалов». Same GitHub source and token as the library downloads.
    * On top — «Олимпиадный вариант»: a paper assembled from the packs' quizzes (quiz/sources.ts, src=variant).
+   * Past results (db.results) are shown next to each paper and as the trend of the last variants: the honest
+   * «готовность», not experience points.
    */
   import { onMount } from 'svelte';
   import { CloudDownload, RefreshCw, Check, Play, ScrollText, Timer } from '@lucide/svelte';
@@ -19,6 +21,7 @@
   import { installPackBundle } from '$lib/core/content/packimport';
   import { toast } from '$lib/core/ui.svelte';
   import { pluralN, WORDS } from '$lib/core/utils/format';
+  import { db, type ResultRow } from '$lib/core/db';
   import { downloadRemote, listRemote, loadSource, type GithubSource, type RemoteFile } from '$lib/modules/library/github';
 
   const FOLDER = 'olympiads';
@@ -62,7 +65,17 @@
       loading = false;
     }
   }
+  /** Attempts per quiz ref, oldest first. */
+  let results = $state<Map<string, ResultRow[]>>(new Map());
+  const pct = (r: ResultRow) => Math.round((r.score / Math.max(1, r.total)) * 100);
+  const variants = $derived([...results].filter(([ref]) => ref.startsWith('variant:')).flatMap(([, rs]) => rs).sort((a, b) => a.ts - b.ts).slice(-8));
+  const attempts = (id: string) => results.get(`pack:${id}`) ?? [];
+
   onMount(async () => {
+    const rows = await db.results.where('kind').equals('quiz').filter((r) => r.ref.startsWith('variant:') || r.ref.startsWith('pack:olymp')).toArray();
+    const m = new Map<string, ResultRow[]>();
+    for (const r of rows.sort((a, b) => a.ts - b.ts)) m.set(r.ref, [...(m.get(r.ref) ?? []), r]);
+    results = m;
     source = await loadSource();
     await load();
   });
@@ -98,6 +111,14 @@
         {/each}
       </div>
       <Button full icon={Timer} onclick={variant}>{periods.length ? 'Собрать по выбранным эпохам' : 'Собрать по всем эпохам'}</Button>
+      {#if variants.length}
+        <div class="trend" aria-label="Последние варианты">
+          {#each variants as r (r.id)}
+            <span class="col" title="{new Date(r.ts).toLocaleDateString('ru-RU')}: {r.score} из {r.total}"><i style:height="{Math.max(6, pct(r))}%"></i><small class="num">{pct(r)}</small></span>
+          {/each}
+        </div>
+        <p class="muted small">Последние варианты, доля верных ответов (развёрнутые — по вашей самопроверке)</p>
+      {/if}
     </div>
   </Card>
 
@@ -108,7 +129,11 @@
       <div class="stack">
         {#each p.quizzes as q (q.id)}
           <Card href="/quiz/run?src=pack&id={q.id}" padding="sm">
-            <div class="row q"><ScrollText size={18} class="acc" /><strong class="grow">{q.title}</strong><span class="muted">{pluralN(q.questions.length, WORDS.question)}</span><Play size={16} /></div>
+            {@const tries = attempts(q.id)}
+            <div class="row q">
+              <ScrollText size={18} class="acc" /><strong class="grow">{q.title}</strong>
+              <span class="muted">{tries.length ? `${pct(tries.at(-1)!)}% · лучший ${Math.max(...tries.map(pct))}% · ${pluralN(tries.length, WORDS.attempt)}` : pluralN(q.questions.length, WORDS.question)}</span><Play size={16} />
+            </div>
           </Card>
         {/each}
       </div>
@@ -152,5 +177,9 @@
   .q { gap: var(--sp-3); }
   .q .muted { font-size: var(--text-xs); }
   .bar { width: 96px; }
+  .trend { display: flex; align-items: flex-end; gap: 6px; height: 72px; margin-top: var(--sp-2); }
+  .col { flex: 1; max-width: 36px; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 2px; }
+  .col i { width: 100%; border-radius: 4px 4px 2px 2px; background: color-mix(in srgb, var(--accent) 70%, transparent); }
+  .col small { font-size: var(--text-2xs); color: var(--ink-3); }
   :global(.acc) { color: var(--accent); }
 </style>

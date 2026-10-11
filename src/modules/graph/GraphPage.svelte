@@ -15,6 +15,22 @@
   import { normalize } from '$lib/core/utils/text';
   import { pluralN, WORDS } from '$lib/core/utils/format';
   import { separate, cullLabels } from './declutter';
+  import { kvGet, kvSet } from '$lib/core/db';
+  import { hashString } from '$lib/core/utils/random';
+
+  // The force layout costs about a second on a phone: its result is kept per set of nodes and links
+  // (in memory and in IndexedDB), so an epoch is laid out once per content version, not on every visit.
+  type Positions = Record<string, [number, number]>;
+  const KV = 'graph-layouts-v1';
+  let memo: Promise<Map<string, Positions>> | null = null;
+  const layouts = () => (memo ??= kvGet<[string, Positions][]>(KV, []).then((list) => new Map(list)));
+  async function remember(key: string, pos: Positions) {
+    const m = await layouts();
+    m.delete(key);
+    m.set(key, pos);
+    // Old content versions drop out: the 24 most recent layouts are enough for every epoch and a few focus views.
+    await kvSet(KV, [...m].slice(-24));
+  }
 
   const focus = router.query.get('focus');
   const focusEntity = focus ? kb.get(focus) : undefined;
@@ -149,8 +165,11 @@
     relabelTimer = setTimeout(relabel, ms);
   };
 
-  async function render() {
+  /** `fresh` — «Перестроить»: a new random layout instead of the remembered one. */
+  let renders = 0;
+  async function render(fresh = false) {
     if (!container) return;
+    const run = ++renders;
     loading = true;
     const [{ default: cytoscape }, { default: fcose }] = await Promise.all([import('cytoscape'), import('cytoscape-fcose')]);
     try {
@@ -158,24 +177,34 @@
     } catch {
       /* already registered */
     }
-    cy?.destroy();
     labelScale = 1;
     const css = getComputedStyle(document.documentElement);
     const ink = css.getPropertyValue('--ink').trim();
     const bg = css.getPropertyValue('--surface').trim();
     const elements = buildElements();
     const n = counts.nodes;
+    const key = String(hashString(`${mode}|${focus ?? ''}|${elements.map((e) => (e.data.source ? `${e.data.source}>${e.data.target}` : e.data.id)).join(',')}`));
+    const saved = fresh ? undefined : (await layouts()).get(key);
+    // Let the screen appear before the heavy layout blocks the main thread.
+    if (!saved) await new Promise((r) => setTimeout(r, 120));
+    // A newer render (another epoch tapped meanwhile) or leaving the page wins.
+    if (!container || run !== renders) return;
+    cy?.destroy();
     cy = cytoscape({
       container,
       elements,
       minZoom: 0.12,
       maxZoom: 3,
+      // Phones have 3–3.5 device pixels per CSS pixel: drawing the canvas at 2 is three times less work and still sharp.
+      pixelRatio: Math.min(2, window.devicePixelRatio || 1),
       style: stylesheet(ink, bg),
       layout: { name: 'preset' },
     });
     const inst = cy;
     // Layout with label boxes counted as part of the nodes, then a pass that removes leftover overlaps.
-    const layout = focus && mode === 'focus'
+    const layout = saved
+      ? inst.layout({ name: 'preset', positions: (nd: NodeSingular) => { const p = saved[nd.id()]; return p ? { x: p[0], y: p[1] } : { x: 0, y: 0 }; }, fit: false } as never)
+      : focus && mode === 'focus'
       ? inst.layout({
         name: 'concentric', concentric: (nd: NodeSingular) => (nd.id() === focus ? 3 : nd.data('faded') ? 1 : 2), levelWidth: () => 1,
         minNodeSpacing: 18, avoidOverlap: true, nodeDimensionsIncludeLabels: true, animate: false, padding: 20,
@@ -187,8 +216,13 @@
       } as never);
     layout.one('layoutstop', () => {
       if (cy !== inst) return;
-      placeLonely(inst);
-      separate(inst, { pad: 10, fixed: mode === 'focus' ? focus : null });
+      if (!saved) {
+        placeLonely(inst);
+        separate(inst, { pad: 10, fixed: mode === 'focus' ? focus : null });
+        const pos: Positions = {};
+        inst.nodes().forEach((nd) => { const p = nd.position(); pos[nd.id()] = [Math.round(p.x), Math.round(p.y)]; });
+        void remember(key, pos);
+      }
       inst.fit(undefined, 24);
       const target = inst.$id(focus ?? '');
       if (mode === 'focus' && target.nonempty()) {
@@ -262,6 +296,7 @@
     void render();
   });
   onDestroy(() => {
+    renders++;
     clearTimeout(relabelTimer);
     cy?.destroy();
   });
@@ -272,7 +307,7 @@
   <PageHeader title="Граф связей" back="/explore">
     {#snippet actions()}
       <IconButton icon={Maximize} label="Показать всё" onclick={() => cy?.animate({ fit: { eles: cy.elements(), padding: 24 } }, { duration: motionOK() ? 400 : 0 })} />
-      <IconButton icon={RefreshCw} label="Перестроить" onclick={render} />
+      <IconButton icon={RefreshCw} label="Перестроить" onclick={() => render(true)} />
     {/snippet}
   </PageHeader>
 

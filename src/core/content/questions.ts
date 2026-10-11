@@ -410,7 +410,9 @@ const G: Record<string, Gen> = {
     const SAME = [['Санкт-Петербург', 'Петроград', 'Ленинград'], ['Царицын', 'Сталинград', 'Волгоград'], ['Новгород', 'Великий Новгород']];
     const key = (pl: string) => SAME.find((g) => g.includes(pl))?.[0] ?? pl;
     const ok = (pl?: string): pl is string => !!pl && !/[,;]/.test(pl) && pl !== 'Россия' && pl !== 'Москва';
-    const e = pick(events.filter((x) => ok(x.place) && imp(x) >= 2), rng);
+    // «Ям-Запольский мир» — «Ям-Запольский», «Цусимское сражение» — «Цусимский пролив»: the title gives it away.
+    const inTitle = (x: EventItem) => x.place!.toLowerCase().split(/[\s-]+/).some((w) => w.length >= 4 && x.title.toLowerCase().includes(w.slice(0, Math.max(3, w.length - 2))));
+    const e = pick(events.filter((x) => ok(x.place) && imp(x) >= 2 && !inTitle(x)), rng);
     if (!e) return null;
     const near = [...new Set(kb.events.filter((x) => ok(x.place) && key(x.place) !== key(e.place!) && Math.abs(x.year - e.year) <= 150).map((x) => x.place!))];
     const others = sample(near, 3, rng);
@@ -449,7 +451,7 @@ const G: Record<string, Gen> = {
     if (!others) return null;
     const set = shuffle([w, ...others], rng);
     return {
-      type: 'single', prompt: `Какое событие всемирной истории произошло в правление: ${reignName(r)}?`, options: set.map(qt), answer: set.indexOf(w),
+      type: 'single', prompt: `Какое событие всемирной истории произошло, когда страной правил ${reignName(r)}?`, options: set.map(qt), answer: set.indexOf(w),
       explain: `${reignName(r)} — ${formatYear(r.from)}–${formatYear(r.to)}. ${[...set].sort((a, b) => a.year - b.year).map((e) => `${formatYear(e.year)} — ${e.title}`).join('; ')}.`,
       entity: r.person.id, period: r.person.periods[0],
     };

@@ -1,6 +1,7 @@
 /**
  * pnpm content:merge — folds batch files `data/NN-<period>-plus.json` (written by agents, see
  * .agents/skills/add-content/BATCH.md) into the period's main file `data/NN-<period>.json` and deletes them.
+ * Agents working on one period in parallel write `NN-<period>-plus-<suffix>.json` (`06-c19-plus-src.json`).
  * Run after `pnpm content:check` is clean. Collections are appended in order; nothing is rewritten.
  *
  *   pnpm content:merge [period…] [--pack osnova] [--dry]     e.g. `pnpm content:merge udel c17` — only these periods
@@ -23,9 +24,10 @@ const sameLink = (a: Link, b: Link) =>
 const read = (f: string) => JSON.parse(readFileSync(f, 'utf8')) as Fragment;
 
 let merged = 0;
-const wanted = (n: string) => !only.length || only.some((p) => n.endsWith(`-${p}-plus.json`));
-for (const name of readdirSync(dir).filter((n) => n.endsWith('-plus.json') && wanted(n)).sort()) {
-  const target = join(dir, name.replace(/-plus\.json$/, '.json'));
+const PLUS = /-plus(?:-[a-z0-9]+)?\.json$/;
+const wanted = (n: string) => !only.length || only.some((p) => n.replace(PLUS, '').endsWith(`-${p}`));
+for (const name of readdirSync(dir).filter((n) => PLUS.test(n) && wanted(n)).sort()) {
+  const target = join(dir, name.replace(PLUS, '.json'));
   if (!existsSync(target)) {
     console.log(`✖ ${name}: нет файла ${rel(target)}`);
     process.exitCode = 1;

@@ -404,6 +404,23 @@ const G: Record<string, Gen> = {
       explain: `${odd.term} — ${odd.definition}`, entity: odd.id, period: pid,
     };
   },
+  // ——— Где: место события (подготовка к заданиям с картой) ———
+  placeChoice({ rng, events }) {
+    // Moscow and «Россия» are answers one guesses; one city under several names must not be a distractor of itself.
+    const SAME = [['Санкт-Петербург', 'Петроград', 'Ленинград'], ['Царицын', 'Сталинград', 'Волгоград'], ['Новгород', 'Великий Новгород']];
+    const key = (pl: string) => SAME.find((g) => g.includes(pl))?.[0] ?? pl;
+    const ok = (pl?: string): pl is string => !!pl && !/[,;]/.test(pl) && pl !== 'Россия' && pl !== 'Москва';
+    const e = pick(events.filter((x) => ok(x.place) && imp(x) >= 2), rng);
+    if (!e) return null;
+    const near = [...new Set(kb.events.filter((x) => ok(x.place) && key(x.place) !== key(e.place!) && Math.abs(x.year - e.year) <= 150).map((x) => x.place!))];
+    const others = sample(near, 3, rng);
+    if (others.length < 3 || new Set(others.map(key)).size < 3) return null;
+    const options = shuffle([e.place!, ...others], rng);
+    return {
+      type: 'single', prompt: `Где произошло событие ${q(qt(e))}?`, options, answer: options.indexOf(e.place!),
+      explain: `${formatEventDate(e)}, ${e.place}. ${e.summary}`, entity: e.id, period: e.period,
+    };
+  },
   // ——— Синхронизация с всемирной историей: что происходило в мире в те же годы ———
   syncWorld({ rng, events }) {
     const world = kb.events.filter((e) => e.scope === 'world');
@@ -465,12 +482,12 @@ const SKILL_OF: Record<keyof typeof G, Skill> = {
   cultureCentury: 'culture', cultureAuthor: 'culture',
   openCauses: 'analysis', openResults: 'analysis',
   seriesEvent: 'persons', oddPerson: 'persons', oddTerm: 'terms',
-  syncWorld: 'dates', syncReign: 'dates', syncOrder: 'dates',
+  syncWorld: 'dates', syncReign: 'dates', syncOrder: 'dates', placeChoice: 'dates',
   sourceWhich: 'sources', sourceYear: 'sources', sourceAuthor: 'sources', sourceEvent: 'sources', sourceByClues: 'sources',
 };
 
 const BY_TYPE: Record<QuestionType, (keyof typeof G)[]> = {
-  single: ['yearChoice', 'earliest', 'whoByHints', 'termChoice', 'cultureCentury', 'cultureAuthor', 'sourceWhich', 'sourceEvent', 'seriesEvent', 'oddPerson', 'oddTerm', 'syncWorld', 'syncReign'],
+  single: ['yearChoice', 'earliest', 'whoByHints', 'termChoice', 'cultureCentury', 'cultureAuthor', 'sourceWhich', 'sourceEvent', 'seriesEvent', 'oddPerson', 'oddTerm', 'syncWorld', 'syncReign', 'placeChoice'],
   multiple: ['multiplePeriod'],
   order: ['order', 'syncOrder'],
   match: ['matchYears', 'matchPersons'],

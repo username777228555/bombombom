@@ -46,7 +46,10 @@
       if (timeLimit && elapsed >= timeLimit && !finished) void finish();
     }, 250);
   });
-  onDestroy(() => clearInterval(tick));
+  onDestroy(() => {
+    clearInterval(tick);
+    commit();
+  });
 
   const current = $derived(spec?.questions[index]);
   const QC = $derived(current ? QUESTION_COMPONENTS[current.type] : null);
@@ -54,24 +57,42 @@
   const correctCount = $derived(scores.filter((s) => s >= 0.999).length);
   const points = $derived(scores.reduce((a, b) => a + b, 0));
 
+  /** A right answer marked «Угадал»: half a point in the quiz, a mistake for the schedule and the knowledge map. */
+  const GUESS = 0.5;
+  let guessed = $state(false);
+  // The answer waits here until «Далее» (or leaving the quiz), so «Угадал» can still change it.
+  let pending: { q: GeneratedQuestion; score: number } | null = null;
+
   function submit(score: number) {
     scores[index] = score;
     revealed = true;
-    // Every answer goes to the log («Карта знаний») and to the mistakes schedule — right away, not at the end.
-    if (spec && current) {
-      const q = current as GeneratedQuestion;
-      const pid = q.period ?? spec.period ?? (q.entity ? periodOfEntity(q.entity) : undefined);
-      const src = spec.ref.split(':')[0];
-      // A due delayed check is logged as 'check': those answers are the «удержание» of the knowledge map.
-      void noteAnswer(current as Question, score >= 0.999).then((was) =>
-        logAnswer({ period: pid, skill: skillOf(q), entity: q.entity, type: q.type, score, src: was === 'check' ? 'check' : src }),
-      );
-    }
+    guessed = false;
+    if (current) pending = { q: current as GeneratedQuestion, score };
     haptic(score >= 0.999 ? 'success' : score > 0 ? 'tap' : 'error');
+  }
+
+  function guess() {
+    if (!pending) return;
+    pending.score = scores[index] = GUESS;
+    guessed = true;
+  }
+
+  /** Every answer goes to the log («Карта знаний») and to the mistakes schedule. */
+  function commit() {
+    if (!spec || !pending) return;
+    const { q, score } = pending;
+    pending = null;
+    const pid = q.period ?? spec.period ?? (q.entity ? periodOfEntity(q.entity) : undefined);
+    const src = spec.ref.split(':')[0];
+    // A due delayed check is logged as 'check': those answers are the «удержание» of the knowledge map.
+    void noteAnswer(q as Question, score >= 0.999).then((was) =>
+      logAnswer({ period: pid, skill: skillOf(q), entity: q.entity, type: q.type, score, src: was === 'check' ? 'check' : src }),
+    );
   }
 
   async function next() {
     if (!spec) return;
+    commit();
     if (index + 1 >= spec.questions.length) return finish();
     index++;
     revealed = false;
@@ -79,6 +100,7 @@
 
   async function finish() {
     if (!spec || finished) return;
+    commit();
     finished = true;
     clearInterval(tick);
     const n = spec.questions.length;
@@ -180,7 +202,10 @@
         {#if revealed}
           <div class="feedback {verdict}" in:fly={{ y: 16, duration: 260 }}>
             <div class="row head">
-              <span class="v">{#if verdict === 'ok'}<Check size={18} /> Верно{:else if verdict === 'part'}Частично верно · {Math.round(lastScore * 100)}%{:else}Неверно{/if}</span>
+              <span class="v grow">{#if guessed}Наугад — вопрос вернётся завтра{:else if verdict === 'ok'}<Check size={18} /> Верно{:else if verdict === 'part'}Частично верно · {Math.round(lastScore * 100)}%{:else}Неверно{/if}</span>
+              {#if verdict === 'ok' && current.type !== 'open'}
+                <button class="guess" onclick={guess} title="Угаданный ответ не засчитывается в карту знаний: вопрос вернётся завтра">Угадал</button>
+              {/if}
             </div>
             {#if current.explain}<div class="rich exp">{@html richText(current.explain)}</div>{/if}
             {#if why && !whyAdded.has(index)}
@@ -210,6 +235,7 @@
   .meta { gap: var(--sp-2); }
   .prompt { font-size: var(--text-2xl); line-height: 1.2; }
   .why { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; margin: 0 0 var(--sp-3); padding: 10px 14px; border-radius: var(--r-md); border: 1.5px dashed var(--accent); background: none; color: var(--accent); font-weight: 650; text-align: left; cursor: pointer; }
+  .guess { padding: 4px 12px; border-radius: var(--r-full); border: 1px solid var(--line-strong); background: none; color: var(--ink-2); font-size: var(--text-xs); font-weight: 650; cursor: pointer; }
   .why small { font-weight: 400; color: var(--ink-3); font-size: var(--text-xs); }
   blockquote { white-space: pre-line; margin: 0; padding: var(--sp-4); border-left: 3px solid var(--gold); background: var(--gold-soft); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-read); font-size: var(--text-md); line-height: 1.55; }
   .feedback { display: flex; flex-direction: column; gap: var(--sp-3); padding: var(--sp-4); border-radius: var(--r-lg); border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow-2); margin-top: var(--sp-2); }

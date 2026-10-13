@@ -37,3 +37,6 @@ import/quizlet/work/preview/
 import/olympiads/*.pdf
 import/olympiads/txt/
 import/olympiads/png/
+
+# Черновики агентов (content:brief → *-plus*.json → content:check → content:merge): в git попадает только слитый файл эпохи
+content/packs/*/data/*-plus*.json

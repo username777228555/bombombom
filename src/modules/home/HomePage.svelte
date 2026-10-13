@@ -145,7 +145,7 @@
     <div class="stack plan-list">
       {#if lessonsDue.length}
         <Card href="/lesson/{lessonsDue[0]!.id}" padding="sm">
-          <div class="row pl"><BookOpen size={20} /><span class="grow"><strong>Повторить урок: {lessonsDue[0]!.title}</strong><small>{lessonsDue.length > 1 ? `и ещё ${lessonsDue.length - 1} — ` : ''}проверка без текста перед глазами</small></span><span class="num cnt">{lessonsDue.length}</span></div>
+          <div class="row pl"><BookOpen size={20} /><span class="grow"><strong>Повторить урок: {lessonsDue[0]!.title}</strong><small>{lessonsDue.length > 1 ? `и ещё ${lessonsDue.length - 1} — ` : ''}вспомнить урок по памяти, потом проверка</small></span><span class="num cnt">{lessonsDue.length}</span></div>
         </Card>
       {/if}
       {#if nextLesson}

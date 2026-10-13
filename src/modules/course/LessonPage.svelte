@@ -1,13 +1,14 @@
 <script lang="ts">
   /**
    * A lesson of the «Курс», read step by step: goals → warm-up guesses (not scored) → sections one at a time,
-   * each closed by a comprehension question → historians' views and the summary → «Проверка» (the lesson's quiz
-   * in the quiz runner, src=lesson). Links `[[id]]` in the text open the entity sheet. The section reached is
-   * remembered; answers to section questions go to the knowledge map and the mistakes schedule.
+   * each closed by a comprehension question → «Вспомните урок» (write it down from memory with the text hidden,
+   * then check against the lesson's points, RecallStep) → historians' views and the summary → «Даты урока»
+   * (DatesPage) → «Проверка» (the lesson's quiz, src=lesson). A due review starts with the recall again.
+   * Links `[[id]]` open the entity sheet; the section reached is remembered; answers go to the knowledge map.
    */
   import { onMount, tick } from 'svelte';
   import { fly } from 'svelte/transition';
-  import { Clock, Target, ArrowDown, ListChecks, RotateCcw, CircleCheck, Lightbulb } from '@lucide/svelte';
+  import { Clock, Target, ArrowDown, ListChecks, RotateCcw, CircleCheck, Lightbulb, Brain, CalendarClock, Check } from '@lucide/svelte';
   import PageHeader from '$lib/design/components/PageHeader.svelte';
   import Card from '$lib/design/components/Card.svelte';
   import Button from '$lib/design/components/Button.svelte';
@@ -24,7 +25,10 @@
   import { richText } from '$lib/core/utils/text';
   import { pluralN, WORDS } from '$lib/core/utils/format';
   import { noteAnswer } from '$lib/modules/quiz/mistakes';
-  import { courseState, daysUntil, lessonAt, type LessonState } from './progress';
+  import { courseState, daysUntil, lessonAt, lessonRecalled, type LessonState } from './progress';
+  import RecallStep from './RecallStep.svelte';
+  import { lessonDates } from './dates';
+  import type { RecallAttempt } from './recall';
   import { lessonHtml } from './text';
 
   const lesson = kb.lessons.find((l) => l.id === router.params.id);
@@ -44,6 +48,28 @@
 
   const total = $derived(lesson?.sections.length ?? 0);
   const readAll = $derived(shown >= total);
+  /** read → recall (text hidden) → final (summary, dates, check). */
+  let phase = $state<'read' | 'recall' | 'final'>('read');
+  let reviewing = $state(false);
+  let recalled = $state<RecallAttempt | null>(null);
+  /** A forgotten point's section, shown under the checklist. */
+  let reread = $state<number | null>(null);
+  const hasDates = $derived(!!lesson && lessonDates(lesson).length > 0);
+  const due = $derived(!!st?.done && !!st.due && st.due <= Date.now());
+
+  function startRecall(review: boolean) {
+    reviewing = review;
+    reread = null;
+    phase = 'recall';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  async function recallDone(a: RecallAttempt) {
+    recalled = a;
+    reread = null;
+    if (lesson) await lessonRecalled(lesson.id, a.total ? a.got.length / a.total : 0);
+    phase = 'final';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   const sectionDone = (i: number) => (lesson?.sections[i]?.check ?? []).every((_, k) => scores[`s${i}-${k}`] !== undefined);
 
   function answer(key: string, q: Question, score: number) {
@@ -98,15 +124,28 @@
           </div>
           <p class="goals-t"><Target size={16} /> После урока вы сможете</p>
           <ul class="goals">{#each lesson.goals as g (g)}<li>{g}</li>{/each}</ul>
-          {#if st?.done}
-            <p class="muted small">{st.due ? (st.due <= Date.now() ? 'Пора повторить: вопросы урока без подсказок.' : `Повторение через ${pluralN(daysUntil(st.due), WORDS.day)}.`) : 'Все повторения пройдены.'}</p>
+          {#if st?.done && phase !== 'recall'}
+            <p class="muted small">{st.due ? (due ? 'Пора повторить: сначала вспомните урок по памяти, потом проверка.' : `Повторение через ${pluralN(daysUntil(st.due), WORDS.day)}.`) : 'Все повторения пройдены.'}</p>
             <div class="row acts">
-              <Button size="sm" icon={RotateCcw} onclick={check}>Повторить проверку</Button>
-              {#if shown < total}<Button size="sm" variant="secondary" onclick={() => (shown = total)}>Открыть текст</Button>{/if}
+              <Button size="sm" icon={due ? Brain : RotateCcw} onclick={() => (due ? startRecall(true) : check())}>{due ? 'Начать повторение' : 'Пройти проверку'}</Button>
+              {#if !due}<Button size="sm" variant="secondary" icon={Brain} onclick={() => startRecall(true)}>Вспомнить по памяти</Button>{/if}
+              {#if shown < total}<Button size="sm" variant="secondary" onclick={() => { shown = total; phase = 'final'; }}>Открыть текст</Button>{/if}
             </div>
           {/if}
         </Card>
 
+        {#if phase === 'recall'}
+          <RecallStep {lesson} review={reviewing} ondone={recallDone} onreread={(n) => (reread = n)} />
+          {#if reread}
+            {@const sec = lesson.sections[reread - 1]}
+            {#if sec}
+              <section class="sec reread" in:fly={{ y: 10, duration: 200 }}>
+                <h2 class="h"><span class="num n">{reread}</span>{sec.title}</h2>
+                <div class="text">{@html lessonHtml(sec.text)}</div>
+              </section>
+            {/if}
+          {/if}
+        {:else}
         {#if shown === 0 && !st?.done}
           {#if lesson.warmup?.length}
             <section class="warm">
@@ -134,7 +173,16 @@
           </section>
         {/each}
 
-        {#if readAll}
+        {#if readAll && phase === 'read' && !st?.done}
+          <Card tone="gold" padding="md">
+            <strong class="row step-h"><Brain size={18} /> Теперь — вспомнить</strong>
+            <p class="muted small">Текст прочитан. Самое важное впереди: закройте его и напишите по памяти всё, что запомнили, а потом сверьтесь с пунктами урока. Пересказ по памяти запоминается в разы лучше перечитывания.</p>
+            <Button full icon={Brain} onclick={() => startRecall(false)}>Вспомнить урок по памяти</Button>
+            <button type="button" class="skip" onclick={() => (phase = 'final')}>Пропустить</button>
+          </Card>
+        {/if}
+
+        {#if readAll && (phase === 'final' || (st?.done && phase === 'read'))}
           {#if lesson.views?.length}
             <section class="sec">
               <h2 class="h">Точки зрения историков</h2>
@@ -152,10 +200,34 @@
             <h2 class="h"><CircleCheck size={18} /> Главное</h2>
             <ul class="sum">{#each lesson.summary as s (s)}<li>{s}</li>{/each}</ul>
           </section>
+        {/if}
+        {/if}
+
+        {#if phase === 'final'}
           <Card tone="gold" padding="md">
-            <strong>Проверка</strong>
-            <p class="muted small">{pluralN(lesson.quiz.length, WORDS.question)} без текста перед глазами. Вопросы урока вернутся через 2, 7 и 21 день: так знание остаётся, а не выветривается к олимпиаде.</p>
-            <Button full icon={ListChecks} onclick={check}>{st?.done ? 'Пройти ещё раз' : 'Начать проверку'}</Button>
+            <strong>Закрепление</strong>
+            <ol class="steps">
+              <li class:done={!!recalled}>
+                <span class="si">{#if recalled}<Check size={16} />{:else}<Brain size={16} />{/if}</span>
+                <span class="grow">{#if recalled}Вспомнили {recalled.got.length} из {recalled.total}{:else}<button type="button" class="lnk" onclick={() => startRecall(!!st?.done)}>Вспомнить урок по памяти</button>{/if}</span>
+              </li>
+              {#if hasDates}
+                <li class:done={!!st?.dates}>
+                  <span class="si">{#if st?.dates}<Check size={16} />{:else}<CalendarClock size={16} />{/if}</span>
+                  <span class="grow"><button type="button" class="lnk" onclick={() => navigate(`/lesson/${lesson.id}/dates`)}>Даты урока</button><small class="muted"> — лента и тренировка: каждую дату дважды по памяти, потом в «Карточки»</small></span>
+                </li>
+              {/if}
+              <li>
+                <span class="si"><ListChecks size={16} /></span>
+                <span class="grow">Проверка: {pluralN(lesson.quiz.length, WORDS.question)} без текста перед глазами; вернётся через 2, 7 и 21 день</span>
+              </li>
+            </ol>
+            {#if hasDates && !st?.dates}
+              <Button full icon={CalendarClock} onclick={() => navigate(`/lesson/${lesson.id}/dates`)}>Даты урока</Button>
+              <Button full variant="secondary" icon={ListChecks} onclick={check}>Сразу к проверке</Button>
+            {:else}
+              <Button full icon={ListChecks} onclick={check}>{st?.done ? 'Пройти проверку' : 'Начать проверку'}</Button>
+            {/if}
           </Card>
         {/if}
       </div>
@@ -186,4 +258,12 @@
   .views { --gap: var(--sp-2); }
   .view { display: flex; flex-direction: column; gap: 4px; padding: var(--sp-3); border-radius: var(--r-md); font-size: var(--text-sm); line-height: 1.5; }
   .who { font-weight: 700; text-align: left; }
+  .step-h { gap: 6px; align-items: center; }
+  .skip { align-self: center; margin-top: 4px; padding: 4px; border: 0; background: none; color: var(--ink-3); font: inherit; font-size: var(--text-xs); cursor: pointer; }
+  .steps { list-style: none; margin: var(--sp-2) 0 var(--sp-3); padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: var(--text-sm); line-height: 1.4; }
+  .steps li { display: flex; gap: 8px; align-items: flex-start; }
+  .si { display: grid; place-items: center; width: 24px; height: 24px; flex: none; border-radius: 50%; background: var(--surface); color: var(--c); }
+  .steps li.done .si { background: var(--success); color: #fff; }
+  .lnk { padding: 0; border: 0; background: none; color: var(--c); font: inherit; font-weight: 650; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .reread { padding: var(--sp-3); border-radius: var(--r-md); background: var(--surface); }
 </style>

@@ -342,6 +342,14 @@ export const LessonSchema = z.strictObject({
   /** Points of view of historians on the topic (paraphrased positions, not quotes). */
   views: z.array(z.strictObject({ who: Text, person: Id.optional(), view: Text })).max(5).optional(),
   summary: z.array(Text).min(3).max(8),
+  /**
+   * What a good recall of the lesson contains — the checklist after the student writes the lesson down from memory.
+   * One fact or idea per point (a date with its event, a cause, a person and what they did); `section` (from 1) is
+   * where to reread a forgotten point.
+   */
+  points: z.array(z.strictObject({ text: Text, section: z.number().int().min(1).optional() })).min(4).max(16).optional(),
+  /** Events whose dates the lesson drills; by default — dated events linked in the text and in `entities`. */
+  dates: z.array(Id).max(12).optional(),
   entities: z.array(Id).min(3).max(30),
   quiz: z.array(QuestionSchema).min(3).max(12),
 });

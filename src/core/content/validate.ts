@@ -343,6 +343,10 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         const at = `lessons[${i}]`;
         period(`${at}.period`, l.period);
         l.entities.forEach((id, j) => ref(`${at}.entities[${j}]`, id));
+        l.dates?.forEach((id, j) => ref(`${at}.dates[${j}]`, id, ['event']));
+        l.points?.forEach((pt, j) => {
+          if (pt.section && pt.section > l.sections.length) add('error', file, `${at}.points[${j}].section`, `в уроке ${l.sections.length} разделов`);
+        });
         l.views?.forEach((v, j) => ref(`${at}.views[${j}].person`, v.person, ['person']));
         l.warmup?.forEach((q, j) => checkQuestion(`${at}.warmup[${j}]`, q));
         l.quiz.forEach((q, j) => checkQuestion(`${at}.quiz[${j}]`, q));

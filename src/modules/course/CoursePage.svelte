@@ -39,7 +39,7 @@
   {:else}
     {#if due.length}
       <Card href="/lesson/{due[0]!.id}" padding="md">
-        <div class="row head"><RotateCcw size={20} class="acc" /><span class="grow"><strong>Повторить: {due[0]!.title}</strong><small class="muted">{due.length > 1 ? `и ещё ${pluralN(due.length - 1, WORDS.lesson)}` : 'проверка без текста перед глазами'}</small></span><Badge tone="danger">{due.length}</Badge></div>
+        <div class="row head"><RotateCcw size={20} class="acc" /><span class="grow"><strong>Повторить: {due[0]!.title}</strong><small class="muted">{due.length > 1 ? `и ещё ${pluralN(due.length - 1, WORDS.lesson)}` : 'вспомнить по памяти, потом проверка'}</small></span><Badge tone="danger">{due.length}</Badge></div>
       </Card>
     {/if}
     {#if next}

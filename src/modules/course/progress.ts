@@ -28,6 +28,10 @@ export interface LessonState {
   last?: number;
   /** Section the student stopped at (resume reading). */
   at?: number;
+  /** The «Даты урока» drill was completed. */
+  dates?: number;
+  /** Last «Вспомните урок»: share of the points recalled and when. */
+  recall?: { share: number; ts: number };
 }
 
 export const courseState = () => kvGet<Record<string, LessonState>>(KEY, {});
@@ -47,6 +51,18 @@ export async function lessonFinished(id: string, share: number): Promise<LessonS
   all[id] = next;
   await kvSet(KEY, all);
   return next;
+}
+
+export async function lessonDatesDone(id: string) {
+  const all = await courseState();
+  all[id] = { ...(all[id] ?? { step: 0 }), dates: Date.now() };
+  await kvSet(KEY, all);
+}
+
+export async function lessonRecalled(id: string, share: number) {
+  const all = await courseState();
+  all[id] = { ...(all[id] ?? { step: 0 }), recall: { share, ts: Date.now() } };
+  await kvSet(KEY, all);
 }
 
 /** Remembers the section being read, so the lesson opens where it was left. */

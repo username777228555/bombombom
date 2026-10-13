@@ -1,9 +1,11 @@
 import { kb } from '$lib/core/content/kb.svelte';
 import { findDeck } from '$lib/core/content/cards';
+import { lessonDates } from '$lib/modules/course/dates';
+import { quizTitle } from '$lib/core/content/titles';
 import { DRILLS, generateQuestions, type DrillId, type GeneratedQuestion } from '$lib/core/content/questions';
 import { QUESTION_TYPES, type Question, type QuestionType } from '$lib/core/content/schema';
 import { hashString, mulberry32, sample, shuffle } from '$lib/core/utils/random';
-import { todayKey } from '$lib/core/utils/format';
+import { formatEventDate, todayKey } from '$lib/core/utils/format';
 import { QUESTION_TYPE_INFO } from '$lib/components/questions/registry';
 import { getDueMistakes } from './mistakes';
 import { SKILLS, skillOf, type Skill } from '$lib/core/mastery';
@@ -55,7 +57,12 @@ export async function buildQuiz(p: URLSearchParams): Promise<QuizSpec | null> {
       const l = kb.lessons.find((x) => x.id === p.get('id'));
       if (!l) return null;
       const checks = l.sections.flatMap((s) => s.check ?? []);
-      return { title: l.title, ref: `lesson:${l.id}`, questions: [...shuffle(l.quiz), ...sample(checks, Math.min(3, checks.length))], exam, period: l.period };
+      // Dates of the lesson are asked by recall (type the year), not recognition.
+      const years: GeneratedQuestion[] = sample(lessonDates(l), 4).map((e) => ({
+        type: 'year', prompt: `Укажите год: «${quizTitle(e)}»`, answer: e.year, tolerance: e.circa ? 3 : 0,
+        explain: `${formatEventDate(e)}. ${e.summary}`, entity: e.id, period: e.period, skill: 'dates',
+      }));
+      return { title: l.title, ref: `lesson:${l.id}`, questions: shuffle([...l.quiz, ...sample(checks, Math.min(3, checks.length)), ...years]), exam, period: l.period };
     }
     case 'drill': {
       const id = p.get('d') ?? '';

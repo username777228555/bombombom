@@ -8,6 +8,7 @@ export default defineModule({
   routes: [
     { path: '/course', tab: 'explore', component: () => import('./CoursePage.svelte') },
     { path: '/lesson/:id', tab: 'explore', component: () => import('./LessonPage.svelte') },
+    { path: '/lesson/:id/dates', tab: 'explore', component: () => import('./DatesPage.svelte') },
   ],
   entries: [
     { hub: 'explore', title: 'Курс', description: 'Уроки по эпохам: объяснение, вопросы, повторение', icon: BookOpen, href: '/course', order: 1, tint: '#7c1d2b' },

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Plus, Layers, Play, FolderOpen, Star } from '@lucide/svelte';
+  import { Plus, Layers, Play, FolderOpen, Star, CalendarClock } from '@lucide/svelte';
   import PageHeader from '$lib/design/components/PageHeader.svelte';
   import Card from '$lib/design/components/Card.svelte';
   import Button from '$lib/design/components/Button.svelte';
@@ -19,6 +19,8 @@
   let fresh = $state(0);
   let enrolledDecks = $state<Record<string, number>>({});
   let stars = $state(0);
+  /** Dates drilled after lessons («Даты урока»), see modules/course/DatesPage. */
+  let lessonCards = $state(0);
 
   onMount(async () => {
     const q = await buildQueue({ newLimit: settings.newPerDay });
@@ -29,6 +31,7 @@
     for (const r of rows) counts[r.deck] = (counts[r.deck] ?? 0) + 1;
     enrolledDecks = counts;
     stars = (await deckProgress('stars')).enrolled;
+    lessonCards = (await deckProgress('lessons')).enrolled;
   });
 
   const auto = $derived.by(() => {
@@ -74,6 +77,11 @@
   <section class="section">
     <div class="section-title"><h2>Мои колоды</h2><Button size="sm" variant="ghost" icon={Plus} href="/cards/edit/new">Создать</Button></div>
     <div class="stack">
+      {#if lessonCards}
+        <Card href="/cards/session?deck=lessons" padding="sm">
+          <div class="row deck"><span class="ico gold"><CalendarClock size={18} /></span><div class="grow"><strong>Даты уроков</strong><span class="muted">Даты, выученные после уроков курса, — на повторение по расписанию</span></div><Badge tone="gold">{lessonCards}</Badge></div>
+        </Card>
+      {/if}
       {#if stars}
         <Card href="/cards/session?deck=stars" padding="sm">
           <div class="row deck"><span class="ico gold"><Star size={18} /></span><div class="grow"><strong>Избранное</strong><span class="muted">Карточки, добавленные со страниц событий и людей</span></div><Badge tone="gold">{stars}</Badge></div>

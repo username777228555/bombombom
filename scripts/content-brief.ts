@@ -8,7 +8,7 @@
  *
  * Batch filling of a period by a cheaper model: .agents/skills/add-content/BATCH.md.
  */
-import type { CultureItem, EventItem, PersonItem, QuizItem, SourceItem, TermItem } from '../src/core/content/schema';
+import type { CultureItem, EventItem, LessonItem, PersonItem, QuizItem, SourceItem, TermItem } from '../src/core/content/schema';
 import { PERIODS_FILE, listPackDirs, readJson, walkJson } from './lib/content-fs';
 
 const [period, ...flags] = process.argv.slice(2);
@@ -25,6 +25,7 @@ const terms: TermItem[] = [];
 const culture: CultureItem[] = [];
 const quizzes: QuizItem[] = [];
 const sources: SourceItem[] = [];
+const lessons: LessonItem[] = [];
 const causeLinks: { from: string; to: string }[] = [];
 for (const dir of listPackDirs()) {
   for (const file of walkJson(dir)) {
@@ -35,6 +36,7 @@ for (const dir of listPackDirs()) {
     culture.push(...((d.culture ?? []) as CultureItem[]));
     quizzes.push(...((d.quizzes ?? []) as QuizItem[]));
     sources.push(...((d.sources ?? []) as SourceItem[]));
+    lessons.push(...((d.lessons ?? []) as LessonItem[]));
     for (const l of (d.links ?? []) as { from: string; to: string; type: string }[]) if (l.type === 'cause') causeLinks.push(l);
   }
 }
@@ -55,6 +57,8 @@ const cu = mine(culture, (c) => [c.period]).sort((a, b) => a.year - b.year);
 out.push('', `## Культура (${cu.length})`, ...cu.map((c) => `${c.year} · ${c.title} · ${c.kind} · ${c.id}`));
 const so = mine(sources.filter((x) => !x.note), (x) => [x.period]).sort((a, b) => (a.year ?? 0) - (b.year ?? 0));
 out.push('', `## Источники хрестоматии (${so.length})`, ...so.map((x) => `${x.year ?? '?'} · ${x.title} · ${x.id}`));
+const le = lessons.filter((l) => l.period === p.id).sort((a, b) => a.order - b.order);
+out.push('', `## Уроки (${le.length})`, ...le.map((l) => `${l.order}. ${l.title} · ${l.id}`));
 const qu = mine(quizzes, (q) => (q.period ? [q.period] : []));
 out.push('', `## Тесты (${qu.length})`, ...qu.map((q) => `${q.title} · ${q.id}`));
 if (flags.includes('--persons')) {

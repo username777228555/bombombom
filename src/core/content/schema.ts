@@ -20,6 +20,7 @@ export const ID_PREFIX = {
   deck: 'd-',
   quiz: 'q-',
   map: 'm-',
+  lesson: 'l-',
 } as const;
 export type EntityKind = keyof typeof ID_PREFIX;
 
@@ -321,7 +322,31 @@ export const MapSchema = z.strictObject({
   })).default([]),
 });
 
-export const FRAGMENT_KEYS = ['events', 'persons', 'culture', 'terms', 'links', 'sources', 'decks', 'quizzes', 'maps'] as const;
+/**
+ * A lesson of the «Курс»: one topic told as a coherent text, with retrieval checks between its parts
+ * (modules/course). In `text`, `[[id]]` / `[[id|подпись]]` link to the knowledge base; the lesson's
+ * `entities` are what it teaches — they come back in the lesson reviews.
+ */
+export const LessonSchema = z.strictObject({
+  id: prefixed('lesson'),
+  title: Text,
+  period: Id,
+  /** Position in the period's course, from 1. */
+  order: z.number().int().min(1),
+  minutes: z.number().int().min(1).max(40).optional(),
+  /** «После урока вы сможете…» */
+  goals: z.array(Text).min(1).max(5),
+  /** Questions before reading: a guess primes attention, the answer is not scored. */
+  warmup: z.array(QuestionSchema).max(3).optional(),
+  sections: z.array(z.strictObject({ title: Text, text: Text, check: z.array(QuestionSchema).max(2).optional() })).min(2).max(8),
+  /** Points of view of historians on the topic (paraphrased positions, not quotes). */
+  views: z.array(z.strictObject({ who: Text, person: Id.optional(), view: Text })).max(5).optional(),
+  summary: z.array(Text).min(3).max(8),
+  entities: z.array(Id).min(3).max(30),
+  quiz: z.array(QuestionSchema).min(3).max(12),
+});
+
+export const FRAGMENT_KEYS = ['events', 'persons', 'culture', 'terms', 'links', 'sources', 'decks', 'quizzes', 'maps', 'lessons'] as const;
 export type FragmentKey = (typeof FRAGMENT_KEYS)[number];
 
 export const FragmentSchema = z.strictObject({
@@ -335,6 +360,7 @@ export const FragmentSchema = z.strictObject({
   decks: z.array(DeckSchema).optional(),
   quizzes: z.array(QuizSchema).optional(),
   maps: z.array(MapSchema).optional(),
+  lessons: z.array(LessonSchema).optional(),
 });
 
 export const PackManifestSchema = z.strictObject({
@@ -378,6 +404,7 @@ export type Question = z.infer<typeof QuestionSchema>;
 export type QuestionType = Question['type'];
 export type QuizItem = z.infer<typeof QuizSchema>;
 export type MapItem = z.infer<typeof MapSchema>;
+export type LessonItem = z.infer<typeof LessonSchema>;
 export type Fragment = z.infer<typeof FragmentSchema>;
 export type PackManifest = z.infer<typeof PackManifestSchema>;
 export type PackBundle = z.infer<typeof PackBundleSchema>;

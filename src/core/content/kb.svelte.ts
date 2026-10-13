@@ -4,7 +4,7 @@
  */
 import {
   FragmentSchema, PackManifestSchema, PeriodsFileSchema, SYMMETRIC_LINKS,
-  type CultureItem, type DeckItem, type EventItem, type Fragment, type LinkItem, type MapItem,
+  type CultureItem, type DeckItem, type EventItem, type Fragment, type LinkItem, type MapItem, type LessonItem,
   type PackBundle, type PackManifest, type Period, type PersonItem, type QuizItem, type SourceItem, type TermItem, type ImageInfo,
 } from './schema';
 import { db } from '../db';
@@ -101,6 +101,8 @@ class KnowledgeBase {
   decks: (DeckItem & { pack: string })[] = [];
   quizzes: (QuizItem & { pack: string })[] = [];
   maps: (MapItem & { pack: string })[] = [];
+  /** Lessons of the «Курс», by period and `order`. */
+  lessons: (LessonItem & { pack: string })[] = [];
   edges: Edge[] = [];
   private rulerList: Reign[] = [];
   byId = new Map<string, Entity>();
@@ -174,6 +176,7 @@ class KnowledgeBase {
     const decks = new Map<string, DeckItem & { pack: string }>();
     const quizzes = new Map<string, QuizItem & { pack: string }>();
     const maps = new Map<string, MapItem & { pack: string }>();
+    const lessons = new Map<string, LessonItem & { pack: string }>();
     const links: LinkItem[] = [];
     for (const p of enabledPacks) {
       const pack = p.manifest.id;
@@ -186,6 +189,7 @@ class KnowledgeBase {
         f.decks?.forEach((d) => decks.set(d.id, { ...d, pack }));
         f.quizzes?.forEach((q) => quizzes.set(q.id, { ...q, pack }));
         f.maps?.forEach((m) => maps.set(m.id, { ...m, pack }));
+        f.lessons?.forEach((l) => lessons.set(l.id, { ...l, pack }));
         if (f.links) links.push(...f.links);
       }
     }
@@ -202,6 +206,8 @@ class KnowledgeBase {
     this.decks = [...decks.values()];
     this.quizzes = [...quizzes.values()];
     this.maps = [...maps.values()];
+    const periodIndex = new Map(this.periods.map((p, i) => [p.id, i]));
+    this.lessons = [...lessons.values()].sort((a, b) => (periodIndex.get(a.period) ?? 99) - (periodIndex.get(b.period) ?? 99) || a.order - b.order);
     this.byId = byId;
 
     const adjacency = new Map<string, Neighbor[]>();

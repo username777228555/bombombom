@@ -7,7 +7,7 @@ import { pluralN, WORDS } from '../utils/format';
 import { undatedCollisions } from './titles';
 import {
   FragmentSchema, PackManifestSchema, PeriodsFileSchema, ID_PREFIX, SYMMETRIC_LINKS,
-  type EntityKind, type Fragment, type PackManifest, type Period,
+  type EntityKind, type Fragment, type PackManifest, type Period, type Question,
 } from './schema';
 
 export type IssueLevel = 'error' | 'warning';
@@ -97,6 +97,8 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
   const add = (level: IssueLevel, file: string, path: string, message: string) => issues.push({ level, file, path, message });
   const periodById = new Map(periods.map((p) => [p.id, p]));
   const registry = new Map<string, Located>();
+  /** Event years (from, to) for the year check of lesson texts. */
+  const eventYears = new Map<string, [number, number]>();
   const validated: ValidatedPack[] = [];
 
   // 1. Schemas + id registry.
@@ -128,7 +130,10 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
         registry.set(id, { kind, pack: manifest.id, file: frag.file, path });
       };
       const d = r.data;
-      d.events?.forEach((x, i) => register(x.id, 'event', `events[${i}]`));
+      d.events?.forEach((x, i) => {
+        register(x.id, 'event', `events[${i}]`);
+        eventYears.set(x.id, [x.year, x.endYear ?? x.year]);
+      });
       d.persons?.forEach((x, i) => register(x.id, 'person', `persons[${i}]`));
       d.culture?.forEach((x, i) => register(x.id, 'culture', `culture[${i}]`));
       d.terms?.forEach((x, i) => register(x.id, 'term', `terms[${i}]`));
@@ -136,6 +141,7 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
       d.decks?.forEach((x, i) => register(x.id, 'deck', `decks[${i}]`));
       d.quizzes?.forEach((x, i) => register(x.id, 'quiz', `quizzes[${i}]`));
       d.maps?.forEach((x, i) => register(x.id, 'map', `maps[${i}]`));
+      d.lessons?.forEach((x, i) => register(x.id, 'lesson', `lessons[${i}]`));
     }
     validated.push(pack);
   }
@@ -296,10 +302,7 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
           ref(`decks[${i}].cards[${j}].entity`, c.entity, ['event', 'person', 'culture', 'term']);
         });
       });
-      d.quizzes?.forEach((quiz, i) => {
-        period(`quizzes[${i}].period`, quiz.period);
-        quiz.questions.forEach((q, j) => {
-          const at = `quizzes[${i}].questions[${j}]`;
+      const checkQuestion = (at: string, q: Question) => {
           checkAsset(file, `${at}.image`, q.image);
           switch (q.type) {
             case 'single':
@@ -329,6 +332,31 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
                 if (answers.some((a) => a.length > 3 && norm(h).includes(a))) add('warning', file, `${at}.hints[${k}]`, 'подсказка содержит ответ');
               });
               break;
+            }
+          }
+      };
+      d.quizzes?.forEach((quiz, i) => {
+        period(`quizzes[${i}].period`, quiz.period);
+        quiz.questions.forEach((q, j) => checkQuestion(`quizzes[${i}].questions[${j}]`, q));
+      });
+      d.lessons?.forEach((l, i) => {
+        const at = `lessons[${i}]`;
+        period(`${at}.period`, l.period);
+        l.entities.forEach((id, j) => ref(`${at}.entities[${j}]`, id));
+        l.views?.forEach((v, j) => ref(`${at}.views[${j}].person`, v.person, ['person']));
+        l.warmup?.forEach((q, j) => checkQuestion(`${at}.warmup[${j}]`, q));
+        l.quiz.forEach((q, j) => checkQuestion(`${at}.quiz[${j}]`, q));
+        l.sections.forEach((sec, j) => {
+          const sp = `${at}.sections[${j}]`;
+          sec.check?.forEach((q, k) => checkQuestion(`${sp}.check[${k}]`, q));
+          checkLatin(file, `${sp}.text`, sec.text);
+          // [[id]] links must exist; a year written right after a linked event must be its year («[[e-x|битва]] (1242)»).
+          for (const m of sec.text.matchAll(/\[\[([a-z0-9-]+)(?:\|[^\]]+)?\]\](?:\s*\(|\s+в\s+)?(\d{3,4})?/g)) {
+            ref(`${sp}.text`, m[1]);
+            const hit = registry.get(m[1]!);
+            if (m[2] && hit?.kind === 'event') {
+              const ev = eventYears.get(m[1]!);
+              if (ev && +m[2] !== ev[0] && +m[2] !== ev[1]) add('warning', file, `${sp}.text`, `у «${m[1]}» в базе ${ev[0]}${ev[1] !== ev[0] ? `–${ev[1]}` : ''}, в тексте ${m[2]}`);
             }
           }
         });

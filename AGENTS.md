@@ -62,6 +62,7 @@ Actions → Android APK → Run workflow.
 | Новый экран или игра | папка/страница в `src/modules/…` + маршрут и плитка в `module.ts` (пример: `modules/study/module.ts`) |
 | Новый тип вопроса | `schema.ts` → компонент в `components/questions/` → `registry.ts` → генератор в `questions.ts` |
 | Орден (достижение) | запись в `ORDERS` (`core/achievements.ts`) |
+| Урок курса | `lessons` в пакете: текст по разделам со ссылками `[[id]]`, вопросы по ходу чтения и проверка; инструкция для модели — `.agents/skills/add-content/LESSONS.md`. Экран и повторения через 2/7/21 день — `src/modules/course/` |
 | Честный прогресс | каждый ответ пишется в `db.answers` (`core/mastery.ts`: эпоха, навык, балл) → «Карта знаний» и «План на сегодня». Новый генератор вопросов — укажите его навык в `SKILL_OF` (`questions.ts`) |
 | Тема или акцент | CSS-переменные в `src/design/themes.css` |
 

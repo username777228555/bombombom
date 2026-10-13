@@ -23,6 +23,8 @@
   import { navigate } from '$lib/core/router.svelte';
   import { update, dismissUpdate } from '$lib/core/update.svelte';
   import { mistakesStats } from '$lib/modules/quiz/mistakes';
+  import { duePlan } from '$lib/modules/course/progress';
+  import type { LessonItem } from '$lib/core/content/schema';
   import { masteryMap, weakest, SKILL_LABELS, type Skill, type Cell } from '$lib/core/mastery';
 
   let due = $state(0);
@@ -31,6 +33,10 @@
   // «План на сегодня»: what actually moves results — due mistakes, the weakest cell of the knowledge map, an extended answer.
   let mist = $state({ due: 0, total: 0, checks: 0 });
   let weak = $state<{ period: string; skill: Skill; cell?: Cell } | null>(null);
+  // Learning before testing: lesson reviews due today and the next lesson of the course.
+  let lessonsDue = $state<LessonItem[]>([]);
+  let nextLesson = $state<LessonItem | undefined>();
+  let nextStarted = $state(false);
 
   onMount(async () => {
     const q = await buildQueue({ newLimit: settings.newPerDay });
@@ -39,6 +45,10 @@
     lastBook = (await db.books.orderBy('openedAt').reverse().first()) ?? null;
     mist = await mistakesStats();
     weak = weakest(await masteryMap(), kb.periods.map((p) => p.id));
+    const plan = await duePlan();
+    lessonsDue = plan.due;
+    nextLesson = plan.next;
+    nextStarted = !!plan.next && plan.state[plan.next.id]?.at !== undefined;
   });
 
   const now = new Date();
@@ -133,6 +143,16 @@
       <a href="#/quiz/map" class="more">Карта знаний <ArrowRight size={14} /></a>
     </div>
     <div class="stack plan-list">
+      {#if lessonsDue.length}
+        <Card href="/lesson/{lessonsDue[0]!.id}" padding="sm">
+          <div class="row pl"><BookOpen size={20} /><span class="grow"><strong>Повторить урок: {lessonsDue[0]!.title}</strong><small>{lessonsDue.length > 1 ? `и ещё ${lessonsDue.length - 1} — ` : ''}проверка без текста перед глазами</small></span><span class="num cnt">{lessonsDue.length}</span></div>
+        </Card>
+      {/if}
+      {#if nextLesson}
+        <Card href="/lesson/{nextLesson.id}" padding="sm">
+          <div class="row pl"><BookOpen size={20} /><span class="grow"><strong>{nextStarted ? 'Дочитать урок' : 'Новый урок'}: {nextLesson.title}</strong><small>{kb.periodById.get(nextLesson.period)?.short}{nextLesson.minutes ? ` · ${nextLesson.minutes} мин чтения и вопросы` : ''}</small></span><ArrowRight size={16} /></div>
+        </Card>
+      {/if}
       {#if mist.due}
         <Card href="/quiz/run?src=mistakes" padding="sm">
           <div class="row pl"><RotateCcw size={20} /><span class="grow"><strong>Повторение по расписанию</strong><small>{mist.checks ? 'ошибки и проверки недельной давности — запомнилось ли?' : 'ошибки вернулись — проверьте, запомнилось ли'}</small></span><span class="num cnt">{mist.due}</span></div>

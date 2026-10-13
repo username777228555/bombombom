@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ChartGantt, Network, GraduationCap, MapPin, Crown, ExternalLink } from '@lucide/svelte';
+  import { ChartGantt, Network, GraduationCap, MapPin, Crown, ExternalLink, BookOpen } from '@lucide/svelte';
   import PageHeader from '$lib/design/components/PageHeader.svelte';
   import Card from '$lib/design/components/Card.svelte';
   import Badge from '$lib/design/components/Badge.svelte';
@@ -167,6 +167,9 @@
         {#if e.kind !== 'term'}<Button size="sm" variant="secondary" icon={ChartGantt} href="/timeline?focus={e.item.id}">На ленте</Button>{/if}
         <Button size="sm" variant="secondary" icon={Network} href="/graph?focus={e.item.id}">В графе</Button>
         {#if cardId}<Button size="sm" variant="soft" icon={GraduationCap} onclick={study}>Учить</Button>{/if}
+        {#each kb.lessons.filter((l) => l.entities.includes(e.item.id)).slice(0, 2) as l (l.id)}
+          <Button size="sm" variant="soft" icon={BookOpen} href="/lesson/{l.id}">Урок: {l.title}</Button>
+        {/each}
       </div>
 
       {#each groups as [label, list] (label)}

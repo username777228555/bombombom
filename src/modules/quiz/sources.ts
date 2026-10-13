@@ -50,6 +50,13 @@ export async function buildQuiz(p: URLSearchParams): Promise<QuizSpec | null> {
         exam,
       };
     }
+    case 'lesson': {
+      // «Проверка» of a lesson and its reviews: the lesson's quiz plus its section questions, mixed.
+      const l = kb.lessons.find((x) => x.id === p.get('id'));
+      if (!l) return null;
+      const checks = l.sections.flatMap((s) => s.check ?? []);
+      return { title: l.title, ref: `lesson:${l.id}`, questions: [...shuffle(l.quiz), ...sample(checks, Math.min(3, checks.length))], exam, period: l.period };
+    }
     case 'drill': {
       const id = p.get('d') ?? '';
       const d = id in DRILLS ? DRILLS[id as DrillId] : null;

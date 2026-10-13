@@ -13,6 +13,7 @@
   import ZoomImage from '$lib/design/components/ZoomImage.svelte';
   import { buildQuiz, type QuizSpec } from './sources';
   import { noteAnswer } from './mistakes';
+  import { lessonFinished } from '$lib/modules/course/progress';
   import { kb } from '$lib/core/content/kb.svelte';
   import { logAnswer, skillOf } from '$lib/core/mastery';
   import { whyQuestion, type GeneratedQuestion } from '$lib/core/content/questions';
@@ -109,11 +110,14 @@
     const xp = Math.round(points * 5) + (perfect ? 10 : 0);
     await record({ quizzes: 1, questions: answered, xp });
     await saveResult({ kind: 'quiz', ref: spec.ref, score: correctCount, total: n, ms: Date.now() - startedAt });
+    // A lesson's check schedules its next review (course/progress.ts); unanswered questions count as wrong.
+    if (spec.ref.startsWith('lesson:')) lessonNext = await lessonFinished(spec.ref.slice(7), points / n);
     if (correctCount / n >= 0.7) setTimeout(() => burst(), 250);
   }
 
   // «Почему?»: after a right answer about an event, one tap adds its causes as the next (extended) question.
   let whyAdded = $state(new Set<number>());
+  let lessonNext = $state<{ due?: number } | null>(null);
   const why = $derived.by(() => {
     if (!revealed || lastScore < 0.999 || !current) return null;
     const q = current as GeneratedQuestion;
@@ -170,6 +174,7 @@
       <h1>{correctCount === spec.questions.length ? 'Безупречно!' : correctCount / spec.questions.length >= 0.7 ? 'Отличный результат' : correctCount / spec.questions.length >= 0.4 ? 'Неплохо, есть над чем поработать' : 'Стоит повторить тему'}</h1>
       <Ornament />
       <p class="muted">Время: {formatDuration(elapsed)} · +{Math.round(points * 5) + (correctCount === spec.questions.length ? 10 : 0)} опыта</p>
+      {#if lessonNext}<p class="lesson-next">{lessonNext.due ? `Урок вернётся на повторение ${new Date(lessonNext.due).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })}` : 'Все повторения урока пройдены'}</p>{/if}
 
       <div class="review stack">
         {#each spec.questions as q, i (i)}
@@ -236,6 +241,7 @@
   .prompt { font-size: var(--text-2xl); line-height: 1.2; }
   .why { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; margin: 0 0 var(--sp-3); padding: 10px 14px; border-radius: var(--r-md); border: 1.5px dashed var(--accent); background: none; color: var(--accent); font-weight: 650; text-align: left; cursor: pointer; }
   .guess { padding: 4px 12px; border-radius: var(--r-full); border: 1px solid var(--line-strong); background: none; color: var(--ink-2); font-size: var(--text-xs); font-weight: 650; cursor: pointer; }
+  .lesson-next { margin: 0; font-weight: 650; color: var(--accent); }
   .why small { font-weight: 400; color: var(--ink-3); font-size: var(--text-xs); }
   blockquote { white-space: pre-line; margin: 0; padding: var(--sp-4); border-left: 3px solid var(--gold); background: var(--gold-soft); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-read); font-size: var(--text-md); line-height: 1.55; }
   .feedback { display: flex; flex-direction: column; gap: var(--sp-3); padding: var(--sp-4); border-radius: var(--r-lg); border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow-2); margin-top: var(--sp-2); }

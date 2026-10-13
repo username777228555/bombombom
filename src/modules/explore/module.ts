@@ -1,4 +1,4 @@
-import { ChartGantt, Network, Crown, BookOpen, Landmark, ScrollText } from '@lucide/svelte';
+import { ChartGantt, Network, Crown, BookOpen, Landmark, ScrollText, LibraryBig } from '@lucide/svelte';
 import { defineModule } from '$lib/core/define-module';
 
 export default defineModule({
@@ -12,6 +12,7 @@ export default defineModule({
     { path: '/terms', tab: 'explore', component: () => import('./TermsPage.svelte') },
     { path: '/sources', tab: 'explore', component: () => import('./SourcesPage.svelte') },
     { path: '/culture', tab: 'explore', component: () => import('./CulturePage.svelte') },
+    { path: '/reading', tab: 'explore', component: () => import('./ReadingPage.svelte') },
   ],
   entries: [
     { hub: 'explore', title: 'Лента времени', description: 'События и правления на одной шкале', icon: ChartGantt, href: '/timeline', order: 10, tint: '#2b4f8c' },
@@ -19,6 +20,7 @@ export default defineModule({
     { hub: 'explore', title: 'Правители', description: 'Лестница престолонаследия', icon: Crown, href: '/rulers', order: 30, tint: '#a87a28' },
     { hub: 'explore', title: 'Термины', description: 'Словарь понятий', icon: BookOpen, href: '/terms', order: 40, tint: '#7c1d2b' },
     { hub: 'explore', title: 'Хрестоматия', description: 'Отрывки источников: узнай документ', icon: ScrollText, href: '/sources', order: 45, tint: '#6b4a2b' },
+    { hub: 'explore', title: 'Что читать', description: 'Главные книги по эпохам', icon: LibraryBig, href: '/reading', order: 5, tint: '#4f3a6b' },
     { hub: 'explore', title: 'Культура', description: 'Памятники и признаки', icon: Landmark, href: '/culture', order: 50, tint: '#7a3d6b' },
   ],
 });

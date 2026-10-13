@@ -8,7 +8,7 @@
   import EmptyState from '$lib/design/components/EmptyState.svelte';
   import EntityRow from '$lib/components/EntityRow.svelte';
   import { kb, type Entity } from '$lib/core/content/kb.svelte';
-  import { guideFor } from '$lib/core/guides';
+  import { coreBooksFor, guideFor } from '$lib/core/guides';
   import { EVENT_TAG_LABELS, CULTURE_KIND_LABELS } from '$lib/core/content/schema';
   import { router } from '$lib/core/router.svelte';
   import { century, pluralN, toRoman, WORDS } from '$lib/core/utils/format';
@@ -29,7 +29,8 @@
   const books = $derived(period ? kb.sources.filter((s) => s.period === period.id && isBook(s)) : []);
   const docs = $derived(period ? kb.sources.filter((s) => s.period === period.id && !isBook(s)).sort((a, b) => (a.year ?? 0) - (b.year ?? 0)) : []);
   const guide = $derived(period ? guideFor(period.id) : null);
-  const hasPlan = $derived(!!guide && (guide.read.length + guide.watch.length + guide.do.length > 0));
+  const core = $derived(period ? coreBooksFor(period.id) : []);
+  const hasPlan = $derived(!!guide && (core.length + guide.read.length + guide.watch.length + guide.do.length > 0));
 
   const tags = $derived.by(() => {
     const src: string[] = tab === 'events' ? events.flatMap((e) => e.tags ?? []) : tab === 'culture' ? culture.map((c) => c.kind) : [];
@@ -111,8 +112,17 @@
     {#if hasPlan && guide}
       <div class="stack plan">
         <div class="section-title"><h2>План подготовки</h2></div>
+        {#if core.length}
+          <h3 class="eyebrow">Главные книги</h3>
+          <Card padding="sm">
+            <ul class="plan-list">
+              {#each core as b (b.author + b.title)}<li><strong>{b.author} — «{b.title}»</strong>{#if b.detail}<span class="muted"> — {b.detail}</span>{/if}</li>{/each}
+            </ul>
+            <a class="all-books" href="#/reading">Весь список по эпохам →</a>
+          </Card>
+        {/if}
         {#if guide.read.length}
-          <h3 class="eyebrow">Прочитать</h3>
+          <h3 class="eyebrow">{core.length ? 'Дополнительно' : 'Прочитать'}</h3>
           <Card padding="sm">
             <ul class="plan-list">
               {#each guide.read as r (r.title)}<li><strong>{r.title}</strong>{#if r.detail}<span class="muted"> — {r.detail}</span>{/if}</li>{/each}
@@ -202,6 +212,7 @@
   .plan { --gap: var(--sp-3); margin-bottom: var(--sp-4); }
   .plan-list { margin: 0; padding-left: 18px; font-size: var(--text-sm); display: flex; flex-direction: column; gap: 6px; }
   .plan-list a { font-weight: 600; }
+  .all-books { display: inline-block; margin-top: var(--sp-2); font-size: var(--text-sm); font-weight: 650; color: var(--accent); }
   .net-note { font-size: var(--text-xs); }
   .quiz-row { color: var(--gold); }
   .quiz-row strong { color: var(--ink); }

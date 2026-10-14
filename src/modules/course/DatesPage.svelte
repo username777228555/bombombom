@@ -23,7 +23,7 @@
   import { haptic } from '$lib/core/platform';
   import { pluralN, WORDS } from '$lib/core/utils/format';
   import { shuffle } from '$lib/core/utils/random';
-  import { gapLabel, lessonDates, yearLabel } from './dates';
+  import { gapLabel, lessonDates, yearAsk, yearLabel } from './dates';
   import { lessonDatesDone } from './progress';
 
   const lesson = kb.lessons.find((l) => l.id === router.params.id);
@@ -69,9 +69,9 @@
     const explain = `${yearLabel(e)} — ${e.title}. ${e.summary}`;
     if (it.level === 0) {
       const ys = yearChoices(e);
-      task = { item: it, q: { type: 'single', prompt: `В каком году: «${quizTitle(e)}»?`, options: ys.map(String), answer: ys.indexOf(e.year), explain } };
+      task = { item: it, q: { type: 'single', prompt: `${yearAsk(e)}: «${quizTitle(e)}»?`, options: ys.map(String), answer: ys.indexOf(e.year), explain } };
     } else {
-      task = { item: it, q: { type: 'year', prompt: `${it.level === 2 ? 'Ещё раз, по памяти' : 'Напишите год'}: «${quizTitle(e)}»`, answer: e.year, tolerance: e.circa ? 3 : 0, explain } };
+      task = { item: it, q: { type: 'year', prompt: `${it.level === 2 ? 'Ещё раз, по памяти' : 'Напишите год'}${e.endYear && e.endYear !== e.year ? ' начала' : ''}: «${quizTitle(e)}»`, answer: e.year, tolerance: e.circa ? 3 : 0, explain } };
     }
   }
 

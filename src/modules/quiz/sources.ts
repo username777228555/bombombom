@@ -59,7 +59,7 @@ export async function buildQuiz(p: URLSearchParams): Promise<QuizSpec | null> {
       const checks = l.sections.flatMap((s) => s.check ?? []);
       // Dates of the lesson are asked by recall (type the year), not recognition.
       const years: GeneratedQuestion[] = sample(lessonDates(l), 4).map((e) => ({
-        type: 'year', prompt: `Укажите год: «${quizTitle(e)}»`, answer: e.year, tolerance: e.circa ? 3 : 0,
+        type: 'year', prompt: `Укажите год${e.endYear && e.endYear !== e.year ? ' начала' : ''}: «${quizTitle(e)}»`, answer: e.year, tolerance: e.circa ? 3 : 0,
         explain: `${formatEventDate(e)}. ${e.summary}`, entity: e.id, period: e.period, skill: 'dates',
       }));
       return { title: l.title, ref: `lesson:${l.id}`, questions: shuffle([...l.quiz, ...sample(checks, Math.min(3, checks.length)), ...years]), exam, period: l.period };

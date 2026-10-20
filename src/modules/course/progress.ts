@@ -6,12 +6,15 @@
  *   lessonFinished(id, share)   // after the lesson's quiz (first pass or review), share of right answers 0..1
  *   courseState()               // { [lessonId]: LessonState }
  *   duePlan()                   // { due: lessons to review today, next: the first lesson not done yet }
+ *   lessonSession(id)           // the open pass of a lesson (answers, step reached), until its quiz is finished
  */
 import { kvGet, kvSet } from '$lib/core/db';
 import { kb } from '$lib/core/content/kb.svelte';
 import type { LessonItem } from '$lib/core/content/schema';
+import type { RecallAttempt } from './recall';
 
 const KEY = 'course-v1';
+const SESSION = 'lesson-session-v1';
 const DAY = 86_400_000;
 /** Days until the next review after the first pass, the 1st and the 2nd review. */
 const STEPS = [2, 7, 21];
@@ -50,7 +53,40 @@ export async function lessonFinished(id: string, share: number): Promise<LessonS
   delete next.at;
   all[id] = next;
   await kvSet(KEY, all);
+  await clearLessonSession(id);
   return next;
+}
+
+/**
+ * One pass through a lesson as the page last showed it: answers to the warm-up and section questions, the
+ * sections opened, the step (reading, recall, final). Leaving the lesson — for «Даты урока», an entity card or
+ * another tab — must not wipe it; the pass ends when the lesson's quiz is finished (lessonFinished).
+ */
+export interface LessonSession {
+  shown: number;
+  phase: 'read' | 'recall' | 'final';
+  review?: boolean;
+  /** Scores by question key: `w0` warm-up, `s2-0` check 0 of section 2. */
+  scores: Record<string, number>;
+  recalled?: RecallAttempt;
+  ts: number;
+}
+
+export const lessonSession = async (id: string) => (await kvGet<Record<string, LessonSession>>(SESSION, {}))[id];
+
+export async function saveLessonSession(id: string, s: LessonSession) {
+  const all = await kvGet<Record<string, LessonSession>>(SESSION, {});
+  all[id] = s;
+  // Keep the recent passes only: an abandoned lesson should not live here forever.
+  const keep = Object.entries(all).sort((a, b) => b[1].ts - a[1].ts).slice(0, 30);
+  await kvSet(SESSION, Object.fromEntries(keep));
+}
+
+export async function clearLessonSession(id: string) {
+  const all = await kvGet<Record<string, LessonSession>>(SESSION, {});
+  if (!(id in all)) return;
+  delete all[id];
+  await kvSet(SESSION, all);
 }
 
 export async function lessonDatesDone(id: string) {

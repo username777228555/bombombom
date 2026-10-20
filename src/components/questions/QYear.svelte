@@ -1,3 +1,11 @@
+<script module lang="ts">
+  /**
+   * Several year pads can be on one screen (a lesson's warm-up and checks): the physical keyboard goes to one —
+   * the pad last touched, else the first open one that gets a key.
+   */
+  let owner: symbol | null = null;
+</script>
+
 <script lang="ts">
   import { Delete } from '@lucide/svelte';
   import type { QuestionProps } from './types';
@@ -7,10 +15,21 @@
 
   let { q, revealed, onsubmit }: QuestionProps<Extract<Question, { type: 'year' }>> = $props();
   let value = $state('');
+  let box = $state<HTMLElement>();
+  const me = Symbol();
   const diff = $derived(value ? Number(value) - q.answer : 0);
+
+  // Answered or gone: free the keyboard for the next pad.
+  $effect(() => {
+    if (revealed && owner === me) owner = null;
+  });
+  $effect(() => () => {
+    if (owner === me) owner = null;
+  });
 
   function key(k: string) {
     if (revealed) return;
+    owner = me;
     haptic('select');
     if (k === '⌫') value = value.slice(0, -1);
     else if (value.length < 4) value += k;
@@ -22,12 +41,16 @@
 </script>
 
 <svelte:window onkeydown={(e) => {
+  // Not when answered, hidden (a lesson's text during recall), typing in a field, or another pad has the keyboard.
+  if (revealed || !box || box.offsetParent === null) return;
+  if ((e.target as HTMLElement | null)?.closest?.('input, textarea, select, [contenteditable="true"]')) return;
+  if (owner && owner !== me) return;
   if (/^\d$/.test(e.key)) key(e.key);
   else if (e.key === 'Backspace') key('⌫');
-  else if (e.key === 'Enter' && value && !revealed) check();
+  else if (e.key === 'Enter' && value) check();
 }} />
 
-<div class="display" class:right={revealed && Math.abs(diff) <= (q.tolerance ?? 0)} class:wrong={revealed && Math.abs(diff) > (q.tolerance ?? 0)}>
+<div bind:this={box} class="display" class:right={revealed && Math.abs(diff) <= (q.tolerance ?? 0)} class:wrong={revealed && Math.abs(diff) > (q.tolerance ?? 0)}>
   <span class="num">{value || '____'}</span>
   {#if revealed}
     <small>{diff === 0 ? 'Точно!' : `Верно: ${q.answer} (${diff > 0 ? '+' : ''}${diff})`}</small>

@@ -4,7 +4,8 @@
    * each closed by a comprehension question → «Вспомните урок» (write it down from memory with the text hidden,
    * then check against the lesson's points, RecallStep) → historians' views and the summary → «Даты урока»
    * (DatesPage) → «Проверка» (the lesson's quiz, src=lesson). A due review starts with the recall again.
-   * Links `[[id]]` open the entity sheet; the section reached is remembered; answers go to the knowledge map.
+   * Links `[[id]]` open the entity sheet; answers go to the knowledge map. The pass is kept (lessonSession):
+   * leaving for «Даты урока» or a card and coming back restores the answers, the sections opened and the step.
    */
   import { onMount, tick } from 'svelte';
   import { fly } from 'svelte/transition';
@@ -25,7 +26,7 @@
   import { richText } from '$lib/core/utils/text';
   import { pluralN, WORDS } from '$lib/core/utils/format';
   import { noteAnswer } from '$lib/modules/quiz/mistakes';
-  import { courseState, daysUntil, lessonAt, lessonRecalled, type LessonState } from './progress';
+  import { courseState, daysUntil, lessonAt, lessonRecalled, lessonSession, saveLessonSession, type LessonState } from './progress';
   import RecallStep from './RecallStep.svelte';
   import { lessonDates } from './dates';
   import type { RecallAttempt } from './recall';
@@ -38,13 +39,9 @@
   let shown = $state(0);
   /** Scores of answered questions by key: `w0` warm-up, `s2-0` check 0 of section 2. */
   let scores = $state<Record<string, number>>({});
+  /** Answers restored from an earlier visit: the question shows the right answer, so say how it went. */
+  let restored = $state(new Set<string>());
   let loaded = $state(false);
-
-  onMount(async () => {
-    st = (await courseState())[lesson?.id ?? ''];
-    if (st?.at && !st.done) shown = Math.min(st.at, lesson?.sections.length ?? 0);
-    loaded = true;
-  });
 
   const total = $derived(lesson?.sections.length ?? 0);
   const readAll = $derived(shown >= total);
@@ -52,6 +49,33 @@
   let phase = $state<'read' | 'recall' | 'final'>('read');
   let reviewing = $state(false);
   let recalled = $state<RecallAttempt | null>(null);
+
+  onMount(async () => {
+    if (!lesson) return;
+    st = (await courseState())[lesson.id];
+    const s = await lessonSession(lesson.id);
+    if (s) {
+      shown = Math.min(s.shown, total);
+      phase = s.phase;
+      reviewing = !!s.review;
+      scores = s.scores;
+      restored = new Set(Object.keys(s.scores));
+      recalled = s.recalled ?? null;
+    } else if (st?.at && !st.done) shown = Math.min(st.at, total);
+    loaded = true;
+    // Back where the student was: the last section opened, or the final steps.
+    await tick();
+    const target = phase === 'final' ? document.getElementById('final') : phase === 'read' && shown > 0 ? document.getElementById(`sec-${shown - 1}`) : null;
+    target?.scrollIntoView({ block: 'start' });
+  });
+
+  // Every change of the pass is saved, so a visit elsewhere does not wipe the answers.
+  $effect(() => {
+    if (!loaded || !lesson) return;
+    // Spread reads every key, so a new answer re-runs this; IndexedDB needs plain objects, not state proxies.
+    const snap = { shown, phase, review: reviewing, scores: { ...scores }, recalled: recalled ? $state.snapshot(recalled) : undefined, ts: Date.now() };
+    void saveLessonSession(lesson.id, snap);
+  });
   /** A forgotten point's section, shown under the checklist. */
   let reread = $state<number | null>(null);
   const hasDates = $derived(!!lesson && lessonDates(lesson).length > 0);
@@ -100,6 +124,9 @@
   <div class="ask">
     <p class="ask-q">{q.prompt}</p>
     {#if q.excerpt}<blockquote>{q.excerpt}</blockquote>{/if}
+    {#if done && restored.has(key)}
+      <p class="was" class:ok={scores[key]! >= 0.999}>{scores[key]! >= 0.999 ? 'Вы ответили верно' : 'Вы ответили неверно — верный ответ отмечен'}</p>
+    {/if}
     <QC {q} revealed={done} onsubmit={(s: number) => answer(key, q, s)} />
     {#if done && q.explain}<div class="rich exp" in:fly={{ y: 8, duration: 200 }}>{@html richText(q.explain)}</div>{/if}
   </div>
@@ -145,7 +172,9 @@
               </section>
             {/if}
           {/if}
-        {:else}
+        {/if}
+        <!-- Hidden, not removed, while recalling: the answered questions keep the student's own choices. -->
+        <div class="read" hidden={phase === 'recall'}>
         {#if shown === 0 && !st?.done}
           {#if lesson.warmup?.length}
             <section class="warm">
@@ -201,9 +230,10 @@
             <ul class="sum">{#each lesson.summary as s (s)}<li>{s}</li>{/each}</ul>
           </section>
         {/if}
-        {/if}
+        </div>
 
         {#if phase === 'final'}
+          <div id="final" class="final">
           <Card tone="gold" padding="md">
             <strong>Закрепление</strong>
             <ol class="steps">
@@ -214,7 +244,7 @@
               {#if hasDates}
                 <li class:done={!!st?.dates}>
                   <span class="si">{#if st?.dates}<Check size={16} />{:else}<CalendarClock size={16} />{/if}</span>
-                  <span class="grow"><button type="button" class="lnk" onclick={() => navigate(`/lesson/${lesson.id}/dates`)}>Даты урока</button><small class="muted"> — лента и тренировка: каждую дату дважды по памяти, потом в «Карточки»</small></span>
+                  <span class="grow"><button type="button" class="lnk" onclick={() => navigate(`/lesson/${lesson.id}/dates`)}>Даты урока</button><small class="muted"> — лента и тренировка: выбрать год, потом написать по памяти; затем даты уходят в «Карточки»</small></span>
                 </li>
               {/if}
               <li>
@@ -229,6 +259,7 @@
               <Button full icon={ListChecks} onclick={check}>{st?.done ? 'Пройти проверку' : 'Начать проверку'}</Button>
             {/if}
           </Card>
+          </div>
         {/if}
       </div>
     {/if}
@@ -238,6 +269,11 @@
 <style>
   .bar { position: sticky; top: calc(var(--safe-top) + 0px); z-index: 4; padding: 6px 0; background: var(--bg); }
   .body { display: flex; flex-direction: column; gap: var(--sp-4); padding-bottom: var(--sp-6); }
+  .read { display: flex; flex-direction: column; gap: var(--sp-4); }
+  .read[hidden] { display: none; }
+  .final { scroll-margin-top: 64px; }
+  .was { margin: 0 0 var(--sp-2); font-size: var(--text-sm); font-weight: 650; color: var(--danger); }
+  .was.ok { color: var(--success); }
   .meta { gap: var(--sp-3); flex-wrap: wrap; font-size: var(--text-xs); }
   .meta .row { gap: 4px; }
   .goals-t { display: flex; align-items: center; gap: 6px; font-weight: 700; margin: var(--sp-3) 0 var(--sp-1); color: var(--c); }

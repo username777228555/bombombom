@@ -1,9 +1,10 @@
 <script lang="ts">
   /**
-   * «Даты урока» (/lesson/:id/dates): first the dates as a chain in time with the gaps between them, then a drill by
-   * steps — pick the year from four → type it → type it again a few tasks later; one chronological ordering round in
-   * the middle. A mistake sends the date a step back. At the end every date goes to «Карточки» (FSRS, deck `lessons`)
-   * graded by how it went, so it comes back on a schedule; answers are logged to the knowledge map (skill «даты»).
+   * «Даты урока» (/lesson/:id/dates): first the dates as a chain in time with the gaps between them, then a short
+   * drill — pick the year from four → type it from memory; a date with a mistake is typed once more a few tasks
+   * later, and after three mistakes it is left for the cards instead of going round in circles. One chronological
+   * ordering round in the middle; «Закончить» ends it any time. At the end every date goes to «Карточки» (FSRS,
+   * deck `lessons`) graded by how it went; answers are logged to the knowledge map (skill «даты»).
    */
   import { fly } from 'svelte/transition';
   import { CalendarClock, ArrowRight, Check, X as XIcon, ListChecks } from '@lucide/svelte';
@@ -30,16 +31,19 @@
   const period = lesson ? kb.periodById.get(lesson.period) : undefined;
   const dates = lesson ? lessonDates(lesson) : [];
 
-  /** 0 — pick from four, 1 — type, 2 — type again, 3 — learnt. */
+  /** 0 — pick from four, 1 — type, 2 — type once more (after a mistake), 3 — learnt. */
   interface Item { e: EventItem; level: number; errors: number; seen: number }
+  /** A date missed this many times is left to the cards: drilling it on and on only tires. */
+  const MAX_ERRORS = 3;
   const items = $state<Item[]>(dates.map((e) => ({ e, level: 0, errors: 0, seen: -100 })));
+  const over = (i: Item) => i.level >= 3 || i.errors >= MAX_ERRORS;
   let phase = $state<'chain' | 'drill' | 'done'>('chain');
   let step = $state(0);
   let orderDone = false;
   let task = $state<{ q: Question; item?: Item } | null>(null);
   let result = $state<number | null>(null);
 
-  const learnt = $derived(items.filter((i) => i.level >= 3).length);
+  const learnt = $derived(items.filter(over).length);
 
   function yearChoices(e: EventItem): number[] {
     // Other dates of the lesson are the best distractors: they are the ones that get mixed up.
@@ -51,10 +55,10 @@
 
   function nextTask() {
     result = null;
-    const open = items.filter((i) => i.level < 3);
+    const open = items.filter((i) => !over(i));
     if (!open.length) return void finish();
-    // One ordering round once every date has been seen.
-    if (!orderDone && items.length >= 3 && items.every((i) => i.level >= 1)) {
+    // One ordering round once every date has been recognised.
+    if (!orderDone && items.length >= 3 && items.every((i) => i.level >= 1 || over(i))) {
       orderDone = true;
       const set = shuffle(items).slice(0, 5).map((i) => i.e).sort((a, b) => a.year - b.year);
       task = { q: { type: 'order', prompt: 'Расположите события урока по порядку', items: set.map(quizTitle), explain: set.map((e) => `${yearLabel(e)} — ${e.title}`).join('; ') } };
@@ -81,10 +85,11 @@
     haptic(ok ? 'success' : 'error');
     const it = task?.item;
     if (it) {
-      if (ok) it.level++;
+      // Recognised → type it; typed right → learnt, or once more later if it was ever missed.
+      if (ok) it.level = it.level === 0 ? 1 : it.level === 1 && it.errors ? 2 : 3;
       else {
         it.errors++;
-        it.level = Math.max(0, it.level - 1);
+        it.level = Math.min(it.level, 1);
       }
       logAnswer({ period: it.e.period, skill: 'dates', entity: it.e.id, type: task!.q.type, score, src: `lesson-dates:${lesson?.id}` });
     }
@@ -99,6 +104,7 @@
   }
 
   async function finish() {
+    if (phase === 'done') return;
     phase = 'done';
     task = null;
     if (!lesson) return;
@@ -107,7 +113,8 @@
     await enroll('lessons', ids);
     for (const it of items) {
       const rec = await db.srs.get(`a:e:${it.e.id}`);
-      if (rec) await grade(rec, it.errors === 0 ? Rating.Good : it.errors === 1 ? Rating.Hard : Rating.Again);
+      // Not finished (the drill was cut short) or missed twice — soon again; one slip — harder; clean — good.
+      if (rec) await grade(rec, it.level < 3 || it.errors >= 2 ? Rating.Again : it.errors === 1 ? Rating.Hard : Rating.Good);
     }
     await lessonDatesDone(lesson.id);
   }
@@ -136,7 +143,7 @@
     </ol>
     <Button full size="lg" icon={ListChecks} onclick={start}>Запоминать</Button>
   {:else if phase === 'drill' && task && QC}
-    <div class="bar"><span class="pb"><ProgressBar value={learnt / items.length} /></span><span class="muted small num">{learnt}/{items.length}</span></div>
+    <div class="bar"><span class="pb"><ProgressBar value={learnt / items.length} /></span><span class="muted small num">{learnt}/{items.length}</span><button type="button" class="end" onclick={() => void finish()}>Закончить</button></div>
     {#key step}
       <article class="q" in:fly={{ x: 30, duration: 240 }}>
         <h2 class="prompt">{task.q.prompt}</h2>
@@ -156,10 +163,10 @@
     {/key}
   {:else if phase === 'done'}
     <Card tone="gold" padding="lg">
-      <strong class="display big">Даты урока запомнены</strong>
-      <p class="muted small">Каждую вы написали по памяти дважды. Теперь они в «Карточках» и вернутся, когда начнут забываться: сначала скоро, потом всё реже.</p>
+      <strong class="display big">{items.every((i) => i.level >= 3) ? 'Даты урока запомнены' : 'Тренировка закончена'}</strong>
+      <p class="muted small">Теперь все даты в «Карточках» и вернутся, когда начнут забываться: трудные — скоро, остальные — всё реже.</p>
       <ul class="res">
-        {#each items as it (it.e.id)}<li><span class="num">{yearLabel(it.e)}</span> {it.e.title}{#if it.errors}<small> · ошибок: {it.errors}</small>{/if}</li>{/each}
+        {#each items as it (it.e.id)}<li><span class="num">{yearLabel(it.e)}</span> {it.e.title}{#if it.level < 3}<small> · повторим в карточках</small>{:else if it.errors}<small> · ошибок: {it.errors}</small>{/if}</li>{/each}
       </ul>
       <div class="stack acts">
         <Button full icon={ListChecks} onclick={() => navigate(`/quiz/run?src=lesson&id=${lesson.id}`)}>К проверке урока</Button>
@@ -179,6 +186,7 @@
   .gap { padding: 2px 0 2px 34px; border-left: 2px dashed color-mix(in srgb, var(--c) 45%, transparent); margin-left: 30px; font-size: var(--text-xs); color: var(--ink-3); font-weight: 650; }
   .bar { display: flex; align-items: center; gap: var(--sp-3); margin: var(--sp-2) 0 var(--sp-3); }
   .pb { flex: 1; }
+  .end { padding: 4px 2px; border: 0; background: none; color: var(--ink-3); font: inherit; font-size: var(--text-xs); font-weight: 650; cursor: pointer; }
   .prompt { font-size: var(--text-lg); line-height: 1.35; margin: 0 0 var(--sp-3); }
   .fb { display: flex; flex-direction: column; gap: var(--sp-2); margin-top: var(--sp-3); padding: var(--sp-3); border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--line); }
   .fb .v { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--danger); }

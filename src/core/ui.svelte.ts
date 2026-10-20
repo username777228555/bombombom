@@ -26,6 +26,8 @@ export const ui = $state({
   celebrations: [] as Celebration[],
   sheet: null as SheetState | null,
   confirm: null as null | { title: string; message?: string; ok: string; danger?: boolean; resolve: (v: boolean) => void },
+  /** «Знакомство с Василием» opened again from the settings (the first one starts by itself: settings.onboarded). */
+  tour: false,
 });
 
 let nextId = 1;

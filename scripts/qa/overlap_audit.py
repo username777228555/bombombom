@@ -85,6 +85,9 @@ async def main():
         page.on("pageerror", lambda e: errs.append(str(e)))
         await page.goto(BASE + "#/", wait_until="networkidle")
         await page.wait_for_timeout(2000)
+        if await page.locator(".tour .skip").count():  # first launch opens «Знакомство с Василием»
+            await page.locator(".tour .skip").click()
+            await page.wait_for_timeout(400)
         if WHAT in ("both", "timeline"):
             await page.goto(BASE + "#/timeline", wait_until="networkidle")
             await page.wait_for_timeout(1500)

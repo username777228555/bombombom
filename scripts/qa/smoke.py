@@ -21,6 +21,9 @@ async def main():
             await page.goto(BASE + "#" + r, wait_until="networkidle")
             await page.wait_for_timeout(wait)
         await go("/", 2000)
+        if await page.locator(".tour .skip").count():  # first launch opens «Знакомство с Василием»
+            await page.locator(".tour .skip").click()
+            await page.wait_for_timeout(400)
 
         # Rulers ladder
         await go("/rulers")

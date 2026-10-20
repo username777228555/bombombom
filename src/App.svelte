@@ -14,6 +14,8 @@
   import SheetHost from '$lib/app/SheetHost.svelte';
   import Overlays from '$lib/app/Overlays.svelte';
   import Splash from '$lib/app/Splash.svelte';
+  import Onboarding from '$lib/app/Onboarding.svelte';
+  import { ui } from '$lib/core/ui.svelte';
   import NotFound from '$lib/app/NotFound.svelte';
 
   let booted = $state(false);
@@ -92,6 +94,7 @@
   {/key}
   {#if !immersive}<TabBar />{/if}
   <SheetHost />
+  {#if ui.tour || !settings.onboarded}<Onboarding onclose={() => (ui.tour = false)} />{/if}
 {/if}
 <Overlays />
 

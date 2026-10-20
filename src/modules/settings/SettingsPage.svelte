@@ -5,10 +5,11 @@
   import Segmented from '$lib/design/components/Segmented.svelte';
   import Toggle from '$lib/design/components/Toggle.svelte';
   import Button from '$lib/design/components/Button.svelte';
+  import Vasily from '$lib/design/components/Vasily.svelte';
   import { settings, type Accent } from '$lib/core/settings.svelte';
   import { exportBackup, importBackup, resetProgress } from '$lib/core/backup';
   import { pickFiles } from '$lib/core/platform';
-  import { toast, confirmDialog } from '$lib/core/ui.svelte';
+  import { toast, confirmDialog, ui } from '$lib/core/ui.svelte';
   import { navigate } from '$lib/core/router.svelte';
 
   const ACCENTS: { id: Accent; name: string; color: string }[] = [
@@ -56,6 +57,14 @@
 
 <div class="page">
   <PageHeader title="Настройки" back="/profile" />
+
+  <Card padding="sm">
+    <button class="link tour" onclick={() => (ui.tour = true)}>
+      <Vasily size={44} head />
+      <span class="grow">Знакомство с Василием<small>обзор возможностей приложения</small></span>
+      <ChevronRight size={18} />
+    </button>
+  </Card>
 
   <section class="stack">
     <h2 class="eyebrow">Оформление</h2>
@@ -118,4 +127,6 @@
   .small { font-size: var(--text-sm); }
   .link { display: flex; align-items: center; gap: var(--sp-3); width: 100%; padding: 12px; border: 0; background: none; cursor: pointer; font-size: var(--text-md); color: var(--ink); }
   .link :global(svg:first-child) { color: var(--accent); }
+  .tour { padding: 6px 12px; text-align: left; }
+  .tour small { display: block; color: var(--ink-3); font-size: var(--text-xs); }
 </style>

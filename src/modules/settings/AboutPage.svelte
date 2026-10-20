@@ -3,6 +3,7 @@
   import Card from '$lib/design/components/Card.svelte';
   import Emblem from '$lib/design/components/Emblem.svelte';
   import Ornament from '$lib/design/components/Ornament.svelte';
+  import Vasily from '$lib/design/components/Vasily.svelte';
   const version = __APP_VERSION__;
 </script>
 
@@ -19,6 +20,15 @@
     <Card padding="md">
       <h2>Что это</h2>
       <p class="secondary">Офлайн-приложение для подготовки к олимпиадам по истории России: эпохи, лента времени, граф связей, карточки с интервальным повторением, тесты в олимпиадных форматах, игры и читалка книг. Всё работает без интернета, данные хранятся только на устройстве.</p>
+    </Card>
+    <Card padding="md">
+      <div class="cat">
+        <Vasily size={96} interactive />
+        <div>
+          <h2>Василий</h2>
+          <p class="secondary">Кот учёный: каракал — «степная рысь», по-тюркски «чёрное ухо», — в лавровом венке и с цепью пушкинского кота, что «всё ходит по цепи кругом». Его можно погладить.</p>
+        </div>
+      </div>
     </Card>
     <Card padding="md" tone="gold">
       <h2>О точности</h2>
@@ -38,5 +48,6 @@
   .hero { display: flex; flex-direction: column; align-items: center; gap: var(--sp-2); padding: var(--sp-4) 0 var(--sp-6); }
   .hero h1 { font-size: var(--text-3xl); letter-spacing: 0.12em; }
   h2 { font-size: var(--text-lg); margin-bottom: var(--sp-2); }
+  .cat { display: flex; align-items: center; gap: var(--sp-4); }
   ul { margin: 0; padding-left: 18px; font-size: var(--text-sm); display: flex; flex-direction: column; gap: 4px; }
 </style>

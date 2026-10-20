@@ -253,7 +253,7 @@
           <div class="about" in:fade>
             <b>{round.pic.title}</b> <span class="num">· {round.pic.date}</span>
             <p>{round.pic.summary}</p>
-            <ImageCredit info={round.pic.info} compact />
+            <ImageCredit info={round.pic.info} compact shown={[round.pic.title]} />
           </div>
           <Button full size="lg" iconRight={ArrowRight} onclick={nextRound}>{qi + 1 >= rounds.length ? 'Итоги' : 'Дальше'}</Button>
         {/if}
@@ -278,7 +278,7 @@
           <h2>{cur.title}</h2>
           <p class="date num">{cur.date}{cur.author ? ` · ${cur.author}` : ''}</p>
           <p class="sum">{cur.summary}</p>
-          <ImageCredit info={cur.info} light />
+          <ImageCredit info={cur.info} light shown={[cur.title, cur.author]} />
           <Button variant="gold" iconRight={ArrowRight} onclick={() => { const id = cur.id; open = null; navigate(`/entity/${id}`); }}>Подробнее</Button>
         </div>
       </div>

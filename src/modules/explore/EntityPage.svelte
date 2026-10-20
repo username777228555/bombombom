@@ -96,14 +96,14 @@
             <p class="date num">{formatLife(e.item.born, e.item.died, e.item.circa)}</p>
           </div>
         </div>
-        <ImageCredit info={kb.imageInfoOf(e)} compact />
+        <ImageCredit info={kb.imageInfoOf(e)} compact shown={[e.item.name]} />
       {:else}
         {#if image}
           <figure class="hero-fig" class:art={e.kind === 'culture'}>
             <button class="hero-btn" onclick={() => navigate(`/gallery?open=${e.item.id}`)} aria-label="Открыть в галерее">
               <img class="hero-img" src={image} alt="" />
             </button>
-            <ImageCredit info={kb.imageInfoOf(e)} />
+            <ImageCredit info={kb.imageInfoOf(e)} shown={[kb.title(e.item.id), 'authorName' in e.item ? e.item.authorName : undefined]} />
           </figure>
         {/if}
         <h1>{e.kind === 'term' ? e.item.term : e.item.title}</h1>

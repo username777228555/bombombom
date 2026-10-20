@@ -12,6 +12,7 @@
   import { reveal, dailyPick } from '$lib/design/motion';
   import PeriodCard from '$lib/components/PeriodCard.svelte';
   import EntityRow from '$lib/components/EntityRow.svelte';
+  import VasilyCard from './VasilyCard.svelte';
   import ImageCredit from '$lib/components/ImageCredit.svelte';
   import { kb } from '$lib/core/content/kb.svelte';
   import { progress, currentRank } from '$lib/core/progress.svelte';
@@ -98,6 +99,8 @@
     <h1>{greeting()}{settings.name ? `, ${settings.name}` : ''}</h1>
     <p class="muted">{formatDateLong(now)}</p>
   </section>
+
+  <VasilyCard due={due + fresh} />
 
   {#if update.available}
     <div class="update" role="status">
@@ -198,7 +201,7 @@
           <small class="art-d">{artOfDay.sub} · {kb.periodById.get(artOfDay.period)?.short}</small>
         {/snippet}
       </Painting>
-      <div class="art-credit"><ImageCredit info={artOfDay.info} compact /></div>
+      <div class="art-credit"><ImageCredit info={artOfDay.info} compact shown={[artOfDay.title]} /></div>
     </section>
   {/if}
 

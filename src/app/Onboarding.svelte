@@ -7,7 +7,7 @@
   import { onMount } from 'svelte';
   import { fade, fly } from 'svelte/transition';
   import { backOut, cubicOut } from 'svelte/easing';
-  import { ArrowLeft, ArrowRight, BookOpen, RotateCcw, Target, Check, ChartGantt, Network, Crown, ScrollText, Images, Swords, Crosshair, UserSearch, Flame, Library, MapPin, Layers } from '@lucide/svelte';
+  import { ArrowLeft, ArrowRight, BookOpen, RotateCcw, Target, Check, ChartGantt, Network, Crown, ScrollText, Images, Swords, Crosshair, UserSearch, Flame, Library, MapPin, Layers, BellOff } from '@lucide/svelte';
   import Vasily, { type VasilyMood } from '$lib/design/components/Vasily.svelte';
   import Button from '$lib/design/components/Button.svelte';
   import TextField from '$lib/design/components/TextField.svelte';
@@ -19,11 +19,15 @@
   import { pluralN, WORDS } from '$lib/core/utils/format';
   import { haptic } from '$lib/core/platform';
   import { duePlan } from '$lib/modules/course/progress';
+  import { toast } from '$lib/core/ui.svelte';
+  import { REMIND_TIMES, enableReminders, disableReminders, nextReminder, whenLabel } from '$lib/core/reminders';
+  import type { PlannedReminder } from '$lib/core/reminder-plan';
 
   let { onclose }: { onclose: () => void } = $props();
 
-  type Scene = 'hello' | 'course' | 'plan' | 'cards' | 'tests' | 'epochs' | 'games' | 'profile' | 'finish';
-  interface Step { scene: Scene; mood: VasilyMood; where?: string; say: () => string }
+  type Scene = 'hello' | 'course' | 'plan' | 'cards' | 'tests' | 'epochs' | 'games' | 'profile' | 'remind' | 'finish';
+  /** `small` — a tall scene: Vasily steps back a little so the buttons stay on screen. */
+  interface Step { scene: Scene; mood: VasilyMood; where?: string; small?: boolean; say: () => string }
 
   let name = $state(settings.name);
   const who = $derived(name.trim());
@@ -36,6 +40,7 @@
     { scene: 'epochs', mood: 'think', where: 'Эпохи', say: () => 'Для любопытных — «Эпохи»: лента времени, граф связей, лестница правителей, хрестоматия и галерея картин. Я тут могу пропасть на весь вечер.' },
     { scene: 'games', mood: 'smile', where: 'Практика → Игры', say: () => 'Устанете — поиграем: «Хронология», «Год-снайпер», «Кто я?» и «При ком это было?». Тоже учёба, только незаметная.' },
     { scene: 'profile', mood: 'idle', where: 'Библиотека · Профиль', say: () => 'В «Библиотеке» — ваши книги и заметки. А в «Профиле» растут чины по Табели о рангах и жалуются ордена — разумеется, за усердие.' },
+    { scene: 'remind', mood: 'smile', where: 'Профиль → Настройки', small: true, say: () => 'Хотите, я буду напоминать о занятиях? Раз в день и только по делу: когда карточки или урок вернутся на повторение. Пропадёте надолго — стану писать реже, а через две недели замолчу.' },
     { scene: 'finish', mood: 'happy', say: () => `Вот и всё${who ? `, ${who}` : ''}! Захотите послушать меня снова — «Профиль → Настройки». С чего начнём? И да: меня можно погладить.` },
   ];
 
@@ -45,6 +50,25 @@
   const text = $derived(cur.say());
   const lesson = $derived(kb.lessons[0]);
   const order = ORDERS.find((o) => o.id === 'stanislav-3')!;
+
+  // Reminders: a time or «не напоминать»; the sample shows the very note Vasily would send.
+  let sample = $state<PlannedReminder | undefined>();
+  async function remindAt(at: string) {
+    if (!(await enableReminders(at))) {
+      toast('Android не разрешил уведомления — их можно включить в настройках телефона', 'error');
+      return;
+    }
+    haptic('success');
+    sample = await nextReminder(at);
+  }
+  async function noReminders() {
+    await disableReminders();
+    sample = undefined;
+  }
+  // Opened again from the settings with reminders on: show the sample right away.
+  $effect(() => {
+    if (cur.scene === 'remind' && settings.remindAt && !sample) void nextReminder().then((r) => (sample = r));
+  });
 
   // The line is typed out while Vasily talks; a tap on the bubble shows it whole.
   let typed = $state(0);
@@ -102,7 +126,7 @@
 
   let vh = $state(800);
   // Vasily takes the height left over by the bubble, the scene and the buttons (~620 px on a phone).
-  const catSize = $derived(Math.round(Math.max(96, Math.min(230, (vh - 620) * 0.75))));
+  const catSize = $derived(Math.round(Math.max(96, Math.min(230, (vh - 620) * 0.75)) * (cur.small ? 0.62 : 1)));
 
   onMount(() => {
     document.documentElement.style.overflow = 'hidden';
@@ -223,6 +247,26 @@
               </div>
             </div>
             <div class="card lib"><Library size={18} /><span><b>Библиотека</b><small>читалка, закладки и заметки к вашим книгам</small></span></div>
+          {:else if cur.scene === 'remind'}
+            <div class="card remind">
+              <div class="times">
+                {#each REMIND_TIMES as t (t.at)}
+                  <button class="time" class:on={settings.remindAt === t.at} onclick={() => remindAt(t.at)}><span class="num">{t.at}</span><small>{t.label}</small></button>
+                {/each}
+              </div>
+              <button class="time off" class:on={settings.remindAsked && !settings.remindAt} onclick={noReminders}><BellOff size={15} /> Не напоминать</button>
+              {#if settings.remindAt && sample}
+                <div class="notif" in:fly={{ y: motionOK() ? 8 : 0, duration: 260 }}>
+                  <Vasily head size={40} mood="smile" />
+                  <div class="grow">
+                    <span class="app">СТОЛЫПИНЪ · {whenLabel(sample.at)}</span>
+                    <b>{sample.title}</b>
+                    <small>{sample.body}</small>
+                  </div>
+                </div>
+              {/if}
+              {#if !(settings.remindAt && sample)}<small class="note">Поменять или выключить — в настройках. Всё хранится на телефоне.</small>{/if}
+            </div>
           {:else}
             <div class="finish">
               <Button variant="primary" size="lg" full icon={BookOpen} onclick={firstLesson}>Начать первый урок</Button>
@@ -299,6 +343,7 @@
   @keyframes caret { 50% { opacity: 0; } }
 
   .cat { position: relative; display: flex; justify-content: center; margin-top: var(--sp-3); }
+  .cat :global(.vasily) { transition: width var(--dur-3) var(--ease-out); }
 
   .scene { display: grid; grid-template-columns: minmax(0, 1fr); flex: 1; align-content: start; }
   .pane { grid-area: 1 / 1; min-width: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
@@ -367,6 +412,20 @@
   .lib { flex-direction: row; align-items: center; gap: var(--sp-3); color: var(--accent); }
   .lib span { display: flex; flex-direction: column; color: var(--ink); }
 
+  .remind { gap: var(--sp-2); }
+  .times { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .time { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 7px 4px; border-radius: var(--r-md); border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: var(--text-sm); cursor: pointer; transition: border-color var(--dur-2), background var(--dur-2); }
+  .time .num { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .time small { font-size: var(--text-2xs); color: var(--ink-3); white-space: nowrap; }
+  .time.on { border-color: var(--accent); background: var(--accent-soft); }
+  .time.on .num, .time.on small { color: var(--accent); }
+  .time.off { flex-direction: row; gap: 6px; padding: 8px; color: var(--ink-3); }
+  .time.off.on { color: var(--ink); border-color: var(--line-strong); background: var(--surface-3); }
+  .notif { display: flex; gap: var(--sp-3); align-items: flex-start; padding: var(--sp-3); border-radius: var(--r-md); background: var(--surface-2); border: 1px solid var(--line); }
+  .notif .grow { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .notif .app { font-size: var(--text-2xs); color: var(--ink-3); }
+  .notif b { font-size: var(--text-sm); }
+  .notif small { color: var(--ink-2); font-size: var(--text-xs); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .finish { display: flex; flex-direction: column; gap: var(--sp-2); margin-top: var(--sp-4); }
 
   footer { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-2); padding-top: var(--sp-3); }

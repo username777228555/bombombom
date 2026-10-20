@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Download, Upload, RotateCcw, Package, ChevronRight } from '@lucide/svelte';
+  import { Download, Upload, RotateCcw, Package, ChevronRight, BellRing } from '@lucide/svelte';
   import PageHeader from '$lib/design/components/PageHeader.svelte';
   import Card from '$lib/design/components/Card.svelte';
   import Segmented from '$lib/design/components/Segmented.svelte';
@@ -11,6 +11,8 @@
   import { pickFiles } from '$lib/core/platform';
   import { toast, confirmDialog, ui } from '$lib/core/ui.svelte';
   import { navigate } from '$lib/core/router.svelte';
+  import { REMIND_TIMES, enableReminders, disableReminders, nextReminder, testReminder, whenLabel } from '$lib/core/reminders';
+  import type { PlannedReminder } from '$lib/core/reminder-plan';
 
   const ACCENTS: { id: Accent; name: string; color: string }[] = [
     { id: 'crimson', name: 'Кармин', color: '#7c1d2b' },
@@ -26,6 +28,31 @@
     settings.dailyGoal = Number(goal);
     settings.newPerDay = Number(perDay);
   });
+
+  // Reminders from Vasily: on/off, the time, the next note he would send.
+  let remindOn = $state(!!settings.remindAt);
+  let upcoming = $state<PlannedReminder | undefined>();
+  $effect(() => {
+    const at = settings.remindAt;
+    void nextReminder(at).then((r) => (upcoming = r));
+  });
+  async function remindTime(at: string) {
+    if (await enableReminders(at)) remindOn = true;
+    else {
+      remindOn = false;
+      toast('Android не разрешил уведомления — включите их в настройках телефона', 'error');
+    }
+  }
+  async function toggleRemind(on: boolean) {
+    if (on) await remindTime(settings.remindAt ?? '19:00');
+    else await disableReminders();
+  }
+  async function tryReminder() {
+    const r = await testReminder();
+    if (r === 'sent') toast('Через пару секунд придёт пробное напоминание', 'success');
+    else if (r === 'denied') toast('Android не разрешил уведомления — включите их в настройках телефона', 'error');
+    else toast(upcoming ? `В браузере уведомлений нет. На телефоне придёт: «${upcoming.title}»` : 'В браузере уведомлений нет — они приходят в приложении на телефоне');
+  }
 
   async function doExport() {
     try {
@@ -97,6 +124,34 @@
   </section>
 
   <section class="stack section">
+    <h2 class="eyebrow">Напоминания от Василия</h2>
+    <Card padding="md">
+      <div class="stack inner">
+        <label class="line"><span class="grow">Напоминать о занятиях<small>раз в день и только по делу: что вернулось на повторение, новый урок. Если долго не заходить — реже, через две недели — тишина</small></span><Toggle bind:checked={remindOn} label="Напоминать о занятиях" onchange={toggleRemind} /></label>
+        {#if remindOn}
+          <div class="times">
+            {#each REMIND_TIMES as t (t.at)}
+              <button class="time" class:on={settings.remindAt === t.at} onclick={() => remindTime(t.at)}><b>{t.label}</b><span class="num">{t.at}</span></button>
+            {/each}
+          </div>
+          <label class="line"><span class="grow">Своё время</span><input class="clock num" type="time" value={settings.remindAt ?? '19:00'} onchange={(e) => e.currentTarget.value && remindTime(e.currentTarget.value)} /></label>
+          {#if upcoming}
+            <div class="notif">
+              <Vasily head size={40} mood="smile" />
+              <div class="grow">
+                <span class="app">Ближайшее · {whenLabel(upcoming.at)}</span>
+                <b>{upcoming.title}</b>
+                <small>{upcoming.body}</small>
+              </div>
+            </div>
+          {/if}
+          <Button variant="secondary" full icon={BellRing} onclick={tryReminder}>Прислать пробное</Button>
+        {/if}
+      </div>
+    </Card>
+  </section>
+
+  <section class="stack section">
     <h2 class="eyebrow">Материалы и данные</h2>
     <Card padding="sm">
       <button class="link" onclick={() => navigate('/packs')}><Package size={20} /><span class="grow">Пакеты материалов</span><ChevronRight size={18} /></button>
@@ -128,5 +183,16 @@
   .link { display: flex; align-items: center; gap: var(--sp-3); width: 100%; padding: 12px; border: 0; background: none; cursor: pointer; font-size: var(--text-md); color: var(--ink); }
   .link :global(svg:first-child) { color: var(--accent); }
   .tour { padding: 6px 12px; text-align: left; }
+  .times { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .time { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 10px 12px; border-radius: var(--r-md); border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: var(--text-sm); cursor: pointer; }
+  .time .num { color: var(--ink-3); }
+  .time.on { border-color: var(--accent); background: var(--accent-soft); }
+  .time.on .num { color: var(--accent); }
+  .clock { padding: 8px 10px; border-radius: var(--r-sm); border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; }
+  .notif { display: flex; gap: var(--sp-3); align-items: flex-start; padding: var(--sp-3); border-radius: var(--r-md); background: var(--surface-2); border: 1px solid var(--line); }
+  .notif .grow { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .notif .app { font-size: var(--text-2xs); color: var(--ink-3); }
+  .notif b { font-size: var(--text-sm); }
+  .notif small { color: var(--ink-2); font-size: var(--text-xs); line-height: 1.35; }
   .tour small { display: block; color: var(--ink-3); font-size: var(--text-xs); }
 </style>

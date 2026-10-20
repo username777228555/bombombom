@@ -1,12 +1,13 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, untrack } from 'svelte';
   import { fly, fade } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
   import { router } from '$lib/core/router.svelte';
   import { allRoutes, modules } from '$lib/core/modules';
   import { kb } from '$lib/core/content/kb.svelte';
   import { loadSettings, settings, persistSettings, applyTheme, motionOK } from '$lib/core/settings.svelte';
-  import { loadProgress } from '$lib/core/progress.svelte';
+  import { loadProgress, progress } from '$lib/core/progress.svelte';
+  import { initReminders, syncReminders } from '$lib/core/reminders';
   import { loadUserDecks } from '$lib/core/content/userdecks.svelte';
   import { initPlatform, setHapticsEnabled } from '$lib/core/platform';
   import { checkForUpdate } from '$lib/core/update.svelte';
@@ -32,6 +33,7 @@
       void initPlatform(() => router.handleHardwareBack());
       void navigator.storage?.persist?.();
       void checkForUpdate();
+      void initReminders();
     } catch (e) {
       console.error(e);
       failure = e instanceof Error ? e.message : String(e);
@@ -49,6 +51,12 @@
     } catch {
       /* private mode */
     }
+  });
+
+  // The first study of the day cancels today's reminder from Vasily.
+  const studiedToday = $derived(progress.today.xp > 0);
+  $effect(() => {
+    if (booted && studiedToday) untrack(() => void syncReminders());
   });
 
   // Scroll: top on forward navigation, restore on back.

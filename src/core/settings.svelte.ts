@@ -18,6 +18,10 @@ export interface Settings {
   checkUpdates: boolean;
   name: string;
   onboarded: boolean;
+  /** Напоминания от Василия: время «ЧЧ:ММ» или null — выключены (core/reminders.ts). */
+  remindAt: string | null;
+  /** Василий уже спрашивал, напоминать ли (при знакомстве или на главной) — больше не спрашивает. */
+  remindAsked: boolean;
   packs: Record<string, boolean>;
   reader: {
     fontSize: number;
@@ -40,6 +44,8 @@ const DEFAULTS: Settings = {
   checkUpdates: true,
   name: '',
   onboarded: false,
+  remindAt: null,
+  remindAsked: false,
   packs: {},
   reader: { fontSize: 108, lineHeight: 1.55, theme: 'paper', font: 'literata', justify: true, flow: 'paginated' },
 };

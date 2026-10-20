@@ -7,5 +7,7 @@ export default defineModule({
     { path: '/settings', tab: 'profile', component: () => import('./SettingsPage.svelte') },
     { path: '/packs', tab: 'profile', component: () => import('./PacksPage.svelte') },
     { path: '/about', tab: 'profile', component: () => import('./AboutPage.svelte') },
+    // «Мастерская Василия»: all moods side by side, dev server only (not in the APK).
+    ...(import.meta.env.DEV ? [{ path: '/vasily-lab', immersive: true, component: () => import('./VasilyLab.svelte') }] : []),
   ],
 });

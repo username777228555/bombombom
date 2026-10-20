@@ -30,11 +30,16 @@
   // Chain of the learned cat — Pushkin: «и днём и ночью кот учёный всё ходит по цепи кругом».
   const LINKS = Array.from({ length: 5 }, (_, i) => ({ x: r1(414 + i * 21), y: r1(618 + i * 15 + i * i * 0.6), rot: i % 2 ? 35 : -55 }));
 
-  const INK = '#2b1a12', MARK = '#3a2318', WHITE = '#fdf3e3', CREAM = '#f6e3c8', FUR_D = '#b97843', LID = '#d8995f';
+  const INK = '#2b1a12', MARK = '#3a2318', WHITE = '#fdf3e3', CREAM = '#f6e3c8', FUR_D = '#b97843';
   const EYES = [422, 602] as const;
   const EYE_Y = 412;
+  // Eyeliner wing from the middle of the outer edge, like on the sketch (i = 0 — the left eye, its outer side is −x).
+  const wing = (cx: number, i: number) => {
+    const s = i === 0 ? -1 : 1;
+    return `M ${cx + s * 47} ${EYE_Y - 4} Q ${cx + s * 70} ${EYE_Y} ${cx + s * 88} ${EYE_Y + 10} Q ${cx + s * 68} ${EYE_Y + 10} ${cx + s * 48} ${EYE_Y + 13} Z`;
+  };
   const TAIL = 'M 690 944 C 806 958 908 890 906 800 C 905 728 894 664 864 622 C 842 592 794 588 778 616 C 768 636 788 660 798 690 C 810 728 808 790 806 816 C 804 872 760 896 690 900 Z';
-  const LOOKS: [number, number][] = [[0, 0], [8, 4], [-8, 4], [10, -6], [-10, -6], [0, 12], [0, 12], [4, 6]];
+  const LOOKS: [number, number][] = [[0, 0], [8, 3], [-8, 3], [9, -6], [-9, -6], [0, 10], [0, 10], [4, 5]];
 </script>
 
 <script lang="ts">
@@ -69,6 +74,7 @@
   let root = $state<SVGGElement>();
   let shadow = $state<SVGEllipseElement>();
   const eyes: SVGGElement[] = [];
+  const lashes: SVGPathElement[] = [];
   const ears: SVGGElement[] = [];
   let whiskers = $state<SVGGElement>();
 
@@ -79,8 +85,8 @@
 
   const shown = $derived<VasilyMood>(petted ? 'happy' : mood);
   const look = $derived.by<[number, number]>(() => {
-    if (shown === 'think') return [12, -14];
-    if (shown === 'sad') return [0, 12];
+    if (shown === 'think') return [10, -12];
+    if (shown === 'sad') return [0, 10];
     return pointer ?? wander;
   });
   const mouthOpen = $derived(talking && motionOK() ? mouthFlip : shown === 'happy' || shown === 'surprised');
@@ -90,8 +96,11 @@
   const play = (el: Element | undefined, frames: Keyframe[], ms: number, easing = 'ease-in-out') =>
     motionOK() && el?.animate?.(frames, { duration: ms, easing });
 
+  // A blink: the open eye flattens, for a moment the closed-eye line is shown instead, then the eye opens.
   function blink() {
-    for (const e of eyes) play(e, [{ transform: 'scaleY(1)' }, { transform: 'scaleY(.08)', offset: 0.45 }, { transform: 'scaleY(1)' }], 210);
+    const shut = (o: number, at: number) => ({ transform: 'scaleY(.2)', opacity: o, offset: at });
+    for (const e of eyes) play(e, [{ transform: 'scaleY(1)', opacity: 1 }, shut(1, 0.38), shut(0, 0.4), shut(0, 0.62), shut(1, 0.64), { transform: 'scaleY(1)', opacity: 1 }], 240);
+    for (const l of lashes) play(l, [{ opacity: 0 }, { opacity: 0, offset: 0.38 }, { opacity: 1, offset: 0.4 }, { opacity: 1, offset: 0.62 }, { opacity: 0, offset: 0.64 }, { opacity: 0 }], 240);
   }
   function hop(height = 34) {
     play(root, [
@@ -151,7 +160,7 @@
     const cx = r.left + (512 - vb.x) * k, cy = r.top + (EYE_Y - vb.y) * k;
     const dx = e.clientX - cx, dy = e.clientY - cy;
     const dist = Math.hypot(dx, dy) || 1;
-    const m = Math.min(13, dist / 18);
+    const m = Math.min(10, dist / 20);
     pointer = [(dx / dist) * m, (dy / dist) * m];
     idleAt = Date.now() + 2600;
   }
@@ -204,28 +213,31 @@
 
 {#snippet sideFace()}
   <path d="M 300 420 Q 314 428 328 424 M 300 446 Q 316 452 330 446" fill="none" stroke={FUR_D} stroke-width="6" />
-  <path d="M 454 452 C 450 476 440 500 424 526 C 438 506 456 480 468 456 Z" fill={MARK} />
+  <!-- caracal marks: a tear line from the inner corner of the eye and a dark crescent on the whisker pad -->
+  <path d="M 440 462 Q 457 467 462 490 Q 451 478 435 470 Z" fill="#5a3421" />
+  <path d="M 452 480 Q 422 510 451 544 Q 441 510 452 480 Z" fill="#5a3421" />
 {/snippet}
 
 {#snippet brow()}
-  <path d="M 388 336 Q 414 324 442 330" fill="none" stroke={MARK} stroke-width="8" />
+  <!-- a short dark tuft over the inner corner of the eye -->
+  <path d="M 443 353 Q 442 338 439 324 Q 452 335 455 350 Q 449 358 443 353 Z" fill={MARK} />
 {/snippet}
 
 {#snippet whisker()}
-  <path d="M 420 492 Q 330 476 246 474 M 418 506 Q 330 502 244 510 M 422 520 Q 340 528 264 548" fill="none" stroke={INK} stroke-width="4" />
+  <path d="M 438 494 Q 340 478 246 476 M 436 508 Q 340 504 244 512 M 440 522 Q 350 530 264 550" fill="none" stroke={INK} stroke-width="4" />
 {/snippet}
 
 {#snippet eye(cx: number, i: number)}
-  <g class="eye" style="transform-origin: {cx}px {EYE_Y + 20}px" bind:this={eyes[i]}>
-    <circle {cx} cy={EYE_Y} r="54" fill="url(#{id}-iris)" />
+  <g class="eye" style="transform-origin: {cx}px {EYE_Y + 28}px" bind:this={eyes[i]}>
+    <ellipse class="socket" {cx} cy={EYE_Y + 8} rx="59" ry="66" fill={CREAM} />
+    <ellipse {cx} cy={EYE_Y} rx="50" ry="57" fill="url(#{id}-iris)" />
     <g class="pupil" style="transform: translate({look[0]}px, {look[1]}px)">
-      <ellipse cx={cx} cy={EYE_Y + 4} rx={shown === 'surprised' ? 24 : 31} ry={shown === 'surprised' ? 30 : 37} fill="#160c08" />
-      <circle cx={cx + 15} cy={EYE_Y - 15} r="14" fill="#fff" />
-      <circle cx={cx - 16} cy={EYE_Y + 24} r="6.5" fill="#fff" />
+      <ellipse {cx} cy={EYE_Y + 4} rx={shown === 'surprised' ? 18 : 26} ry={shown === 'surprised' ? 28 : 40} fill="#160c08" />
+      <circle cx={cx + 12} cy={EYE_Y - 18} r="12" fill="#fff" />
+      <circle cx={cx - 11} cy={EYE_Y + 24} r="5.5" fill="#fff" />
     </g>
-    <circle {cx} cy={EYE_Y} r="54" fill="none" stroke={INK} stroke-width="8" />
-    <path d="M {cx - 58} {EYE_Y + 6} A 58 58 0 0 1 {cx + 58} {EYE_Y + 6}" fill="none" stroke={INK} stroke-width="12" />
-    <path d={i === 0 ? `M ${cx - 50} ${EYE_Y - 28} L ${cx - 74} ${EYE_Y - 40} L ${cx - 56} ${EYE_Y - 12} Z` : `M ${cx + 50} ${EYE_Y - 28} L ${cx + 74} ${EYE_Y - 40} L ${cx + 56} ${EYE_Y - 12} Z`} fill={INK} />
+    <ellipse {cx} cy={EYE_Y} rx="50" ry="57" fill="none" stroke={INK} stroke-width="8" />
+    <path d="M {cx - 51} {EYE_Y - 6} A 51 58 0 0 1 {cx + 51} {EYE_Y - 6}" fill="none" stroke={INK} stroke-width="11" />
   </g>
 {/snippet}
 
@@ -323,9 +335,6 @@
           {@render laurel()}
           <g transform="matrix(-1 0 0 1 1024 0)">{@render laurel()}</g>
 
-          {#each EYES as cx (cx)}
-            <path d="M {cx - 62} 412 Q {cx} 496 {cx + 62} 412 Q {cx} 476 {cx - 62} 412 Z" fill={WHITE} opacity=".85" />
-          {/each}
           <path d="M 512 450 C 550 450 592 462 606 494 C 618 524 590 552 556 556 C 540 558 524 552 512 546 C 500 552 484 558 468 556 C 434 552 406 524 418 494 C 432 462 474 450 512 450 Z" fill={WHITE} />
           {@render sideFace()}
           <g transform="matrix(-1 0 0 1 1024 0)">{@render sideFace()}</g>
@@ -336,20 +345,20 @@
           <g class="brow">{@render brow()}</g>
           <g transform="matrix(-1 0 0 1 1024 0)"><g class="brow brow-r">{@render brow()}</g></g>
 
-          {#if shown === 'happy'}
-            {#each EYES as cx (cx)}
-              <path d="M {cx - 40} {EYE_Y + 10} Q {cx} {EYE_Y - 38} {cx + 40} {EYE_Y + 10}" fill="none" stroke={INK} stroke-width="12" />
-            {/each}
-          {:else if shown === 'sleep'}
-            {#each EYES as cx (cx)}
-              <path d="M {cx - 40} {EYE_Y} Q {cx} {EYE_Y + 34} {cx + 40} {EYE_Y}" fill="none" stroke={INK} stroke-width="11" />
-            {/each}
-          {:else}
-            {#each EYES as cx, i (cx)}{@render eye(cx, i)}{/each}
-          {/if}
+          {#each EYES as cx, i (cx)}
+            {#if shown === 'happy'}
+              <!-- laughing: eyes shut in an arc -->
+              <path d="M {cx - 44} {EYE_Y + 16} Q {cx} {EYE_Y - 30} {cx + 44} {EYE_Y + 16}" fill="none" stroke={INK} stroke-width="11" />
+            {:else if shown !== 'sleep'}
+              {@render eye(cx, i)}
+            {/if}
+            <!-- closed eye: asleep, and for a moment in every blink -->
+            <path class="lash" bind:this={lashes[i]} d="M {cx - 44} {EYE_Y + 8} Q {cx} {EYE_Y + 42} {cx + 44} {EYE_Y + 8}" fill="none" stroke={INK} stroke-width="10" />
+            <path d={wing(cx, i)} fill={INK} />
+          {/each}
 
-          {#each [384, 640] as cx (cx)}
-            <ellipse class="blush" {cx} cy="490" rx="30" ry="16" fill="#e98a7d" />
+          {#each [372, 652] as cx (cx)}
+            <ellipse class="blush" {cx} cy="502" rx="28" ry="14" fill="#e98a7d" />
           {/each}
 
           <path d="M 490 474 L 534 474 Q 542 476 536 484 L 518 502 Q 512 507 506 502 L 488 484 Q 482 476 490 474 Z" fill="#c9705e" stroke={INK} stroke-width="5" />
@@ -441,12 +450,17 @@
   .m-surprised .ear { transform: rotate(5deg) translateY(-8px); }
   .m-sleep .ear { transform: rotate(-12deg) translateY(8px); }
 
-  .brow { transform-origin: 388px 336px; transition: transform 380ms var(--ease-spring); }
-  .m-happy .brow, .m-smile .brow { transform: translateY(-12px); }
-  .m-surprised .brow { transform: translateY(-20px); }
-  .m-think .brow-r { transform: translateY(-16px) rotate(-4deg); }
-  .m-sad .brow { transform: rotate(-16deg) translateY(-4px); }
+  .brow { transform-origin: 448px 352px; transition: transform 380ms var(--ease-spring); }
+  .m-smile .brow { transform: translateY(-8px); }
+  .m-happy .brow { transform: translateY(-3px); }
+  .m-surprised .brow { transform: translateY(-14px); }
+  .m-think .brow-r { transform: translateY(-12px) rotate(-10deg); }
+  .m-sad .brow { transform: rotate(18deg); }
   .m-sleep .brow { transform: translateY(4px); }
+
+  .socket { opacity: 0.9; }
+  .lash { opacity: 0; }
+  .m-sleep .lash { opacity: 1; }
 
   .pupil { transition: transform 320ms var(--ease-out); }
   .whiskers { transform-origin: 512px 500px; }

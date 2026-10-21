@@ -52,6 +52,8 @@
 
   onMount(async () => {
     if (!lesson) return;
+    // Back from a link (an entity card, «Даты урока»): the very spot that was being read, once the text is laid out.
+    const backTo = router.direction === 'back' ? router.savedScroll() : null;
     st = (await courseState())[lesson.id];
     const s = await lessonSession(lesson.id);
     if (s) {
@@ -65,6 +67,7 @@
     loaded = true;
     // Back where the student was: the last section opened, or the final steps.
     await tick();
+    if (backTo !== null) return void requestAnimationFrame(() => window.scrollTo(0, backTo));
     const target = phase === 'final' ? document.getElementById('final') : phase === 'read' && shown > 0 ? document.getElementById(`sec-${shown - 1}`) : null;
     target?.scrollIntoView({ block: 'start' });
   });
@@ -113,7 +116,7 @@
 
   function openRef(ev: MouseEvent) {
     const id = (ev.target as HTMLElement).closest<HTMLElement>('[data-ref]')?.dataset.ref;
-    if (id) openSheet({ component: EntityPreview, props: { id } });
+    if (id && lesson) openSheet({ component: EntityPreview, props: { id, from: lesson.title } });
   }
   const check = () => lesson && navigate(`/quiz/run?src=lesson&id=${lesson.id}`);
 </script>
@@ -244,7 +247,7 @@
               {#if hasDates}
                 <li class:done={!!st?.dates}>
                   <span class="si">{#if st?.dates}<Check size={16} />{:else}<CalendarClock size={16} />{/if}</span>
-                  <span class="grow"><button type="button" class="lnk" onclick={() => navigate(`/lesson/${lesson.id}/dates`)}>Даты урока</button><small class="muted"> — лента и тренировка: выбрать год, потом написать по памяти; затем даты уходят в «Карточки»</small></span>
+                  <span class="grow"><button type="button" class="lnk" onclick={() => navigate(`/lesson/${lesson.id}/dates`)}>Даты урока</button><small class="muted"> — лента и короткая тренировка: соединить с годами, расставить по порядку, написать по памяти; затем даты уходят в «Карточки»</small></span>
                 </li>
               {/if}
               <li>

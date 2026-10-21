@@ -12,6 +12,7 @@
   import { isThrone } from '$lib/core/content/rulers';
   import { EVENT_TAG_LABELS, PERSON_TAG_LABELS, CULTURE_KIND_LABELS, SOURCE_KIND_LABELS } from '$lib/core/content/schema';
   import { router, navigate } from '$lib/core/router.svelte';
+  import { returnPoint, comeBack } from '$lib/core/return-point.svelte';
   import { formatEventDate, formatLife, formatYear, centuryLabel, formatSpan } from '$lib/core/utils/format';
   import { detailsBeyondSummary, richText } from '$lib/core/utils/text';
   import { enroll } from '$lib/core/srs';
@@ -168,7 +169,12 @@
         <Button size="sm" variant="secondary" icon={Network} href="/graph?focus={e.item.id}">В графе</Button>
         {#if cardId}<Button size="sm" variant="soft" icon={GraduationCap} onclick={study}>Учить</Button>{/if}
         {#each kb.lessons.filter((l) => l.entities.includes(e.item.id)).slice(0, 2) as l (l.id)}
-          <Button size="sm" variant="soft" icon={BookOpen} href="/lesson/{l.id}">Урок: {l.title}</Button>
+          <!-- The lesson the student came from: go back to the spot being read, not to its top -->
+          {#if returnPoint.at?.path === `/lesson/${l.id}`}
+            <Button size="sm" variant="soft" icon={BookOpen} onclick={comeBack}>Урок: {l.title}</Button>
+          {:else}
+            <Button size="sm" variant="soft" icon={BookOpen} href="/lesson/{l.id}">Урок: {l.title}</Button>
+          {/if}
         {/each}
       </div>
 

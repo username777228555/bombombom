@@ -7,8 +7,10 @@
   import { CULTURE_KIND_LABELS } from '$lib/core/content/schema';
   import { closeSheet } from '$lib/core/ui.svelte';
   import { navigate } from '$lib/core/router.svelte';
+  import { leaveFrom } from '$lib/core/return-point.svelte';
 
-  let { id, hideTimeline = false, hideGraph = false }: { id: string; hideTimeline?: boolean; hideGraph?: boolean } = $props();
+  /** `from` — the screen it was opened on (a lesson's title): going on from here shows «← К уроку» to come back. */
+  let { id, hideTimeline = false, hideGraph = false, from }: { id: string; hideTimeline?: boolean; hideGraph?: boolean; from?: string } = $props();
   const e = $derived(kb.get(id));
   const period = $derived(e ? kb.periodOf(e) : undefined);
   const date = $derived.by(() => {
@@ -19,6 +21,7 @@
     return '';
   });
   function go(path: string) {
+    if (from) leaveFrom(from);
     closeSheet();
     setTimeout(() => navigate(path), 50);
   }

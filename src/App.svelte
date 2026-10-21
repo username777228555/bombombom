@@ -18,6 +18,8 @@
   import Splash from '$lib/app/Splash.svelte';
   import Onboarding from '$lib/app/Onboarding.svelte';
   import { ui } from '$lib/core/ui.svelte';
+  import { ArrowLeft } from '@lucide/svelte';
+  import { returnPoint, awayFromReturn, comeBack, dropReturnIfBack } from '$lib/core/return-point.svelte';
   import NotFound from '$lib/app/NotFound.svelte';
 
   let booted = $state(false);
@@ -73,6 +75,13 @@
     requestAnimationFrame(() => setTimeout(() => window.scrollTo(0, y), back ? 60 : 0));
   });
 
+  // «← К уроку» after following a link out of a lesson (core/return-point.svelte.ts).
+  const away = $derived((void router.seq, awayFromReturn()));
+  $effect(() => {
+    void router.seq;
+    untrack(dropReturnIfBack);
+  });
+
   function interceptLinks(e: MouseEvent) {
     const a = (e.target as HTMLElement | null)?.closest?.('a');
     const href = a?.getAttribute('href');
@@ -92,7 +101,7 @@
   <Splash error={failure} />
 {:else}
   {#key router.seq}
-    <main class="view" in:fly={{ x: motionOK() ? dx : 0, y: dx === 0 && motionOK() ? 12 : 0, duration: 300, easing: cubicOut }}>
+    <main class="view" class:return-pad={away} in:fly={{ x: motionOK() ? dx : 0, y: dx === 0 && motionOK() ? 12 : 0, duration: 300, easing: cubicOut }}>
       {#if router.route}
         {#await router.route.component()}
           <div class="loading" in:fade={{ delay: 150 }}><span class="dot"></span></div>
@@ -106,6 +115,11 @@
       {/if}
     </main>
   {/key}
+  {#if away && returnPoint.at}
+    <button type="button" class="return" onclick={comeBack} transition:fly={{ y: motionOK() ? 16 : 0, duration: 220 }}>
+      <ArrowLeft size={17} /><span>К уроку · {returnPoint.at.label}</span>
+    </button>
+  {/if}
   {#if !immersive}<TabBar />{/if}
   <SheetHost />
   {#if ui.tour || !settings.onboarded}<Onboarding onclose={() => (ui.tour = false)} />{/if}
@@ -114,6 +128,30 @@
 
 <style>
   .view { min-height: 100dvh; }
+  .return-pad :global(.page) { padding-bottom: calc(var(--tabbar-h) + var(--safe-bottom) + var(--sp-8) + 52px); }
+  .return {
+    position: fixed;
+    left: 50%;
+    bottom: calc(var(--tabbar-h) + var(--safe-bottom) + var(--sp-4));
+    z-index: 60;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    max-width: calc(100vw - 2 * var(--page-x));
+    padding: 10px 16px 10px 12px;
+    border: 0;
+    border-radius: var(--r-full);
+    background: var(--accent);
+    color: var(--on-accent);
+    box-shadow: var(--shadow-3);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: 650;
+    cursor: pointer;
+  }
+  .return span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .return :global(svg) { flex: none; }
   .loading { min-height: 60dvh; display: grid; place-items: center; }
   .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); animation: pulse 900ms ease-in-out infinite alternate; }
   @keyframes pulse { from { transform: scale(0.6); opacity: 0.4; } to { transform: scale(1.4); opacity: 1; } }

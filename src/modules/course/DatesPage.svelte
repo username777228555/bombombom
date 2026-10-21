@@ -1,10 +1,10 @@
 <script lang="ts">
   /**
-   * «Даты урока» (/lesson/:id/dates): first the dates as a chain in time with the gaps between them, then a short
-   * drill — pick the year from four → type it from memory; a date with a mistake is typed once more a few tasks
-   * later, and after three mistakes it is left for the cards instead of going round in circles. One chronological
-   * ordering round in the middle; «Закончить» ends it any time. At the end every date goes to «Карточки» (FSRS,
-   * deck `lessons`) graded by how it went; answers are logged to the knowledge map (skill «даты»).
+   * «Даты урока» (/lesson/:id/dates): first the dates as a chain in time with the gaps between them, then a short drill
+   * with a visible end («5 из 11»): match events with their years (up to four on a screen) → put them in order → type
+   * every year from memory. A year typed wrong comes back once at the end, and that is all: what is still shaky is left
+   * to «Карточки». «Закончить» ends it any time. At the end every date goes to the cards (FSRS, deck `lessons`) graded
+   * by how it went; answers are logged to the knowledge map (skill «даты»).
    */
   import { fly } from 'svelte/transition';
   import { CalendarClock, ArrowRight, Check, X as XIcon, ListChecks } from '@lucide/svelte';
@@ -24,102 +24,90 @@
   import { haptic } from '$lib/core/platform';
   import { pluralN, WORDS } from '$lib/core/utils/format';
   import { shuffle } from '$lib/core/utils/random';
-  import { gapLabel, lessonDates, yearAsk, yearLabel } from './dates';
+  import { gapLabel, lessonDates, yearLabel } from './dates';
   import { lessonDatesDone } from './progress';
 
   const lesson = kb.lessons.find((l) => l.id === router.params.id);
   const period = lesson ? kb.periodById.get(lesson.period) : undefined;
   const dates = lesson ? lessonDates(lesson) : [];
 
-  /** 0 — pick from four, 1 — type, 2 — type once more (after a mistake), 3 — learnt. */
-  interface Item { e: EventItem; level: number; errors: number; seen: number }
-  /** A date missed this many times is left to the cards: drilling it on and on only tires. */
-  const MAX_ERRORS = 3;
-  const items = $state<Item[]>(dates.map((e) => ({ e, level: 0, errors: 0, seen: -100 })));
-  const over = (i: Item) => i.level >= 3 || i.errors >= MAX_ERRORS;
+  /** How each year was typed: right at once, right on the second try, missed (or not reached). */
+  const typed = $state<Record<string, 'first' | 'second' | 'missed'>>({});
+  /** `match` — events ↔ years on one screen; `order` — the chronology; `type` — a year from memory (`again` — the retry). */
+  type Task = { kind: 'match'; group: EventItem[] } | { kind: 'order' } | { kind: 'type'; e: EventItem; again?: boolean };
+  let tasks = $state<Task[]>([]);
+  let pos = $state(0);
   let phase = $state<'chain' | 'drill' | 'done'>('chain');
-  let step = $state(0);
-  let orderDone = false;
-  let task = $state<{ q: Question; item?: Item } | null>(null);
   let result = $state<number | null>(null);
 
-  const learnt = $derived(items.filter(over).length);
-
-  function yearChoices(e: EventItem): number[] {
-    // Other dates of the lesson are the best distractors: they are the ones that get mixed up.
-    const opts = new Set<number>([e.year]);
-    for (const o of shuffle(dates)) if (opts.size < 3 && o.year !== e.year && Math.abs(o.year - e.year) <= 150) opts.add(o.year);
-    while (opts.size < 4) opts.add(e.year + Math.round((3 + Math.random() * 25) * (Math.random() < 0.5 ? -1 : 1)));
-    return shuffle([...opts]);
+  // Up to four events per matching screen, groups of even size, no repeated year on one screen (the years are the chips).
+  function matchGroups(): EventItem[][] {
+    const groups: EventItem[][] = Array.from({ length: Math.ceil(dates.length / 4) }, () => []);
+    const size = Math.ceil(dates.length / groups.length);
+    for (const e of shuffle(dates)) {
+      const g = groups.find((x) => x.length < size && !x.some((o) => yearLabel(o) === yearLabel(e))) ?? groups.reduce((a, b) => (a.length <= b.length ? a : b));
+      g.push(e);
+    }
+    return groups.filter((g) => g.length);
   }
 
-  function nextTask() {
+  function start() {
+    const plan: Task[] = matchGroups().map((group) => ({ kind: 'match', group }));
+    if (dates.length >= 3) plan.push({ kind: 'order' });
+    plan.push(...shuffle(dates).map((e): Task => ({ kind: 'type', e })));
+    tasks = plan;
+    pos = 0;
     result = null;
-    const open = items.filter((i) => !over(i));
-    if (!open.length) return void finish();
-    // One ordering round once every date has been recognised.
-    if (!orderDone && items.length >= 3 && items.every((i) => i.level >= 1 || over(i))) {
-      orderDone = true;
-      const set = shuffle(items).slice(0, 5).map((i) => i.e).sort((a, b) => a.year - b.year);
-      task = { q: { type: 'order', prompt: 'Расположите события урока по порядку', items: set.map(quizTitle), explain: set.map((e) => `${yearLabel(e)} — ${e.title}`).join('; ') } };
-      return;
-    }
-    // The date not asked for longest, lower steps first; never the same date twice in a row if there is a choice.
-    const fresh = open.filter((i) => i.seen !== step - 1);
-    const pool = fresh.length ? fresh : open;
-    const it = [...pool].sort((a, b) => a.seen - b.seen || a.level - b.level)[0]!;
-    it.seen = step;
-    const e = it.e;
-    const explain = `${yearLabel(e)} — ${e.title}. ${e.summary}`;
-    if (it.level === 0) {
-      const ys = yearChoices(e);
-      task = { item: it, q: { type: 'single', prompt: `${yearAsk(e)}: «${quizTitle(e)}»?`, options: ys.map(String), answer: ys.indexOf(e.year), explain } };
-    } else {
-      task = { item: it, q: { type: 'year', prompt: `${it.level === 2 ? 'Ещё раз, по памяти' : 'Напишите год'}${e.endYear && e.endYear !== e.year ? ' начала' : ''}: «${quizTitle(e)}»`, answer: e.year, tolerance: e.circa ? 3 : 0, explain } };
-    }
+    phase = 'drill';
   }
+
+  const task = $derived<Task | undefined>(tasks[pos]);
+  const question = $derived.by<Question | null>(() => {
+    const t = task;
+    if (!t) return null;
+    if (t.kind === 'match') return { type: 'match', prompt: 'Соедините события с годами', pairs: t.group.map((e) => [quizTitle(e), yearLabel(e)] as [string, string]) };
+    if (t.kind === 'order') {
+      const set = shuffle(dates).slice(0, 5).sort((a, b) => a.year - b.year);
+      return { type: 'order', prompt: 'Расположите события урока по порядку', items: set.map(quizTitle), explain: set.map((e) => `${yearLabel(e)} — ${e.title}`).join('; ') };
+    }
+    const span = t.e.endYear && t.e.endYear !== t.e.year;
+    return { type: 'year', prompt: `${t.again ? 'Ещё раз, по памяти' : 'Напишите год'}${span ? ' начала' : ''}: «${quizTitle(t.e)}»`, answer: t.e.year, tolerance: t.e.circa ? 3 : 0, explain: `${yearLabel(t.e)} — ${t.e.title}` };
+  });
 
   function answer(score: number) {
     result = score;
     const ok = score >= 0.999;
     haptic(ok ? 'success' : 'error');
-    const it = task?.item;
-    if (it) {
-      // Recognised → type it; typed right → learnt, or once more later if it was ever missed.
-      if (ok) it.level = it.level === 0 ? 1 : it.level === 1 && it.errors ? 2 : 3;
-      else {
-        it.errors++;
-        it.level = Math.min(it.level, 1);
-      }
-      logAnswer({ period: it.e.period, skill: 'dates', entity: it.e.id, type: task!.q.type, score, src: `lesson-dates:${lesson?.id}` });
-    }
+    const t = task;
+    if (!t || !lesson) return;
+    if (t.kind === 'type') {
+      typed[t.e.id] = ok ? (t.again ? 'second' : 'first') : 'missed';
+      // A miss comes back once, a couple of tasks later (not right after the answer was shown).
+      if (!ok && !t.again) tasks.splice(Math.min(tasks.length, pos + 3), 0, { kind: 'type', e: t.e, again: true });
+      logAnswer({ period: t.e.period, skill: 'dates', entity: t.e.id, type: 'year', score, src: `lesson-dates:${lesson.id}` });
+    } else logAnswer({ period: lesson.period, skill: 'dates', type: t.kind, score, src: `lesson-dates:${lesson.id}` });
   }
   function next() {
-    step++;
-    nextTask();
-  }
-  function start() {
-    phase = 'drill';
-    nextTask();
+    result = null;
+    if (pos + 1 >= tasks.length) void finish();
+    else pos++;
   }
 
   async function finish() {
     if (phase === 'done') return;
     phase = 'done';
-    task = null;
     if (!lesson) return;
     // Into «Карточки»: the first grade follows the drill, then FSRS spaces the reviews.
-    const ids = items.map((i) => `a:e:${i.e.id}`);
-    await enroll('lessons', ids);
-    for (const it of items) {
-      const rec = await db.srs.get(`a:e:${it.e.id}`);
-      // Not finished (the drill was cut short) or missed twice — soon again; one slip — harder; clean — good.
-      if (rec) await grade(rec, it.level < 3 || it.errors >= 2 ? Rating.Again : it.errors === 1 ? Rating.Hard : Rating.Good);
+    await enroll('lessons', dates.map((e) => `a:e:${e.id}`));
+    for (const e of dates) {
+      const rec = await db.srs.get(`a:e:${e.id}`);
+      if (rec) await grade(rec, typed[e.id] === 'first' ? Rating.Good : typed[e.id] === 'second' ? Rating.Hard : Rating.Again);
     }
     await lessonDatesDone(lesson.id);
   }
 
-  const QC = $derived(task ? QUESTION_COMPONENTS[task.q.type] : null);
+  const QC = $derived(question ? QUESTION_COMPONENTS[question.type] : null);
+  const learnt = $derived(dates.filter((e) => typed[e.id] === 'first' || typed[e.id] === 'second').length);
   const near = (e: EventItem) => {
     const i = dates.findIndex((d) => d.id === e.id);
     return i > 0 ? `${gapLabel(dates[i - 1], e)} после события «${quizTitle(dates[i - 1]!)}»` : '';
@@ -142,31 +130,31 @@
       {/each}
     </ol>
     <Button full size="lg" icon={ListChecks} onclick={start}>Запоминать</Button>
-  {:else if phase === 'drill' && task && QC}
-    <div class="bar"><span class="pb"><ProgressBar value={learnt / items.length} /></span><span class="muted small num">{learnt}/{items.length}</span><button type="button" class="end" onclick={() => void finish()}>Закончить</button></div>
-    {#key step}
+  {:else if phase === 'drill' && task && question && QC}
+    <div class="bar"><span class="pb"><ProgressBar value={(pos + (result !== null ? 1 : 0)) / tasks.length} /></span><span class="muted small num">{pos + 1} из {tasks.length}</span><button type="button" class="end" onclick={() => void finish()}>Закончить</button></div>
+    {#key pos}
       <article class="q" in:fly={{ x: 30, duration: 240 }}>
-        <h2 class="prompt">{task.q.prompt}</h2>
-        <QC q={task.q} revealed={result !== null} onsubmit={answer} />
+        <h2 class="prompt">{question.prompt}</h2>
+        <QC q={question} revealed={result !== null} onsubmit={answer} />
         {#if result !== null}
           <div class="fb" class:ok={result >= 0.999}>
-            <span class="v">{#if result >= 0.999}<Check size={18} /> Верно{:else}<XIcon size={18} /> Неверно{/if}</span>
-            {#if task.item}
-              <p><strong class="num">{yearLabel(task.item.e)}</strong> — {task.item.e.title}{#if near(task.item.e)}<span class="muted"> · {near(task.item.e)}</span>{/if}</p>
-            {:else if task.q.explain}
-              <p class="muted">{task.q.explain}</p>
+            <span class="v">{#if result >= 0.999}<Check size={18} /> Верно{:else if task.kind === 'type'}<XIcon size={18} /> Неверно{task.again ? '' : ' — спрошу ещё раз в конце'}{:else}<XIcon size={18} /> Есть ошибки{/if}</span>
+            {#if task.kind === 'type'}
+              <p><strong class="num">{yearLabel(task.e)}</strong> — {task.e.title}{#if near(task.e)}<span class="muted"> · {near(task.e)}</span>{/if}</p>
+            {:else if question.explain}
+              <p class="muted">{question.explain}</p>
             {/if}
-            <Button full iconRight={ArrowRight} onclick={next}>Дальше</Button>
+            <Button full iconRight={ArrowRight} onclick={next}>{pos + 1 >= tasks.length ? 'Готово' : 'Дальше'}</Button>
           </div>
         {/if}
       </article>
     {/key}
   {:else if phase === 'done'}
     <Card tone="gold" padding="lg">
-      <strong class="display big">{items.every((i) => i.level >= 3) ? 'Даты урока запомнены' : 'Тренировка закончена'}</strong>
+      <strong class="display big">{learnt === dates.length ? 'Даты урока запомнены' : 'Тренировка закончена'}</strong>
       <p class="muted small">Теперь все даты в «Карточках» и вернутся, когда начнут забываться: трудные — скоро, остальные — всё реже.</p>
       <ul class="res">
-        {#each items as it (it.e.id)}<li><span class="num">{yearLabel(it.e)}</span> {it.e.title}{#if it.level < 3}<small> · повторим в карточках</small>{:else if it.errors}<small> · ошибок: {it.errors}</small>{/if}</li>{/each}
+        {#each dates as e (e.id)}<li><span class="num">{yearLabel(e)}</span> {e.title}{#if typed[e.id] === 'second'}<small>{' · со второй попытки'}</small>{:else if typed[e.id] !== 'first'}<small>{' · повторим в карточках'}</small>{/if}</li>{/each}
       </ul>
       <div class="stack acts">
         <Button full icon={ListChecks} onclick={() => navigate(`/quiz/run?src=lesson&id=${lesson.id}`)}>К проверке урока</Button>

@@ -28,6 +28,3 @@ export function gapLabel(prev: EventItem | undefined, cur: EventItem): string {
   const d = cur.year - prev.year;
   return d === 0 ? 'в том же году' : `через ${pluralN(d, WORDS.year)}`;
 }
-
-/** «В каком году: …» — for a span («1555–1556») the question asks for the first year, so the answer is unambiguous. */
-export const yearAsk = (e: EventItem) => (e.endYear && e.endYear !== e.year ? 'В каком году началось' : 'В каком году');

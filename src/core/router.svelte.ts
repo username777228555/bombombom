@@ -60,6 +60,11 @@ class Router {
     return this.index > 0;
   }
 
+  /** This entry's position in history (grows with every navigation forward). */
+  get position(): number {
+    return this.index;
+  }
+
   private sync(): void {
     const raw = decodeURI(location.hash.slice(1) || '/');
     const [p = '/', q = ''] = raw.split('?');

@@ -3,12 +3,12 @@
    * «Знакомство с Василием» — обзор возможностей при первом входе (пока не стоит settings.onboarded) и по кнопке
    * в настройках (ui.tour). Василий рассказывает о разделах: реплика печатается, пока он «говорит», под ним —
    * живая мини-сцена раздела. Под конец предлагает поставить «Живого Василия» на главный экран (виджет сам листает
-   * утро → день → вечер → ночь), в конце — первый урок или главная. Назад/вперёд: кнопки, стрелки, «Назад» Android.
+   * утро → день → вечер → ночь) и зовёт в чат приложения в Telegram, в конце — первый урок или главная. Назад/вперёд: кнопки, стрелки, «Назад» Android.
    */
   import { onMount } from 'svelte';
   import { fade, fly } from 'svelte/transition';
   import { backOut, cubicOut } from 'svelte/easing';
-  import { ArrowLeft, ArrowRight, BookOpen, RotateCcw, Target, Check, ChartGantt, Network, Crown, ScrollText, Images, Swords, Crosshair, UserSearch, Flame, Library, MapPin, Layers, BellOff, Plus } from '@lucide/svelte';
+  import { ArrowLeft, ArrowRight, BookOpen, RotateCcw, Target, Check, ChartGantt, Network, Crown, ScrollText, Images, Swords, Crosshair, UserSearch, Flame, Library, MapPin, Layers, BellOff, Plus, Send, Megaphone, MessageCircleQuestionMark, Bug } from '@lucide/svelte';
   import Vasily, { type VasilyMood } from '$lib/design/components/Vasily.svelte';
   import Button from '$lib/design/components/Button.svelte';
   import TextField from '$lib/design/components/TextField.svelte';
@@ -28,10 +28,11 @@
   import { liveScene, say, type Moment } from '$lib/modules/widgets/voice';
   import { pinWidget, placedStyles } from '$lib/modules/widgets/native';
   import type { WidgetStyleId } from '$lib/modules/widgets/scenes';
+  import { TELEGRAM_URL, TELEGRAM_NAME } from '$lib/core/contact';
 
   let { onclose }: { onclose: () => void } = $props();
 
-  type Scene = 'hello' | 'course' | 'plan' | 'cards' | 'tests' | 'epochs' | 'games' | 'profile' | 'remind' | 'widget' | 'finish';
+  type Scene = 'hello' | 'course' | 'plan' | 'cards' | 'tests' | 'epochs' | 'games' | 'profile' | 'remind' | 'widget' | 'chat' | 'finish';
   /** `small` — a tall scene: Vasily steps back a little so the buttons stay on screen. */
   interface Step { scene: Scene; mood: VasilyMood; where?: string; small?: boolean; say: () => string }
 
@@ -48,6 +49,7 @@
     { scene: 'profile', mood: 'idle', where: 'Библиотека · Профиль', say: () => 'В «Библиотеке» — ваши книги и заметки. А в «Профиле» растут чины по Табели о рангах и жалуются ордена — разумеется, за усердие.' },
     { scene: 'remind', mood: 'smile', where: 'Профиль → Настройки', small: true, say: () => 'Хотите, я буду напоминать о занятиях? Раз в день и по делу: урок на повторение, карточки, вопрос дня. Пропадёте надолго — стану писать реже, а через две недели замолчу.' },
     { scene: 'widget', mood: 'happy', where: 'Профиль → Виджеты Василия', small: true, say: () => 'А ещё я могу жить у вас на главном экране! Утром помашу, днём задам вопрос дня, вечером подожду урок, а ночью усну в колпаке. Поставить меня туда?' },
+    { scene: 'chat', mood: 'smile', where: 'Профиль → Чат в Telegram', say: () => 'И последнее: у нас есть чат в Telegram. Там новости о новых версиях, там можно задать вопрос, а если я где-то напутал с датой — скажите, исправим. Заглянете?' },
     { scene: 'finish', mood: 'happy', say: () => `Вот и всё${who ? `, ${who}` : ''}! Захотите послушать меня снова — «Настройки». С чего начнём? И да: меня можно погладить.` },
   ];
 
@@ -332,6 +334,21 @@
                 <small class="note">Виджеты работают в приложении для Android. Шлёпа, Ждун, Самодержец и ещё девять стилей — в «Профиль → Виджеты Василия».</small>
               {/if}
             </div>
+          {:else if cur.scene === 'chat'}
+            <div class="card chat">
+              <div class="tg-head">
+                <span class="tg-ava"><Send size={20} /></span>
+                <span class="grow"><b>СТОЛЫПИНЪ · чат</b><small>{TELEGRAM_NAME}</small></span>
+              </div>
+              <div class="tg-rows">
+                {#each [{ icon: Megaphone, t: 'Новые версии и что в них' }, { icon: MessageCircleQuestionMark, t: 'Вопросы по приложению и истории' }, { icon: Bug, t: 'Ошибки в датах и фактах, идеи' }] as r, i (r.t)}
+                  {@const Icon = r.icon}
+                  <span class="tg-row" style="--d: {0.15 + i * 0.2}s"><Icon size={16} />{r.t}</span>
+                {/each}
+              </div>
+              <a class="tg-open" href={TELEGRAM_URL} target="_blank" rel="noreferrer"><Send size={18} /> Открыть чат</a>
+              <small class="note">Можно и потом: «Профиль → Чат в Telegram».</small>
+            </div>
           {:else}
             <div class="finish">
               <Button variant="primary" size="lg" full icon={BookOpen} onclick={firstLesson}>Начать первый урок</Button>
@@ -499,6 +516,15 @@
   .day button { display: flex; align-items: baseline; gap: 6px; width: 100%; padding: 5px 8px; border: 0; border-radius: var(--r-sm); background: none; color: var(--ink-3); font: inherit; font-size: var(--text-sm); text-align: left; cursor: pointer; transition: background var(--dur-2), color var(--dur-2); }
   .day .num { min-width: 40px; font-weight: 700; font-variant-numeric: tabular-nums; }
   .day button.on { background: var(--accent-soft); color: var(--accent); }
+  .chat { gap: var(--sp-3); }
+  .tg-head { display: flex; align-items: center; gap: var(--sp-3); }
+  .tg-head .grow { display: flex; flex-direction: column; }
+  .tg-ava { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; flex: 0 0 auto; background: #2aabee; color: #fff; }
+  .tg-rows { display: flex; flex-direction: column; gap: 6px; }
+  .tg-row { display: flex; align-items: center; gap: var(--sp-2); font-size: var(--text-sm); color: var(--ink-2); animation: pop 420ms var(--ease-spring) backwards; animation-delay: var(--d); }
+  .tg-row :global(svg) { color: var(--accent); flex: 0 0 auto; }
+  .tg-open { display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2); height: 44px; border-radius: var(--r-full); background: #2aabee; color: #fff; font-weight: 620; text-decoration: none; }
+  .tg-open:active { transform: scale(0.965); }
   .finish { display: flex; flex-direction: column; gap: var(--sp-2); margin-top: var(--sp-4); }
 
   footer { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-2); padding-top: var(--sp-3); }

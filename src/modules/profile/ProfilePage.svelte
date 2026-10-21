@@ -108,7 +108,7 @@
       <button class="link" onclick={() => navigate('/widgets')}><LayoutGrid size={20} /><span class="grow">Виджеты Василия</span><span class="muted">13 стилей</span><ChevronRight size={18} /></button>
       <button class="link" onclick={() => navigate('/packs')}><Package size={20} /><span class="grow">Пакеты материалов</span><ChevronRight size={18} /></button>
       <button class="link" onclick={() => navigate('/settings')}><Settings size={20} /><span class="grow">Настройки и резервная копия</span><ChevronRight size={18} /></button>
-      <a class="link" href={TELEGRAM_URL} target="_blank" rel="noreferrer"><Send size={20} /><span class="grow">Канал в Telegram<small>{TELEGRAM_NAME} · новости и ошибки</small></span><ChevronRight size={18} /></a>
+      <a class="link" href={TELEGRAM_URL} target="_blank" rel="noreferrer"><Send size={20} /><span class="grow">Чат в Telegram<small>{TELEGRAM_NAME} · новости, вопросы, ошибки</small></span><ChevronRight size={18} /></a>
       <button class="link" onclick={() => navigate('/about')}><Info size={20} /><span class="grow">О приложении</span><ChevronRight size={18} /></button>
     </Card>
     <Ornament />

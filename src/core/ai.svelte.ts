@@ -25,6 +25,8 @@ export interface RetellResult {
 export interface AiTasks {
   retell: { req: { lesson: string; points: string[]; text: string }; res: RetellResult };
   why: { req: { question: string; right: string; given: string; cards: string[] }; res: { text: string } };
+  fork: { req: { role: string; situation: string; choice: string; cards: string[] }; res: { story: string; reality: string; ids: string[] } };
+  ask: { req: { question: string; cards: string[] }; res: { text: string; ids: string[] } };
 }
 
 /** Why a request failed, in words for a toast. */

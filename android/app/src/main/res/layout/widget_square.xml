@@ -57,7 +57,7 @@
         android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
         android:lineSpacingMultiplier="1.05"
-        android:maxLines="2"
+        android:maxLines="3"
         android:paddingStart="8dp"
         android:paddingTop="5dp"
         android:paddingEnd="8dp"

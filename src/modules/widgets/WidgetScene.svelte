@@ -299,7 +299,7 @@
     line-height: 1.25;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
   }
-  .caption span { display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .caption span { display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .streak {
     display: inline-flex;
     align-items: center;

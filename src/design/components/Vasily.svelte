@@ -1,5 +1,21 @@
 <script lang="ts" module>
-  export type VasilyMood = 'idle' | 'smile' | 'happy' | 'think' | 'surprised' | 'sad' | 'sleep';
+  export type VasilyMood = 'idle' | 'smile' | 'happy' | 'think' | 'surprised' | 'sad' | 'sleep' | 'meh' | 'angry';
+  /**
+   * What the paws do: `book` — reads (default); `wave` — waves hello; `cheer` — fists of joy at the chin; `chin` —
+   * paw on the chin; `cross` — arms crossed; `wand` — magic wand («Вжух»); `fold` — paws folded on the belly («Ждун»);
+   * `cheeks` — paws on the cheeks («в шоке»); `orb` — orb and sceptre, ermine collar; `spear` — spear and shield;
+   * `lie` — lies like Big Floppa (Шлёпа), the picture is wide.
+   */
+  export type VasilyPose = 'book' | 'wave' | 'cheer' | 'chin' | 'cross' | 'wand' | 'fold' | 'cheeks' | 'orb' | 'spear' | 'lie';
+  /** On the head: laurel wreath (default), Monomakh's cap, a bogatyr helmet, a nightcap or nothing. */
+  export type VasilyHat = 'wreath' | 'crown' | 'helmet' | 'nightcap' | 'none';
+
+  export interface ViewBox { x: number; y: number; w: number; h: number }
+  /** The drawing's frame for a pose (shared with scenes that draw props in Vasily's coordinates). */
+  export function vasilyBox(pose: VasilyPose = 'book', head = false): ViewBox {
+    if (head) return { x: 212, y: 0, w: 600, h: 600 };
+    return pose === 'lie' ? { x: 170, y: 0, w: 1190, h: 880 } : { x: 200, y: 0, w: 740, h: 990 };
+  }
 
   let seq = 0;
   const r1 = (n: number) => Math.round(n * 10) / 10;
@@ -30,7 +46,7 @@
   // Chain of the learned cat — Pushkin: «и днём и ночью кот учёный всё ходит по цепи кругом».
   const LINKS = Array.from({ length: 5 }, (_, i) => ({ x: r1(414 + i * 21), y: r1(618 + i * 15 + i * i * 0.6), rot: i % 2 ? 35 : -55 }));
 
-  const INK = '#2b1a12', MARK = '#3a2318', WHITE = '#fdf3e3', CREAM = '#f6e3c8', FUR_D = '#b97843';
+  const INK = '#2b1a12', MARK = '#3a2318', WHITE = '#fdf3e3', CREAM = '#f6e3c8', FUR_D = '#b97843', FUR = '#d89a61', PAD = '#6b3d2a';
   const EYES = [422, 602] as const;
   const EYE_Y = 412;
   // Eyeliner wing from the middle of the outer edge, like on the sketch (i = 0 — the left eye, its outer side is −x).
@@ -40,6 +56,20 @@
   };
   const TAIL = 'M 690 944 C 806 958 908 890 906 800 C 905 728 894 664 864 622 C 842 592 794 588 778 616 C 768 636 788 660 798 690 C 810 728 808 790 806 816 C 804 872 760 896 690 900 Z';
   const LOOKS: [number, number][] = [[0, 0], [8, 3], [-8, 3], [9, -6], [-9, -6], [0, 10], [0, 10], [4, 5]];
+  // Upper lid line over each eye (left, right): where it crosses the outer and the inner edge of the eye.
+  const LIDS: Partial<Record<VasilyMood, [number, number]>> = { meh: [-8, -8], angry: [-40, -6] };
+  // Ermine tails on the tsar's collar.
+  const ERMINE = [[336, 636], [392, 668], [452, 684], [572, 684], [632, 668], [688, 636]];
+  // Lying: the tail wraps along the ground in front of the hind leg, the dark tip forward.
+  const LIE_TAIL = 'M 1300 712 C 1336 784 1296 820 1220 824 C 1160 827 1100 824 1050 818 C 1015 814 985 808 960 802';
+  const LIE_TIP = 'M 1050 818 C 1015 814 985 808 960 802';
+  function starPath(cx: number, cy: number, r: number) {
+    const pts = Array.from({ length: 10 }, (_, k) => {
+      const a = -Math.PI / 2 + (k * Math.PI) / 5, rr = k % 2 ? r * 0.45 : r;
+      return `${r1(cx + rr * Math.cos(a))} ${r1(cy + rr * Math.sin(a))}`;
+    });
+    return `M ${pts.join(' L ')} Z`;
+  }
 </script>
 
 <script lang="ts">
@@ -48,7 +78,9 @@
    * пушкинского кота учёного и книгой. Живой: дышит, моргает, водит глазами за пальцем, поводит ушами и хвостом,
    * говорит (`talking` — рот открывается, пока печатается реплика), радуется, если его погладить.
    *   <Vasily mood="happy" talking={typing} size={180} interactive />
-   * Все движения выключаются при «Меньше анимаций». Статичные копии: docs/mascot/vasily*.svg.
+   * Позы и шапки — для мемов в виджетах (`pose`, `hat`, см. типы выше): машет, радуется, думает, колдует, лежит как Шлёпа…
+   *   <Vasily pose="lie" mood="meh" still />
+   * Все движения выключаются при «Меньше анимаций» и `still`. Статичные копии: docs/mascot/vasily*.svg.
    */
   import { onMount, untrack } from 'svelte';
   import { motionOK } from '$lib/core/settings.svelte';
@@ -64,11 +96,17 @@
     interactive?: boolean;
     /** Only the head (square) — for small icons. */
     head?: boolean;
+    pose?: VasilyPose;
+    hat?: VasilyHat;
+    /** A still picture: no breathing, blinking or glances (widget pictures, exports). */
+    still?: boolean;
     label?: string;
   }
-  let { mood = 'idle', talking = false, size = 200, interactive = false, head = false, label = 'Василий' }: Props = $props();
-  // The drawing lives in 1024×1024 coordinates around the axis x = 512.
-  const vb = $derived(head ? { x: 212, y: 0, w: 600, h: 600 } : { x: 200, y: 0, w: 740, h: 990 });
+  let { mood = 'idle', talking = false, size = 200, interactive = false, head = false, pose = 'book', hat = 'wreath', still = false, label = 'Василий' }: Props = $props();
+  // The drawing lives in 1024×1024 coordinates around the axis x = 512 (lying — wider, to the right).
+  const vb = $derived(vasilyBox(pose, head));
+  const lying = $derived(pose === 'lie' && !head);
+  const moving = () => motionOK() && !still;
 
   const id = `vas${++seq}`;
   let root = $state<SVGGElement>();
@@ -87,14 +125,16 @@
   const look = $derived.by<[number, number]>(() => {
     if (shown === 'think') return [10, -12];
     if (shown === 'sad') return [0, 10];
+    if (shown === 'meh') return [0, 8];
+    if (still) return [0, 0];
     return pointer ?? wander;
   });
-  const mouthOpen = $derived(talking && motionOK() ? mouthFlip : shown === 'happy' || shown === 'surprised');
+  const mouthOpen = $derived(talking && moving() ? mouthFlip : shown === 'happy' || shown === 'surprised');
   const joyful = $derived(shown === 'happy' || shown === 'smile');
 
   const rand = (a: number, b: number) => a + Math.random() * (b - a);
   const play = (el: Element | undefined, frames: Keyframe[], ms: number, easing = 'ease-in-out') =>
-    motionOK() && el?.animate?.(frames, { duration: ms, easing });
+    moving() && el?.animate?.(frames, { duration: ms, easing });
 
   // A blink: the open eye flattens, for a moment the closed-eye line is shown instead, then the eye opens.
   function blink() {
@@ -137,7 +177,7 @@
 
   // Talking: the mouth opens and closes at an uneven pace, like speech.
   $effect(() => {
-    if (!talking || !motionOK()) return;
+    if (!talking || !moving()) return;
     let t: ReturnType<typeof setTimeout>;
     const step = () => {
       mouthFlip = !mouthFlip;
@@ -154,7 +194,7 @@
   let idleAt = 0;
   function follow(e: PointerEvent) {
     // On a phone the eyes follow taps, not every finger move while scrolling.
-    if (!svg || !motionOK() || (e.type === 'pointermove' && e.pointerType !== 'mouse')) return;
+    if (!svg || !moving() || (e.type === 'pointermove' && e.pointerType !== 'mouse')) return;
     const r = svg.getBoundingClientRect();
     if (!r.width) return;
     const k = r.width / vb.w;
@@ -167,7 +207,7 @@
   }
 
   onMount(() => {
-    if (!motionOK()) return;
+    if (!moving()) return;
     const timers: ReturnType<typeof setTimeout>[] = [];
     const loop = (fn: () => void, min: number, max: number) => {
       const tick = () => {
@@ -212,6 +252,39 @@
   {/each}
 {/snippet}
 
+{#snippet crown()}
+  <!-- Monomakh's cap: a golden filigree dome on a sable band, a cross on top -->
+  <path d="M 404 276 C 406 200 452 152 512 144 C 572 152 618 200 620 276 Z" fill="url(#{id}-gold)" stroke={INK} stroke-width="8" />
+  <path d="M 512 150 L 512 270 M 466 160 Q 450 214 454 272 M 558 160 Q 574 214 570 272 M 426 206 Q 512 186 598 206" fill="none" stroke="#a8721e" stroke-width="4" />
+  {#each [[512, 238, '#b3263a'], [468, 230, '#2f7d5b'], [556, 230, '#2f7d5b'], [512, 192, '#2b4f8c']] as [x, y, c] (`${x}${y}`)}
+    <circle cx={x} cy={y} r="11" fill={c as string} stroke={INK} stroke-width="4" />
+  {/each}
+  <path d="M 512 136 L 512 72 M 490 94 L 534 94" stroke={INK} stroke-width="20" />
+  <path d="M 512 136 L 512 72 M 490 94 L 534 94" stroke="url(#{id}-gold)" stroke-width="9" />
+  <circle cx="512" cy="138" r="15" fill="url(#{id}-gold)" stroke={INK} stroke-width="5" />
+  <path d="M 384 300 C 384 262 440 248 512 248 C 584 248 640 262 640 300 C 640 320 590 330 512 330 C 434 330 384 320 384 300 Z" fill="#4a2c1c" stroke={INK} stroke-width="8" />
+  <path d="M 404 290 q 10 -12 20 0 q 10 -12 20 0 M 470 282 q 10 -12 20 0 q 10 -12 20 0 q 10 -12 20 0 M 560 284 q 10 -12 20 0 q 10 -12 20 0 M 600 296 q 8 -10 16 0" fill="none" stroke="#7a5038" stroke-width="5" />
+{/snippet}
+
+{#snippet helmet()}
+  <!-- a pointed bogatyr helmet (шишак) -->
+  <path d="M 392 294 C 396 206 450 150 512 110 C 574 150 628 206 632 294 Z" fill="url(#{id}-steel)" stroke={INK} stroke-width="8" />
+  <path d="M 452 270 C 452 210 474 170 506 136" fill="none" stroke="#fff" stroke-width="10" opacity=".55" />
+  <path d="M 512 110 L 512 58" stroke={INK} stroke-width="16" />
+  <path d="M 512 110 L 512 58" stroke="url(#{id}-steel)" stroke-width="7" />
+  <circle cx="512" cy="56" r="10" fill="url(#{id}-gold)" stroke={INK} stroke-width="5" />
+  <path d="M 384 292 C 440 276 584 276 640 292 L 636 322 C 584 308 440 308 388 322 Z" fill="url(#{id}-gold)" stroke={INK} stroke-width="7" />
+  {#each [420, 466, 512, 558, 604] as x (x)}<circle cx={x} cy={x === 512 ? 300 : 302} r="5" fill="#7a5418" />{/each}
+{/snippet}
+
+{#snippet nightcap()}
+  <!-- a floppy nightcap with a pompom -->
+  <path d="M 398 296 C 396 206 456 146 548 132 C 650 118 742 170 792 262 C 800 280 796 300 780 310 C 756 252 708 226 668 234 C 640 242 630 270 628 296 Z" fill="url(#{id}-cap)" stroke={INK} stroke-width="8" />
+  {#each [[470, 200], [560, 168], [650, 170], [720, 222], [520, 250], [610, 226]] as [x, y] (`${x}${y}`)}<circle cx={x} cy={y} r="6" fill="#fdf3e3" opacity=".85" />{/each}
+  <path d="M 388 294 C 440 274 584 274 636 294 L 632 324 C 584 306 440 306 392 324 Z" fill={WHITE} stroke={INK} stroke-width="7" />
+  <circle cx="790" cy="314" r="30" fill={WHITE} stroke={INK} stroke-width="7" />
+{/snippet}
+
 {#snippet sideFace()}
   <path d="M 300 420 Q 314 428 328 424 M 300 446 Q 316 452 330 446" fill="none" stroke={FUR_D} stroke-width="6" />
   <!-- caracal marks: a tear line from the inner corner of the eye and a dark crescent on the whisker pad -->
@@ -229,6 +302,7 @@
 {/snippet}
 
 {#snippet eye(cx: number, i: number)}
+  {@const lid = LIDS[shown]}
   <g class="eye" style="transform-origin: {cx}px {EYE_Y + 28}px" bind:this={eyes[i]}>
     <ellipse class="socket" {cx} cy={EYE_Y + 8} rx="59" ry="66" fill={CREAM} />
     <ellipse {cx} cy={EYE_Y} rx="50" ry="57" fill="url(#{id}-iris)" />
@@ -239,71 +313,256 @@
     </g>
     <ellipse {cx} cy={EYE_Y} rx="50" ry="57" fill="none" stroke={INK} stroke-width="8" />
     <path d="M {cx - 51} {EYE_Y - 6} A 51 58 0 0 1 {cx + 51} {EYE_Y - 6}" fill="none" stroke={INK} stroke-width="11" />
+    {#if lid}
+      <!-- an upper lid: half shut (unimpressed) or slanted (cross) -->
+      {@const yl = EYE_Y + (i === 0 ? lid[0] : lid[1])}
+      {@const yr = EYE_Y + (i === 0 ? lid[1] : lid[0])}
+      <g clip-path="url(#{id}-eye{i})">
+        <path d="M {cx - 72} {EYE_Y - 90} L {cx + 72} {EYE_Y - 90} L {cx + 72} {yr + (yr - yl) * 0.15} L {cx - 72} {yl - (yr - yl) * 0.15} Z" fill="url(#{id}-lid)" />
+        <path d="M {cx - 72} {yl - (yr - yl) * 0.15} L {cx + 72} {yr + (yr - yl) * 0.15}" stroke={INK} stroke-width="11" />
+      </g>
+    {/if}
   </g>
 {/snippet}
 
-<svelte:element
-  this={interactive ? 'button' : 'div'}
-  class="vasily m-{shown}"
-  class:still={!motionOK()}
-  class:pet={interactive}
-  class:head
-  style:width="{size}px"
-  role={interactive ? undefined : 'img'}
-  type={interactive ? 'button' : undefined}
-  aria-label={interactive ? `${label}: погладить` : label}
-  onclick={interactive ? pet : undefined}
->
-  <svg bind:this={svg} viewBox="{vb.x} {vb.y} {vb.w} {vb.h}" aria-hidden="true" stroke-linejoin="round" stroke-linecap="round">
-    <defs>
-      <radialGradient id="{id}-fur" cx="0.5" cy="0.42" r="0.62">
-        <stop offset="0" stop-color="#e3aa74" /><stop offset=".7" stop-color="#d4955f" /><stop offset="1" stop-color="#bf7f4a" />
-      </radialGradient>
-      <linearGradient id="{id}-gold" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#fbe39a" /><stop offset=".45" stop-color="#e2ad45" /><stop offset="1" stop-color="#a8721e" />
-      </linearGradient>
-      <radialGradient id="{id}-iris" cx="0.5" cy="0.38" r="0.62">
-        <stop offset="0" stop-color="#fcd977" /><stop offset=".62" stop-color="#eaa83a" /><stop offset="1" stop-color="#b8731c" />
-      </radialGradient>
-      <linearGradient id="{id}-cover" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#8f2630" /><stop offset="1" stop-color="#6a1a22" />
-      </linearGradient>
-      <linearGradient id="{id}-tip" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#2e1d16" /><stop offset="1" stop-color="#4a3024" />
-      </linearGradient>
-      <clipPath id="{id}-tail"><path d={TAIL} /></clipPath>
-    </defs>
+{#snippet limb(d: string, w = 84)}
+  <path {d} fill="none" stroke={INK} stroke-width={w + 18} />
+  <path {d} fill="none" stroke={FUR} stroke-width={w} />
+{/snippet}
 
-    <ellipse bind:this={shadow} class="shadow" cx="530" cy="958" rx="270" ry="22" fill="#000" opacity=".13" />
+{#snippet mitt(cx: number, cy: number, rot = 0, rx = 42, ry = 52)}
+  <g transform="rotate({rot} {cx} {cy})">
+    <ellipse {cx} {cy} {rx} {ry} fill={WHITE} stroke={INK} stroke-width="9" />
+    <path d="M {cx - rx * 0.36} {cy - ry * 0.2} Q {cx} {cy - ry * 0.12} {cx + rx * 0.3} {cy - ry * 0.24} M {cx - rx * 0.4} {cy + ry * 0.24} Q {cx} {cy + ry * 0.32} {cx + rx * 0.34} {cy + ry * 0.2}" fill="none" stroke={INK} stroke-width="5" />
+  </g>
+{/snippet}
 
-    <g bind:this={root} class="root">
-      <g class="tail">
-        <path d={TAIL} fill="url(#{id}-fur)" />
-        <path d="M 740 560 L 940 560 L 940 716 L 918 732 L 902 712 L 886 734 L 868 714 L 852 738 L 836 716 L 820 736 L 802 714 L 780 728 L 740 728 Z" fill="url(#{id}-tip)" clip-path="url(#{id}-tail)" />
-        <path d="M 840 840 Q 856 824 852 802 M 826 900 Q 846 890 852 868" fill="none" stroke={FUR_D} stroke-width="6" />
-        <path d={TAIL} fill="none" stroke={INK} stroke-width="9" />
+{#snippet fist(cx: number, cy: number, rot = 0)}
+  <g transform="rotate({rot} {cx} {cy})">
+    <ellipse {cx} {cy} rx="44" ry="41" fill={WHITE} stroke={INK} stroke-width="9" />
+    <path d="M {cx - 21} {cy - 33} Q {cx - 15} {cy - 18} {cx - 20} {cy - 4} M {cx + 1} {cy - 38} Q {cx + 7} {cy - 20} {cx + 2} {cy - 4} M {cx + 22} {cy - 32} Q {cx + 28} {cy - 18} {cx + 23} {cy - 6}" fill="none" stroke={INK} stroke-width="5" />
+  </g>
+{/snippet}
+
+{#snippet palm(cx: number, cy: number, rot = 0)}
+  <!-- an open paw, pads to the viewer -->
+  <g transform="rotate({rot} {cx} {cy})">
+    <ellipse {cx} {cy} rx="50" ry="57" fill={WHITE} stroke={INK} stroke-width="9" />
+    <path d="M {cx} {cy + 2} C {cx + 22} {cy + 2} {cx + 30} {cy + 22} {cx + 24} {cy + 34} C {cx + 18} {cy + 44} {cx - 18} {cy + 44} {cx - 24} {cy + 34} C {cx - 30} {cy + 22} {cx - 22} {cy + 2} {cx} {cy + 2} Z" fill={PAD} />
+    {#each [[-30, -14], [-11, -31], [11, -31], [30, -14]] as [dx, dy] (dx)}
+      <ellipse cx={cx + dx!} cy={cy + dy!} rx="10" ry="12" fill={PAD} />
+    {/each}
+  </g>
+{/snippet}
+
+{#snippet star(cx: number, cy: number, r: number)}
+  <path d={starPath(cx, cy, r)} fill="url(#{id}-gold)" stroke={INK} stroke-width="6" />
+{/snippet}
+
+<!-- Paws and props in front of the body but behind the head. -->
+{#snippet behind()}
+  {#if pose === 'wave'}
+    {@render limb('M 684 700 Q 702 750 694 798')}
+    {@render mitt(694, 810, -8)}
+  {:else if pose === 'chin'}
+    {@render limb('M 690 712 Q 612 798 448 790', 80)}
+    {@render mitt(432, 788, 80, 40, 48)}
+  {:else if pose === 'cross'}
+    {@render limb('M 340 694 Q 470 770 640 744')}
+    {@render mitt(650, 740, 75, 40, 48)}
+    {@render limb('M 684 694 Q 556 780 390 760')}
+    {@render mitt(374, 756, -75, 40, 48)}
+  {:else if pose === 'fold'}
+    {@render limb('M 340 706 Q 372 800 476 832', 80)}
+    {@render limb('M 684 706 Q 652 800 548 832', 80)}
+    {@render mitt(490, 834, 70, 38, 46)}
+    {@render mitt(534, 834, -70, 38, 46)}
+  {:else if pose === 'wand'}
+    {@render limb('M 340 700 Q 322 750 330 798')}
+    {@render mitt(330, 810, 8)}
+  {:else if pose === 'orb'}
+    <!-- ermine collar -->
+    <path d="M 296 634 C 360 590 664 590 728 634 C 760 656 744 704 700 710 C 620 722 404 722 324 710 C 280 704 264 656 296 634 Z" fill={WHITE} stroke={INK} stroke-width="8" />
+    {#each ERMINE as [x, y] (x)}
+      <path d="M {x} {y! - 14} C {x! + 7} {y! - 4} {x! + 6} {y! + 8} {x} {y! + 14} C {x! - 6} {y! + 8} {x! - 7} {y! - 4} {x} {y! - 14} Z" fill={INK} />
+    {/each}
+    {@render limb('M 340 706 Q 326 760 326 798')}
+    <circle cx="318" cy="736" r="52" fill="url(#{id}-gold)" stroke={INK} stroke-width="8" />
+    <path d="M 268 742 Q 318 764 368 742 M 318 686 Q 332 736 318 788" fill="none" stroke="#a8721e" stroke-width="7" />
+    <circle cx="322" cy="752" r="9" fill="#b3263a" stroke={INK} stroke-width="3" />
+    <path d="M 318 686 L 318 640 M 300 656 L 336 656" stroke={INK} stroke-width="18" />
+    <path d="M 318 686 L 318 640 M 300 656 L 336 656" stroke="url(#{id}-gold)" stroke-width="8" />
+    {@render mitt(322, 800, 82, 34, 48)}
+    {@render limb('M 684 706 Q 702 760 716 798')}
+    <path d="M 742 964 L 762 476" stroke={INK} stroke-width="22" />
+    <path d="M 742 964 L 762 476" stroke="url(#{id}-gold)" stroke-width="11" />
+    <circle cx="763" cy="462" r="22" fill="url(#{id}-gold)" stroke={INK} stroke-width="6" />
+    <path d="M 763 440 L 763 400 M 748 414 L 778 414" stroke={INK} stroke-width="16" />
+    <path d="M 763 440 L 763 400 M 748 414 L 778 414" stroke="url(#{id}-gold)" stroke-width="7" />
+    {@render mitt(722, 806, -10)}
+  {:else if pose === 'spear'}
+    <!-- a red teardrop shield and a spear -->
+    <path d="M 316 636 C 382 636 414 660 414 704 C 414 804 362 882 316 944 C 270 882 218 804 218 704 C 218 660 250 636 316 636 Z" fill="url(#{id}-shield)" stroke={INK} stroke-width="18" />
+    <path d="M 316 636 C 382 636 414 660 414 704 C 414 804 362 882 316 944 C 270 882 218 804 218 704 C 218 660 250 636 316 636 Z" fill="none" stroke="url(#{id}-gold)" stroke-width="8" />
+    <path d="M 316 676 L 316 880 M 262 720 L 370 720" stroke="url(#{id}-gold)" stroke-width="10" />
+    <circle cx="316" cy="720" r="20" fill="url(#{id}-gold)" stroke={INK} stroke-width="5" />
+    <path d="M 794 984 L 794 304" stroke={INK} stroke-width="22" />
+    <path d="M 794 984 L 794 304" stroke="#8a5a2b" stroke-width="11" />
+    <path d="M 794 168 C 816 210 822 254 808 304 L 780 304 C 766 254 772 210 794 168 Z" fill="url(#{id}-steel)" stroke={INK} stroke-width="7" />
+    <path d="M 794 186 L 794 296" stroke="#7d8790" stroke-width="3" />
+    <path d="M 776 312 L 812 312" stroke="url(#{id}-gold)" stroke-width="12" />
+    {@render limb('M 684 704 Q 744 718 782 736')}
+    {@render mitt(794, 742, -10, 40, 48)}
+  {/if}
+{/snippet}
+
+<!-- Paws in front of the face. -->
+{#snippet front()}
+  {#if pose === 'wave'}
+    {@render limb('M 352 706 Q 300 670 262 604', 80)}
+    {@render palm(244, 556, -16)}
+  {:else if pose === 'cheer'}
+    {@render limb('M 342 710 Q 348 662 392 630', 78)}
+    {@render fist(402, 614, -12)}
+    {@render limb('M 682 710 Q 676 662 632 630', 78)}
+    {@render fist(622, 614, 12)}
+  {:else if pose === 'chin'}
+    {@render limb('M 432 784 Q 446 690 484 622', 74)}
+    {@render fist(494, 602, 8)}
+  {:else if pose === 'cheeks'}
+    {@render limb('M 342 710 Q 290 662 274 552', 74)}
+    {@render mitt(268, 504, 8, 42, 54)}
+    {@render limb('M 682 710 Q 734 662 750 552', 74)}
+    {@render mitt(756, 504, -8, 42, 54)}
+  {:else if pose === 'wand'}
+    {@render limb('M 684 702 Q 742 664 768 596', 80)}
+    <path d="M 774 588 L 880 410" stroke={INK} stroke-width="20" />
+    <path d="M 774 588 L 880 410" stroke="#7b4a2c" stroke-width="10" />
+    {@render star(888, 396, 40)}
+    {@render fist(778, 574, -28)}
+  {/if}
+{/snippet}
+
+{#snippet headGroup()}
+  <g class="head">
+    <g class="ear"><g bind:this={ears[0]} class="ear-in">{@render ear()}</g></g>
+    <g transform="matrix(-1 0 0 1 1024 0)"><g class="ear"><g bind:this={ears[1]} class="ear-in">{@render ear()}</g></g></g>
+
+    <path d="M 512 222 C 600 220 672 240 712 300 C 736 336 748 380 746 424 L 790 446 Q 766 458 752 466 L 784 496 Q 758 502 744 508 L 762 538 Q 728 540 704 550 C 660 576 590 586 512 586 C 434 586 364 576 320 550 Q 296 540 262 538 L 280 508 Q 266 502 240 496 L 272 466 Q 258 458 234 446 L 278 424 C 276 380 288 336 312 300 C 352 240 424 220 512 222 Z" fill="url(#{id}-fur)" stroke={INK} stroke-width="9" />
+
+    {#if hat === 'wreath'}
+      {@render laurel()}
+      <g transform="matrix(-1 0 0 1 1024 0)">{@render laurel()}</g>
+    {/if}
+
+    <path d="M 512 450 C 550 450 592 462 606 494 C 618 524 590 552 556 556 C 540 558 524 552 512 546 C 500 552 484 558 468 556 C 434 552 406 524 418 494 C 432 462 474 450 512 450 Z" fill={WHITE} />
+    {@render sideFace()}
+    <g transform="matrix(-1 0 0 1 1024 0)">{@render sideFace()}</g>
+    {#each [[486, 44], [512, 54], [538, 44]] as [x, h] (x)}
+      <path d="M {x! - 7} 246 Q {x} 240 {x! + 7} 246 Q {x! + 4} {246 + h! * 0.6} {x} {246 + h!} Q {x! - 4} {246 + h! * 0.6} {x! - 7} 246 Z" fill="#8a522c" />
+    {/each}
+
+    {#if hat === 'crown'}{@render crown()}{:else if hat === 'helmet'}{@render helmet()}{:else if hat === 'nightcap'}{@render nightcap()}{/if}
+
+    <g class="brow">{@render brow()}</g>
+    <g transform="matrix(-1 0 0 1 1024 0)"><g class="brow brow-r">{@render brow()}</g></g>
+
+    {#each EYES as cx, i (cx)}
+      {#if shown === 'happy'}
+        <!-- laughing: eyes shut in an arc -->
+        <path d="M {cx - 44} {EYE_Y + 16} Q {cx} {EYE_Y - 30} {cx + 44} {EYE_Y + 16}" fill="none" stroke={INK} stroke-width="11" />
+      {:else if shown !== 'sleep'}
+        {@render eye(cx, i)}
+      {/if}
+      <!-- closed eye: asleep, and for a moment in every blink -->
+      <path class="lash" bind:this={lashes[i]} d="M {cx - 44} {EYE_Y + 8} Q {cx} {EYE_Y + 42} {cx + 44} {EYE_Y + 8}" fill="none" stroke={INK} stroke-width="10" />
+      <path d={wing(cx, i)} fill={INK} />
+    {/each}
+    {#if shown === 'angry'}
+      <!-- frowning brows -->
+      <path d="M 366 334 Q 412 330 458 356 M 658 334 Q 612 330 566 356" fill="none" stroke={MARK} stroke-width="15" />
+    {/if}
+
+    {#each [372, 652] as cx (cx)}
+      <ellipse class="blush" {cx} cy="502" rx="28" ry="14" fill="#e98a7d" />
+    {/each}
+
+    <path d="M 490 474 L 534 474 Q 542 476 536 484 L 518 502 Q 512 507 506 502 L 488 484 Q 482 476 490 474 Z" fill="#c9705e" stroke={INK} stroke-width="5" />
+    <ellipse cx="503" cy="481" rx="8" ry="4" fill="#f2b3a2" opacity=".9" />
+
+    <g class="mouth">
+      {#if joyful}
+        {#if mouthOpen}
+          <path d="M 476 516 Q 512 516 548 516 Q 544 556 512 558 Q 480 556 476 516 Z" fill="#8e2f36" stroke={INK} stroke-width="6" />
+          <path d="M 490 542 Q 512 530 534 542 Q 524 556 512 556 Q 500 556 490 542 Z" fill="#e48a86" />
+        {:else}
+          <path d="M 512 504 L 512 516 M 512 516 Q 498 536 478 522 M 512 516 Q 526 536 546 522" fill="none" stroke={INK} stroke-width="6" />
+        {/if}
+      {:else if shown === 'surprised'}
+        <ellipse cx="512" cy="532" rx={mouthOpen ? 15 : 11} ry={mouthOpen ? 20 : 14} fill="#8e2f36" stroke={INK} stroke-width="6" />
+      {:else if mouthOpen}
+        <path d="M 512 504 L 512 514" stroke={INK} stroke-width="6" />
+        <path d="M 490 520 Q 512 512 534 520 Q 530 546 512 548 Q 494 546 490 520 Z" fill="#8e2f36" stroke={INK} stroke-width="6" />
+        <path d="M 499 537 Q 512 530 525 537 Q 520 546 512 546 Q 504 546 499 537 Z" fill="#e48a86" />
+      {:else if shown === 'sad'}
+        <path d="M 512 504 L 512 516 M 490 536 Q 512 516 534 536" fill="none" stroke={INK} stroke-width="6" />
+      {:else if shown === 'angry'}
+        <path d="M 512 504 L 512 518 M 486 542 Q 512 520 538 542" fill="none" stroke={INK} stroke-width="7" />
+      {:else if shown === 'meh'}
+        <path d="M 512 504 L 512 520 M 492 528 Q 512 520 532 528" fill="none" stroke={INK} stroke-width="6" />
+      {:else}
+        <path d="M 512 504 L 512 518 M 512 518 Q 500 534 484 526 M 512 518 Q 524 534 540 526" fill="none" stroke={INK} stroke-width="6" />
+      {/if}
+    </g>
+
+    <g bind:this={whiskers} class="whiskers">
+      {@render whisker()}
+      <g transform="matrix(-1 0 0 1 1024 0)">{@render whisker()}</g>
+    </g>
+  </g>
+{/snippet}
+
+{#snippet chain()}
+  <g class="chain">
+    {#each LINKS as l (l.x)}
+      <ellipse cx={l.x} cy={l.y} rx="15" ry="9.5" transform="rotate({l.rot} {l.x} {l.y})" fill="none" stroke={INK} stroke-width="12" />
+      <ellipse cx={l.x} cy={l.y} rx="15" ry="9.5" transform="rotate({l.rot} {l.x} {l.y})" fill="none" stroke="url(#{id}-gold)" stroke-width="6" />
+    {/each}
+    <circle cx="394" cy="598" r="24" fill="url(#{id}-gold)" stroke={INK} stroke-width="6" />
+    <circle cx="394" cy="598" r="13" fill="none" stroke="#a8721e" stroke-width="3" />
+    <circle cx="387" cy="590" r="5" fill="#fff6d6" opacity=".9" />
+  </g>
+{/snippet}
+
+{#snippet sitting()}
+  <ellipse bind:this={shadow} class="shadow" cx="530" cy="958" rx="270" ry="22" fill="#000" opacity=".13" />
+
+  <g bind:this={root} class="root">
+    <g class="tail">
+      <path d={TAIL} fill="url(#{id}-fur)" />
+      <path d="M 740 560 L 940 560 L 940 716 L 918 732 L 902 712 L 886 734 L 868 714 L 852 738 L 836 716 L 820 736 L 802 714 L 780 728 L 740 728 Z" fill="url(#{id}-tip)" clip-path="url(#{id}-tail)" />
+      <path d="M 840 840 Q 856 824 852 802 M 826 900 Q 846 890 852 868" fill="none" stroke={FUR_D} stroke-width="6" />
+      <path d={TAIL} fill="none" stroke={INK} stroke-width="9" />
+    </g>
+
+    <g class="breathe">
+      <g class="body">
+        <path d="M 404 544 C 352 586 322 630 308 668 L 290 674 L 302 690 L 286 702 L 299 712 C 293 740 291 760 294 780 C 288 870 300 924 346 952 L 678 952 C 724 924 736 870 730 780 C 733 760 731 740 725 712 L 738 702 L 722 690 L 734 674 L 716 668 C 702 630 672 586 620 544 Z" fill="url(#{id}-fur)" stroke={INK} stroke-width="9" />
+        {#if pose !== 'book'}
+          <!-- without the book the belly shows -->
+          <path d="M 446 676 C 424 760 434 872 468 934 L 556 934 C 590 872 600 760 578 676 Z" fill={CREAM} />
+          <path d="M 476 760 Q 486 770 498 764 M 528 790 Q 540 800 552 792 M 482 842 Q 494 852 506 846" fill="none" stroke="#e2c29d" stroke-width="5" />
+        {/if}
+        <path d="M 432 548 C 420 600 438 650 466 688 L 558 688 C 586 650 604 600 592 548 Z" fill={CREAM} />
+        <path d="M 424 556 L 446 600 L 462 582 L 480 622 L 498 598 L 512 636 L 526 598 L 544 622 L 562 582 L 578 600 L 600 556 Z" fill={CREAM} stroke="#e2c29d" stroke-width="5" />
+        {#each [360, 664] as cx (cx)}
+          <path d="M {cx - 74} 900 C {cx - 80} 840 {cx - 40} 806 {cx} 806 C {cx + 40} 806 {cx + 80} 840 {cx + 74} 900 C {cx + 70} 940 {cx - 70} 940 {cx - 74} 900 Z" fill="url(#{id}-fur)" stroke={INK} stroke-width="8" />
+        {/each}
       </g>
 
-      <g class="breathe">
-        <g class="body">
-          <path d="M 404 544 C 352 586 322 630 308 668 L 290 674 L 302 690 L 286 702 L 299 712 C 293 740 291 760 294 780 C 288 870 300 924 346 952 L 678 952 C 724 924 736 870 730 780 C 733 760 731 740 725 712 L 738 702 L 722 690 L 734 674 L 716 668 C 702 630 672 586 620 544 Z" fill="url(#{id}-fur)" stroke={INK} stroke-width="9" />
-          <path d="M 432 548 C 420 600 438 650 466 688 L 558 688 C 586 650 604 600 592 548 Z" fill={CREAM} />
-          <path d="M 424 556 L 446 600 L 462 582 L 480 622 L 498 598 L 512 636 L 526 598 L 544 622 L 562 582 L 578 600 L 600 556 Z" fill={CREAM} stroke="#e2c29d" stroke-width="5" />
-          {#each [360, 664] as cx (cx)}
-            <path d="M {cx - 74} 900 C {cx - 80} 840 {cx - 40} 806 {cx} 806 C {cx + 40} 806 {cx + 80} 840 {cx + 74} 900 C {cx + 70} 940 {cx - 70} 940 {cx - 74} 900 Z" fill="url(#{id}-fur)" stroke={INK} stroke-width="8" />
-          {/each}
-        </g>
+      {#if pose !== 'orb'}{@render chain()}{/if}
 
-        <g class="chain">
-          {#each LINKS as l (l.x)}
-            <ellipse cx={l.x} cy={l.y} rx="15" ry="9.5" transform="rotate({l.rot} {l.x} {l.y})" fill="none" stroke={INK} stroke-width="12" />
-            <ellipse cx={l.x} cy={l.y} rx="15" ry="9.5" transform="rotate({l.rot} {l.x} {l.y})" fill="none" stroke="url(#{id}-gold)" stroke-width="6" />
-          {/each}
-          <circle cx="394" cy="598" r="24" fill="url(#{id}-gold)" stroke={INK} stroke-width="6" />
-          <circle cx="394" cy="598" r="13" fill="none" stroke="#a8721e" stroke-width="3" />
-          <circle cx="387" cy="590" r="5" fill="#fff6d6" opacity=".9" />
-        </g>
-
+      {#if pose === 'book'}
         <g class="book">
           <path d="M 512 700 C 462 672 392 664 322 676 L 326 704 L 698 704 L 702 676 C 632 664 562 672 512 700 Z" fill={WHITE} stroke={INK} stroke-width="7" />
           <path d="M 340 684 C 400 676 462 680 508 700 M 684 684 C 624 676 562 680 516 700" fill="none" stroke="#d8c3a0" stroke-width="3" />
@@ -326,80 +585,101 @@
             <path d="M {cx! - 14} 760 Q {cx! - 2} 764 {cx! + 12} 758 M {cx! - 16} 784 Q {cx! - 2} 788 {cx! + 14} 782" fill="none" stroke={INK} stroke-width="5" />
           {/each}
         </g>
+      {/if}
 
-        <g class="head">
-          <g class="ear"><g bind:this={ears[0]} class="ear-in">{@render ear()}</g></g>
-          <g transform="matrix(-1 0 0 1 1024 0)"><g class="ear"><g bind:this={ears[1]} class="ear-in">{@render ear()}</g></g></g>
-
-          <path d="M 512 222 C 600 220 672 240 712 300 C 736 336 748 380 746 424 L 790 446 Q 766 458 752 466 L 784 496 Q 758 502 744 508 L 762 538 Q 728 540 704 550 C 660 576 590 586 512 586 C 434 586 364 576 320 550 Q 296 540 262 538 L 280 508 Q 266 502 240 496 L 272 466 Q 258 458 234 446 L 278 424 C 276 380 288 336 312 300 C 352 240 424 220 512 222 Z" fill="url(#{id}-fur)" stroke={INK} stroke-width="9" />
-
-          {@render laurel()}
-          <g transform="matrix(-1 0 0 1 1024 0)">{@render laurel()}</g>
-
-          <path d="M 512 450 C 550 450 592 462 606 494 C 618 524 590 552 556 556 C 540 558 524 552 512 546 C 500 552 484 558 468 556 C 434 552 406 524 418 494 C 432 462 474 450 512 450 Z" fill={WHITE} />
-          {@render sideFace()}
-          <g transform="matrix(-1 0 0 1 1024 0)">{@render sideFace()}</g>
-          {#each [[486, 44], [512, 54], [538, 44]] as [x, h] (x)}
-            <path d="M {x! - 7} 246 Q {x} 240 {x! + 7} 246 Q {x! + 4} {246 + h! * 0.6} {x} {246 + h!} Q {x! - 4} {246 + h! * 0.6} {x! - 7} 246 Z" fill="#8a522c" />
-          {/each}
-
-          <g class="brow">{@render brow()}</g>
-          <g transform="matrix(-1 0 0 1 1024 0)"><g class="brow brow-r">{@render brow()}</g></g>
-
-          {#each EYES as cx, i (cx)}
-            {#if shown === 'happy'}
-              <!-- laughing: eyes shut in an arc -->
-              <path d="M {cx - 44} {EYE_Y + 16} Q {cx} {EYE_Y - 30} {cx + 44} {EYE_Y + 16}" fill="none" stroke={INK} stroke-width="11" />
-            {:else if shown !== 'sleep'}
-              {@render eye(cx, i)}
-            {/if}
-            <!-- closed eye: asleep, and for a moment in every blink -->
-            <path class="lash" bind:this={lashes[i]} d="M {cx - 44} {EYE_Y + 8} Q {cx} {EYE_Y + 42} {cx + 44} {EYE_Y + 8}" fill="none" stroke={INK} stroke-width="10" />
-            <path d={wing(cx, i)} fill={INK} />
-          {/each}
-
-          {#each [372, 652] as cx (cx)}
-            <ellipse class="blush" {cx} cy="502" rx="28" ry="14" fill="#e98a7d" />
-          {/each}
-
-          <path d="M 490 474 L 534 474 Q 542 476 536 484 L 518 502 Q 512 507 506 502 L 488 484 Q 482 476 490 474 Z" fill="#c9705e" stroke={INK} stroke-width="5" />
-          <ellipse cx="503" cy="481" rx="8" ry="4" fill="#f2b3a2" opacity=".9" />
-
-          <g class="mouth">
-            {#if joyful}
-              {#if mouthOpen}
-                <path d="M 476 516 Q 512 516 548 516 Q 544 556 512 558 Q 480 556 476 516 Z" fill="#8e2f36" stroke={INK} stroke-width="6" />
-                <path d="M 490 542 Q 512 530 534 542 Q 524 556 512 556 Q 500 556 490 542 Z" fill="#e48a86" />
-              {:else}
-                <path d="M 512 504 L 512 516 M 512 516 Q 498 536 478 522 M 512 516 Q 526 536 546 522" fill="none" stroke={INK} stroke-width="6" />
-              {/if}
-            {:else if shown === 'surprised'}
-              <ellipse cx="512" cy="532" rx={mouthOpen ? 15 : 11} ry={mouthOpen ? 20 : 14} fill="#8e2f36" stroke={INK} stroke-width="6" />
-            {:else if mouthOpen}
-              <path d="M 512 504 L 512 514" stroke={INK} stroke-width="6" />
-              <path d="M 490 520 Q 512 512 534 520 Q 530 546 512 548 Q 494 546 490 520 Z" fill="#8e2f36" stroke={INK} stroke-width="6" />
-              <path d="M 499 537 Q 512 530 525 537 Q 520 546 512 546 Q 504 546 499 537 Z" fill="#e48a86" />
-            {:else if shown === 'sad'}
-              <path d="M 512 504 L 512 516 M 490 536 Q 512 516 534 536" fill="none" stroke={INK} stroke-width="6" />
-            {:else}
-              <path d="M 512 504 L 512 518 M 512 518 Q 500 534 484 526 M 512 518 Q 524 534 540 526" fill="none" stroke={INK} stroke-width="6" />
-            {/if}
-          </g>
-
-          <g bind:this={whiskers} class="whiskers">
-            {@render whisker()}
-            <g transform="matrix(-1 0 0 1 1024 0)">{@render whisker()}</g>
-          </g>
-        </g>
-      </g>
-
-      <g class="feet">
-        {#each [418, 606] as cx (cx)}
-          <path d="M {cx - 64} 936 C {cx - 66} 902 {cx - 36} 888 {cx} 888 C {cx + 36} 888 {cx + 66} 902 {cx + 64} 936 C {cx + 60} 962 {cx - 60} 962 {cx - 64} 936 Z" fill={WHITE} stroke={INK} stroke-width="9" />
-          <path d="M {cx - 16} 920 L {cx - 16} 948 M {cx + 16} 920 L {cx + 16} 948" stroke={INK} stroke-width="6" />
-        {/each}
-      </g>
+      {@render behind()}
+      {@render headGroup()}
+      {@render front()}
     </g>
+
+    <g class="feet">
+      {#each [418, 606] as cx (cx)}
+        <path d="M {cx - 64} 936 C {cx - 66} 902 {cx - 36} 888 {cx} 888 C {cx + 36} 888 {cx + 66} 902 {cx + 64} 936 C {cx + 60} 962 {cx - 60} 962 {cx - 64} 936 Z" fill={WHITE} stroke={INK} stroke-width="9" />
+        <path d="M {cx - 16} 920 L {cx - 16} 948 M {cx + 16} 920 L {cx + 16} 948" stroke={INK} stroke-width="6" />
+      {/each}
+    </g>
+  </g>
+{/snippet}
+
+<!-- Lying like Big Floppa: the head as always, the body stretched out to the right behind it. -->
+{#snippet lyingCat()}
+  <ellipse bind:this={shadow} class="shadow" cx="850" cy="816" rx="520" ry="24" fill="#000" opacity=".13" style="transform-origin: 850px 816px" />
+  <g bind:this={root} class="root" style="transform-origin: 760px 816px">
+    <g class="breathe" style="transform-origin: 800px 810px">
+      <path d="M 560 476 C 700 426 1000 412 1182 440 C 1300 460 1350 556 1338 656 C 1326 748 1254 800 1150 806 L 700 806 C 640 806 600 790 580 760 Z" fill="url(#{id}-fur-wide)" stroke={INK} stroke-width="9" />
+      <path d="M 760 450 Q 774 480 768 512 M 860 440 Q 876 474 870 508 M 960 438 Q 976 472 970 506 M 1060 442 Q 1074 474 1068 506" fill="none" stroke={FUR_D} stroke-width="7" />
+      <path d="M 1018 708 C 1008 606 1088 546 1180 564 C 1272 584 1304 684 1262 754 C 1232 802 1162 812 1100 806 C 1050 800 1022 762 1018 708 Z" fill="url(#{id}-fur)" stroke={INK} stroke-width="8" />
+      <g class="tail" style="transform-origin: 1300px 712px">
+        <path d={LIE_TAIL} fill="none" stroke={INK} stroke-width="88" />
+        <path d={LIE_TAIL} fill="none" stroke={FUR} stroke-width="70" />
+        <path d={LIE_TIP} fill="none" stroke={MARK} stroke-width="70" />
+      </g>
+      <path d="M 372 572 C 344 650 350 744 384 806 L 646 806 C 680 744 686 650 656 572 Z" fill="url(#{id}-fur)" stroke={INK} stroke-width="9" />
+      <path d="M 440 572 C 424 640 440 712 474 772 L 554 772 C 588 712 604 640 588 572 Z" fill={CREAM} />
+      {#each [420, 612] as cx (cx)}
+        <path d="M {cx - 56} 690 C {cx - 62} 740 {cx - 58} 778 {cx - 50} 800 L {cx + 50} 800 C {cx + 58} 778 {cx + 62} 740 {cx + 56} 690 Z" fill="url(#{id}-fur)" />
+        <path d="M {cx - 56} 690 C {cx - 62} 740 {cx - 58} 778 {cx - 50} 800 M {cx + 50} 800 C {cx + 58} 778 {cx + 62} 740 {cx + 56} 690" fill="none" stroke={INK} stroke-width="8" />
+        <path d="M {cx - 66} 806 C {cx - 68} 772 {cx - 38} 756 {cx} 756 C {cx + 38} 756 {cx + 68} 772 {cx + 66} 806 C {cx + 62} 830 {cx - 62} 830 {cx - 66} 806 Z" fill={WHITE} stroke={INK} stroke-width="9" />
+        <path d="M {cx - 16} 786 L {cx - 16} 814 M {cx + 16} 786 L {cx + 16} 814" stroke={INK} stroke-width="6" />
+      {/each}
+      {@render chain()}
+      {@render headGroup()}
+    </g>
+  </g>
+{/snippet}
+
+<svelte:element
+  this={interactive ? 'button' : 'div'}
+  class="vasily m-{shown}"
+  class:still={!moving()}
+  class:pet={interactive}
+  class:head
+  style:width="{size}px"
+  style:aspect-ratio="{vb.w} / {vb.h}"
+  role={interactive ? undefined : 'img'}
+  type={interactive ? 'button' : undefined}
+  aria-label={interactive ? `${label}: погладить` : label}
+  onclick={interactive ? pet : undefined}
+>
+  <svg bind:this={svg} viewBox="{vb.x} {vb.y} {vb.w} {vb.h}" aria-hidden="true" stroke-linejoin="round" stroke-linecap="round">
+    <defs>
+      <radialGradient id="{id}-fur" cx="0.5" cy="0.42" r="0.62">
+        <stop offset="0" stop-color="#e3aa74" /><stop offset=".7" stop-color="#d4955f" /><stop offset="1" stop-color="#bf7f4a" />
+      </radialGradient>
+      <radialGradient id="{id}-fur-wide" cx="0.36" cy="0.3" r="0.8">
+        <stop offset="0" stop-color="#e3aa74" /><stop offset=".6" stop-color="#d4955f" /><stop offset="1" stop-color="#bf7f4a" />
+      </radialGradient>
+      <linearGradient id="{id}-gold" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fbe39a" /><stop offset=".45" stop-color="#e2ad45" /><stop offset="1" stop-color="#a8721e" />
+      </linearGradient>
+      <radialGradient id="{id}-iris" cx="0.5" cy="0.38" r="0.62">
+        <stop offset="0" stop-color="#fcd977" /><stop offset=".62" stop-color="#eaa83a" /><stop offset="1" stop-color="#b8731c" />
+      </radialGradient>
+      <linearGradient id="{id}-cover" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8f2630" /><stop offset="1" stop-color="#6a1a22" />
+      </linearGradient>
+      <linearGradient id="{id}-tip" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2e1d16" /><stop offset="1" stop-color="#4a3024" />
+      </linearGradient>
+      <linearGradient id="{id}-lid" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#e2a96f" /><stop offset="1" stop-color="#d39459" />
+      </linearGradient>
+      <linearGradient id="{id}-steel" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#f1f4f6" /><stop offset=".5" stop-color="#b3bcc4" /><stop offset="1" stop-color="#717c86" />
+      </linearGradient>
+      <linearGradient id="{id}-shield" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#c8333f" /><stop offset="1" stop-color="#8a1c26" />
+      </linearGradient>
+      <linearGradient id="{id}-cap" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#4f6fc2" /><stop offset="1" stop-color="#2c4387" />
+      </linearGradient>
+      <clipPath id="{id}-tail"><path d={TAIL} /></clipPath>
+      {#each EYES as cx, i (cx)}
+        <clipPath id="{id}-eye{i}"><ellipse {cx} cy={EYE_Y + 4} rx="61" ry="68" /></clipPath>
+      {/each}
+    </defs>
+
+    {#if lying}{@render lyingCat()}{:else}{@render sitting()}{/if}
 
     {#if shown === 'happy'}
       <g class="sparkles" fill="url(#{id}-gold)" stroke={INK} stroke-width="4">
@@ -422,8 +702,7 @@
 </svelte:element>
 
 <style>
-  .vasily { display: block; aspect-ratio: 740 / 990; flex-shrink: 0; color: var(--ink-3); -webkit-tap-highlight-color: transparent; }
-  .vasily.head { aspect-ratio: 1; }
+  .vasily { display: block; flex-shrink: 0; color: var(--ink-3); -webkit-tap-highlight-color: transparent; }
   .head svg { overflow: hidden; }
   button.vasily { padding: 0; border: 0; background: none; cursor: pointer; }
   button.vasily:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: var(--r-lg); }
@@ -446,12 +725,15 @@
   .m-sad .head { transform: rotate(4deg) translateY(8px); }
   .m-surprised .head { transform: translateY(-6px); }
   .m-sleep .head { transform: rotate(7deg) translateY(10px); }
+  .m-angry .head { transform: translateY(4px); }
 
   .ear { transform-origin: 380px 300px; transition: transform 480ms var(--ease-spring); }
   .ear-in { transform-origin: 380px 300px; }
   .m-sad .ear { transform: rotate(-24deg) translateY(16px); }
   .m-surprised .ear { transform: rotate(5deg) translateY(-8px); }
   .m-sleep .ear { transform: rotate(-12deg) translateY(8px); }
+  .m-meh .ear { transform: rotate(-7deg) translateY(4px); }
+  .m-angry .ear { transform: rotate(-17deg) translateY(12px); }
 
   .brow { transform-origin: 448px 352px; transition: transform 380ms var(--ease-spring); }
   .m-smile .brow { transform: translateY(-8px); }
@@ -460,6 +742,8 @@
   .m-think .brow-r { transform: translateY(-12px) rotate(-10deg); }
   .m-sad .brow { transform: rotate(18deg); }
   .m-sleep .brow { transform: translateY(4px); }
+  .m-meh .brow { transform: translateY(10px); }
+  .m-angry .brow { opacity: 0; }
 
   .socket { opacity: 0.9; }
   .lash { opacity: 0; }
@@ -470,6 +754,7 @@
   .blush { opacity: 0.16; transition: opacity 300ms; }
   .m-happy .blush { opacity: 0.42; }
   .m-smile .blush { opacity: 0.32; }
+  .m-angry .blush { opacity: 0.36; }
 
   .sparkles path { animation: v-twinkle 1.4s var(--ease-in-out) infinite; animation-delay: var(--d); transform: scale(0); }
   .zzz text { animation: v-zzz 2.4s var(--ease-out) infinite; animation-delay: var(--d); opacity: 0; }

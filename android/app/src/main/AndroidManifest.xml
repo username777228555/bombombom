@@ -25,6 +25,162 @@
 
         </activity>
 
+        <!-- Василий's home-screen widgets: one per style (src/modules/widgets/scenes.ts, widget/VasilyWidget.java). -->
+        <receiver
+            android:name=".widget.VasilyWidget$Live"
+            android:exported="false"
+            android:label="@string/widget_live">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_live" />
+        </receiver>
+        <receiver
+            android:name=".widget.VasilyWidget$Floppa"
+            android:exported="false"
+            android:label="@string/widget_floppa">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_floppa" />
+        </receiver>
+        <receiver
+            android:name=".widget.VasilyWidget$Hello"
+            android:exported="false"
+            android:label="@string/widget_hello">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_hello" />
+        </receiver>
+        <receiver
+            android:name=".widget.VasilyWidget$Yay"
+            android:exported="false"
+            android:label="@string/widget_yay">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_yay" />
+        </receiver>
+        <receiver
+            android:name=".widget.VasilyWidget$Hmm"
+            android:exported="false"
+            android:label="@string/widget_hmm">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_hmm" />
+        </receiver>
+        <receiver
+            android:name=".widget.VasilyWidget$Grumpy"
+            android:exported="false"
+            android:label="@string/widget_grumpy">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_grumpy" />
+        </receiver>
+        <receiver
+            android:name=".widget.VasilyWidget$Reader"
+            android:exported="false"
+            android:label="@string/widget_reader">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_reader" />
+        </receiver>
+        <receiver
+            android:name=".widget.VasilyWidget$Sleepy"
+            android:exported="false"
+            android:label="@string/widget_sleepy">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_sleepy" />
+        </receiver>
+        <receiver
+            android:name=".widget.VasilyWidget$Vzhuh"
+            android:exported="false"
+            android:label="@string/widget_vzhuh">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_vzhuh" />
+        </receiver>
+        <receiver
+            android:name=".widget.VasilyWidget$Zhdun"
+            android:exported="false"
+            android:label="@string/widget_zhdun">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_zhdun" />
+        </receiver>
+        <receiver
+            android:name=".widget.VasilyWidget$Shock"
+            android:exported="false"
+            android:label="@string/widget_shock">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_shock" />
+        </receiver>
+        <receiver
+            android:name=".widget.VasilyWidget$Knight"
+            android:exported="false"
+            android:label="@string/widget_knight">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_knight" />
+        </receiver>
+        <receiver
+            android:name=".widget.VasilyWidget$Tsar"
+            android:exported="false"
+            android:label="@string/widget_tsar">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_tsar" />
+        </receiver>
+        <!-- Changes the widgets' captions at the planned moments and after a restart, an update or a clock change. -->
+        <receiver
+            android:name=".widget.VasilyWidget$Tick"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

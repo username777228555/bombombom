@@ -1,33 +1,33 @@
 /**
  * Напоминания от Василия — локальные уведомления Android: живут на телефоне, без сети и серверов. Тексты и
- * расписание — core/reminder-plan.ts (раз в день и по делу, при долгом отсутствии всё реже, потом тишина).
- * Расписание пересобирается при запуске, при уходе из приложения и после первого занятия за день, поэтому
- * «сегодня уже занимались» всегда учтено, а открытое приложение сбрасывает отсчёт отсутствия.
+ * расписание — core/reminder-plan.ts (раз в день и по делу, каждый день по-разному, вечером — спасти серию,
+ * при долгом отсутствии всё реже, потом тишина). Мордочка в уведомлении — по настроению текста
+ * (res/drawable-nodpi/vasily_<mood>.webp). Расписание пересобирается при запуске, при уходе из приложения и
+ * после первого занятия за день, поэтому «сегодня уже занимались» всегда учтено.
  *   initReminders()            // App.svelte, один раз после загрузки
  *   enableReminders('19:00')   // спросит разрешение Android: 'on' | 'denied' | 'error'
  *   disableReminders()
  *   syncReminders()            // пересобрать сейчас
- *   nextReminder()             // ближайшее { at, title, body } — для настроек и знакомства
+ *   nextReminder()             // ближайшее { at, title, body, mood } — для настроек и знакомства
  *   reminderStatus()           // разрешение Android и сколько напоминаний стоит в очереди
- *   testReminder()             // пробное уведомление прямо сейчас
+ *   testReminder()             // пробное уведомление прямо сейчас (каждый раз другого вида)
  *
  * Плагин импортируется статически и никогда не передаётся через `await`/`return` из async-функции: прокси Capacitor
  * отвечает на любое свойство, в том числе на `then`, и такой `await` зависает навсегда.
  */
 import { LocalNotifications as ln, type LocalNotificationSchema } from '@capacitor/local-notifications';
-import { db } from './db';
-import { State } from './srs';
 import { isNative } from './platform';
 import { settings } from './settings.svelte';
-import { progress } from './progress.svelte';
-import { kb } from './content/kb.svelte';
+import { progress, nextRank } from './progress.svelte';
 import { navigate } from './router.svelte';
 import { toast } from './ui.svelte';
-import { todayKey } from './utils/format';
-import { courseState, duePlan } from '$lib/modules/course/progress';
-import { planReminders, REMIND_DAYS, type PlanInput, type PlannedReminder } from './reminder-plan';
+import { outlook } from './outlook';
+import { factOn, quizOn } from './daily';
+import { planReminders, sampleReminders, REMIND_DAYS, type PlanInput, type PlannedReminder } from './reminder-plan';
 
+// Daily notes: BASE_ID + day; evening streak savers: SAVER_ID + day.
 const BASE_ID = 7300;
+const SAVER_ID = 7340;
 const TEST_ID = 7399;
 const CHANNEL = 'vasily';
 const DAY = 86_400_000;
@@ -62,15 +62,16 @@ const ours = (id: number) => id >= BASE_ID && id < TEST_ID;
 const message = (e: unknown) => (e instanceof Error ? e.message : String(e));
 let lastError = '';
 
-const toNotification = (r: Pick<PlannedReminder, 'title' | 'body' | 'route' | 'at'>, id: number): LocalNotificationSchema => ({
+type Shown = Pick<PlannedReminder, 'title' | 'body' | 'route' | 'mood' | 'lines'>;
+const toNotification = (r: Shown & { at: Date }, id: number): LocalNotificationSchema => ({
   id,
   title: r.title,
   body: r.body,
-  largeBody: r.body,
+  ...(r.lines ? { inboxList: r.lines, summaryText: 'План на сегодня' } : { largeBody: r.body }),
   schedule: { at: r.at, allowWhileIdle: true },
   channelId: CHANNEL,
   smallIcon: 'ic_stat_vasily',
-  largeIcon: 'vasily_face',
+  largeIcon: `vasily_${r.mood}`,
   iconColor: '#7C1D2B',
   autoCancel: true,
   extra: { route: r.route },
@@ -78,31 +79,19 @@ const toNotification = (r: Pick<PlannedReminder, 'title' | 'body' | 'route' | 'a
   isExactNotification: false,
 });
 
-/** What Vasily knows right now: today's study, the streak, and what comes back for review on each day. */
+/** What Vasily knows right now: today's study, the streak, what comes back for review, the question of the day. */
 async function planInput(now = new Date()): Promise<PlanInput> {
-  const start = new Date(now);
-  start.setHours(0, 0, 0, 0);
-  const ends = Array.from({ length: REMIND_DAYS[REMIND_DAYS.length - 1]! + 1 }, (_, d) => start.getTime() + (d + 1) * DAY);
-  const dues = (await db.srs.where('state').notEqual(State.New).toArray()).map((r) => r.due);
-  const course = await courseState();
-  const reviews = kb.lessons.filter((l) => course[l.id]?.due).sort((a, b) => course[a.id]!.due! - course[b.id]!.due!);
-  const plan = await duePlan();
-  const lastDay = [...progress.days].reverse().find((d) => d.xp > 0)?.date;
-  const today = todayKey(now);
-  const studiedToday = progress.today.date === today && progress.today.xp > 0;
+  const span = REMIND_DAYS[REMIND_DAYS.length - 1]! + 1;
+  const o = await outlook(span, now);
+  const day = (d: number) => new Date(now.getTime() + d * DAY);
+  const rank = nextRank();
   return {
-    now,
+    ...o,
     at: settings.remindAt ?? '19:00',
-    name: settings.name.trim() || undefined,
-    studiedToday,
-    sinceStudy: studiedToday ? 0 : lastDay ? Math.round((start.getTime() - new Date(`${lastDay}T00:00:00`).getTime()) / DAY) : undefined,
-    streak: progress.streak,
-    cardsByDay: ends.map((end) => dues.filter((due) => due < end).length),
-    lessonByDay: ends.map((end) => {
-      const l = reviews.find((x) => course[x.id]!.due! < end);
-      return l && { id: l.id, title: l.title, minutes: l.minutes };
-    }),
-    next: plan.next && { id: plan.next.id, title: plan.next.title, minutes: plan.next.minutes },
+    quiz: Array.from({ length: span }, (_, d) => quizOn(day(d), o.met)),
+    fact: Array.from({ length: span }, (_, d) => factOn(day(d))),
+    rank: rank && { title: rank.title, left: rank.xp - progress.xpTotal },
+    saver: settings.remindStreak,
   };
 }
 
@@ -129,7 +118,7 @@ async function sync() {
   if (!settings.remindAt || !(await allowed(false))) return;
   await ensureChannel();
   const plan = planReminders(await planInput());
-  if (plan.length) await ln.schedule({ notifications: plan.map((r) => toNotification(r, BASE_ID + r.day)) });
+  if (plan.length) await ln.schedule({ notifications: plan.map((r) => toNotification(r, (r.slot ? SAVER_ID : BASE_ID) + r.day)) });
   lastError = '';
 }
 
@@ -192,16 +181,23 @@ export async function reminderStatus(): Promise<ReminderStatus | undefined> {
   }
 }
 
-/** A sample notification right now: 'sent', 'denied' (no permission), 'web' (no notifications in a browser) or an error text. */
-export async function testReminder(): Promise<'sent' | 'denied' | 'web' | { error: string }> {
-  if (!isNative) return 'web';
+let tests = 0;
+/** The next sample note: every press shows another kind (a question, a fact, a plan, the streak saver…). */
+export async function sampleReminder(): Promise<Shown> {
+  const all = sampleReminders(await planInput());
+  return all[tests++ % all.length] ?? { title: 'Василий', body: 'Мяу! Так будут выглядеть мои напоминания.', route: '/', mood: 'smile' };
+}
+
+/** A sample notification right now: the note, 'denied' (no permission), 'web' (a browser: the note to show) or an error. */
+export async function testReminder(): Promise<{ sent: Shown } | 'denied' | { web: Shown } | { error: string }> {
+  if (!isNative) return { web: await sampleReminder() };
   try {
     if (!(await allowed(true))) return 'denied';
     await ensureChannel();
-    const r = (await nextReminder(settings.remindAt ?? '19:00')) ?? { title: 'Василий', body: 'Мяу! Так будут выглядеть мои напоминания.', route: '/' };
+    const r = await sampleReminder();
     const { schedule: _, ...now } = toNotification({ ...r, at: new Date() }, TEST_ID);
     await ln.schedule({ notifications: [now] });
-    return 'sent';
+    return { sent: r };
   } catch (e) {
     return { error: message(e) };
   }

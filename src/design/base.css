@@ -235,15 +235,9 @@ input, textarea, select {
   margin-top: 0.8em;
 }
 
-/* Fewer animations: everything jumps to its end at once. One iteration only — an endless animation squeezed
+/* «Меньше анимаций» (settings.reducedMotion): everything jumps to its end at once. Only the in-app switch counts —
+   Android's «Убрать анимацию» must not silently freeze the app. One iteration only: an endless animation squeezed
    into 1 ms would flicker back and forth every frame (the slow drift of a picture turned into jitter). */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 1ms !important;
-  }
-}
 [data-motion='reduced'] *,
 [data-motion='reduced'] *::before,
 [data-motion='reduced'] *::after {

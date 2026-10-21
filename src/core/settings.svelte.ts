@@ -22,6 +22,8 @@ export interface Settings {
   remindAt: string | null;
   /** Василий уже спрашивал, напоминать ли (при знакомстве или на главной) — больше не спрашивает. */
   remindAsked: boolean;
+  /** Вечером второе напоминание, если серия (от двух дней) сгорит, а сегодня ещё не занимались. */
+  remindStreak: boolean;
   packs: Record<string, boolean>;
   reader: {
     fontSize: number;
@@ -46,6 +48,7 @@ const DEFAULTS: Settings = {
   onboarded: false,
   remindAt: null,
   remindAsked: false,
+  remindStreak: true,
   packs: {},
   reader: { fontSize: 108, lineHeight: 1.55, theme: 'paper', font: 'literata', justify: true, flow: 'paginated' },
 };
@@ -90,5 +93,11 @@ export function applyTheme(): void {
   void applySystemBars(dark);
 }
 
-export const motionOK = () =>
-  !settings.reducedMotion && !(typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches);
+/**
+ * Animations are on unless «Меньше анимаций» is switched on in the app. The system «reduce motion» flag is not
+ * followed: many phones raise it with battery saver or developer options, and the app looked frozen.
+ */
+export const motionOK = () => !settings.reducedMotion;
+
+/** Android asks apps for fewer animations (only shown as a hint next to the switch). */
+export const systemReducedMotion = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -6,12 +6,12 @@
   import Toggle from '$lib/design/components/Toggle.svelte';
   import Button from '$lib/design/components/Button.svelte';
   import Vasily from '$lib/design/components/Vasily.svelte';
-  import { settings, type Accent } from '$lib/core/settings.svelte';
+  import { settings, systemReducedMotion, type Accent } from '$lib/core/settings.svelte';
   import { exportBackup, importBackup, resetProgress } from '$lib/core/backup';
   import { pickFiles } from '$lib/core/platform';
   import { toast, confirmDialog, ui } from '$lib/core/ui.svelte';
   import { navigate } from '$lib/core/router.svelte';
-  import { REMIND_TIMES, enableReminders, disableReminders, nextReminder, reminderStatus, reminderToast, testReminder, whenLabel, type ReminderStatus } from '$lib/core/reminders';
+  import { REMIND_TIMES, enableReminders, disableReminders, nextReminder, reminderStatus, reminderToast, syncReminders, testReminder, whenLabel, type ReminderStatus } from '$lib/core/reminders';
   import { pluralN, WORDS } from '$lib/core/utils/format';
   import type { PlannedReminder } from '$lib/core/reminder-plan';
 
@@ -52,12 +52,19 @@
     else await disableReminders();
     await refreshStatus();
   }
+  // «Прислать пробное»: every press — another kind of note; the mock below shows the last one.
+  let sample = $state<Pick<PlannedReminder, 'title' | 'body' | 'mood' | 'lines'> | undefined>();
+  const shown = $derived(sample ?? upcoming);
   async function tryReminder() {
     const r = await testReminder();
-    if (r === 'sent') toast('Пробное напоминание отправлено — загляните в шторку', 'success');
-    else if (r === 'denied') toast('Android запретил уведомления. Разрешите их: настройки телефона → Приложения → СТОЛЫПИНЪ → Уведомления', 'error', 6000);
-    else if (r === 'web') toast(upcoming ? `В браузере уведомлений нет. На телефоне придёт: «${upcoming.title}»` : 'В браузере уведомлений нет — они приходят в приложении на телефоне');
-    else toast(`Не получилось: ${r.error}`, 'error', 6000);
+    if (r === 'denied') toast('Android запретил уведомления. Разрешите их: настройки телефона → Приложения → СТОЛЫПИНЪ → Уведомления', 'error', 6000);
+    else if ('sent' in r) {
+      sample = r.sent;
+      toast('Отправил — загляните в шторку. Нажмите ещё: пришлю другое', 'success');
+    } else if ('web' in r) {
+      sample = r.web;
+      toast('В браузере уведомлений нет — так оно выглядело бы на телефоне');
+    } else toast(`Не получилось: ${r.error}`, 'error', 6000);
   }
 
   async function doExport() {
@@ -97,6 +104,11 @@
       <span class="grow">Знакомство с Василием<small>обзор возможностей приложения</small></span>
       <ChevronRight size={18} />
     </button>
+    <button class="link tour" onclick={() => navigate('/widgets')}>
+      <Vasily size={44} head mood="happy" still />
+      <span class="grow">Виджеты Василия<small>12 мемов и «Живой» для главного экрана</small></span>
+      <ChevronRight size={18} />
+    </button>
   </Card>
 
   <section class="stack">
@@ -113,7 +125,7 @@
           </div>
         </div>
         <div class="field"><span>Размер интерфейса</span><Segmented bind:value={scale} options={[{ value: '0.9', label: 'A−' }, { value: '1', label: 'A' }, { value: '1.1', label: 'A+' }, { value: '1.2', label: 'A++' }]} /></div>
-        <label class="line"><span class="grow">Меньше анимаций</span><Toggle bind:checked={settings.reducedMotion} label="Меньше анимаций" /></label>
+        <label class="line"><span class="grow">Меньше анимаций{#if systemReducedMotion() && !settings.reducedMotion}<small>в Android анимации выключены, но здесь они идут — включите, если мешают</small>{/if}</span><Toggle bind:checked={settings.reducedMotion} label="Меньше анимаций" /></label>
         <label class="line"><span class="grow">Вибрация</span><Toggle bind:checked={settings.haptics} label="Вибрация" /></label>
       </div>
     </Card>
@@ -133,7 +145,7 @@
     <h2 class="eyebrow">Напоминания от Василия</h2>
     <Card padding="md">
       <div class="stack inner">
-        <label class="line"><span class="grow">Напоминать о занятиях<small>раз в день и только по делу: что вернулось на повторение, новый урок. Если долго не заходить — реже, через две недели — тишина</small></span><Toggle bind:checked={remindOn} label="Напоминать о занятиях" onchange={toggleRemind} /></label>
+        <label class="line"><span class="grow">Напоминать о занятиях<small>раз в день и по делу, каждый день по-разному: урок на повторение, карточки, вопрос дня, «сегодня в истории», план на день. Если долго не заходить — реже, через две недели — тишина</small></span><Toggle bind:checked={remindOn} label="Напоминать о занятиях" onchange={toggleRemind} /></label>
         {#if remindOn}
           <div class="times">
             {#each REMIND_TIMES as t (t.at)}
@@ -141,13 +153,18 @@
             {/each}
           </div>
           <label class="line"><span class="grow">Своё время</span><input class="clock num" type="time" value={settings.remindAt ?? '19:00'} onchange={(e) => e.currentTarget.value && remindTime(e.currentTarget.value)} /></label>
-          {#if upcoming}
+          <label class="line"><span class="grow">Спасать серию<small>вечером в 21:00 — ещё одно, если серия от двух дней сгорит в полночь, а сегодня вы не занимались</small></span><Toggle bind:checked={settings.remindStreak} label="Спасать серию" onchange={() => void syncReminders()} /></label>
+          {#if shown}
             <div class="notif">
-              <Vasily head size={40} mood="smile" />
+              <Vasily head size={40} mood={shown.mood} still />
               <div class="grow">
-                <span class="app">Ближайшее · {whenLabel(upcoming.at)}</span>
-                <b>{upcoming.title}</b>
-                <small>{upcoming.body}</small>
+                <span class="app">{sample ? 'Пробное' : upcoming ? `Ближайшее · ${whenLabel(upcoming.at)}` : ''}</span>
+                <b>{shown.title}</b>
+                {#if shown.lines}
+                  {#each shown.lines as l (l)}<small>• {l}</small>{/each}
+                {:else}
+                  <small>{shown.body}</small>
+                {/if}
               </div>
             </div>
           {/if}

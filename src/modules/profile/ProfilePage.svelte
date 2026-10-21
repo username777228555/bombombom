@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Settings, Package, Info, Flame, Zap, Layers, Sparkles, BookOpen, ChevronRight, Pencil, Trophy, CalendarDays } from '@lucide/svelte';
+  import { Settings, Package, Info, Flame, Zap, Layers, Sparkles, BookOpen, ChevronRight, Pencil, Trophy, CalendarDays, LayoutGrid } from '@lucide/svelte';
   import PageHeader from '$lib/design/components/PageHeader.svelte';
   import IconButton from '$lib/design/components/IconButton.svelte';
   import Card from '$lib/design/components/Card.svelte';
@@ -104,6 +104,7 @@
   <section class="section links">
     <Card padding="sm">
       <button class="link" onclick={() => navigate('/ranks')}><Trophy size={20} /><span class="grow">Табель о рангах</span><span class="muted">{rankIndex() + 1}/{RANKS.length}</span><ChevronRight size={18} /></button>
+      <button class="link" onclick={() => navigate('/widgets')}><LayoutGrid size={20} /><span class="grow">Виджеты Василия</span><span class="muted">13 стилей</span><ChevronRight size={18} /></button>
       <button class="link" onclick={() => navigate('/packs')}><Package size={20} /><span class="grow">Пакеты материалов</span><ChevronRight size={18} /></button>
       <button class="link" onclick={() => navigate('/settings')}><Settings size={20} /><span class="grow">Настройки и резервная копия</span><ChevronRight size={18} /></button>
       <button class="link" onclick={() => navigate('/about')}><Info size={20} /><span class="grow">О приложении</span><ChevronRight size={18} /></button>

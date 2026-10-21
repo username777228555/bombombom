@@ -8,6 +8,7 @@
   import { loadSettings, settings, persistSettings, applyTheme, motionOK } from '$lib/core/settings.svelte';
   import { loadProgress, progress } from '$lib/core/progress.svelte';
   import { initReminders, syncReminders } from '$lib/core/reminders';
+  import { initWidgets, syncWidgets } from '$lib/modules/widgets/native';
   import { loadUserDecks } from '$lib/core/content/userdecks.svelte';
   import { initPlatform, setHapticsEnabled } from '$lib/core/platform';
   import { checkForUpdate } from '$lib/core/update.svelte';
@@ -34,6 +35,7 @@
       void navigator.storage?.persist?.();
       void checkForUpdate();
       void initReminders();
+      initWidgets();
     } catch (e) {
       console.error(e);
       failure = e instanceof Error ? e.message : String(e);
@@ -53,10 +55,14 @@
     }
   });
 
-  // The first study of the day cancels today's reminder from Vasily.
+  // The first study of the day cancels today's reminder from Vasily and cheers up his widgets.
   const studiedToday = $derived(progress.today.xp > 0);
+  const goalMet = $derived(progress.today.xp >= settings.dailyGoal);
   $effect(() => {
     if (booted && studiedToday) untrack(() => void syncReminders());
+  });
+  $effect(() => {
+    if (booted && (studiedToday || goalMet)) untrack(() => void syncWidgets());
   });
 
   // Scroll: top on forward navigation, restore on back.

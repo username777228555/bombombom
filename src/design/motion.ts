@@ -1,7 +1,7 @@
 /**
- * Motion helpers shared by all screens. Every animation must go through `motionOK()` (system «reduce
- * motion» + the in-app «Меньше анимаций» switch); CSS keyframes are additionally shortened globally in
- * base.css for `[data-motion='reduced']`.
+ * Motion helpers shared by all screens. Every animation must go through `motionOK()` (the in-app «Меньше анимаций»
+ * switch; the system «reduce motion» flag is deliberately not followed); CSS keyframes are additionally shortened
+ * globally in base.css for `[data-motion='reduced']`.
  */
 import type { Action } from 'svelte/action';
 import { motionOK } from '$lib/core/settings.svelte';

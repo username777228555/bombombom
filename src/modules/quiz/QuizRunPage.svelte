@@ -25,7 +25,7 @@
   import { richText } from '$lib/core/utils/text';
   import Vasily from '$lib/design/components/Vasily.svelte';
   import { toast } from '$lib/core/ui.svelte';
-  import { aiConfigured, aiConsent, askAi, AiError, cardText, entityByTitle, plainRefs } from '$lib/core/ai.svelte';
+  import { aiReady, aiConsent, askAi, AiError, cardText, entityByTitle, plainRefs } from '$lib/core/ai.svelte';
 
   let spec = $state<QuizSpec | null>(null);
   let loading = $state(true);
@@ -150,7 +150,7 @@
   let whyBusy = $state(false);
   const rightText = (q: Question): string =>
     q.type === 'single' ? q.options[q.answer] ?? '' : q.type === 'year' ? String(q.answer) : q.type === 'text' ? q.answers[0] ?? '' : '';
-  const canAskWhy = $derived(aiConfigured && !spec?.exam && verdict !== 'ok' && !!givenAnswer && !!current && ['single', 'year', 'text'].includes(current.type));
+  const canAskWhy = $derived(aiReady() && !spec?.exam && verdict !== 'ok' && !!givenAnswer && !!current && ['single', 'year', 'text'].includes(current.type));
   async function askWhy() {
     if (!current || !(await aiConsent())) return;
     const q = current as GeneratedQuestion;

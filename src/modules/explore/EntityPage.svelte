@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ChartGantt, Network, GraduationCap, MapPin, Crown, ExternalLink, BookOpen } from '@lucide/svelte';
+  import { ChartGantt, Network, GraduationCap, MapPin, Crown, ExternalLink, BookOpen, Sparkles } from '@lucide/svelte';
   import PageHeader from '$lib/design/components/PageHeader.svelte';
   import Card from '$lib/design/components/Card.svelte';
   import Badge from '$lib/design/components/Badge.svelte';
@@ -17,6 +17,10 @@
   import { detailsBeyondSummary, richText } from '$lib/core/utils/text';
   import { enroll } from '$lib/core/srs';
   import { toast } from '$lib/core/ui.svelte';
+  import TextField from '$lib/design/components/TextField.svelte';
+  import Chip from '$lib/design/components/Chip.svelte';
+  import Vasily from '$lib/design/components/Vasily.svelte';
+  import { aiReady, aiConsent, askAi, AiError, cardText, plainRefs } from '$lib/core/ai.svelte';
 
   const entity = $derived(kb.get(router.params.id ?? ''));
   // Wikipedia links are not shown (they are long and live in the `wiki` field for scripts/media).
@@ -67,6 +71,30 @@
     const prefix = { event: 'e', person: 'p', term: 't', culture: 'c' } as Record<string, string>;
     return prefix[entity.kind] ? `a:${prefix[entity.kind]}:${entity.item.id}` : null;
   });
+
+  // «Спросить Василия»: a question about this card, answered by the AI from it and its neighbours.
+  let question = $state('');
+  let asking = $state(false);
+  let answer = $state<{ text: string; ids: string[] } | null>(null);
+  $effect(() => {
+    void entity?.item.id;
+    question = '';
+    answer = null;
+  });
+  async function ask() {
+    if (!entity || question.trim().length < 3 || !(await aiConsent())) return;
+    const id = entity.item.id;
+    const ids = [id, ...kb.neighbors(id).map((n) => n.id).filter((n) => n !== id)].slice(0, 9);
+    asking = true;
+    try {
+      const r = await askAi('ask', { question: question.trim(), cards: ids.map(cardText).filter((x): x is string => !!x) });
+      answer = { text: plainRefs(r.text), ids: r.ids.filter((x) => x !== id) };
+    } catch (e) {
+      toast(e instanceof AiError ? e.message : 'Василий не смог ответить', 'error', 3600);
+    } finally {
+      asking = false;
+    }
+  }
 
   async function study() {
     if (!cardId) return;
@@ -181,6 +209,27 @@
         {/each}
       </div>
 
+      {#if aiReady()}
+        <section class="rel ask">
+          <h2 class="eyebrow">Спросить Василия</h2>
+          <div class="ask-row">
+            <div class="grow"><TextField bind:value={question} placeholder="Почему? Чем закончилось? Кто участвовал?" onenter={ask} /></div>
+            <Button icon={Sparkles} loading={asking} disabled={question.trim().length < 3} onclick={ask} label="Спросить"></Button>
+          </div>
+          {#if answer}
+            <div class="vas">
+              <Vasily head size={40} mood="smile" still />
+              <div class="grow">
+                <div class="rich">{@html richText(answer.text)}</div>
+                {#if answer.ids.length}
+                  <div class="chips">{#each answer.ids as x (x)}<Chip size="sm" onclick={() => navigate(`/entity/${x}`)}>{kb.title(x)}</Chip>{/each}</div>
+                {/if}
+              </div>
+            </div>
+          {/if}
+        </section>
+      {/if}
+
       {#each groups as [label, list] (label)}
         <section class="rel">
           <h2 class="eyebrow">{label}</h2>
@@ -234,5 +283,14 @@
   .facts:empty { display: none; }
   .actions { gap: var(--sp-2); }
   .rel { display: flex; flex-direction: column; gap: var(--sp-2); }
+  /* A long lesson title («Урок: Великие реформы 1860–1870-х годов») ends with «…» instead of leaving the screen. */
+  .actions :global(.btn) { max-width: 100%; min-width: 0; }
+  .actions :global(.btn .label) { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .ask-row { display: flex; gap: var(--sp-2); align-items: flex-start; }
+  .ask .vas { display: flex; gap: var(--sp-3); align-items: flex-start; padding: var(--sp-3); border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--line); }
+  .ask .rich { font-size: var(--text-sm); line-height: 1.5; }
+  .ask .rich :global(p) { margin: 0 0 var(--sp-2); }
+  .ask .rich :global(p:last-child) { margin: 0; }
+  .ask .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--sp-2); }
   .refs { margin: 0; padding-left: 18px; font-size: var(--text-sm); color: var(--ink-3); }
 </style>

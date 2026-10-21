@@ -13,7 +13,7 @@
   import Button from '$lib/design/components/Button.svelte';
   import Vasily from '$lib/design/components/Vasily.svelte';
   import { toast } from '$lib/core/ui.svelte';
-  import { aiConfigured, aiConsent, askAi, AiError, type RetellResult } from '$lib/core/ai.svelte';
+  import { aiReady, aiConsent, askAi, AiError, type RetellResult } from '$lib/core/ai.svelte';
   import type { LessonItem } from '$lib/core/content/schema';
   import { logAnswer } from '$lib/core/mastery';
   import { pluralN, WORDS } from '$lib/core/utils/format';
@@ -106,7 +106,7 @@
       <span class="muted small grow">{pluralN(words, WORDS.word)}</span>
       <Button disabled={words < 3 || aiBusy} onclick={check}>Проверить себя</Button>
     </div>
-    {#if aiConfigured}
+    {#if aiReady()}
       <Button full variant="soft" icon={Sparkles} loading={aiBusy} disabled={words < 3} onclick={checkWithVasily}>{aiBusy ? 'Василий читает…' : 'Проверить с Василием'}</Button>
     {/if}
   {:else}

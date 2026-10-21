@@ -1,20 +1,39 @@
 /**
- * Помощь Василия (ИИ): the app's only requests that carry the student's own text. They go to the app's proxy
- * (server/ai-proxy.mjs, address from VITE_AI_URL at build time), which holds the model key and builds the prompt;
- * nothing else is sent — no name, no progress, only an anonymous install id for the daily limit.
- * Without VITE_AI_URL (local builds, forks) the AI buttons are hidden. The first use asks for consent (settings.ai).
+ * Помощь Василия (ИИ): the app's only requests that carry the student's own text. Two ways to reach the model:
+ *  - the student's own key («Настройки → Помощь Василия»): kept only on this device (kv `ai-key`, never written to
+ *    a backup — backup.ts), the phone calls the model service directly;
+ *  - a proxy that holds the key (server/ai-proxy.mjs, address VITE_AI_URL at build time), if the build has one.
+ * Prompts and answer parsing — server/ai-tasks.mjs, shared by both. Nothing else is sent: no name, no progress.
+ * The buttons show when one of the two is set (aiReady()); the first use asks for consent (settings.ai).
  *
- *   aiConfigured                         // the build knows a proxy
+ *   aiReady()                              // a key on the device or a proxy in the build
  *   if (await aiConsent()) await askAi('retell', { lesson, points, text })
- *   cardText(id)                         // «[[id]] Название (год): кратко» — context for the model
+ *   await checkAiKey(key) → saveAiKey(key) // the settings field; ai.key — the saved key ('' — none)
+ *   cardText(id)                           // «[[id]] Название (год): кратко» — context for the model
  */
 import { kvGet, kvSet } from './db';
 import { settings, persistSettings } from './settings.svelte';
 import { confirmDialog } from './ui.svelte';
 import { kb } from './content/kb.svelte';
+import { isNative } from './platform';
+import { todayKey } from './utils/format';
+import { TASKS, DEFAULT_BASE, DEFAULT_MODELS, parseModels } from '../../server/ai-tasks.mjs';
 
 const AI_URL = (import.meta.env.VITE_AI_URL ?? '').replace(/\/+$/, '');
-export const aiConfigured = !!AI_URL;
+/** The build talks to a proxy: no key field in the settings. */
+export const aiProxy = !!AI_URL;
+
+/** kv row of the device key (listed in backup.ts PRIVATE_KV: it never leaves the device). */
+export const AI_KEY_KV = 'ai-key';
+const USAGE_KV = 'ai-usage';
+/** Requests a day with the device key — a fuse against a runaway loop, not a quota. */
+const DAILY = 150;
+const MODELS = parseModels(DEFAULT_MODELS);
+
+export const ai = $state({ key: '' });
+void kvGet<string>(AI_KEY_KV, '').then((k) => (ai.key = k));
+
+export const aiReady = (): boolean => aiProxy || !!ai.key;
 
 export interface RetellResult {
   covered: number[];
@@ -37,7 +56,7 @@ export async function aiConsent(): Promise<boolean> {
   if (settings.ai) return true;
   const ok = await confirmDialog('Спросить Василия?', {
     message:
-      'Проверку делает модель ИИ через сервер приложения. Туда уйдёт только этот текст ответа и задание — без имени и прогресса. ' +
+      'Ответ проверяет модель ИИ: в сервис уйдёт только этот текст и задание — без имени и прогресса. ' +
       'Нужен интернет. Выключить можно в настройках.',
     ok: 'Разрешить',
   });
@@ -48,6 +67,81 @@ export async function aiConsent(): Promise<boolean> {
   return ok;
 }
 
+export async function askAi<T extends keyof AiTasks>(task: T, body: AiTasks[T]['req']): Promise<AiTasks[T]['res']> {
+  if (!navigator.onLine) throw new AiError('Нет интернета — Василию не дозвониться');
+  if (aiProxy) return viaProxy(task, body);
+  if (!ai.key) throw new AiError('Вставьте ключ ИИ в настройках');
+  await countToday();
+  const t = TASKS[task];
+  const prompt = t.build(body);
+  if (!prompt) throw new AiError('Слишком мало текста — Василию нечего проверять');
+  for (const [i, m] of MODELS.entries()) {
+    try {
+      // A hung first model gets 45 s, then the next one has its turn.
+      const out = t.parse(await chat(m, t.maxTokens, prompt.sys, prompt.user, i === 0 ? 45_000 : 70_000), prompt as never);
+      if (out) return out as AiTasks[T]['res'];
+    } catch (e) {
+      if (e instanceof AiError) throw e; // a bad key: the next model will not help
+    }
+  }
+  throw new AiError('Василий не смог ответить — попробуйте ещё раз');
+}
+
+/** Is the key accepted by the service (the model list costs nothing)? */
+export async function checkAiKey(key: string): Promise<boolean> {
+  const r = await http('GET', `${DEFAULT_BASE}/models`, key.trim(), undefined, 20_000);
+  return r.status >= 200 && r.status < 300;
+}
+
+export async function saveAiKey(key: string): Promise<void> {
+  ai.key = key.trim();
+  await kvSet(AI_KEY_KV, ai.key);
+}
+
+async function chat(m: { name: string; effort?: string }, maxTokens: number, sys: string, user: string, timeout: number): Promise<string> {
+  const body = {
+    model: m.name,
+    max_tokens: maxTokens,
+    messages: [
+      { role: 'system', content: sys },
+      { role: 'user', content: user },
+    ],
+    ...(m.effort ? { reasoning_effort: m.effort } : {}),
+  };
+  const r = await http('POST', `${DEFAULT_BASE}/chat/completions`, ai.key, body, timeout);
+  if (r.status === 401 || r.status === 403) throw new AiError('Ключ ИИ не подходит или отозван — вставьте новый в настройках');
+  if (r.status < 200 || r.status >= 300) throw new Error(`model ${r.status}`);
+  return (r.data as { choices?: { message?: { content?: string } }[] } | null)?.choices?.[0]?.message?.content ?? '';
+}
+
+/** On the phone — native HTTP (no CORS, long reads); in a browser — fetch. */
+async function http(method: 'GET' | 'POST', url: string, key: string, body: unknown, timeout: number): Promise<{ status: number; data: unknown }> {
+  const headers = { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' };
+  if (isNative) {
+    const { CapacitorHttp } = await import('@capacitor/core');
+    const r = await CapacitorHttp.request({ method, url, headers, data: body, connectTimeout: 15_000, readTimeout: timeout });
+    return { status: r.status, data: typeof r.data === 'string' ? parse(r.data) : r.data };
+  }
+  const r = await fetch(url, { method, headers, body: body === undefined ? undefined : JSON.stringify(body), signal: AbortSignal.timeout(timeout) });
+  return { status: r.status, data: await r.json().catch(() => null) };
+}
+
+function parse(s: string): unknown {
+  try {
+    return JSON.parse(s);
+  } catch {
+    return null;
+  }
+}
+
+async function countToday(): Promise<void> {
+  const u = await kvGet<{ day: string; n: number }>(USAGE_KV, { day: '', n: 0 });
+  const n = u.day === todayKey() ? u.n : 0;
+  if (n >= DAILY) throw new AiError('На сегодня хватит — Василий устал, завтра продолжим');
+  await kvSet(USAGE_KV, { day: todayKey(), n: n + 1 });
+}
+
+// ---------- the proxy (a build with VITE_AI_URL) ----------
 async function installId(): Promise<string> {
   let id = await kvGet<string>('ai-install', '');
   if (!id) {
@@ -57,9 +151,7 @@ async function installId(): Promise<string> {
   return id;
 }
 
-export async function askAi<T extends keyof AiTasks>(task: T, body: AiTasks[T]['req']): Promise<AiTasks[T]['res']> {
-  if (!aiConfigured) throw new AiError('Помощь Василия в этой сборке выключена');
-  if (!navigator.onLine) throw new AiError('Нет интернета — Василию не дозвониться');
+async function viaProxy<T extends keyof AiTasks>(task: T, body: AiTasks[T]['req']): Promise<AiTasks[T]['res']> {
   let r: Response;
   try {
     r = await fetch(`${AI_URL}/ai/${task}`, {
@@ -77,6 +169,7 @@ export async function askAi<T extends keyof AiTasks>(task: T, body: AiTasks[T]['
   return (await r.json()) as AiTasks[T]['res'];
 }
 
+// ---------- context for the model ----------
 /** One knowledge-base entry as context: «[[id]] Название (год): summary». */
 export function cardText(id: string): string | undefined {
   const e = kb.get(id);

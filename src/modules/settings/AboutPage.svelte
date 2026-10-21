@@ -6,7 +6,7 @@
   import Vasily from '$lib/design/components/Vasily.svelte';
   import { Send, CodeXml } from '@lucide/svelte';
   import { APP_REPO } from '$lib/modules/library/github';
-  import { aiConfigured } from '$lib/core/ai.svelte';
+  import { aiReady } from '$lib/core/ai.svelte';
   import { TELEGRAM_URL, TELEGRAM_NAME } from '$lib/core/contact';
   const version = __APP_VERSION__;
 </script>
@@ -23,7 +23,7 @@
   <div class="stack">
     <Card padding="md">
       <h2>Что это</h2>
-      <p class="secondary">Офлайн-приложение для подготовки к олимпиадам по истории России: эпохи, лента времени, граф связей, карточки с интервальным повторением, тесты в олимпиадных форматах, игры и читалка книг. Всё работает без интернета, данные хранятся только на устройстве.{#if aiConfigured} Исключение — «Помощь Василия» (ИИ): только по кнопке и с интернетом, на сервер приложения уходит лишь текст ответа.{/if}</p>
+      <p class="secondary">Офлайн-приложение для подготовки к олимпиадам по истории России: эпохи, лента времени, граф связей, карточки с интервальным повторением, тесты в олимпиадных форматах, игры и читалка книг. Всё работает без интернета, данные хранятся только на устройстве.{#if aiReady()} Исключение — «Помощь Василия» (ИИ): только по кнопке и с интернетом, в сервис ИИ уходит лишь текст ответа.{/if}</p>
     </Card>
     <Card padding="md">
       <div class="cat">

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Download, Upload, RotateCcw, Package, ChevronRight, BellRing } from '@lucide/svelte';
+  import { Download, Upload, RotateCcw, Package, ChevronRight, BellRing, KeyRound, Trash2 } from '@lucide/svelte';
   import PageHeader from '$lib/design/components/PageHeader.svelte';
   import Card from '$lib/design/components/Card.svelte';
   import Segmented from '$lib/design/components/Segmented.svelte';
@@ -13,7 +13,8 @@
   import { navigate } from '$lib/core/router.svelte';
   import { REMIND_TIMES, enableReminders, disableReminders, nextReminder, reminderStatus, reminderToast, syncReminders, testReminder, whenLabel, type ReminderStatus } from '$lib/core/reminders';
   import { pluralN, WORDS } from '$lib/core/utils/format';
-  import { aiConfigured } from '$lib/core/ai.svelte';
+  import TextField from '$lib/design/components/TextField.svelte';
+  import { ai, aiProxy, checkAiKey, saveAiKey } from '$lib/core/ai.svelte';
   import type { PlannedReminder } from '$lib/core/reminder-plan';
 
   const ACCENTS: { id: Accent; name: string; color: string }[] = [
@@ -66,6 +67,32 @@
       sample = r.web;
       toast('В браузере уведомлений нет — так оно выглядело бы на телефоне');
     } else toast(`Не получилось: ${r.error}`, 'error', 6000);
+  }
+
+  // Помощь Василия: the key lives only on this device; checked against the service before saving.
+  let keyInput = $state('');
+  let keyBusy = $state(false);
+  const keyMask = $derived(ai.key ? `${ai.key.slice(0, 5)}…${ai.key.slice(-4)}` : '');
+  async function addKey() {
+    const k = keyInput.trim();
+    if (k.length < 10) return toast('Ключ слишком короткий — вставьте его целиком', 'error');
+    keyBusy = true;
+    try {
+      if (!(await checkAiKey(k))) return toast('Сервис не принял ключ — проверьте, что он скопирован целиком и не отозван', 'error', 5000);
+      await saveAiKey(k);
+      settings.ai = true;
+      keyInput = '';
+      toast('Ключ сохранён — Василий готов помогать', 'success');
+    } catch {
+      toast('Не удалось проверить ключ — нужен интернет', 'error');
+    } finally {
+      keyBusy = false;
+    }
+  }
+  async function removeKey() {
+    if (!(await confirmDialog('Удалить ключ ИИ?', { message: 'Кнопки «Спросить Василия» пропадут, пока не вставите ключ снова.', ok: 'Удалить', danger: true }))) return;
+    await saveAiKey('');
+    toast('Ключ удалён');
   }
 
   async function doExport() {
@@ -138,8 +165,25 @@
       <div class="stack inner">
         <div class="field"><span>Цель дня (опыт)</span><Segmented bind:value={goal} options={[{ value: '20', label: '20' }, { value: '50', label: '50' }, { value: '100', label: '100' }, { value: '150', label: '150' }]} /></div>
         <div class="field"><span>Новых карточек в день</span><Segmented bind:value={perDay} options={[{ value: '10', label: '10' }, { value: '20', label: '20' }, { value: '30', label: '30' }, { value: '50', label: '50' }]} /></div>
-        {#if aiConfigured}
-          <label class="line"><span class="grow">Помощь Василия (ИИ)<small>проверка пересказа урока и разбор ошибок в тестах, только по кнопке и с интернетом. Текст ответа уходит на сервер приложения и модели ИИ — без имени и прогресса</small></span><Toggle bind:checked={settings.ai} label="Помощь Василия" /></label>
+      </div>
+    </Card>
+  </section>
+
+  <section class="stack section">
+    <h2 class="eyebrow">Помощь Василия (ИИ)</h2>
+    <Card padding="md">
+      <div class="stack inner">
+        <p class="muted ai-note">Проверка пересказа урока, «Почему я ошибся?» в тестах, «Развилки» и «Спросить Василия» на карточках. Только по кнопке и с интернетом: в сервис ИИ уходит лишь текст ответа и задание — без имени и прогресса.</p>
+        {#if !aiProxy}
+          {#if ai.key}
+            <div class="line"><KeyRound size={18} /><span class="grow">Ключ сохранён<small class="num">{keyMask}</small></span><Button size="sm" variant="ghost" icon={Trash2} onclick={removeKey}>Удалить</Button></div>
+          {:else}
+            <TextField bind:value={keyInput} type="password" label="Ключ ИИ" placeholder="sk-…" hint="Хранится только на этом телефоне и не попадает в резервную копию" onenter={addKey} />
+            <Button full variant="secondary" icon={KeyRound} loading={keyBusy} disabled={!keyInput.trim()} onclick={addKey}>Проверить и сохранить</Button>
+          {/if}
+        {/if}
+        {#if aiProxy || ai.key}
+          <label class="line"><span class="grow">Разрешить запросы к ИИ</span><Toggle bind:checked={settings.ai} label="Разрешить запросы к ИИ" /></label>
         {/if}
       </div>
     </Card>
@@ -203,6 +247,7 @@
 </div>
 
 <style>
+  .ai-note { font-size: var(--text-sm); line-height: 1.5; margin: 0; }
   .inner { --gap: var(--sp-4); }
   .field { display: flex; flex-direction: column; gap: var(--sp-2); }
   .field > span, .line > span { font-weight: 600; font-size: var(--text-sm); }

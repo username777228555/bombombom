@@ -1,4 +1,4 @@
-import { Swords, Crosshair, UserSearch, Crown } from '@lucide/svelte';
+import { Swords, Crosshair, UserSearch, Crown, Split } from '@lucide/svelte';
 import { defineModule } from '$lib/core/define-module';
 
 export default defineModule({
@@ -9,11 +9,13 @@ export default defineModule({
     { hub: 'games', title: 'Год-снайпер', description: 'Угадайте год — чем точнее, тем больше очков', icon: Crosshair, href: '/games/sniper', order: 20, tint: '#a3202e' },
     { hub: 'games', title: 'Кто я?', description: 'Узнайте деятеля по подсказкам', icon: UserSearch, href: '/games/whoami', order: 30, tint: '#1d6b57' },
     { hub: 'games', title: 'При ком это было?', description: 'Соотнесите событие и правителя', icon: Crown, href: '/games/reign', order: 40, tint: '#a87a28' },
+    { hub: 'games', title: 'Развилки', description: 'Решите за Минина, Петра, Столыпина — Василий расскажет, что было бы', icon: Split, href: '/games/forks', order: 50, tint: '#6b3a7a' },
   ],
   routes: [
     { path: '/games/chronology', tab: 'practice', immersive: true, component: () => import('./ChronologyPage.svelte') },
     { path: '/games/sniper', tab: 'practice', immersive: true, component: () => import('./SniperPage.svelte') },
     { path: '/games/whoami', tab: 'practice', immersive: true, component: () => import('./WhoAmIPage.svelte') },
     { path: '/games/reign', tab: 'practice', immersive: true, component: () => import('./ReignPage.svelte') },
+    { path: '/games/forks', tab: 'practice', immersive: true, component: () => import('./ForksPage.svelte') },
   ],
 });

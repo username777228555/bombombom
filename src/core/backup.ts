@@ -1,14 +1,14 @@
 /**
  * Full user-data backup (everything except book files, which are large binaries). Device-only secrets —
- * the GitHub token of the library downloads (kv `PRIVATE_KV`) — are never written to the file and survive
- * a restore untouched.
+ * the GitHub token of the library downloads and the AI key (kv `PRIVATE_KV`) — are never written to the file and
+ * survive a restore untouched.
  */
 import { db } from './db';
 import { exportFile } from './platform';
 import { todayKey } from './utils/format';
 
-/** kv rows that stay on the device: they hold credentials (see modules/library/github.ts). */
-const PRIVATE_KV = new Set(['github-source']);
+/** kv rows that stay on the device: they hold credentials (modules/library/github.ts, core/ai.svelte.ts). */
+const PRIVATE_KV = new Set(['github-source', 'ai-key']);
 
 const TABLES = ['kv', 'srs', 'reviews', 'activity', 'results', 'annotations', 'userDecks', 'userCards', 'userPacks', 'unlocks', 'stars', 'answers'] as const;
 

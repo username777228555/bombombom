@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
-  import { Plus, BookOpen, Highlighter, Trash, Library, CloudDownload } from '@lucide/svelte';
+  import { Plus, BookOpen, Highlighter, Trash, Library } from '@lucide/svelte';
   import PageHeader from '$lib/design/components/PageHeader.svelte';
   import IconButton from '$lib/design/components/IconButton.svelte';
   import Button from '$lib/design/components/Button.svelte';
@@ -55,7 +55,6 @@
   <PageHeader title="Библиотека" eyebrow="Книги и конспекты" large>
     {#snippet actions()}
       {#if notes}<IconButton icon={Highlighter} label="Выделения и заметки" variant="surface" onclick={() => navigate('/notes')} />{/if}
-      <IconButton icon={CloudDownload} label="Скачать с GitHub" variant="surface" onclick={() => navigate('/library/github')} />
       <IconButton icon={Plus} label="Добавить книгу" variant="accent" onclick={add} />
     {/snippet}
   </PageHeader>
@@ -82,7 +81,6 @@
     <EmptyState icon={Library} title="Полка пуста" text="Добавьте купленные книги и материалы курсов: EPUB, FB2, MOBI/AZW3, PDF, CBZ или TXT. Файлы хранятся только на этом устройстве.">
       <div class="empty-btns">
         <Button icon={BookOpen} onclick={add}>Добавить книгу</Button>
-        <Button variant="secondary" icon={CloudDownload} onclick={() => navigate('/library/github')}>Скачать с GitHub</Button>
       </div>
     </EmptyState>
   {/if}

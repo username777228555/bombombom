@@ -1,10 +1,7 @@
 /**
- * Books and content packs downloaded from a GitHub repository — no own server needed.
- *
- * The student keeps files in a repository (private for bought books): in folders of the repo or as release
- * assets. «Библиотека → Скачать с GitHub» lists them and downloads by button: books go to the library
- * (importBook), `*.stolypin.json` packs to «Пакеты» (installPackBundle). Nothing is sent anywhere — the app
- * only downloads, and only when asked.
+ * Files downloaded from the app's GitHub repository by button — no own server needed. «Практика → Пробники» lists
+ * `olympiads/*.stolypin.json` and installs them as packs (installPackBundle); the update check reads releases.
+ * Nothing is sent anywhere — the app only downloads, and only when asked.
  *
  * Settings (repo, folder, token) live in IndexedDB under `GITHUB_KEY` and are never exported to backups
  * (see core/backup.ts). A token is needed only for a private repository: a fine-grained token with read-only
@@ -20,7 +17,7 @@ import { isNative } from '$lib/core/platform';
 
 export const GITHUB_KEY = 'github-source';
 
-/** The app's own repository: books go to its `books/` folder (or to a release), the app downloads them from there. */
+/** The app's own repository. */
 export const APP_REPO = 'username777228555/bombombom';
 export const BOOKS_FOLDER = 'books';
 /** Release whose assets are books too (files over 25 MB, which github.com won't put into a folder). */

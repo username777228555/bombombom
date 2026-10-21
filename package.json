@@ -1,7 +1,8 @@
 {
   "name": "stolypin",
   "private": true,
-  "version": "0.15.2",
+  "version": "0.16.0",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "description": "СТОЛЫПИНЪ — учёба истории: офлайн-приложение для подготовки к олимпиадам по истории России",
   "scripts": {

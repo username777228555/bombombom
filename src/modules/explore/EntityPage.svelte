@@ -124,7 +124,7 @@
         <p class="lead">{e.item.definition}</p>
       {:else if e.kind === 'source'}
         <blockquote>{e.item.excerpt}</blockquote>
-        {#if e.item.note}<p class="secondary">{e.item.note}</p>{/if}
+        {#if e.item.note}<p class="secondary">Есть эта книга? Добавьте файл в «Библиотеку» — название подставится само.</p>{/if}
       {:else}
         <p class="lead">{e.item.summary}</p>
       {/if}
@@ -134,6 +134,7 @@
         {#if more}<div class="rich secondary">{@html richText(more)}</div>{/if}
       {/if}
 
+      {#if e.kind !== 'source' || e.item.authorName || e.item.clues?.length}
       <Card padding="md" tone="sunken">
         <dl class="facts">
           {#if e.kind === 'event' && e.item.place}
@@ -158,11 +159,13 @@
               <div><dt>Признаки</dt><dd><ul>{#each e.item.features as f, i (i)}<li>{f}</li>{/each}</ul></dd></div>
             {/if}
           {/if}
+          {#if e.kind === 'source' && e.item.authorName}<div><dt>Автор</dt><dd>{e.item.authorName}</dd></div>{/if}
           {#if e.kind === 'source' && e.item.clues?.length}
             <div><dt>Подсказки</dt><dd><ul>{#each e.item.clues as f, i (i)}<li>{f}</li>{/each}</ul></dd></div>
           {/if}
         </dl>
       </Card>
+      {/if}
 
       <div class="row wrap actions">
         {#if e.kind !== 'term'}<Button size="sm" variant="secondary" icon={ChartGantt} href="/timeline?focus={e.item.id}">На ленте</Button>{/if}

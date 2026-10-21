@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Settings, Package, Info, Flame, Zap, Layers, Sparkles, BookOpen, ChevronRight, Pencil, Trophy, CalendarDays, LayoutGrid } from '@lucide/svelte';
+  import { Settings, Package, Info, Flame, Zap, Layers, Sparkles, BookOpen, ChevronRight, Pencil, Trophy, CalendarDays, LayoutGrid, Send } from '@lucide/svelte';
   import PageHeader from '$lib/design/components/PageHeader.svelte';
   import IconButton from '$lib/design/components/IconButton.svelte';
   import Card from '$lib/design/components/Card.svelte';
@@ -13,6 +13,7 @@
   import { settings } from '$lib/core/settings.svelte';
   import { openSheet } from '$lib/core/ui.svelte';
   import { navigate } from '$lib/core/router.svelte';
+  import { TELEGRAM_URL, TELEGRAM_NAME } from '$lib/core/contact';
   import { dayKeyOffset, toRoman, pluralN } from '$lib/core/utils/format';
 
   let editing = $state(false);
@@ -107,6 +108,7 @@
       <button class="link" onclick={() => navigate('/widgets')}><LayoutGrid size={20} /><span class="grow">Виджеты Василия</span><span class="muted">13 стилей</span><ChevronRight size={18} /></button>
       <button class="link" onclick={() => navigate('/packs')}><Package size={20} /><span class="grow">Пакеты материалов</span><ChevronRight size={18} /></button>
       <button class="link" onclick={() => navigate('/settings')}><Settings size={20} /><span class="grow">Настройки и резервная копия</span><ChevronRight size={18} /></button>
+      <a class="link" href={TELEGRAM_URL} target="_blank" rel="noreferrer"><Send size={20} /><span class="grow">Канал в Telegram<small>{TELEGRAM_NAME} · новости и ошибки</small></span><ChevronRight size={18} /></a>
       <button class="link" onclick={() => navigate('/about')}><Info size={20} /><span class="grow">О приложении</span><ChevronRight size={18} /></button>
     </Card>
     <Ornament />
@@ -138,7 +140,8 @@
   .order { display: flex; flex-direction: column; align-items: center; gap: 6px; border: 0; background: none; cursor: pointer; padding: 4px; border-radius: var(--r-sm); font-size: var(--text-2xs); line-height: 1.25; color: var(--ink-2); text-align: center; }
   .order:active { transform: scale(0.95); }
   .links { display: flex; flex-direction: column; gap: var(--sp-6); }
-  .link { display: flex; align-items: center; gap: var(--sp-3); width: 100%; padding: 14px 12px; border: 0; background: none; text-align: left; cursor: pointer; border-radius: var(--r-sm); color: var(--ink); font-size: var(--text-md); }
+  .link { display: flex; align-items: center; gap: var(--sp-3); width: 100%; padding: 14px 12px; border: 0; background: none; text-align: left; cursor: pointer; border-radius: var(--r-sm); color: var(--ink); font-size: var(--text-md); text-decoration: none; }
+  .link small { display: block; color: var(--ink-3); font-size: var(--text-xs); }
   .link:hover { background: var(--surface-2); }
   .link :global(svg:first-child) { color: var(--accent); }
 </style>

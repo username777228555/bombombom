@@ -4,6 +4,8 @@
 и другие перечневые олимпиады. Работает без интернета: вся база знаний внутри приложения, прогресс хранится
 только на телефоне.
 
+Новости, вопросы и сообщения об ошибках — в Telegram: [**@stolypinapp**](https://t.me/stolypinapp).
+
 ![Главная, эпохи, период, персоналия, практика, профиль](docs/screenshots/overview.jpg)
 
 ## Установка
@@ -78,3 +80,13 @@ pnpm android:apk  # нужны JDK 21 и Android SDK 36
 Стек: Svelte 5, TypeScript, Vite, Capacitor 8, Dexie (IndexedDB), ts-fsrs, Cytoscape.js, foliate-js, PDF.js,
 MiniSearch, Zod. Архитектура — [`docs/architecture.md`](docs/architecture.md). Сборка APK и релизы идут
 через GitHub Actions: ветка `release/vX.Y.Z` публикует релиз с подписанным APK.
+
+## Лицензия
+
+Приложение бесплатное. Пользоваться, изучать, менять и делиться можно, указав источник; продавать и использовать
+в коммерческих целях — нельзя.
+
+- Код — [PolyForm Noncommercial 1.0.0](LICENSE).
+- Материалы (тексты, уроки, карточки, вопросы) и рисунки Василия — [CC BY-NC 4.0](LICENSE-CONTENT).
+- Картинки из Wikimedia Commons — по своим лицензиям: автор и лицензия указаны под каждой. Шрифты и сторонние
+  библиотеки — по своим лицензиям.

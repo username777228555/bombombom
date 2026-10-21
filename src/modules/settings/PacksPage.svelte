@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { FileUp, Trash, Package, Sparkles, CloudDownload } from '@lucide/svelte';
+  import { FileUp, Trash, Package, Sparkles } from '@lucide/svelte';
   import PageHeader from '$lib/design/components/PageHeader.svelte';
   import Card from '$lib/design/components/Card.svelte';
   import Toggle from '$lib/design/components/Toggle.svelte';
@@ -9,7 +9,6 @@
   import { kb } from '$lib/core/content/kb.svelte';
   import { installPackBundle } from '$lib/core/content/packimport';
   import { settings } from '$lib/core/settings.svelte';
-  import { navigate } from '$lib/core/router.svelte';
   import { plural, WORDS } from '$lib/core/utils/format';
   import { db } from '$lib/core/db';
   import { pickFiles } from '$lib/core/platform';
@@ -82,7 +81,6 @@
   <div class="section">
     <div class="btns">
       <Button full size="lg" icon={FileUp} onclick={importPack}>Импортировать пакет</Button>
-      <Button full variant="secondary" icon={CloudDownload} onclick={() => navigate('/library/github')}>Скачать пакеты и книги с GitHub</Button>
     </div>
     <p class="muted small hint">Пакет собирается командой <code>pnpm content:bundle &lt;id&gt;</code> — см. docs/content-format.md.</p>
   </div>

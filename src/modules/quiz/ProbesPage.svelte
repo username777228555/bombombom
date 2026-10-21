@@ -145,7 +145,7 @@
     {#if loading}
       <p class="muted small">Загружаю список…</p>
     {:else if error}
-      <Card padding="md"><p class="muted small">Не удалось получить список: {error}. Токен для закрытого репозитория задаётся в «Библиотека → Скачать с GitHub».</p></Card>
+      <Card padding="md"><p class="muted small">Не удалось получить список: {error}. Проверьте интернет и попробуйте ещё раз.</p></Card>
     {:else if remote.length}
       <div class="stack">
         {#each remote as f (f.key)}

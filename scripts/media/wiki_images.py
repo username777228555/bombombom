@@ -41,7 +41,7 @@ import requests
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-UA = 'StolypinHistoryApp/0.3 (educational offline app; https://github.com/username777228555/bombombom)'
+UA = 'StolypinHistoryApp/0.3 (educational offline app; https://github.com/username777228555/stolypin)'
 S = requests.Session()
 S.headers['User-Agent'] = UA
 RU_API = 'https://ru.wikipedia.org/w/api.php'

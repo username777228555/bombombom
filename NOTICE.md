@@ -1,7 +1,7 @@
 # СТОЛЫПИНЪ — copyright and license
 
     СТОЛЫПИНЪ — an offline app for history olympiad preparation.
-    Copyright (C) 2026 username777228555 <https://github.com/username777228555/bombombom>
+    Copyright (C) 2026 username777228555 <https://github.com/username777228555/stolypin>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ explanations in `content/`) and the drawings of Vasily the cat. The full text is
 
 1. **Attribution (7b).** Every copy you convey, modified or not, must keep in its Appropriate Legal Notices
    (the «О приложении» screen of the app) the line «Основано на СТОЛЫПИНЪ —
-   https://github.com/username777228555/bombombom», the copyright notice above and a link to the GNU GPL.
+   https://github.com/username777228555/stolypin», the copyright notice above and a link to the GNU GPL.
 2. **Marking modified versions (7c).** A modified version must be marked as different from the original and
    must not be presented as the original app or as made by its author.
 3. **Names (7e).** No rights are granted under trademark law to the name «СТОЛЫПИНЪ», the emblem of the app

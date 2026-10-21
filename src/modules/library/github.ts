@@ -18,7 +18,7 @@ import { isNative } from '$lib/core/platform';
 export const GITHUB_KEY = 'github-source';
 
 /** The app's own repository. */
-export const APP_REPO = 'username777228555/bombombom';
+export const APP_REPO = 'username777228555/stolypin';
 export const BOOKS_FOLDER = 'books';
 /** Release whose assets are books too (files over 25 MB, which github.com won't put into a folder). */
 export const BOOKS_RELEASE = 'books';

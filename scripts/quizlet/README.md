@@ -21,7 +21,7 @@
 - файл до 25 МБ — в папку `import/quizlet/` через github.com («Add file → Upload files»);
 - файл больше — в релиз с тегом **`import`**, не `books`: из релиза `books` приложение берёт книги.
   Скачать файл в контейнер можно так:
-  `curl -L -o import/quizlet/quizlet.pdf https://github.com/username777228555/bombombom/releases/download/import/<файл>`.
+  `curl -L -o import/quizlet/quizlet.pdf https://github.com/username777228555/stolypin/releases/download/import/<файл>`.
 
 Печатать нужно сам набор, то есть список «термин — определение» с картинками. Тесты Quizlet не нужны: приложение
 строит вопросы по карточкам само.

@@ -146,7 +146,7 @@ export function validateContent(periods: Period[], packs: PackInput[], opts: Val
     validated.push(pack);
   }
 
-  // Guards for hand-added materials (see docs/agent-guide.md):
+  // Guards for hand-added materials (see docs/content-guide.md):
   //  · «TODO» placeholders left by `pnpm content:add` are errors — a half-filled stub must not ship;
   //  · the same title/name under a different id is probably a duplicate;
   //  · Wikipedia links belong to the short `wiki` field, not to `refs`;

@@ -3,7 +3,7 @@
 Офлайн-приложение для подготовки к олимпиадам по истории России: Svelte 5 + TypeScript + Vite,
 оборачивается в Android APK через Capacitor 8. Интерфейс и контент на русском.
 
-> **Начните с [`docs/agent-guide.md`](docs/agent-guide.md)** — введение в проект и пошаговое добавление
+> **Начните с [`docs/content-guide.md`](docs/content-guide.md)** — введение в проект и пошаговое добавление
 > материалов без ошибок. Этот файл — краткая шпаргалка: команды, правила, рецепты.
 > Большинство задач решается **данными** (`content/`), а не кодом.
 
@@ -55,7 +55,7 @@ Actions → Android APK → Run workflow.
 
 | Задача | Где и как |
 |--------|-----------|
-| Добавить события/персоналии/термины | `pnpm content:add …` → заполнить `TODO` → `pnpm content:check` (подробно — `docs/agent-guide.md`) |
+| Добавить события/персоналии/термины | `pnpm content:add …` → заполнить `TODO` → `pnpm content:check` (подробно — `docs/content-guide.md`) |
 | Добавить правителя | персоналия с `reigns`; для необычного титула укажите `kind` (`head`, `regent`…) → `pnpm content:rulers` |
 | Картинка к событию / портрет / произведение | `image` + `imageInfo` (автор, дата, описание, лицензия) — или `scripts/media/wiki_images.py`; попадёт в «Галерею», викторины и «Картину дня» |
 | Произведение искусства | запись в `culture` (`kind: painting/icon/sculpture…`, `year`, `authorName`, `features` для атрибуции, `wiki` — название статьи Википедии), пример: `data/12-zhivopis.json`, `data/13-muzyka-literatura-pamyatniki.json` |

@@ -43,7 +43,7 @@ description: Добавление учебных материалов в СТО�
    периодом и структурой в файле периода пакета.
 2. Заполнить все `TODO` (проверка считает их ошибкой, так что недописанное не попадёт в приложение).
 3. `pnpm content:check --file <файл>` → `pnpm content:check`; картинка — `scripts/media/wiki_images.py fetch/apply --ids <id>`.
-Полное руководство: `docs/agent-guide.md`.
+Полное руководство: `docs/content-guide.md`.
 
 ## Дополнительно (обновлено)
 

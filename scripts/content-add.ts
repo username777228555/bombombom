@@ -16,7 +16,7 @@
  *
  * The entry is appended to the period's fragment of the pack (e.g. content/packs/osnova/data/04-c17.json,
  * or data/<period>.json if the pack has none) with «TODO: …» placeholders. `pnpm content:check` reports every
- * TODO as an error, so a half-filled stub cannot reach the app. Guide: docs/agent-guide.md.
+ * TODO as an error, so a half-filled stub cannot reach the app. Guide: docs/content-guide.md.
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, join, resolve } from 'node:path';
@@ -43,7 +43,7 @@ for (let i = 0; i < argv.length; i++) {
   } else positional.push(a);
 }
 const fail = (msg: string): never => {
-  console.error(`✖ ${msg}\n\nПримеры — в шапке scripts/content-add.ts и в docs/agent-guide.md.`);
+  console.error(`✖ ${msg}\n\nПримеры — в шапке scripts/content-add.ts и в docs/content-guide.md.`);
   process.exit(1);
 };
 const kindArg = positional[0];

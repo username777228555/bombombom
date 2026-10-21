@@ -17,9 +17,12 @@ import type { SceneId } from './scenes';
  * прервалась вчера; `away` — не заходили три дня и больше.
  */
 export type Situation = 'new' | 'night' | 'morning' | 'day' | 'evening' | 'late' | 'done' | 'goal' | 'lost' | 'away';
+/** The time of day: до 6, 12, 17, 21:30, 23 часов (after 23 — night again). */
+export type DayPart = 'night' | 'morning' | 'day' | 'evening' | 'late';
 
 export interface Moment {
   sit: Situation;
+  part: DayPart;
   /** Days in a row (0 — broken). */
   streak: number;
   /** Cards due by the end of the day. */
@@ -238,17 +241,25 @@ export function details(m: Moment, scene?: SceneId): string {
 
 const pickScene = (seed: number, ...scenes: SceneId[]): SceneId => scenes[Math.abs(seed) % scenes.length]!;
 
-/** «Живой Василий»: the scene that fits the moment (when you are away, he changes his mood through the day). */
+/**
+ * «Живой Василий» — the scene that fits the moment. He lives by the clock: waves in the morning, asks the question of
+ * the day in the afternoon, waits for the lesson in the evening, falls asleep in his nightcap late in the evening and
+ * sleeps at night. Only a streak about to burn keeps him awake after 21:30 («в шоке»). After a lesson he is glad,
+ * then lounges like Шлёпа; when you are away, he changes his mood through the day.
+ */
 export function liveScene(m: Moment): SceneId {
+  if (m.sit === 'night') return 'sleepy';
+  if (m.part === 'late') return m.sit === 'late' && m.streak ? 'shock' : 'sleepy';
   switch (m.sit) {
-    case 'night': return 'sleepy';
     case 'new': return 'hello';
     case 'morning': return 'hello';
     case 'day': return m.seed % 2 && m.fact ? 'reader' : 'hmm';
     case 'evening': return m.due >= 20 ? 'shock' : m.due && m.lesson ? 'knight' : 'zhdun';
-    case 'late': return m.streak ? 'shock' : 'grumpy';
-    case 'done': return m.seed % 2 ? 'vzhuh' : 'yay';
-    case 'goal': return m.seed % 2 ? 'tsar' : 'floppa';
+    case 'late': return m.streak ? 'shock' : 'sleepy';
+    case 'done':
+    case 'goal':
+      if (m.part === 'evening') return m.sit === 'goal' && m.seed % 2 ? 'tsar' : 'floppa';
+      return m.part === 'day' && m.seed % 2 ? 'vzhuh' : 'yay';
     case 'lost': return pickScene(m.seed, 'zhdun', 'hello', m.quiz ? 'hmm' : 'yay');
     case 'away': return m.gap <= 6 ? pickScene(m.seed, 'grumpy', 'zhdun', m.quiz ? 'hmm' : 'shock') : pickScene(m.seed, 'floppa', 'zhdun', 'sleepy');
   }

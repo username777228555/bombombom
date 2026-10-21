@@ -14,14 +14,14 @@
   const q = $derived(router.query);
   const one = $derived(q.get('scene') as SceneId | null);
   const preview = $derived(q.get('preview') as WidgetStyleId | null);
-  const sample: Moment = { sit: 'evening', streak: 5, due: 12, gap: 1, xp: 0, goal: 50, seed: 3, lesson: { id: 'x', title: 'Смутное время', minutes: 7 }, quiz: { id: 'q', q: 'Полтавская битва — в каком году?', a: '1709', title: 'Полтавская битва' } };
-  const morning: Moment = { ...sample, sit: 'morning', seed: 1 };
+  const sample: Moment = { sit: 'evening', part: 'evening', streak: 5, due: 12, gap: 1, xp: 0, goal: 50, seed: 3, lesson: { id: 'x', title: 'Смутное время', minutes: 7 }, quiz: { id: 'q', q: 'Полтавская битва — в каком году?', a: '1709', title: 'Полтавская битва' } };
+  const morning: Moment = { ...sample, sit: 'morning', part: 'morning', seed: 1 };
 </script>
 
 {#if preview}
   <div class="bare" data-ready="1">
     {#if preview === 'live'}
-      <WidgetScene scene="hello" height={Number(q.get('h') ?? 300)} rounded={false} text={{ say: 'Утром машу, вечером волнуюсь за серию', streak: 5 }} />
+      <WidgetScene scene="hello" height={Number(q.get('h') ?? 300)} rounded={false} text={{ say: 'Утром машу, днём спрашиваю, ночью сплю', streak: 5 }} />
     {:else}
       <WidgetScene scene={preview} height={Number(q.get('h') ?? 300)} rounded={false} text={{ say: say(preview, preview === 'hmm' || preview === 'hello' ? morning : sample), streak: 5 }} />
     {/if}

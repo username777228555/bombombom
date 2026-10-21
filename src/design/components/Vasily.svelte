@@ -4,7 +4,8 @@
    * What the paws do: `book` — reads (default); `wave` — waves hello; `cheer` — fists of joy at the chin; `chin` —
    * paw on the chin; `cross` — arms crossed; `wand` — magic wand («Вжух»); `fold` — paws folded on the belly («Ждун»);
    * `cheeks` — paws on the cheeks («в шоке»); `orb` — orb and sceptre, ermine collar; `spear` — spear and shield;
-   * `lie` — lies like Big Floppa (Шлёпа), the picture is wide.
+   * `lie` — lies like Big Floppa (Шлёпа) on a couch whose seat is at y = 806: a front paw and the tail hang over its
+   * edge; the picture is wide.
    */
   export type VasilyPose = 'book' | 'wave' | 'cheer' | 'chin' | 'cross' | 'wand' | 'fold' | 'cheeks' | 'orb' | 'spear' | 'lie';
   /** On the head: laurel wreath (default), Monomakh's cap, a bogatyr helmet, a nightcap or nothing. */
@@ -14,7 +15,7 @@
   /** The drawing's frame for a pose (shared with scenes that draw props in Vasily's coordinates). */
   export function vasilyBox(pose: VasilyPose = 'book', head = false): ViewBox {
     if (head) return { x: 212, y: 0, w: 600, h: 600 };
-    return pose === 'lie' ? { x: 170, y: 0, w: 1190, h: 880 } : { x: 200, y: 0, w: 740, h: 990 };
+    return pose === 'lie' ? { x: 170, y: 0, w: 1190, h: 1030 } : { x: 200, y: 0, w: 740, h: 990 };
   }
 
   let seq = 0;
@@ -58,11 +59,62 @@
   const LOOKS: [number, number][] = [[0, 0], [8, 3], [-8, 3], [9, -6], [-9, -6], [0, 10], [0, 10], [4, 5]];
   // Upper lid line over each eye (left, right): where it crosses the outer and the inner edge of the eye.
   const LIDS: Partial<Record<VasilyMood, [number, number]>> = { meh: [-8, -8], angry: [-40, -6] };
-  // Ermine tails on the tsar's collar.
-  const ERMINE = [[336, 636], [392, 668], [452, 684], [572, 684], [632, 668], [688, 636]];
-  // Lying: the tail wraps along the ground in front of the hind leg, the dark tip forward.
-  const LIE_TAIL = 'M 1300 712 C 1336 784 1296 820 1220 824 C 1160 827 1100 824 1050 818 C 1015 814 985 808 960 802';
-  const LIE_TIP = 'M 1050 818 C 1015 814 985 808 960 802';
+  type Pt = [number, number];
+  /**
+   * A paw as a filled shape: a smooth line from the shoulder through `pts` to the wrist, `w0` wide at the shoulder and
+   * `w1` at the wrist. `line` is its outline, open at the shoulder — the paw grows out of the body — unless `closed`
+   * (a forearm laid over its upper arm gets a round elbow).
+   */
+  function armPath(pts: Pt[], w0: number, w1: number, closed = false) {
+    const P = [pts[0]!, ...pts, pts[pts.length - 1]!];
+    const c: Pt[] = [];
+    for (let i = 1; i < P.length - 2; i++) {
+      const [a, b, d, e] = [P[i - 1]!, P[i]!, P[i + 1]!, P[i + 2]!];
+      for (let k = 0; k < 10; k++) {
+        const t = k / 10, t2 = t * t, t3 = t2 * t;
+        const f = (j: 0 | 1) => 0.5 * (2 * b[j] + (d[j] - a[j]) * t + (2 * a[j] - 5 * b[j] + 4 * d[j] - e[j]) * t2 + (3 * b[j] - a[j] - 3 * d[j] + e[j]) * t3);
+        c.push([f(0), f(1)]);
+      }
+    }
+    c.push(pts[pts.length - 1]!);
+    const len = [0];
+    for (let i = 1; i < c.length; i++) len.push(len[i - 1]! + Math.hypot(c[i]![0] - c[i - 1]![0], c[i]![1] - c[i - 1]![1]));
+    const total = len[len.length - 1]! || 1;
+    const L: Pt[] = [], R: Pt[] = [];
+    c.forEach(([x, y], i) => {
+      const a = c[Math.max(0, i - 1)]!, b = c[Math.min(c.length - 1, i + 1)]!;
+      const dx = b[0] - a[0], dy = b[1] - a[1], n = Math.hypot(dx, dy) || 1;
+      const w = (w0 + ((w1 - w0) * len[i]!) / total) / 2;
+      L.push([x - (dy / n) * w, y + (dx / n) * w]);
+      R.push([x + (dy / n) * w, y - (dx / n) * w]);
+    });
+    const p = ([x, y]: Pt) => `${r1(x)} ${r1(y)}`;
+    // A round end: one cubic whose middle lies exactly r ahead of the end.
+    const cap = (from: Pt, to: Pt, tip: Pt, prev: Pt, r: number) => {
+      const dx = tip[0] - prev[0], dy = tip[1] - prev[1], n = Math.hypot(dx, dy) || 1, k = (4 / 3) * r;
+      return `C ${p([from[0] + (dx / n) * k, from[1] + (dy / n) * k])} ${p([to[0] + (dx / n) * k, to[1] + (dy / n) * k])} ${p(to)}`;
+    };
+    const m = c.length - 1;
+    const run = (s: Pt[]) => s.map((q) => `L ${p(q)}`).join(' ');
+    const line = `M ${p(L[0]!)} ${run(L.slice(1))} ${cap(L[m]!, R[m]!, c[m]!, c[m - 1]!, w1 / 2)} ${run(R.slice(0, m).reverse())}`;
+    if (!closed) return { fill: `${line} Z`, line };
+    const shut = `${line} ${cap(R[0]!, L[0]!, c[0]!, c[1]!, w0 / 2)} Z`;
+    return { fill: shut, line: shut };
+  }
+
+  // The tsar: a purple mantle (порфира) open in front, an ermine capelet over the shoulders.
+  const MANTLE = 'M 306 690 C 286 752 274 836 280 900 C 284 936 298 958 330 962 L 454 962 C 446 880 444 800 454 724 Z';
+  const MANTLE_EDGE = 'M 454 962 C 446 880 444 800 454 724';
+  const CAPE = 'M 330 596 C 296 628 284 680 292 732 C 318 744 346 736 372 746 C 398 756 424 748 450 756 C 476 764 494 758 512 766 C 530 758 548 764 574 756 C 600 748 626 756 652 746 C 678 736 706 744 732 732 C 740 680 728 628 694 596 C 640 576 384 576 330 596 Z';
+  const ERMINE = [[334, 700], [394, 722], [454, 734], [570, 734], [630, 722], [690, 700], [364, 652], [512, 712], [660, 652]];
+  const EDGE_TAILS = [[452, 790], [448, 850], [450, 910]];
+  // A double-headed eagle on top of the sceptre, around (0, 0).
+  const EAGLE = 'M -6 -12 C -12 -18 -14 -26 -10 -33 L -17 -35 L -11 -40 C -6 -43 -1 -40 0 -35 C 1 -40 6 -43 11 -40 L 17 -35 L 10 -33 C 14 -26 12 -18 6 -12 C 18 -22 34 -30 46 -40 C 48 -24 44 -10 34 0 C 42 2 44 10 38 16 C 30 16 22 14 14 10 C 16 20 12 30 6 36 L 0 30 L -6 36 C -12 30 -16 20 -14 10 C -22 14 -30 16 -38 16 C -44 10 -42 2 -34 0 C -44 -10 -48 -24 -46 -40 C -34 -30 -18 -22 -6 -12 Z';
+  // Lying like Шлёпа: a long low body on the couch, a front paw and the tail hanging over the edge.
+  const LIE_BODY = 'M 600 572 C 690 486 850 446 1004 444 C 1136 442 1250 474 1302 548 C 1350 616 1352 724 1316 790 Q 1306 806 1280 806 L 640 806 Z';
+  const LIE_THIGH = 'M 1030 806 C 1010 704 1072 612 1170 600 C 1256 590 1314 646 1322 722';
+  const LIE_TAIL = 'M 1270 740 C 1306 784 1322 840 1316 892 C 1312 924 1302 948 1290 966';
+  const LIE_TIP = 'M 1312 912 C 1308 934 1300 952 1290 966';
   function starPath(cx: number, cy: number, r: number) {
     const pts = Array.from({ length: 10 }, (_, k) => {
       const a = -Math.PI / 2 + (k * Math.PI) / 5, rr = k % 2 ? r * 0.45 : r;
@@ -253,17 +305,20 @@
 {/snippet}
 
 {#snippet crown()}
-  <!-- Monomakh's cap: a golden filigree dome on a sable band, a cross on top -->
-  <path d="M 404 276 C 406 200 452 152 512 144 C 572 152 618 200 620 276 Z" fill="url(#{id}-gold)" stroke={INK} stroke-width="8" />
-  <path d="M 512 150 L 512 270 M 466 160 Q 450 214 454 272 M 558 160 Q 574 214 570 272 M 426 206 Q 512 186 598 206" fill="none" stroke="#a8721e" stroke-width="4" />
-  {#each [[512, 238, '#b3263a'], [468, 230, '#2f7d5b'], [556, 230, '#2f7d5b'], [512, 192, '#2b4f8c']] as [x, y, c] (`${x}${y}`)}
-    <circle cx={x} cy={y} r="11" fill={c as string} stroke={INK} stroke-width="4" />
+  <!-- Monomakh's cap: a tall golden filigree dome with gems on a narrow sable band, a cross on top -->
+  <path d="M 410 286 C 404 204 450 140 512 128 C 574 140 620 204 614 286 Z" fill="url(#{id}-gold)" stroke={INK} stroke-width="8" />
+  <path d="M 512 136 L 512 282 M 468 150 Q 446 214 450 284 M 556 150 Q 578 214 574 284 M 428 210 Q 512 190 596 210" fill="none" stroke="#a8721e" stroke-width="4" />
+  <path d="M 466 168 Q 476 158 486 168 Q 476 178 466 168 Z M 538 168 Q 548 158 558 168 Q 548 178 538 168 Z" fill="#fbe39a" opacity=".8" />
+  {#each [[512, 246, 14, '#b3263a'], [470, 236, 10, '#2f7d5b'], [554, 236, 10, '#2f7d5b'], [512, 186, 11, '#2b4f8c']] as [x, y, r, c] (`${x}${y}`)}
+    <circle cx={x} cy={y} r={r} fill={c as string} stroke={INK} stroke-width="4" />
+    <circle cx={(x as number) - 3} cy={(y as number) - 4} r="3" fill="#fff" opacity=".7" />
   {/each}
-  <path d="M 512 136 L 512 72 M 490 94 L 534 94" stroke={INK} stroke-width="20" />
-  <path d="M 512 136 L 512 72 M 490 94 L 534 94" stroke="url(#{id}-gold)" stroke-width="9" />
-  <circle cx="512" cy="138" r="15" fill="url(#{id}-gold)" stroke={INK} stroke-width="5" />
-  <path d="M 384 300 C 384 262 440 248 512 248 C 584 248 640 262 640 300 C 640 320 590 330 512 330 C 434 330 384 320 384 300 Z" fill="#4a2c1c" stroke={INK} stroke-width="8" />
-  <path d="M 404 290 q 10 -12 20 0 q 10 -12 20 0 M 470 282 q 10 -12 20 0 q 10 -12 20 0 q 10 -12 20 0 M 560 284 q 10 -12 20 0 q 10 -12 20 0 M 600 296 q 8 -10 16 0" fill="none" stroke="#7a5038" stroke-width="5" />
+  <path d="M 512 122 L 512 64 M 492 84 L 532 84" stroke={INK} stroke-width="20" />
+  <path d="M 512 122 L 512 64 M 492 84 L 532 84" stroke="url(#{id}-gold)" stroke-width="9" />
+  <circle cx="512" cy="124" r="15" fill="url(#{id}-gold)" stroke={INK} stroke-width="5" />
+  <!-- the sable band: soft, a little uneven at the edges -->
+  <path d="M 394 294 C 388 276 404 266 428 270 C 452 262 476 270 500 264 C 524 270 548 262 572 270 C 596 264 620 272 630 280 C 640 292 638 308 622 314 C 598 320 576 314 552 318 C 528 314 504 320 480 316 C 456 320 432 314 410 316 C 396 314 390 304 394 294 Z" fill="url(#{id}-sable)" stroke={INK} stroke-width="8" />
+  <path d="M 414 290 q 8 -8 16 0 M 446 300 q 8 -8 16 0 M 480 288 q 8 -8 16 0 M 512 300 q 8 -8 16 0 M 546 288 q 8 -8 16 0 M 580 300 q 8 -8 16 0 M 606 290 q 8 -8 14 0" fill="none" stroke="#b07a52" stroke-width="5" />
 {/snippet}
 
 {#snippet helmet()}
@@ -325,9 +380,18 @@
   </g>
 {/snippet}
 
-{#snippet limb(d: string, w = 84)}
-  <path {d} fill="none" stroke={INK} stroke-width={w + 18} />
-  <path {d} fill="none" stroke={FUR} stroke-width={w} />
+{#snippet arm(pts: Pt[], w0 = 96, w1 = 74, closed = false)}
+  {@const a = armPath(pts, w0, w1, closed)}
+  <path d={a.fill} fill="url(#{id}-fur-body)" />
+  <path d={a.line} fill="none" stroke={INK} stroke-width="9" />
+{/snippet}
+
+{#snippet grip(cx: number, cy: number, rot = 0)}
+  <!-- a paw wrapped around a stick: the fingers across it -->
+  <g transform="rotate({rot} {cx} {cy})">
+    <ellipse {cx} {cy} rx="42" ry="40" fill={WHITE} stroke={INK} stroke-width="9" />
+    <path d="M {cx - 30} {cy - 14} Q {cx} {cy - 6} {cx + 30} {cy - 14} M {cx - 34} {cy + 6} Q {cx} {cy + 14} {cx + 34} {cy + 6} M {cx - 26} {cy + 24} Q {cx} {cy + 30} {cx + 26} {cy + 24}" fill="none" stroke={INK} stroke-width="5" />
+  </g>
 {/snippet}
 
 {#snippet mitt(cx: number, cy: number, rot = 0, rx = 42, ry = 52)}
@@ -362,84 +426,110 @@
 <!-- Paws and props in front of the body but behind the head. -->
 {#snippet behind()}
   {#if pose === 'wave'}
-    {@render limb('M 684 700 Q 702 750 694 798')}
+    {@render arm([[652, 700], [688, 750], [694, 798]])}
     {@render mitt(694, 810, -8)}
   {:else if pose === 'chin'}
-    {@render limb('M 690 712 Q 612 798 448 790', 80)}
-    {@render mitt(432, 788, 80, 40, 48)}
+    <!-- one paw across the belly; the other rests its elbow on it -->
+    {@render arm([[652, 704], [654, 784], [580, 812], [482, 804]], 94, 74)}
+    {@render mitt(466, 802, 80, 40, 48)}
   {:else if pose === 'cross'}
-    {@render limb('M 340 694 Q 470 770 640 744')}
-    {@render mitt(650, 740, 75, 40, 48)}
-    {@render limb('M 684 694 Q 556 780 390 760')}
-    {@render mitt(374, 756, -75, 40, 48)}
+    <!-- arms crossed: the left forearm under, the right one over; its paw lies on the left upper arm -->
+    {@render arm([[372, 696], [342, 760], [350, 810]], 96, 84)}
+    {@render arm([[350, 810], [496, 778], [632, 730]], 84, 72, true)}
+    {@render mitt(644, 726, -110, 38, 46)}
+    {@render arm([[652, 696], [682, 760], [674, 810]], 96, 84)}
+    {@render arm([[674, 810], [528, 778], [392, 730]], 84, 72, true)}
+    {@render mitt(380, 726, 110, 38, 46)}
   {:else if pose === 'fold'}
-    {@render limb('M 340 706 Q 372 800 476 832', 80)}
-    {@render limb('M 684 706 Q 652 800 548 832', 80)}
-    {@render mitt(490, 834, 70, 38, 46)}
-    {@render mitt(534, 834, -70, 38, 46)}
+    {@render arm([[372, 700], [340, 780], [398, 838], [480, 848]], 94, 74)}
+    {@render arm([[652, 700], [684, 780], [626, 838], [544, 848]], 94, 74)}
+    {@render mitt(494, 844, 70, 38, 46)}
+    {@render mitt(530, 844, -70, 38, 46)}
   {:else if pose === 'wand'}
-    {@render limb('M 340 700 Q 322 750 330 798')}
-    {@render mitt(330, 810, 8)}
+    {@render arm([[372, 700], [334, 754], [330, 800]])}
+    {@render mitt(330, 812, 8)}
   {:else if pose === 'orb'}
-    <!-- ermine collar -->
-    <path d="M 296 634 C 360 590 664 590 728 634 C 760 656 744 704 700 710 C 620 722 404 722 324 710 C 280 704 264 656 296 634 Z" fill={WHITE} stroke={INK} stroke-width="8" />
-    {#each ERMINE as [x, y] (x)}
+    <!-- a purple mantle, open in front, ermine down its edges -->
+    {#each [false, true] as flip (flip)}
+      <g transform={flip ? 'matrix(-1 0 0 1 1024 0)' : undefined}>
+        <path d={MANTLE} fill="url(#{id}-mantle)" stroke={INK} stroke-width="8" />
+        <path d={MANTLE_EDGE} fill="none" stroke={INK} stroke-width="40" />
+        <path d={MANTLE_EDGE} fill="none" stroke={WHITE} stroke-width="26" />
+        {#each EDGE_TAILS as [x, y] (y)}
+          <path d="M {x} {y! - 12} C {x! + 6} {y! - 4} {x! + 5} {y! + 7} {x} {y! + 12} C {x! - 5} {y! + 7} {x! - 6} {y! - 4} {x} {y! - 12} Z" fill={INK} />
+        {/each}
+      </g>
+    {/each}
+    {@render arm([[372, 708], [346, 772], [364, 812]], 94, 76)}
+    {@render arm([[652, 708], [692, 778], [704, 816]], 94, 76)}
+    <!-- the ermine capelet over the shoulders -->
+    <path d={CAPE} fill={WHITE} stroke={INK} stroke-width="8" />
+    <path d="M 340 640 Q 352 690 346 720 M 684 640 Q 672 690 678 720" fill="none" stroke="#e8d9c2" stroke-width="6" />
+    {#each ERMINE as [x, y] (`${x}${y}`)}
       <path d="M {x} {y! - 14} C {x! + 7} {y! - 4} {x! + 6} {y! + 8} {x} {y! + 14} C {x! - 6} {y! + 8} {x! - 7} {y! - 4} {x} {y! - 14} Z" fill={INK} />
     {/each}
-    {@render limb('M 340 706 Q 326 760 326 798')}
-    <circle cx="318" cy="736" r="52" fill="url(#{id}-gold)" stroke={INK} stroke-width="8" />
-    <path d="M 268 742 Q 318 764 368 742 M 318 686 Q 332 736 318 788" fill="none" stroke="#a8721e" stroke-width="7" />
-    <circle cx="322" cy="752" r="9" fill="#b3263a" stroke={INK} stroke-width="3" />
-    <path d="M 318 686 L 318 640 M 300 656 L 336 656" stroke={INK} stroke-width="18" />
-    <path d="M 318 686 L 318 640 M 300 656 L 336 656" stroke="url(#{id}-gold)" stroke-width="8" />
-    {@render mitt(322, 800, 82, 34, 48)}
-    {@render limb('M 684 706 Q 702 760 716 798')}
-    <path d="M 742 964 L 762 476" stroke={INK} stroke-width="22" />
-    <path d="M 742 964 L 762 476" stroke="url(#{id}-gold)" stroke-width="11" />
-    <circle cx="763" cy="462" r="22" fill="url(#{id}-gold)" stroke={INK} stroke-width="6" />
-    <path d="M 763 440 L 763 400 M 748 414 L 778 414" stroke={INK} stroke-width="16" />
-    <path d="M 763 440 L 763 400 M 748 414 L 778 414" stroke="url(#{id}-gold)" stroke-width="7" />
-    {@render mitt(722, 806, -10)}
+    <!-- the orb sits in the left paw -->
+    <path d="M 364 702 L 364 652 M 346 670 L 382 670" stroke={INK} stroke-width="18" />
+    <path d="M 364 702 L 364 652 M 346 670 L 382 670" stroke="url(#{id}-gold)" stroke-width="8" />
+    <circle cx="364" cy="756" r="54" fill="url(#{id}-gold)" stroke={INK} stroke-width="8" />
+    <path d="M 312 752 Q 364 776 416 752 M 364 702 Q 380 754 364 810" fill="none" stroke="#a8721e" stroke-width="7" />
+    <circle cx="372" cy="764" r="10" fill="#b3263a" stroke={INK} stroke-width="3" />
+    <circle cx="344" cy="734" r="9" fill="#fff6d6" opacity=".8" />
+    {@render mitt(366, 812, 86, 34, 52)}
   {:else if pose === 'spear'}
     <!-- a red teardrop shield and a spear -->
     <path d="M 316 636 C 382 636 414 660 414 704 C 414 804 362 882 316 944 C 270 882 218 804 218 704 C 218 660 250 636 316 636 Z" fill="url(#{id}-shield)" stroke={INK} stroke-width="18" />
     <path d="M 316 636 C 382 636 414 660 414 704 C 414 804 362 882 316 944 C 270 882 218 804 218 704 C 218 660 250 636 316 636 Z" fill="none" stroke="url(#{id}-gold)" stroke-width="8" />
     <path d="M 316 676 L 316 880 M 262 720 L 370 720" stroke="url(#{id}-gold)" stroke-width="10" />
     <circle cx="316" cy="720" r="20" fill="url(#{id}-gold)" stroke={INK} stroke-width="5" />
-    <path d="M 794 984 L 794 304" stroke={INK} stroke-width="22" />
-    <path d="M 794 984 L 794 304" stroke="#8a5a2b" stroke-width="11" />
-    <path d="M 794 168 C 816 210 822 254 808 304 L 780 304 C 766 254 772 210 794 168 Z" fill="url(#{id}-steel)" stroke={INK} stroke-width="7" />
-    <path d="M 794 186 L 794 296" stroke="#7d8790" stroke-width="3" />
-    <path d="M 776 312 L 812 312" stroke="url(#{id}-gold)" stroke-width="12" />
-    {@render limb('M 684 704 Q 744 718 782 736')}
-    {@render mitt(794, 742, -10, 40, 48)}
+    <path d="M 798 984 L 798 304" stroke={INK} stroke-width="22" />
+    <path d="M 798 984 L 798 304" stroke="#8a5a2b" stroke-width="11" />
+    <path d="M 798 168 C 820 210 826 254 812 304 L 784 304 C 770 254 776 210 798 168 Z" fill="url(#{id}-steel)" stroke={INK} stroke-width="7" />
+    <path d="M 798 186 L 798 296" stroke="#7d8790" stroke-width="3" />
+    <path d="M 780 312 L 816 312" stroke="url(#{id}-gold)" stroke-width="12" />
+    {@render arm([[652, 704], [704, 794], [778, 772]], 94, 74)}
+    {@render grip(798, 766, 0)}
   {/if}
 {/snippet}
 
 <!-- Paws in front of the face. -->
 {#snippet front()}
   {#if pose === 'wave'}
-    {@render limb('M 352 706 Q 300 670 262 604', 80)}
-    {@render palm(244, 556, -16)}
+    {@render arm([[372, 702], [316, 668], [270, 608]], 96, 76)}
+    {@render palm(250, 566, -16)}
   {:else if pose === 'cheer'}
-    {@render limb('M 342 710 Q 348 662 392 630', 78)}
+    {@render arm([[370, 718], [374, 668], [396, 632]], 94, 76)}
     {@render fist(402, 614, -12)}
-    {@render limb('M 682 710 Q 676 662 632 630', 78)}
+    {@render arm([[654, 718], [650, 668], [628, 632]], 94, 76)}
     {@render fist(622, 614, 12)}
   {:else if pose === 'chin'}
-    {@render limb('M 432 784 Q 446 690 484 622', 74)}
-    {@render fist(494, 602, 8)}
+    {@render arm([[372, 704], [394, 772], [438, 798]], 94, 84)}
+    {@render arm([[438, 798], [466, 716], [488, 630]], 84, 72, true)}
+    {@render fist(494, 604, 8)}
   {:else if pose === 'cheeks'}
-    {@render limb('M 342 710 Q 290 662 274 552', 74)}
+    {@render arm([[372, 712], [310, 662], [282, 564]], 94, 74)}
     {@render mitt(268, 504, 8, 42, 54)}
-    {@render limb('M 682 710 Q 734 662 750 552', 74)}
+    {@render arm([[652, 712], [714, 662], [742, 564]], 94, 74)}
     {@render mitt(756, 504, -8, 42, 54)}
   {:else if pose === 'wand'}
-    {@render limb('M 684 702 Q 742 664 768 596', 80)}
+    {@render arm([[652, 702], [722, 678], [766, 606]], 94, 74)}
     <path d="M 774 588 L 880 410" stroke={INK} stroke-width="20" />
     <path d="M 774 588 L 880 410" stroke="#7b4a2c" stroke-width="10" />
     {@render star(888, 396, 40)}
     {@render fist(778, 574, -28)}
+  {:else if pose === 'orb'}
+    <!-- the sceptre leans out past the head, a double-headed eagle on top -->
+    <path d="M 678 936 L 838 424" stroke={INK} stroke-width="24" />
+    <path d="M 678 936 L 838 424" stroke="url(#{id}-gold)" stroke-width="12" />
+    {#each [0.3, 0.55, 0.8] as t (t)}
+      <circle cx={678 + 160 * t} cy={936 - 512 * t} r="12" fill="url(#{id}-gold)" stroke={INK} stroke-width="5" />
+    {/each}
+    <circle cx="840" cy="418" r="16" fill="url(#{id}-gold)" stroke={INK} stroke-width="5" />
+    <g transform="translate(846 378) scale(1.25)">
+      <path d={EAGLE} fill="url(#{id}-gold)" stroke={INK} stroke-width="4" />
+      <path d="M -9 -46 L -6 -52 L 0 -48 L 6 -52 L 9 -46 Z" fill="url(#{id}-gold)" stroke={INK} stroke-width="3" />
+    </g>
+    {@render grip(708, 830, 17)}
   {/if}
 {/snippet}
 
@@ -547,7 +637,7 @@
 
     <g class="breathe">
       <g class="body">
-        <path d="M 404 544 C 352 586 322 630 308 668 L 290 674 L 302 690 L 286 702 L 299 712 C 293 740 291 760 294 780 C 288 870 300 924 346 952 L 678 952 C 724 924 736 870 730 780 C 733 760 731 740 725 712 L 738 702 L 722 690 L 734 674 L 716 668 C 702 630 672 586 620 544 Z" fill="url(#{id}-fur)" stroke={INK} stroke-width="9" />
+        <path d="M 404 544 C 352 586 322 630 308 668 L 290 674 L 302 690 L 286 702 L 299 712 C 293 740 291 760 294 780 C 288 870 300 924 346 952 L 678 952 C 724 924 736 870 730 780 C 733 760 731 740 725 712 L 738 702 L 722 690 L 734 674 L 716 668 C 702 630 672 586 620 544 Z" fill="url(#{id}-fur-body)" stroke={INK} stroke-width="9" />
         {#if pose !== 'book'}
           <!-- without the book the belly shows -->
           <path d="M 446 676 C 424 760 434 872 468 934 L 556 934 C 590 872 600 760 578 676 Z" fill={CREAM} />
@@ -601,29 +691,35 @@
   </g>
 {/snippet}
 
-<!-- Lying like Big Floppa: the head as always, the body stretched out to the right behind it. -->
+<!-- Lying like Big Floppa (Шлёпа): a long low body on the couch, the head turned to us, the left front paw and the
+     tail hanging over the edge. -->
 {#snippet lyingCat()}
-  <ellipse bind:this={shadow} class="shadow" cx="850" cy="816" rx="520" ry="24" fill="#000" opacity=".13" style="transform-origin: 850px 816px" />
-  <g bind:this={root} class="root" style="transform-origin: 760px 816px">
-    <g class="breathe" style="transform-origin: 800px 810px">
-      <path d="M 560 476 C 700 426 1000 412 1182 440 C 1300 460 1350 556 1338 656 C 1326 748 1254 800 1150 806 L 700 806 C 640 806 600 790 580 760 Z" fill="url(#{id}-fur-wide)" stroke={INK} stroke-width="9" />
-      <path d="M 760 450 Q 774 480 768 512 M 860 440 Q 876 474 870 508 M 960 438 Q 976 472 970 506 M 1060 442 Q 1074 474 1068 506" fill="none" stroke={FUR_D} stroke-width="7" />
-      <path d="M 1018 708 C 1008 606 1088 546 1180 564 C 1272 584 1304 684 1262 754 C 1232 802 1162 812 1100 806 C 1050 800 1022 762 1018 708 Z" fill="url(#{id}-fur)" stroke={INK} stroke-width="8" />
-      <g class="tail" style="transform-origin: 1300px 712px">
-        <path d={LIE_TAIL} fill="none" stroke={INK} stroke-width="88" />
-        <path d={LIE_TAIL} fill="none" stroke={FUR} stroke-width="70" />
-        <path d={LIE_TIP} fill="none" stroke={MARK} stroke-width="70" />
+  <ellipse bind:this={shadow} class="shadow" cx="860" cy="810" rx="500" ry="16" fill="#000" opacity=".12" style="transform-origin: 860px 810px" />
+  <g bind:this={root} class="root" style="transform-origin: 760px 806px">
+    <g class="breathe" style="transform-origin: 900px 806px">
+      <path d={LIE_BODY} fill="url(#{id}-fur-wide)" stroke={INK} stroke-width="9" />
+      <path d="M 790 474 Q 804 502 798 532 M 890 456 Q 906 486 900 518 M 990 450 Q 1006 480 1000 512 M 1090 454 Q 1104 484 1098 514" fill="none" stroke={FUR_D} stroke-width="7" />
+      <path d={LIE_THIGH} fill="none" stroke={INK} stroke-width="8" />
+      <path d="M 1100 640 Q 1150 628 1196 640 M 1150 700 Q 1196 690 1240 702" fill="none" stroke={FUR_D} stroke-width="6" />
+      <g class="tail" style="transform-origin: 1280px 760px">
+        <path d={LIE_TAIL} fill="none" stroke={INK} stroke-width="74" />
+        <path d={LIE_TAIL} fill="none" stroke={FUR} stroke-width="58" />
+        <path d={LIE_TIP} fill="none" stroke={MARK} stroke-width="58" />
       </g>
-      <path d="M 372 572 C 344 650 350 744 384 806 L 646 806 C 680 744 686 650 656 572 Z" fill="url(#{id}-fur)" stroke={INK} stroke-width="9" />
-      <path d="M 440 572 C 424 640 440 712 474 772 L 554 772 C 588 712 604 640 588 572 Z" fill={CREAM} />
-      {#each [420, 612] as cx (cx)}
-        <path d="M {cx - 56} 690 C {cx - 62} 740 {cx - 58} 778 {cx - 50} 800 L {cx + 50} 800 C {cx + 58} 778 {cx + 62} 740 {cx + 56} 690 Z" fill="url(#{id}-fur)" />
-        <path d="M {cx - 56} 690 C {cx - 62} 740 {cx - 58} 778 {cx - 50} 800 M {cx + 50} 800 C {cx + 58} 778 {cx + 62} 740 {cx + 56} 690" fill="none" stroke={INK} stroke-width="8" />
-        <path d="M {cx - 66} 806 C {cx - 68} 772 {cx - 38} 756 {cx} 756 C {cx + 38} 756 {cx + 68} 772 {cx + 66} 806 C {cx + 62} 830 {cx - 62} 830 {cx - 66} 806 Z" fill={WHITE} stroke={INK} stroke-width="9" />
-        <path d="M {cx - 16} 786 L {cx - 16} 814 M {cx + 16} 786 L {cx + 16} 814" stroke={INK} stroke-width="6" />
-      {/each}
+      <!-- the chest under the head -->
+      <path d="M 380 590 C 350 660 352 748 378 806 L 662 806 C 692 744 690 660 662 590 Z" fill="url(#{id}-fur-body)" stroke={INK} stroke-width="9" />
+      <path d="M 446 590 C 430 650 444 716 476 772 L 562 772 C 594 716 608 650 592 590 Z" fill={CREAM} />
+      <!-- the right front paw rests on the couch -->
+      <path d="M 556 690 C 550 740 554 778 562 800 L 662 800 C 670 778 674 740 668 690 Z" fill="url(#{id}-fur-body)" />
+      <path d="M 556 690 C 550 740 554 778 562 800 M 662 800 C 670 778 674 740 668 690" fill="none" stroke={INK} stroke-width="8" />
+      <path d="M 546 806 C 544 772 574 756 612 756 C 650 756 680 772 678 806 C 674 830 550 830 546 806 Z" fill={WHITE} stroke={INK} stroke-width="9" />
+      <path d="M 596 786 L 596 814 M 628 786 L 628 814" stroke={INK} stroke-width="6" />
+      <!-- the left one hangs over the edge -->
+      {@render arm([[422, 690], [418, 790], [416, 870], [418, 916]], 104, 88)}
+      <ellipse cx="418" cy="938" rx="52" ry="56" fill={WHITE} stroke={INK} stroke-width="9" />
+      <path d="M 401 962 L 401 984 M 435 962 L 435 984" stroke={INK} stroke-width="6" />
       {@render chain()}
-      {@render headGroup()}
+      <g transform="rotate(-4 512 590)">{@render headGroup()}</g>
     </g>
   </g>
 {/snippet}
@@ -645,6 +741,10 @@
     <defs>
       <radialGradient id="{id}-fur" cx="0.5" cy="0.42" r="0.62">
         <stop offset="0" stop-color="#e3aa74" /><stop offset=".7" stop-color="#d4955f" /><stop offset="1" stop-color="#bf7f4a" />
+      </radialGradient>
+      <!-- the body and the paws: one field in drawing coordinates, so a paw grows out of the body without a seam -->
+      <radialGradient id="{id}-fur-body" gradientUnits="userSpaceOnUse" cx="512" cy="715" r="300">
+        <stop offset="0" stop-color="#e3aa74" /><stop offset=".7" stop-color="#d4955f" /><stop offset="1" stop-color="#c4844f" />
       </radialGradient>
       <radialGradient id="{id}-fur-wide" cx="0.36" cy="0.3" r="0.8">
         <stop offset="0" stop-color="#e3aa74" /><stop offset=".6" stop-color="#d4955f" /><stop offset="1" stop-color="#bf7f4a" />
@@ -672,6 +772,12 @@
       </linearGradient>
       <linearGradient id="{id}-cap" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0" stop-color="#4f6fc2" /><stop offset="1" stop-color="#2c4387" />
+      </linearGradient>
+      <linearGradient id="{id}-mantle" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#8a4bb0" /><stop offset="1" stop-color="#4a1f66" />
+      </linearGradient>
+      <linearGradient id="{id}-sable" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8a5c3c" /><stop offset="1" stop-color="#5a3824" />
       </linearGradient>
       <clipPath id="{id}-tail"><path d={TAIL} /></clipPath>
       {#each EYES as cx, i (cx)}

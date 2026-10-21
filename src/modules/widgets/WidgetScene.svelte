@@ -6,6 +6,18 @@
     return Array.from({ length: n }, () => ({ x: Math.round(rnd() * w), y: Math.round(rnd() * h), r: rnd(), a: Math.round(rnd() * 180) }));
   }
   const sparkle = (x: number, y: number, s: number) => `M ${x} ${y - s} Q ${x} ${y} ${x + s} ${y} Q ${x} ${y} ${x} ${y + s} Q ${x} ${y} ${x - s} ${y} Q ${x} ${y} ${x} ${y - s} Z`;
+  // A five-pointed star (the logo on the microphone).
+  function star(cx: number, cy: number, r: number) {
+    return 'M ' + Array.from({ length: 10 }, (_, k) => {
+      const a = -Math.PI / 2 + (k * Math.PI) / 5, rr = k % 2 ? r * 0.45 : r;
+      return `${Math.round((cx + rr * Math.cos(a)) * 10) / 10} ${Math.round((cy + rr * Math.sin(a)) * 10) / 10}`;
+    }).join(' L ') + ' Z';
+  }
+  // The couch: buttons in a staggered grid and the quilting between them.
+  const TUFTS = [440, 550, 660].flatMap((y, row) => Array.from({ length: 9 }, (_, k) => [-120 + k * 220 + (row % 2 ? 110 : 0), y] as const));
+  const QUILT = TUFTS.filter(([, y]) => y < 660).map(([x, y]) => `M ${x - 110} ${y + 110} L ${x} ${y} L ${x + 110} ${y + 110}`).join(' ');
+  const FRINGE = Array.from({ length: 124 }, (_, k) => `M ${-292 + k * 16} 852 L ${-289 + k * 16} 884`).join(' ');
+  const SKIN = '#f2c4a0';
   const STARS = scatter(70, 7);
   const BOKEH = scatter(18, 11);
   const CONFETTI = scatter(46, 23);
@@ -173,12 +185,24 @@
 <!-- Props behind Vasily, in his own coordinates. -->
 {#snippet back()}
   {#if scene === 'floppa'}
+    <!-- a cream tufted couch with a golden fringed throw, as in the interview -->
     <rect x="-260" y="330" width="1880" height="520" rx="90" fill="#f4efe6" stroke="#d6cdbd" stroke-width="8" />
-    {#each [0, 1, 2, 3, 4, 5, 6, 7] as k (k)}
-      {#each [440, 600] as y (y)}<circle cx={-120 + k * 220 + (y === 600 ? 110 : 0)} cy={y} r="11" fill="#d3c9b8" />{/each}
-    {/each}
+    <path d={QUILT} fill="none" stroke="#e2d9ca" stroke-width="5" />
+    {#each TUFTS as [x, y] (`${x}${y}`)}<circle cx={x} cy={y} r="11" fill="#d3c9b8" />{/each}
     <rect x="-300" y="800" width="1960" height="320" rx="60" fill="#ebe3d5" stroke="#d1c6b3" stroke-width="8" />
-    <path d="M -260 836 L 1620 836" stroke="#fffaf1" stroke-width="10" stroke-linecap="round" />
+    <path d="M -300 794 L 1660 794 L 1660 846 L -300 846 Z" fill="#e8c67c" />
+    <path d="M -300 820 L 1660 820" stroke="#f4dc9e" stroke-width="6" />
+    <path d="M -300 846 L 1660 846" stroke="#c49343" stroke-width="6" />
+    <path d={FRINGE} stroke="#d4a956" stroke-width="6" stroke-linecap="round" />
+  {:else if scene === 'vzhuh'}
+    <defs>
+      <linearGradient id="wg-trail" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff6c2" /><stop offset=".5" stop-color="#ff9fd6" stop-opacity=".85" /><stop offset="1" stop-color="#a98bff" stop-opacity="0" /></linearGradient>
+    </defs>
+    <path d="M 888 396 C 860 200 640 60 300 110" fill="none" stroke="url(#wg-trail)" stroke-width="46" stroke-linecap="round" />
+    <path d="M 888 396 C 860 200 640 60 300 110" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".7" />
+    {#each [[820, 190, 22], [700, 110, 16], [560, 80, 20], [420, 96, 14], [940, 300, 14], [880, 160, 12]] as [x, y, s] (x)}
+      <path d={sparkle(x!, y!, s!)} fill="#fff6c2" stroke={ink} stroke-width="3" />
+    {/each}
   {:else if scene === 'zhdun'}
     <circle cx="905" cy="120" r="56" fill="#fff" stroke={ink} stroke-width="9" />
     <path d="M 905 120 L 905 82 M 905 120 L 934 136" stroke={ink} stroke-width="8" stroke-linecap="round" />
@@ -205,16 +229,33 @@
 <!-- Props in front of Vasily, in his own coordinates. -->
 {#snippet front()}
   {#if scene === 'floppa'}
-    <!-- a reporter's hand with a microphone -->
-    <path d="M 60 980 C 90 900 120 860 170 830 L 250 900 C 200 940 170 990 160 1040 Z" fill="#2f4a7a" stroke={ink} stroke-width="9" />
-    <path d="M 312 668 L 168 852" stroke={ink} stroke-width="44" stroke-linecap="round" />
-    <path d="M 312 668 L 168 852" stroke="#34343c" stroke-width="28" stroke-linecap="round" />
-    <path d="M 268 722 L 244 752" stroke="#c8333f" stroke-width="30" />
-    <circle cx="332" cy="636" r="50" fill="#45454e" stroke={ink} stroke-width="9" />
-    <path d="M 296 616 Q 332 600 368 616 M 288 642 Q 332 626 376 642 M 296 666 Q 332 652 368 666 M 316 592 Q 306 636 316 680 M 348 592 Q 358 636 348 680" fill="none" stroke="#6c6c76" stroke-width="4" />
-    <circle cx="318" cy="618" r="10" fill="#fff" opacity=".5" />
-    <path d="M 150 830 C 160 800 196 790 222 806 C 246 820 250 850 236 872 C 220 896 184 900 164 884 C 146 870 142 850 150 830 Z" fill="#f2c4a0" stroke={ink} stroke-width="8" />
-    <path d="M 196 806 Q 214 820 214 842 M 176 822 Q 194 836 192 860" fill="none" stroke="#c98f6b" stroke-width="5" stroke-linecap="round" />
+    <!-- the interviewer's hand with a microphone, from the corner -->
+    <defs>
+      <radialGradient id="wg-mesh" cx=".36" cy=".32" r=".78"><stop offset="0" stop-color="#f6f8fa" /><stop offset=".6" stop-color="#b6bec8" /><stop offset="1" stop-color="#76808c" /></radialGradient>
+      <clipPath id="wg-grille"><circle r="50" /></clipPath>
+    </defs>
+    <g transform="translate(330 650) rotate(30)">
+      <path d="M -76 300 L 76 300 L 110 900 L -110 900 Z" fill="#2c3e66" stroke={ink} stroke-width="9" />
+      <path d="M -40 330 L -52 880 M 30 340 L 44 880" stroke="#3d5283" stroke-width="10" stroke-linecap="round" />
+      <path d="M -68 266 L 68 266 L 74 318 L -74 318 Z" fill="#f6f3ec" stroke={ink} stroke-width="8" stroke-linejoin="round" />
+      <path d="M -25 96 L 25 96 L 19 332 Q 0 344 -19 332 Z" fill="#26282e" stroke={ink} stroke-width="8" stroke-linejoin="round" />
+      <path d="M -8 130 L -6 320" stroke="#4a4e57" stroke-width="6" stroke-linecap="round" />
+      <rect x="-50" y="52" width="100" height="68" rx="10" fill="#c8333f" stroke={ink} stroke-width="8" />
+      <path d={star(0, 87, 20)} fill="#fff" />
+      <rect x="-38" y="32" width="76" height="26" rx="8" fill="#5a5f69" stroke={ink} stroke-width="7" />
+      <circle r="56" fill="url(#wg-mesh)" stroke={ink} stroke-width="8" />
+      <g clip-path="url(#wg-grille)" fill="none" stroke="#8a94a0" stroke-width="3">
+        {#each [-34, -17, 0, 17, 34] as k (k)}<path d="M -56 {k} Q 0 {k + 9} 56 {k} M {k} -56 Q {k + 9} 0 {k} 56" />{/each}
+      </g>
+      <ellipse cx="-20" cy="-24" rx="16" ry="11" fill="#fff" opacity=".65" transform="rotate(-30 -20 -24)" />
+      <!-- the hand: the back of it, four fingers wrapped round the handle, the thumb on top -->
+      <path d="M -58 146 C -64 196 -62 248 -54 276 L 56 276 C 64 240 66 194 58 146 Z" fill={SKIN} stroke={ink} stroke-width="8" stroke-linejoin="round" />
+      {#each [0, 1, 2, 3] as k (k)}
+        <rect x="-30" y={132 + k * 31} width="94" height="36" rx="17" fill={SKIN} stroke={ink} stroke-width="7" />
+      {/each}
+      <path d="M -54 200 C -74 162 -56 120 -18 114 C 6 110 20 124 14 140 C 8 154 -20 154 -32 174 Z" fill={SKIN} stroke={ink} stroke-width="8" stroke-linejoin="round" />
+      <path d="M 50 146 Q 56 150 54 158 M 50 177 Q 56 181 54 189 M 50 208 Q 56 212 54 220" fill="none" stroke="#c98f6b" stroke-width="5" stroke-linecap="round" />
+    </g>
   {:else if scene === 'hmm'}
     <circle cx="790" cy="300" r="12" fill="#fff" stroke={ink} stroke-width="5" />
     <circle cx="822" cy="248" r="20" fill="#fff" stroke={ink} stroke-width="6" />
@@ -229,15 +270,6 @@
     <g stroke="#c8333f" stroke-width="12" stroke-linecap="round" fill="none">
       <path d="M 220 300 Q 240 320 260 300 M 220 340 Q 240 320 260 340 M 220 300 Q 200 320 220 340 M 260 300 Q 280 320 260 340" />
     </g>
-  {:else if scene === 'vzhuh'}
-    <defs>
-      <linearGradient id="wg-trail" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff6c2" /><stop offset=".5" stop-color="#ff9fd6" stop-opacity=".85" /><stop offset="1" stop-color="#a98bff" stop-opacity="0" /></linearGradient>
-    </defs>
-    <path d="M 888 396 C 860 200 640 60 300 110" fill="none" stroke="url(#wg-trail)" stroke-width="46" stroke-linecap="round" />
-    <path d="M 888 396 C 860 200 640 60 300 110" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".7" />
-    {#each [[820, 190, 22], [700, 110, 16], [560, 80, 20], [420, 96, 14], [940, 300, 14], [880, 160, 12]] as [x, y, s] (x)}
-      <path d={sparkle(x!, y!, s!)} fill="#fff6c2" stroke={ink} stroke-width="3" />
-    {/each}
   {:else if scene === 'sleepy'}
     <path d="M 900 76 A 64 64 0 0 0 900 204 A 80 80 0 0 1 900 76 Z" fill="#fde9a8" />
   {:else if scene === 'shock'}

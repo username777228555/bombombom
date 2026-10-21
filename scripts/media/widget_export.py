@@ -74,7 +74,8 @@ def android_meta():
     for s in STYLES:
         name, blurb = META[s]
         (ANDROID / "res/xml" / f"widget_{s}.xml").write_text(PROVIDER.format(id=s), encoding="utf-8")
-        label = name if s == "live" else f"Василий — {name}"
+        # The living one is just «Василий»: the phone sorts an app's widgets by name, so it comes first.
+        label = "Василий" if s == "live" else f"Василий — {name}"
         strings += [f'    <string name="widget_{s}">{xml_text(label)}</string>', f'    <string name="widget_{s}_about">{xml_text(blurb)}</string>']
     strings.append("</resources>")
     (ANDROID / "res/values/widget_strings.xml").write_text("\n".join(strings) + "\n", encoding="utf-8")

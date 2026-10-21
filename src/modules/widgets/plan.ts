@@ -8,7 +8,7 @@
 import type { DayFact, DayQuiz } from '$lib/core/daily';
 import type { PlanLesson } from '$lib/core/reminder-plan';
 import { SCENE_IDS, type SceneId, type WidgetStyleId } from './scenes';
-import { details, liveScene, say, type Moment, type Situation } from './voice';
+import { details, liveScene, say, type DayPart, type Moment, type Situation } from './voice';
 
 export interface WidgetInput {
   now: Date;
@@ -66,6 +66,8 @@ function situation(p: WidgetInput, d: number, hour: number): { sit: Situation; g
   return { sit: hour < 12 ? 'morning' : hour < 17 ? 'day' : hour < 21.5 ? 'evening' : 'late', gap };
 }
 
+const partOf = (hour: number): DayPart => (hour < 6 || hour >= 23 ? 'night' : hour < 12 ? 'morning' : hour < 17 ? 'day' : hour < 21.5 ? 'evening' : 'late');
+
 function routeOf(m: Moment, p: WidgetInput): string {
   if (m.sit === 'night' || m.sit === 'goal') return '/';
   if (m.lesson && m.lesson.id !== p.next?.id) return `/lesson/${m.lesson.id}`;
@@ -103,6 +105,7 @@ export function planWidgets(p: WidgetInput): WidgetPlan {
     const quiz = hour < 6 ? p.quiz[d - 1] : p.quiz[d];
     const m: Moment = {
       sit,
+      part: partOf(hour),
       gap,
       streak: gap <= 1 ? p.streak : 0,
       due: Math.max(0, p.cardsByDay[di] ?? 0),

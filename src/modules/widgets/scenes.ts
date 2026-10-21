@@ -1,8 +1,9 @@
 /**
- * Стили виджетов Василия: двенадцать сцен-мемов и «Живой», который сам выбирает сцену по вашему дню (как сова
- * в Duolingo). Сцена — поза и настроение Василия, шапка, фон и реквизит (рисует WidgetScene.svelte); подписи —
- * voice.ts. Картинки для Android снимает scripts/media/widget_export.py (res/drawable-nodpi/wg_<id>_sq|wd.webp),
- * каждому стилю соответствует свой виджет в списке виджетов телефона (VasilyWidget.java).
+ * Стили виджетов Василия: двенадцать сцен-мемов и «Живой» (стиль по умолчанию), который сам выбирает сцену по часам
+ * и вашему дню (как сова в Duolingo): утром «Привет!», днём «Хм…», вечером «Ждун», ночью «Соня». Сцена — поза
+ * и настроение Василия, шапка, фон и реквизит (рисует WidgetScene.svelte); подписи — voice.ts. Картинки для Android
+ * снимает scripts/media/widget_export.py (res/drawable-nodpi/wg_<id>_sq|wd.webp), каждому стилю соответствует свой
+ * виджет в списке виджетов телефона (VasilyWidget.java).
  *   SCENES.floppa.name        // «Шлёпа»
  *   STYLES                    // порядок в галерее: live первым
  */
@@ -38,7 +39,7 @@ export const SCENES: Record<SceneId, Scene> = {
   tsar: { id: 'tsar', name: 'Самодержец', blurb: 'В шапке Мономаха издаёт указы об учёбе', pose: 'orb', mood: 'meh', hat: 'crown' },
 };
 
-export const LIVE = { id: 'live' as const, name: 'Живой Василий', blurb: 'Меняет сцену вместе с вашим днём: утром машет, вечером волнуется за серию, ночью спит' };
+export const LIVE = { id: 'live' as const, name: 'Живой Василий', blurb: 'Живёт по часам: утром машет, днём спрашивает, вечером ждёт урок, ночью спит в колпаке' };
 
 /** Gallery order: the living one first, then the memes. */
 export const STYLES: WidgetStyleId[] = ['live', 'floppa', 'hello', 'yay', 'hmm', 'grumpy', 'reader', 'sleepy', 'vzhuh', 'zhdun', 'shock', 'knight', 'tsar'];

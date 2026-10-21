@@ -24,6 +24,8 @@ export interface Settings {
   remindAsked: boolean;
   /** Вечером второе напоминание, если серия (от двух дней) сгорит, а сегодня ещё не занимались. */
   remindStreak: boolean;
+  /** Помощь Василия (ИИ): разрешена проверка ответов через сервер приложения (core/ai.svelte.ts). */
+  ai: boolean;
   packs: Record<string, boolean>;
   reader: {
     fontSize: number;
@@ -49,6 +51,7 @@ const DEFAULTS: Settings = {
   remindAt: null,
   remindAsked: false,
   remindStreak: true,
+  ai: false,
   packs: {},
   reader: { fontSize: 108, lineHeight: 1.55, theme: 'paper', font: 'literata', justify: true, flow: 'paginated' },
 };

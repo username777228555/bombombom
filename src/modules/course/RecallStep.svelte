@@ -4,11 +4,16 @@
    * then go through the lesson's points — the app pre-marks what your text seems to cover, you confirm or correct.
    * Forgotten points link to their section. The attempt is saved and compared with the previous one
    * (recall.ts); used after reading and at the start of every lesson review.
+   * «Проверить с Василием» (when the build has an AI proxy): the model marks the points and lists factual mistakes
+   * (core/ai.svelte.ts); the student can still flip any mark.
    */
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
-  import { Brain, Eye, CircleCheck, CircleX, CircleHelp, BookOpen } from '@lucide/svelte';
+  import { Brain, Eye, CircleCheck, CircleX, CircleHelp, BookOpen, Sparkles, TriangleAlert } from '@lucide/svelte';
   import Button from '$lib/design/components/Button.svelte';
+  import Vasily from '$lib/design/components/Vasily.svelte';
+  import { toast } from '$lib/core/ui.svelte';
+  import { aiConfigured, aiConsent, askAi, AiError, type RetellResult } from '$lib/core/ai.svelte';
   import type { LessonItem } from '$lib/core/content/schema';
   import { logAnswer } from '$lib/core/mastery';
   import { pluralN, WORDS } from '$lib/core/utils/format';
@@ -32,6 +37,8 @@
   let got = $state<boolean[]>([]);
   let guess = $state<('yes' | 'maybe' | 'no')[]>([]);
   let prev = $state<RecallAttempt | undefined>();
+  let aiBusy = $state(false);
+  let ai = $state<RetellResult | null>(null);
   let saveTimer: ReturnType<typeof setTimeout> | undefined;
 
   onMount(async () => {
@@ -49,7 +56,25 @@
     clearTimeout(saveTimer);
     guess = points.map((p) => pointStatus(p, text));
     got = guess.map((g) => g === 'yes');
+    ai = null;
     checking = true;
+  }
+  async function checkWithVasily() {
+    if (!(await aiConsent())) return;
+    clearTimeout(saveTimer);
+    void saveDraft(lesson.id, text);
+    aiBusy = true;
+    try {
+      const r = await askAi('retell', { lesson: lesson.title, points: points.map((p) => p.text), text });
+      guess = points.map((_, i) => (r.covered.includes(i) ? 'yes' : 'no'));
+      got = guess.map((g) => g === 'yes');
+      ai = r;
+      checking = true;
+    } catch (e) {
+      toast(e instanceof AiError ? e.message : 'Василий не смог ответить', 'error', 3600);
+    } finally {
+      aiBusy = false;
+    }
   }
   async function finish() {
     const a: RecallAttempt = { ts: Date.now(), got: got.flatMap((g, i) => (g ? [i] : [])), total: points.length, hint, words };
@@ -79,11 +104,31 @@
     <textarea class="area" bind:value={text} oninput={input} rows="10" placeholder="— Урок о том, как…&#10;— Причины: …&#10;— 988 — …"></textarea>
     <div class="row foot">
       <span class="muted small grow">{pluralN(words, WORDS.word)}</span>
-      <Button disabled={words < 3} onclick={check}>Проверить себя</Button>
+      <Button disabled={words < 3 || aiBusy} onclick={check}>Проверить себя</Button>
     </div>
+    {#if aiConfigured}
+      <Button full variant="soft" icon={Sparkles} loading={aiBusy} disabled={words < 3} onclick={checkWithVasily}>{aiBusy ? 'Василий читает…' : 'Проверить с Василием'}</Button>
+    {/if}
   {:else}
     <h2 class="h"><CircleCheck size={20} /> Что вы вспомнили?</h2>
-    <p class="muted small">Сверьте свой текст с пунктами урока. Отметки поставлены по словам из вашего текста — поправьте их честно: нажмите на пункт, чтобы переключить.</p>
+    {#if ai}
+      <div class="vas">
+        <Vasily head size={48} mood={ai.errors.length ? 'think' : got.filter(Boolean).length >= points.length * 0.7 ? 'happy' : 'smile'} still />
+        <div class="grow">
+          {#if ai.feedback}<p class="say">{ai.feedback}</p>{/if}
+          {#if ai.errors.length}
+            <ul class="errs">
+              {#each ai.errors as e, i (i)}
+                <li><TriangleAlert size={14} /><span>{#if e.quote}<s>{e.quote}</s>{/if}{#if e.fix}{e.quote ? ' → ' : ''}<b>{e.fix}</b>{/if}</span></li>
+              {/each}
+            </ul>
+          {/if}
+        </div>
+      </div>
+      <p class="muted small">Отметки поставил Василий. Он может ошибиться — нажмите на пункт, чтобы переключить.</p>
+    {:else}
+      <p class="muted small">Сверьте свой текст с пунктами урока. Отметки поставлены по словам из вашего текста — поправьте их честно: нажмите на пункт, чтобы переключить.</p>
+    {/if}
     <div class="score"><strong class="num">{gotCount}</strong> из {points.length}{#if prev} · в прошлый раз {prev.got.length}{/if}</div>
     <ul class="points">
       {#each points as p, i (i)}
@@ -114,6 +159,12 @@
   .area:focus { outline: none; border-color: var(--c, var(--accent)); }
   .foot { gap: var(--sp-3); align-items: center; }
   .score { font-size: var(--text-lg); }
+  .vas { display: flex; gap: var(--sp-3); align-items: flex-start; padding: var(--sp-3); border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--line); }
+  .say { margin: 0; font-size: var(--text-sm); line-height: 1.5; }
+  .errs { list-style: none; margin: var(--sp-2) 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: var(--text-sm); line-height: 1.45; }
+  .errs li { display: flex; gap: 6px; align-items: flex-start; }
+  .errs li :global(svg) { flex: 0 0 auto; margin-top: 3px; color: var(--warning); }
+  .errs s { color: var(--ink-3); }
   .score .num { font-family: var(--font-display); font-size: var(--text-3xl); color: var(--c, var(--accent)); }
   .points { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
   .points li { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border-radius: var(--r-md); border: 1px solid var(--line); background: var(--surface); }

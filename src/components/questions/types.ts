@@ -5,6 +5,6 @@ export interface QuestionProps<Q extends Question = Question> {
   q: Q;
   /** After checking: show correct answers and lock input. */
   revealed: boolean;
-  /** Called when the user presses «Проверить». */
-  onsubmit: (score: number) => void;
+  /** Called when the user presses «Проверить»; `given` — the answer in words, for «Почему я ошибся?» (core/ai.svelte.ts). */
+  onsubmit: (score: number, given?: string) => void;
 }

@@ -13,7 +13,7 @@
   const format = $derived(answerFormat(q.answers));
   function check() {
     ok = answerMatches(value, accepted);
-    onsubmit(ok ? 1 : 0);
+    onsubmit(ok ? 1 : 0, value.trim());
   }
 </script>
 

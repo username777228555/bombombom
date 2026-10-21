@@ -27,7 +27,7 @@
   {/each}
 </div>
 {#if !revealed}
-  <Button full size="lg" disabled={picked === null} onclick={() => onsubmit(picked === q.answer ? 1 : 0)}>Проверить</Button>
+  <Button full size="lg" disabled={picked === null} onclick={() => onsubmit(picked === q.answer ? 1 : 0, picked === null ? undefined : q.options[picked])}>Проверить</Button>
 {/if}
 
 <style>

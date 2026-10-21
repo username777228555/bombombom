@@ -13,6 +13,7 @@
   import { navigate } from '$lib/core/router.svelte';
   import { REMIND_TIMES, enableReminders, disableReminders, nextReminder, reminderStatus, reminderToast, syncReminders, testReminder, whenLabel, type ReminderStatus } from '$lib/core/reminders';
   import { pluralN, WORDS } from '$lib/core/utils/format';
+  import { aiConfigured } from '$lib/core/ai.svelte';
   import type { PlannedReminder } from '$lib/core/reminder-plan';
 
   const ACCENTS: { id: Accent; name: string; color: string }[] = [
@@ -137,6 +138,9 @@
       <div class="stack inner">
         <div class="field"><span>Цель дня (опыт)</span><Segmented bind:value={goal} options={[{ value: '20', label: '20' }, { value: '50', label: '50' }, { value: '100', label: '100' }, { value: '150', label: '150' }]} /></div>
         <div class="field"><span>Новых карточек в день</span><Segmented bind:value={perDay} options={[{ value: '10', label: '10' }, { value: '20', label: '20' }, { value: '30', label: '30' }, { value: '50', label: '50' }]} /></div>
+        {#if aiConfigured}
+          <label class="line"><span class="grow">Помощь Василия (ИИ)<small>проверка пересказа урока и разбор ошибок в тестах, только по кнопке и с интернетом. Текст ответа уходит на сервер приложения и модели ИИ — без имени и прогресса</small></span><Toggle bind:checked={settings.ai} label="Помощь Василия" /></label>
+        {/if}
       </div>
     </Card>
   </section>

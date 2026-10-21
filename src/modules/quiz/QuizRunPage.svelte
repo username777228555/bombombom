@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { fly, fade, scale } from 'svelte/transition';
-  import { X, Check, ArrowRight, Timer, RotateCcw, CircleCheck, CircleX, CircleDot } from '@lucide/svelte';
+  import { X, Check, ArrowRight, Timer, RotateCcw, CircleCheck, CircleX, CircleDot, Sparkles } from '@lucide/svelte';
   import IconButton from '$lib/design/components/IconButton.svelte';
   import Button from '$lib/design/components/Button.svelte';
   import ProgressRing from '$lib/design/components/ProgressRing.svelte';
@@ -23,6 +23,9 @@
   import { burst } from '$lib/design/confetti';
   import { formatDuration, pluralN } from '$lib/core/utils/format';
   import { richText } from '$lib/core/utils/text';
+  import Vasily from '$lib/design/components/Vasily.svelte';
+  import { toast } from '$lib/core/ui.svelte';
+  import { aiConfigured, aiConsent, askAi, AiError, cardText, entityByTitle, plainRefs } from '$lib/core/ai.svelte';
 
   let spec = $state<QuizSpec | null>(null);
   let loading = $state(true);
@@ -64,10 +67,12 @@
   // The answer waits here until «Далее» (or leaving the quiz), so «Угадал» can still change it.
   let pending: { q: GeneratedQuestion; score: number } | null = null;
 
-  function submit(score: number) {
+  function submit(score: number, given?: string) {
     scores[index] = score;
     revealed = true;
     guessed = false;
+    givenAnswer = given ?? '';
+    vasilyWhy = '';
     if (current) pending = { q: current as GeneratedQuestion, score };
     haptic(score >= 0.999 ? 'success' : score > 0 ? 'tap' : 'error');
   }
@@ -138,6 +143,29 @@
   }
 
   const verdict = $derived(lastScore >= 0.999 ? 'ok' : lastScore > 0 ? 'part' : 'bad');
+
+  // «Почему я ошибся?»: Василий (AI proxy) explains this exact mix-up from the cards of the question and the answers.
+  let givenAnswer = $state('');
+  let vasilyWhy = $state('');
+  let whyBusy = $state(false);
+  const rightText = (q: Question): string =>
+    q.type === 'single' ? q.options[q.answer] ?? '' : q.type === 'year' ? String(q.answer) : q.type === 'text' ? q.answers[0] ?? '' : '';
+  const canAskWhy = $derived(aiConfigured && !spec?.exam && verdict !== 'ok' && !!givenAnswer && !!current && ['single', 'year', 'text'].includes(current.type));
+  async function askWhy() {
+    if (!current || !(await aiConsent())) return;
+    const q = current as GeneratedQuestion;
+    const right = rightText(q);
+    const ids = [...new Set([q.entity, entityByTitle(right), entityByTitle(givenAnswer)].filter((x): x is string => !!x))];
+    whyBusy = true;
+    try {
+      const r = await askAi('why', { question: q.prompt + (q.excerpt ? ` «${q.excerpt}»` : ''), right, given: givenAnswer, cards: ids.map(cardText).filter((x): x is string => !!x) });
+      vasilyWhy = plainRefs(r.text);
+    } catch (e) {
+      toast(e instanceof AiError ? e.message : 'Василий не смог ответить', 'error', 3600);
+    } finally {
+      whyBusy = false;
+    }
+  }
 </script>
 
 <div class="page immersive run">
@@ -213,6 +241,11 @@
               {/if}
             </div>
             {#if current.explain}<div class="rich exp">{@html richText(current.explain)}</div>{/if}
+            {#if vasilyWhy}
+              <div class="vas" in:fly={{ y: 8, duration: 220 }}><Vasily head size={40} mood="think" still /><div class="rich grow">{@html richText(vasilyWhy)}</div></div>
+            {:else if canAskWhy}
+              <Button full variant="soft" icon={Sparkles} loading={whyBusy} onclick={askWhy}>{whyBusy ? 'Василий думает…' : `Почему не «${givenAnswer.length > 28 ? givenAnswer.slice(0, 27) + '…' : givenAnswer}»? Спросить Василия`}</Button>
+            {/if}
             {#if why && !whyAdded.has(index)}
               <button class="why" onclick={addWhy}>Почему это произошло? <small>добавить следующим развёрнутое задание о причинах</small></button>
             {/if}
@@ -244,6 +277,10 @@
   .lesson-next { margin: 0; font-weight: 650; color: var(--accent); }
   .why small { font-weight: 400; color: var(--ink-3); font-size: var(--text-xs); }
   blockquote { white-space: pre-line; margin: 0; padding: var(--sp-4); border-left: 3px solid var(--gold); background: var(--gold-soft); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-read); font-size: var(--text-md); line-height: 1.55; }
+  .vas { display: flex; gap: var(--sp-3); align-items: flex-start; padding: var(--sp-3); border-radius: var(--r-md); background: var(--surface-2); }
+  .vas .rich { font-size: var(--text-sm); line-height: 1.5; }
+  .vas .rich :global(p) { margin: 0 0 var(--sp-2); }
+  .vas .rich :global(p:last-child) { margin: 0; }
   .feedback { display: flex; flex-direction: column; gap: var(--sp-3); padding: var(--sp-4); border-radius: var(--r-lg); border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow-2); margin-top: var(--sp-2); }
   .feedback .v { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
   .feedback.ok .v { color: var(--success); }

@@ -41,6 +41,9 @@ jobs:
         run: pnpm exec svelte-check --tsconfig ./tsconfig.json --threshold error
 
       - name: Build web app
+        env:
+          # The AI proxy (server/ai-proxy.mjs); unset — the AI buttons are hidden.
+          VITE_AI_URL: ${{ vars.AI_URL }}
         run: pnpm build
 
       - uses: actions/setup-java@v4

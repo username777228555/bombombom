@@ -36,7 +36,7 @@
   }
   function check() {
     const tol = q.tolerance ?? 0;
-    onsubmit(Math.abs(Number(value) - q.answer) <= tol ? 1 : 0);
+    onsubmit(Math.abs(Number(value) - q.answer) <= tol ? 1 : 0, value);
   }
 </script>
 

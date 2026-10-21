@@ -44,8 +44,33 @@
   LEAVES.push(leaf(P1[0]! - 6, P1[1]! + 2, (Math.atan2(P1[1]! - C2[1]!, P1[0]! - C2[0]!) * 180) / Math.PI - 14, 46, 18));
   const STEM = `M ${r1(bez(0.06)[0])} ${r1(bez(0.06)[1])} C ${C1.join(' ')} ${C2.join(' ')} ${P1.join(' ')}`;
 
-  // Chain of the learned cat — Pushkin: «и днём и ночью кот учёный всё ходит по цепи кругом».
-  const LINKS = Array.from({ length: 5 }, (_, i) => ({ x: r1(414 + i * 21), y: r1(618 + i * 15 + i * i * 0.6), rot: i % 2 ? 35 : -55 }));
+  // Chain of the learned cat — Pushkin: «и днём и ночью кот учёный всё ходит по цепи кругом». It is slung across the
+  // body like a sash: from the medallion on the shoulder over the chest and the belly to the other hip, and on round the
+  // back. Links lie along a cubic curve at equal steps, every other one turned across.
+  function chainLinks(p0: Pt, c1: Pt, c2: Pt, p3: Pt, step = 26, from = 32) {
+    const at = (t: number): Pt => {
+      const u = 1 - t, f = (j: 0 | 1) => u * u * u * p0[j] + 3 * u * u * t * c1[j] + 3 * u * t * t * c2[j] + t * t * t * p3[j];
+      return [f(0), f(1)];
+    };
+    const links: { x: number; y: number; rot: number }[] = [];
+    let prev = at(0), run = 0, next = from;
+    for (let k = 1; k <= 400; k++) {
+      const q = at(k / 400), d = Math.hypot(q[0] - prev[0], q[1] - prev[1]);
+      run += d;
+      if (run >= next) {
+        const deg = (Math.atan2(q[1] - prev[1], q[0] - prev[0]) * 180) / Math.PI;
+        links.push({ x: r1(q[0]), y: r1(q[1]), rot: r1(links.length % 2 ? deg - 90 : deg) });
+        next += step;
+      }
+      prev = q;
+    }
+    return links;
+  }
+  const LINKS = chainLinks([394, 598], [440, 700], [600, 820], [728, 818]);
+  // Lying, the chain crosses the chest down to where the body meets the couch; the tsar wears it over the ermine like
+  // the ribbon of an order, and it goes under his arm.
+  const LIE_LINKS = chainLinks([394, 598], [430, 690], [560, 780], [668, 798]);
+  const TSAR_LINKS = chainLinks([394, 598], [452, 668], [570, 722], [656, 742]);
 
   const INK = '#2b1a12', MARK = '#3a2318', WHITE = '#fdf3e3', CREAM = '#f6e3c8', FUR_D = '#b97843', FUR = '#d89a61', PAD = '#6b3d2a';
   const EYES = [422, 602] as const;
@@ -468,6 +493,7 @@
     {#each ERMINE as [x, y] (`${x}${y}`)}
       <path d="M {x} {y! - 14} C {x! + 7} {y! - 4} {x! + 6} {y! + 8} {x} {y! + 14} C {x! - 6} {y! + 8} {x! - 7} {y! - 4} {x} {y! - 14} Z" fill={INK} />
     {/each}
+    {@render chain(TSAR_LINKS)}
     <!-- the orb sits in the left paw -->
     <path d="M 364 702 L 364 652 M 346 670 L 382 670" stroke={INK} stroke-width="18" />
     <path d="M 364 702 L 364 652 M 346 670 L 382 670" stroke="url(#{id}-gold)" stroke-width="8" />
@@ -612,11 +638,11 @@
   </g>
 {/snippet}
 
-{#snippet chain()}
+{#snippet chain(links: { x: number; y: number; rot: number }[])}
   <g class="chain">
-    {#each LINKS as l (l.x)}
-      <ellipse cx={l.x} cy={l.y} rx="15" ry="9.5" transform="rotate({l.rot} {l.x} {l.y})" fill="none" stroke={INK} stroke-width="12" />
-      <ellipse cx={l.x} cy={l.y} rx="15" ry="9.5" transform="rotate({l.rot} {l.x} {l.y})" fill="none" stroke="url(#{id}-gold)" stroke-width="6" />
+    {#each links as l, i (i)}
+      <ellipse cx={l.x} cy={l.y} rx="17" ry="11" transform="rotate({l.rot} {l.x} {l.y})" fill="none" stroke={INK} stroke-width="13" />
+      <ellipse cx={l.x} cy={l.y} rx="17" ry="11" transform="rotate({l.rot} {l.x} {l.y})" fill="none" stroke="url(#{id}-gold)" stroke-width="6.5" />
     {/each}
     <circle cx="394" cy="598" r="24" fill="url(#{id}-gold)" stroke={INK} stroke-width="6" />
     <circle cx="394" cy="598" r="13" fill="none" stroke="#a8721e" stroke-width="3" />
@@ -650,7 +676,7 @@
         {/each}
       </g>
 
-      {#if pose !== 'orb'}{@render chain()}{/if}
+      {#if pose !== 'orb'}{@render chain(LINKS)}{/if}
 
       {#if pose === 'book'}
         <g class="book">
@@ -709,6 +735,7 @@
       <!-- the chest under the head -->
       <path d="M 380 590 C 350 660 352 748 378 806 L 662 806 C 692 744 690 660 662 590 Z" fill="url(#{id}-fur-body)" stroke={INK} stroke-width="9" />
       <path d="M 446 590 C 430 650 444 716 476 772 L 562 772 C 594 716 608 650 592 590 Z" fill={CREAM} />
+      {@render chain(LIE_LINKS)}
       <!-- the right front paw rests on the couch -->
       <path d="M 556 690 C 550 740 554 778 562 800 L 662 800 C 670 778 674 740 668 690 Z" fill="url(#{id}-fur-body)" />
       <path d="M 556 690 C 550 740 554 778 562 800 M 662 800 C 670 778 674 740 668 690" fill="none" stroke={INK} stroke-width="8" />
@@ -718,7 +745,6 @@
       {@render arm([[422, 690], [418, 790], [416, 870], [418, 916]], 104, 88)}
       <ellipse cx="418" cy="938" rx="52" ry="56" fill={WHITE} stroke={INK} stroke-width="9" />
       <path d="M 401 962 L 401 984 M 435 962 L 435 984" stroke={INK} stroke-width="6" />
-      {@render chain()}
       <g transform="rotate(-4 512 590)">{@render headGroup()}</g>
     </g>
   </g>

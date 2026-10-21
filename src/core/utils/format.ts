@@ -96,6 +96,7 @@ export const WORDS = {
   source: ['источник', 'источника', 'источников'],
   map: ['карта', 'карты', 'карт'],
   pack: ['пакет', 'пакета', 'пакетов'],
+  reminder: ['напоминание', 'напоминания', 'напоминаний'],
 } satisfies Record<string, [string, string, string]>;
 
 /** Interval in days → short human label ("10 мин", "3 дн", "2 мес"). */

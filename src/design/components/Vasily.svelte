@@ -73,9 +73,9 @@
   const id = `vas${++seq}`;
   let root = $state<SVGGElement>();
   let shadow = $state<SVGEllipseElement>();
-  const eyes: SVGGElement[] = [];
-  const lashes: SVGPathElement[] = [];
-  const ears: SVGGElement[] = [];
+  const eyes = $state<SVGGElement[]>([]);
+  const lashes = $state<SVGPathElement[]>([]);
+  const ears = $state<SVGGElement[]>([]);
   let whiskers = $state<SVGGElement>();
 
   let petted = $state(0);
@@ -153,7 +153,8 @@
   let svg = $state<SVGSVGElement>();
   let idleAt = 0;
   function follow(e: PointerEvent) {
-    if (!svg || !motionOK()) return;
+    // On a phone the eyes follow taps, not every finger move while scrolling.
+    if (!svg || !motionOK() || (e.type === 'pointermove' && e.pointerType !== 'mouse')) return;
     const r = svg.getBoundingClientRect();
     if (!r.width) return;
     const k = r.width / vb.w;
@@ -426,16 +427,18 @@
   .head svg { overflow: hidden; }
   button.vasily { padding: 0; border: 0; background: none; cursor: pointer; }
   button.vasily:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: var(--r-lg); }
-  svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  /* Breathing moves the whole picture on its own layer (cheap on a phone); inside the SVG only small parts move. */
+  svg { display: block; width: 100%; height: 100%; overflow: visible; transform-origin: 50% 96%; will-change: transform; animation: v-breathe 3.8s var(--ease-in-out) infinite alternate; }
+  .head svg { animation: none; will-change: auto; }
   svg :global(g), svg :global(path), svg :global(ellipse) { transform-box: view-box; }
 
   .root { transform-origin: 512px 950px; }
   .shadow { transform-origin: 530px 958px; }
-  .breathe { transform-origin: 512px 950px; animation: v-breathe 3.8s var(--ease-in-out) infinite alternate; }
+  .breathe { transform-origin: 512px 950px; }
   .tail { transform-origin: 730px 930px; animation: v-sway 3.4s var(--ease-in-out) infinite alternate; }
   .m-happy .tail { animation-duration: 0.7s; }
   .m-smile .tail { animation-duration: 1.6s; }
-  .m-sleep .breathe { animation-duration: 5.6s; }
+  .m-sleep svg { animation-duration: 5.6s; }
   .m-sleep .tail { animation-duration: 7s; }
 
   .head { transform-origin: 512px 590px; transition: transform 520ms var(--ease-spring); }
@@ -472,7 +475,7 @@
   .zzz text { animation: v-zzz 2.4s var(--ease-out) infinite; animation-delay: var(--d); opacity: 0; }
   .heart { transform-origin: 840px 270px; animation: v-heart 1.4s var(--ease-out) forwards; }
 
-  .still .breathe, .still .tail, .still .sparkles path, .still .zzz text, .still .heart { animation: none; }
+  .still svg, .still .tail, .still .sparkles path, .still .zzz text, .still .heart { animation: none; }
   .still .sparkles path, .still .zzz text { transform: none; opacity: 1; }
 
   @keyframes v-breathe { from { transform: scale(1, 1); } to { transform: scale(1.008, 1.016); } }

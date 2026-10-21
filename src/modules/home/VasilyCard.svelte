@@ -10,8 +10,7 @@
   import Button from '$lib/design/components/Button.svelte';
   import { progress } from '$lib/core/progress.svelte';
   import { settings } from '$lib/core/settings.svelte';
-  import { enableReminders } from '$lib/core/reminders';
-  import { toast } from '$lib/core/ui.svelte';
+  import { enableReminders, reminderToast } from '$lib/core/reminders';
   import { pluralN, WORDS, todayKey } from '$lib/core/utils/format';
 
   /** Cards waiting for review now (due + new for today). */
@@ -44,8 +43,7 @@
 
   const offer = $derived(settings.onboarded && !settings.remindAsked && !settings.remindAt);
   async function remind() {
-    if (await enableReminders('19:00')) toast('Буду напоминать в 19:00 — время можно поменять в настройках', 'success');
-    else toast('Android не разрешил уведомления — включите их в настройках телефона', 'error');
+    reminderToast(await enableReminders('19:00'), '19:00');
   }
 </script>
 

@@ -11,7 +11,8 @@
   import { pickFiles } from '$lib/core/platform';
   import { toast, confirmDialog, ui } from '$lib/core/ui.svelte';
   import { navigate } from '$lib/core/router.svelte';
-  import { REMIND_TIMES, enableReminders, disableReminders, nextReminder, testReminder, whenLabel } from '$lib/core/reminders';
+  import { REMIND_TIMES, enableReminders, disableReminders, nextReminder, reminderStatus, reminderToast, testReminder, whenLabel, type ReminderStatus } from '$lib/core/reminders';
+  import { pluralN, WORDS } from '$lib/core/utils/format';
   import type { PlannedReminder } from '$lib/core/reminder-plan';
 
   const ACCENTS: { id: Accent; name: string; color: string }[] = [
@@ -32,26 +33,31 @@
   // Reminders from Vasily: on/off, the time, the next note he would send.
   let remindOn = $state(!!settings.remindAt);
   let upcoming = $state<PlannedReminder | undefined>();
+  // What Android actually holds: permission and the queue (on the phone only).
+  let status = $state<ReminderStatus | undefined>();
+  const refreshStatus = async () => (status = await reminderStatus());
+  void refreshStatus();
   $effect(() => {
     const at = settings.remindAt;
     void nextReminder(at).then((r) => (upcoming = r));
   });
   async function remindTime(at: string) {
-    if (await enableReminders(at)) remindOn = true;
-    else {
-      remindOn = false;
-      toast('Android не разрешил уведомления — включите их в настройках телефона', 'error');
-    }
+    const r = await enableReminders(at);
+    remindOn = r !== 'denied';
+    reminderToast(r, at);
+    await refreshStatus();
   }
   async function toggleRemind(on: boolean) {
     if (on) await remindTime(settings.remindAt ?? '19:00');
     else await disableReminders();
+    await refreshStatus();
   }
   async function tryReminder() {
     const r = await testReminder();
-    if (r === 'sent') toast('Через пару секунд придёт пробное напоминание', 'success');
-    else if (r === 'denied') toast('Android не разрешил уведомления — включите их в настройках телефона', 'error');
-    else toast(upcoming ? `В браузере уведомлений нет. На телефоне придёт: «${upcoming.title}»` : 'В браузере уведомлений нет — они приходят в приложении на телефоне');
+    if (r === 'sent') toast('Пробное напоминание отправлено — загляните в шторку', 'success');
+    else if (r === 'denied') toast('Android запретил уведомления. Разрешите их: настройки телефона → Приложения → СТОЛЫПИНЪ → Уведомления', 'error', 6000);
+    else if (r === 'web') toast(upcoming ? `В браузере уведомлений нет. На телефоне придёт: «${upcoming.title}»` : 'В браузере уведомлений нет — они приходят в приложении на телефоне');
+    else toast(`Не получилось: ${r.error}`, 'error', 6000);
   }
 
   async function doExport() {
@@ -145,6 +151,13 @@
               </div>
             </div>
           {/if}
+          {#if status}
+            <p class="rstatus" class:bad={!status.allowed || status.error}>
+              {#if !status.allowed}Android запретил уведомления. Разрешите их: настройки телефона → Приложения → СТОЛЫПИНЪ → Уведомления.
+              {:else if status.error}Ошибка: {status.error}
+              {:else}В очереди {pluralN(status.pending, WORDS.reminder)}{status.next ? `, первое — ${whenLabel(status.next)}` : ''}.{/if}
+            </p>
+          {/if}
           <Button variant="secondary" full icon={BellRing} onclick={tryReminder}>Прислать пробное</Button>
         {/if}
       </div>
@@ -189,6 +202,8 @@
   .time.on { border-color: var(--accent); background: var(--accent-soft); }
   .time.on .num { color: var(--accent); }
   .clock { padding: 8px 10px; border-radius: var(--r-sm); border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; }
+  .rstatus { margin: 0; font-size: var(--text-xs); color: var(--success); }
+  .rstatus.bad { color: var(--danger); }
   .notif { display: flex; gap: var(--sp-3); align-items: flex-start; padding: var(--sp-3); border-radius: var(--r-md); background: var(--surface-2); border: 1px solid var(--line); }
   .notif .grow { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
   .notif .app { font-size: var(--text-2xs); color: var(--ink-3); }

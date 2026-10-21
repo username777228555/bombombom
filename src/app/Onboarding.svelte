@@ -19,8 +19,7 @@
   import { pluralN, WORDS } from '$lib/core/utils/format';
   import { haptic } from '$lib/core/platform';
   import { duePlan } from '$lib/modules/course/progress';
-  import { toast } from '$lib/core/ui.svelte';
-  import { REMIND_TIMES, enableReminders, disableReminders, nextReminder, whenLabel } from '$lib/core/reminders';
+  import { REMIND_TIMES, enableReminders, disableReminders, nextReminder, reminderToast, whenLabel } from '$lib/core/reminders';
   import type { PlannedReminder } from '$lib/core/reminder-plan';
 
   let { onclose }: { onclose: () => void } = $props();
@@ -54,10 +53,9 @@
   // Reminders: a time or «не напоминать»; the sample shows the very note Vasily would send.
   let sample = $state<PlannedReminder | undefined>();
   async function remindAt(at: string) {
-    if (!(await enableReminders(at))) {
-      toast('Android не разрешил уведомления — их можно включить в настройках телефона', 'error');
-      return;
-    }
+    const r = await enableReminders(at);
+    if (r !== 'on') reminderToast(r, at);
+    if (r === 'denied') return;
     haptic('success');
     sample = await nextReminder(at);
   }

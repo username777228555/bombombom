@@ -16,7 +16,7 @@
   import ImageCredit from '$lib/components/ImageCredit.svelte';
   import { kb } from '$lib/core/content/kb.svelte';
   import { progress, currentRank } from '$lib/core/progress.svelte';
-  import { settings } from '$lib/core/settings.svelte';
+  import { settings, motionOK } from '$lib/core/settings.svelte';
   import { buildQueue } from '$lib/core/srs';
   import { db, type BookMeta } from '$lib/core/db';
   import { greeting, formatDateLong, pluralN, WORDS, monthGen, formatEventDate, formatSpan } from '$lib/core/utils/format';
@@ -114,7 +114,7 @@
   {/if}
 
   <section class="hero">
-    {#if heroCover}<img class="hero-art" src={heroCover} alt="" aria-hidden="true" />{/if}
+    {#if heroCover}<img class="hero-art" class:drift={motionOK()} src={heroCover} alt="" aria-hidden="true" />{/if}
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-row">
       <ProgressRing value={goal} size={96} stroke={9} color="#f0cf82" track="rgba(255,255,255,.16)">
@@ -293,11 +293,13 @@
     height: 100%;
     object-fit: cover;
     opacity: 0.26;
-    mix-blend-mode: luminosity;
+    /* A grey picture on its own layer: the slow drift runs on the GPU. A blend mode here made Android redraw it
+       every frame, and it stuttered. */
+    filter: grayscale(1);
     transform: scale(1.08);
-    animation: hero-drift 26s ease-in-out infinite alternate;
     pointer-events: none;
   }
+  .hero-art.drift { will-change: transform; animation: hero-drift 26s ease-in-out infinite alternate; }
   @keyframes hero-drift { to { transform: scale(1.2) translate(-3%, 2%); } }
   .art-t { font-family: var(--font-display); font-size: var(--text-lg); line-height: 1.2; }
   .art-d { font-size: var(--text-xs); opacity: 0.85; }

@@ -20,7 +20,8 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <View
+        <!-- Spacers are FrameLayouts: a bare View is not allowed in a widget layout. -->
+        <FrameLayout
             android:id="@+id/gap_left"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -96,7 +97,7 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <View
+        <FrameLayout
             android:id="@+id/gap_right"
             android:layout_width="0dp"
             android:layout_height="match_parent"

@@ -54,7 +54,17 @@ def xml_text(s: str) -> str:
     return s.replace("&", "&amp;").replace("<", "&lt;").replace("'", "\\'").replace('"', '\\"')
 
 
+# Only these views can be inflated in a home-screen widget (classes marked @RemoteView); anything else — even a bare
+# <View> — and the phone shows «Не удалось загрузить виджет».
+REMOTE_VIEWS = {"FrameLayout", "LinearLayout", "RelativeLayout", "GridLayout", "ImageView", "ImageButton", "TextView", "Button",
+                "ProgressBar", "ViewFlipper", "AnalogClock", "TextClock", "Chronometer", "ListView", "GridView", "StackView", "AdapterViewFlipper"}
+
+
 def android_meta():
+    for layout in (ANDROID / "res/layout").glob("widget_*.xml"):
+        bad = sorted(set(re.findall(r"<([A-Za-z.]+)[\s>]", layout.read_text(encoding="utf-8"))) - REMOTE_VIEWS - {"?xml"})
+        if bad:
+            raise SystemExit(f"✖ {layout.name}: {', '.join(bad)} cannot be used in a widget (allowed: {', '.join(sorted(REMOTE_VIEWS))})")
     java = (ANDROID / "java/ru/stolypin/app/widget/VasilyWidget.java").read_text(encoding="utf-8")
     manifest = (ANDROID / "AndroidManifest.xml").read_text(encoding="utf-8")
     missing = [s for s in STYLES if f'"{s}"' not in java or f"@xml/widget_{s}\"" not in manifest]

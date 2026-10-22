@@ -17,7 +17,7 @@ import { confirmDialog } from './ui.svelte';
 import { kb } from './content/kb.svelte';
 import { isNative } from './platform';
 import { todayKey } from './utils/format';
-import { TASKS, DEFAULT_BASE, modelsFor, messagesOf } from '../../server/ai-tasks.mjs';
+import { TASKS, DEFAULT_BASE, modelsFor, timeoutFor, messagesOf } from '../../server/ai-tasks.mjs';
 
 const AI_URL = (import.meta.env.VITE_AI_URL ?? '').replace(/\/+$/, '');
 /** The build talks to a proxy: no key field in the settings. */
@@ -79,8 +79,8 @@ export async function askAi<T extends keyof AiTasks>(task: T, body: AiTasks[T]['
   if (!prompt) throw new AiError('Слишком мало текста — Василию нечего проверять');
   for (const [i, m] of modelsFor(task).entries()) {
     try {
-      // A hung first model gets 45 s, then the next one has its turn.
-      const out = t.parse(await chat(m, t.maxTokens, prompt, i === 0 ? 45_000 : 70_000), prompt as never);
+      // Grok thinks for up to a minute or two (the task's timeout), then the spare has its turn.
+      const out = t.parse(await chat(m, t.maxTokens, prompt, timeoutFor(task, i)), prompt as never);
       if (out) return out as AiTasks[T]['res'];
     } catch (e) {
       if (e instanceof AiError) throw e; // a bad key: the next model will not help
@@ -152,7 +152,7 @@ async function viaProxy<T extends keyof AiTasks>(task: T, body: AiTasks[T]['req'
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Install': await installId() },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(120_000),
+      signal: AbortSignal.timeout(200_000),
     });
   } catch {
     throw new AiError('Сервер Василия не отвечает — попробуйте позже');

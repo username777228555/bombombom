@@ -16,7 +16,7 @@
 import { createServer } from 'node:http';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
-import { TASKS, DEFAULT_BASE, parseModels, modelsFor, messagesOf } from './ai-tasks.mjs';
+import { TASKS, DEFAULT_BASE, parseModels, modelsFor, timeoutFor, messagesOf } from './ai-tasks.mjs';
 
 const env = (k, d) => process.env[k] ?? d;
 const CFG = {
@@ -63,8 +63,8 @@ async function run(task, prompt) {
   let last;
   for (const [i, m] of (CFG.models ?? modelsFor(task)).entries()) {
     try {
-      // The app waits 120 s: a hung first model gets 45 s, then the next one has the rest.
-      const out = TASKS[task].parse(await complete(m, task, prompt, i === 0 ? 45_000 : 70_000), prompt);
+      // The app waits 200 s: the first model gets its task's timeout (up to 120 s), the spare one minute.
+      const out = TASKS[task].parse(await complete(m, task, prompt, timeoutFor(task, i)), prompt);
       if (out) return out;
       last = new Error(`${m.name}: bad output`);
     } catch (e) {

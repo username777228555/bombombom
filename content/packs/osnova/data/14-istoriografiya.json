@@ -108,8 +108,8 @@
       "image": "images/persons/p-pogodin.webp",
       "imageInfo": {
         "author": "Василий Григорьевич Перов",
-        "date": "1872",
-        "about": "Портрет историка Михаила Петровича Погодина",
+        "date": "1872 (по ст. ст.)",
+        "about": "Изображение: Михаил Погодин",
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Michail_Pogodin.jpg"
       }
@@ -217,7 +217,7 @@
       "image": "images/persons/p-kostomarov.webp",
       "imageInfo": {
         "author": "Неизвестный автор",
-        "about": "Николай Иванович Костомаров",
+        "about": "Никола́й Ива́нович Костома́ров",
         "license": "Общественное достояние",
         "source": "https://commons.wikimedia.org/wiki/File:Kostomarov_7.jpg"
       }

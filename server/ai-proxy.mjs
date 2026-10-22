@@ -6,7 +6,7 @@
  *   AI_KEY=sk-... node server/ai-proxy.mjs          # listens on PORT (8787)
  *   POST /ai/retell  { lesson, points[], text }     → { covered[], missed[], errors[{quote,fix}], feedback }
  *   POST /ai/why     { question, right, given, cards[] } → { text }
- *   POST /ai/fork    { role, situation, choice, cards[] } → { story, reality, ids[] }   («Развилки»)
+ *   POST /ai/fork    { role, when, situation, stakes, truth, choice, cards[] } → { outcome, matches, headline, story }
  *   POST /ai/ask     { question, cards[] }       → { text, ids[] }                     («Спросить Василия»)
  *   GET  /ai/health                                  → { ok, model }
  *

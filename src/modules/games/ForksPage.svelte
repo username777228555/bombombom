@@ -1,7 +1,8 @@
 <script lang="ts">
   /**
    * «Развилки»: pick a moment (forks.ts), decide for the figure — a ready choice or your own words — and Василий
-   * (AI, task `fork`) tells what might have followed, then what really happened, with links to the cards.
+   * (AI, task `fork`) judges it like a strict historian (success / mixed / failure) and tells what would follow;
+   * «Как было на самом деле» is the fork's checked `truth`, with links to its cards.
    * Needs the AI key in the settings (or a proxy build); without it the screen points there.
    */
   import { fly, fade } from 'svelte/transition';
@@ -15,13 +16,14 @@
   import { router, navigate } from '$lib/core/router.svelte';
   import { toast } from '$lib/core/ui.svelte';
   import { motionOK } from '$lib/core/settings.svelte';
-  import { aiReady, aiConsent, askAi, AiError, cardText } from '$lib/core/ai.svelte';
+  import { aiReady, aiConsent, askAi, AiError, cardText, type AiTasks } from '$lib/core/ai.svelte';
   import { FORKS, type Fork } from './forks';
 
   let fork = $state<Fork | null>(null);
   let choice = $state('');
   let busy = $state(false);
-  let result = $state<{ story: string; reality: string; ids: string[] } | null>(null);
+  let result = $state<AiTasks['fork']['res'] | null>(null);
+  const VERDICT = { success: 'Удача', mixed: 'С оговорками', failure: 'Провал' } as const;
 
   const facts = (f: Fork) => f.facts.filter((id) => kb.get(id));
 
@@ -37,7 +39,10 @@
     try {
       result = await askAi('fork', {
         role: fork.role,
-        situation: `${fork.when}. ${fork.situation}`,
+        when: fork.when,
+        situation: fork.situation,
+        stakes: fork.stakes,
+        truth: fork.truth,
         choice: choice.trim(),
         cards: facts(fork).map(cardText).filter((x): x is string => !!x),
       });
@@ -99,20 +104,23 @@
         {:else}
           <div class="mine"><span class="eyebrow">Ваше решение</span><p>{choice}</p></div>
           <div class="story" in:fly={{ y: motionOK() ? 12 : 0, duration: 300 }}>
-            <Vasily head size={48} mood="think" still />
-            <div class="grow"><span class="eyebrow">Что могло бы быть</span><p>{result.story}</p></div>
-          </div>
-          {#if result.reality}
-            <div class="reality" in:fly={{ y: motionOK() ? 12 : 0, duration: 300, delay: 150 }}>
-              <span class="eyebrow"><BookOpen size={14} /> Как было на самом деле</span>
-              <p>{result.reality}</p>
-              {#if result.ids.length}
-                <div class="chips">
-                  {#each result.ids as id (id)}<Chip size="sm" onclick={() => navigate(`/entity/${id}`)}>{kb.title(id)}</Chip>{/each}
-                </div>
-              {/if}
+            <Vasily head size={48} mood={result.outcome === 'success' ? 'happy' : result.outcome === 'failure' ? 'sad' : 'think'} still />
+            <div class="grow">
+              <div class="verdict">
+                <span class="badge {result.outcome}">{VERDICT[result.outcome]}</span>
+                {#if result.matches}<span class="badge same">Как в истории</span>{/if}
+              </div>
+              {#if result.headline}<strong class="headline">{result.headline}</strong>{/if}
+              <p>{result.story}</p>
             </div>
-          {/if}
+          </div>
+          <div class="reality" in:fly={{ y: motionOK() ? 12 : 0, duration: 300, delay: 150 }}>
+            <span class="eyebrow"><BookOpen size={14} /> Как было на самом деле</span>
+            <p>{fork.truth}</p>
+            <div class="chips">
+              {#each facts(fork) as id (id)}<Chip size="sm" onclick={() => navigate(`/entity/${id}`)}>{kb.title(id)}</Chip>{/each}
+            </div>
+          </div>
           <Button full icon={RotateCcw} onclick={() => (result = null)}>Решить иначе</Button>
           <Button full variant="secondary" onclick={() => (fork = null)}>Другая развилка</Button>
         {/if}
@@ -144,6 +152,13 @@
   .mine p { margin: 2px 0 0; font-size: var(--text-sm); color: var(--ink-2); font-style: italic; }
   .story { display: flex; gap: var(--sp-3); align-items: flex-start; padding: var(--sp-4); border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-1); }
   .story p, .reality p { margin: 4px 0 0; font-family: var(--font-read); font-size: var(--text-md); line-height: 1.55; }
+  .verdict { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+  .badge { padding: 2px 10px; border-radius: var(--r-full); font-size: var(--text-xs); font-weight: 700; }
+  .badge.success { background: var(--success-soft); color: var(--success); }
+  .badge.mixed { background: color-mix(in srgb, var(--warning) 16%, transparent); color: var(--warning); }
+  .badge.failure { background: var(--danger-soft); color: var(--danger); }
+  .badge.same { background: var(--gold-soft); color: var(--ink-2); }
+  .headline { display: block; font-family: var(--font-display); font-size: var(--text-lg); line-height: 1.25; }
   .reality { padding: var(--sp-4); border-radius: var(--r-lg); background: var(--gold-soft); }
   .reality .eyebrow { display: inline-flex; align-items: center; gap: 6px; }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--sp-3); }

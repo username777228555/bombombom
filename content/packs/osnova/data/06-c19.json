@@ -8821,7 +8821,15 @@
         "внимание к хозяйству, сословиям и «народной жизни»",
         "афористичный язык и психологические портреты"
       ],
-      "importance": 2
+      "importance": 2,
+      "image": "images/culture/c-kurs-russkoy-istorii.webp",
+      "imageInfo": {
+        "author": "Матэ, Василий Васильевич",
+        "about": "Изображение: «Курс русской истории» В. О. Ключевского",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Vasily_Klyuchevsky_2.jpg"
+      },
+      "wiki": "Ключевский, Василий Осипович"
     }
   ],
   "terms": [

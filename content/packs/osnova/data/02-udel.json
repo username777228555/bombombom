@@ -4546,7 +4546,14 @@
         "Его прозвище указывает не на фамилию, а на монашеский чин.",
         "Ближайший соратник автора «Троицы»."
       ],
-      "wiki": "Даниил Чёрный"
+      "wiki": "Даниил Чёрный",
+      "image": "images/persons/p-daniil-chernyy.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "about": "В ту же весну ме- сяца мая начали расписывать великую соборную церковь Пречистой Богородицы Влади- мирской по повеле- нию великого князя Василия Дмитриевича, мастерами были Да- ниил Иконник и Ан- дрей Рублев",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.12,_p.156.gif"
+      }
     }
   ],
   "culture": [
@@ -5171,7 +5178,14 @@
         "ярус кокошников в основании барабана"
       ],
       "importance": 2,
-      "wiki": "Успенский собор на Городке"
+      "wiki": "Успенский собор на Городке",
+      "image": "images/culture/c-uspenskiy-sobor-na-gorodke.webp",
+      "imageInfo": {
+        "date": "2012",
+        "about": "Церковь Успения Пресвятой Богородицы \"на Городке\", 1396-1399, Звенигород",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Zvenigorod_ChurchDormition_in_Gorodok2.JPG"
+      }
     },
     {
       "id": "c-spasskiy-sobor-andronikova-monastyrya",
@@ -5188,7 +5202,14 @@
         "белый камень и скупой резной декор"
       ],
       "importance": 2,
-      "wiki": "Спасский собор Андроникова монастыря"
+      "wiki": "Спасский собор Андроникова монастыря",
+      "image": "images/culture/c-spasskiy-sobor-andronikova-monastyrya.webp",
+      "imageInfo": {
+        "date": "2009",
+        "about": "Спасский собор (Андроников монастырь)",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Cathedral_of_the_Holy_Mandylion_(Andronikov_Monastery)_10.jpg"
+      }
     }
   ],
   "terms": [

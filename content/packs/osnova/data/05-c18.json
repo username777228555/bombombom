@@ -4929,7 +4929,13 @@
         "Обошёл Перекоп по Арабатской стрелке.",
         "Победил шведов при Вильманстранде."
       ],
-      "wiki": "Ласси, Пётр Петрович"
+      "wiki": "Ласси, Пётр Петрович",
+      "image": "images/persons/p-lassi.webp",
+      "imageInfo": {
+        "about": "Изображение: Пётр Ласси",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Peter_von_Lacy.PNG"
+      }
     },
     {
       "id": "p-golovkin",
@@ -4954,7 +4960,14 @@
         "Возглавлял Коллегию иностранных дел.",
         "Член Верховного тайного совета, поддержавший Анну Иоанновну."
       ],
-      "wiki": "Головкин, Гавриил Иванович"
+      "wiki": "Головкин, Гавриил Иванович",
+      "image": "images/persons/p-golovkin.webp",
+      "imageInfo": {
+        "author": "Иван Никитич Никитин",
+        "about": "Изображение: Гавриил Головкин",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Ivan_Nikitin_-_%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%B3%D1%80%D0%B0%D1%84%D0%B0_%D0%93.%D0%98.%D0%93%D0%BE%D0%BB%D0%BE%D0%B2%D0%BA%D0%B8%D0%BD%D0%B0_-_Google_Art_Project.jpg"
+      }
     },
     {
       "id": "p-baranov",
@@ -4980,7 +4993,15 @@
         "Отбил у тлинкитов место для своей столицы.",
         "Основал Ново-Архангельск."
       ],
-      "wiki": "Баранов, Александр Андреевич"
+      "wiki": "Баранов, Александр Андреевич",
+      "image": "images/persons/p-baranov.webp",
+      "imageInfo": {
+        "author": "Тихонов, Михаил Тихонович",
+        "date": "1818",
+        "about": "Изображение: Александр Баранов",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Tikhanov_-_Alexandr_Andreyevich_Baranov_(1818).png"
+      }
     },
     {
       "id": "p-kvarengi",
@@ -5003,7 +5024,14 @@
         "Автор здания Смольного института.",
         "Мастер строгого классицизма."
       ],
-      "wiki": "Кваренги, Джакомо"
+      "wiki": "Кваренги, Джакомо",
+      "image": "images/persons/p-kvarengi.webp",
+      "imageInfo": {
+        "date": "1811",
+        "about": "Изображение: Джакомо Кваренги",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Kvarengi.jpg"
+      }
     },
     {
       "id": "p-kameron",
@@ -5026,7 +5054,14 @@
         "Его именем названа галерея.",
         "Построил дворец для великого князя Павла."
       ],
-      "wiki": "Камерон, Чарлз"
+      "wiki": "Камерон, Чарлз",
+      "image": "images/persons/p-kameron.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "about": "Изображение: Чарлз Камерон",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Charles_Cameron_1800s.jpg"
+      }
     },
     {
       "id": "p-argunov",
@@ -5050,7 +5085,15 @@
         "Написал крестьянку в русском костюме.",
         "Отец художника, написавшего Жемчугову."
       ],
-      "wiki": "Аргунов, Иван Петрович"
+      "wiki": "Аргунов, Иван Петрович",
+      "image": "images/persons/p-argunov.webp",
+      "imageInfo": {
+        "author": "Иван Петрович Аргунов",
+        "date": "конец 1750-х — начало 1760-х гг",
+        "about": "Изображение: Иван Аргунов",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Argunov-self.jpg"
+      }
     },
     {
       "id": "p-kheraskov",
@@ -5074,7 +5117,14 @@
         "Близок к масонскому кругу Новикова.",
         "Написал стихи «Коль славен наш Господь в Сионе»."
       ],
-      "wiki": "Херасков, Михаил Матвеевич"
+      "wiki": "Херасков, Михаил Матвеевич",
+      "image": "images/persons/p-kheraskov.webp",
+      "imageInfo": {
+        "date": "2012",
+        "about": "Изображение: Михаил Херасков",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:M_Kheraskov_by_K_Gekke_1800s.jpg"
+      }
     },
     {
       "id": "p-magnitskiy",
@@ -5098,7 +5148,14 @@
         "Его фамилию, по преданию, дал Пётр I.",
         "Автор учебника 1703 года."
       ],
-      "wiki": "Магницкий, Леонтий Филиппович"
+      "wiki": "Магницкий, Леонтий Филиппович",
+      "image": "images/persons/p-magnitskiy.webp",
+      "imageInfo": {
+        "date": "2020",
+        "about": "Изображение: Леонтий Магницкий",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:DSCF0413x.jpg"
+      }
     },
     {
       "id": "p-anna-leopoldovna",
@@ -5121,7 +5178,14 @@
         "Пришла к власти после свержения Бирона.",
         "Умерла в ссылке в Холмогорах."
       ],
-      "wiki": "Анна Леопольдовна"
+      "wiki": "Анна Леопольдовна",
+      "image": "images/persons/p-anna-leopoldovna.webp",
+      "imageInfo": {
+        "author": "Луи Каравак",
+        "about": "Изображение: Анна Леопольдовна",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Anna_Leopoldovna_by_L.Caravaque_(after_1733,_Tropinin_museum).jpg"
+      }
     },
     {
       "id": "p-mirovich",
@@ -5145,7 +5209,15 @@
         "Хотел возвести на престол бывшего императора.",
         "Казнён в 1764 году."
       ],
-      "wiki": "Мирович, Василий Яковлевич"
+      "wiki": "Мирович, Василий Яковлевич",
+      "image": "images/persons/p-mirovich.webp",
+      "imageInfo": {
+        "author": "Иван Иванович Творожников",
+        "date": "1884",
+        "about": "Изображение: Василий Мирович",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Tvorozhnikov.jpg"
+      }
     },
     {
       "id": "p-salavat-yulaev",
@@ -5192,7 +5264,13 @@
         "Вернулся по приглашению Екатерины II.",
         "Продолжал диктовать работы, почти ослепнув."
       ],
-      "wiki": "Эйлер, Леонард"
+      "wiki": "Эйлер, Леонард",
+      "image": "images/persons/p-eyler.webp",
+      "imageInfo": {
+        "about": "Изображение: Леонард Эйлер",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Leonhard_Euler_2.jpg"
+      }
     },
     {
       "id": "p-ushakov-andrey",
@@ -5216,7 +5294,14 @@
         "Пережил несколько смен власти, оставаясь во главе сыска.",
         "Расследовал дело Волынского."
       ],
-      "wiki": "Ушаков, Андрей Иванович"
+      "wiki": "Ушаков, Андрей Иванович",
+      "image": "images/persons/p-ushakov-andrey.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "about": "Андрей Иванович Ушаков(1672— 1747) — начальник тайной розыскной канцелярии",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Ushakov_Andrea.jpg"
+      }
     },
     {
       "id": "p-tolstoy-petr",
@@ -5241,7 +5326,14 @@
         "Вернул в Россию бежавшего царевича.",
         "Сослан на Соловки по воле Меншикова."
       ],
-      "wiki": "Толстой, Пётр Андреевич"
+      "wiki": "Толстой, Пётр Андреевич",
+      "image": "images/persons/p-tolstoy-petr.webp",
+      "imageInfo": {
+        "author": "Иоганн Готфрид Таннауер",
+        "about": "Изображение: Пётр Толстой",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Johann_Gottfried_Tannauer_05.jpg"
+      }
     },
     {
       "id": "p-vyazemskiy-aleksandr",
@@ -5265,7 +5357,15 @@
         "Руководил судом над Пугачёвым.",
         "Был генерал-прокурором почти тридцать лет."
       ],
-      "wiki": "Вяземский, Александр Алексеевич"
+      "wiki": "Вяземский, Александр Алексеевич",
+      "image": "images/persons/p-vyazemskiy-aleksandr.webp",
+      "imageInfo": {
+        "author": "Карл Людвиг Христинек",
+        "date": "1768",
+        "about": "Российский государственный и политический деятель князь А.А.Вяземский (1727—1793)",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Viazemskij_Aleksandr_Alekseevich.jpg"
+      }
     }
   ],
   "culture": [

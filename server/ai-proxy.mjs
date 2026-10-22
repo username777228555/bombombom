@@ -16,15 +16,15 @@
 import { createServer } from 'node:http';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
-import { TASKS, DEFAULT_BASE, DEFAULT_MODELS, parseModels } from './ai-tasks.mjs';
+import { TASKS, DEFAULT_BASE, parseModels, modelsFor, messagesOf } from './ai-tasks.mjs';
 
 const env = (k, d) => process.env[k] ?? d;
 const CFG = {
   port: Number(env('PORT', 8787)),
   base: env('AI_BASE', DEFAULT_BASE),
   key: env('AI_KEY', ''),
-  /** Models tried in order, «model[:reasoning_effort]» — see ai-tasks.mjs for why these. */
-  models: parseModels(env('AI_MODELS', DEFAULT_MODELS)),
+  /** Models tried in order, «model[:reasoning_effort]»; unset — each task's own order (ai-tasks.mjs explains why). */
+  models: process.env.AI_MODELS ? parseModels(process.env.AI_MODELS) : null,
   perInstall: Number(env('LIMIT_INSTALL', 40)),
   perIp: Number(env('LIMIT_IP', 200)),
   dailyTokens: Number(env('LIMIT_TOKENS', 20_000_000)),
@@ -61,10 +61,10 @@ setInterval(() => {
 /** The first model that answers with a usable result; the next one when a model fails or returns garbage. */
 async function run(task, prompt) {
   let last;
-  for (const [i, m] of CFG.models.entries()) {
+  for (const [i, m] of (CFG.models ?? modelsFor(task)).entries()) {
     try {
       // The app waits 120 s: a hung first model gets 45 s, then the next one has the rest.
-      const out = TASKS[task].parse(await complete(m, task, prompt.sys, prompt.user, i === 0 ? 45_000 : 70_000), prompt);
+      const out = TASKS[task].parse(await complete(m, task, prompt, i === 0 ? 45_000 : 70_000), prompt);
       if (out) return out;
       last = new Error(`${m.name}: bad output`);
     } catch (e) {
@@ -75,8 +75,8 @@ async function run(task, prompt) {
   throw last;
 }
 
-async function complete(m, task, sys, user, timeout) {
-  const body = { model: m.name, max_tokens: TASKS[task].maxTokens, messages: [{ role: 'system', content: sys }, { role: 'user', content: user }] };
+async function complete(m, task, prompt, timeout) {
+  const body = { model: m.name, max_tokens: TASKS[task].maxTokens, messages: messagesOf(prompt) };
   if (m.effort) body.reasoning_effort = m.effort;
   for (let attempt = 0; ; attempt++) {
     const r = await fetch(`${CFG.base}/chat/completions`, {
@@ -116,7 +116,7 @@ createServer(async (req, res) => {
   const origin = CFG.origins.includes(req.headers.origin) ? req.headers.origin : CFG.origins[0];
   if (req.method === 'OPTIONS') return send(res, 204, {}, origin);
   const url = new URL(req.url, 'http://x');
-  if (req.method === 'GET' && url.pathname === '/ai/health') return send(res, 200, { ok: true, models: CFG.models.map((m) => m.name) }, origin);
+  if (req.method === 'GET' && url.pathname === '/ai/health') return send(res, 200, { ok: true, models: CFG.models?.map((m) => m.name) ?? 'per task' }, origin);
   const task = url.pathname.startsWith('/ai/') ? url.pathname.slice(4) : '';
   if (req.method !== 'POST' || !TASKS[task]) return send(res, 404, { error: 'not found' }, origin);
 
@@ -150,4 +150,4 @@ createServer(async (req, res) => {
     day.errors++;
     return send(res, 502, { error: 'model' }, origin);
   }
-}).listen(CFG.port, () => console.log(`ai-proxy on :${CFG.port}, models ${CFG.models.map((m) => m.name).join(' → ')}`));
+}).listen(CFG.port, () => console.log(`ai-proxy on :${CFG.port}, models ${CFG.models?.map((m) => m.name).join(' → ') ?? 'per task'}`));

@@ -17,7 +17,7 @@ import { confirmDialog } from './ui.svelte';
 import { kb } from './content/kb.svelte';
 import { isNative } from './platform';
 import { todayKey } from './utils/format';
-import { TASKS, DEFAULT_BASE, DEFAULT_MODELS, parseModels } from '../../server/ai-tasks.mjs';
+import { TASKS, DEFAULT_BASE, modelsFor, messagesOf } from '../../server/ai-tasks.mjs';
 
 const AI_URL = (import.meta.env.VITE_AI_URL ?? '').replace(/\/+$/, '');
 /** The build talks to a proxy: no key field in the settings. */
@@ -28,7 +28,6 @@ export const AI_KEY_KV = 'ai-key';
 const USAGE_KV = 'ai-usage';
 /** Requests a day with the device key — a fuse against a runaway loop, not a quota. */
 const DAILY = 150;
-const MODELS = parseModels(DEFAULT_MODELS);
 
 export const ai = $state({ key: '' });
 void kvGet<string>(AI_KEY_KV, '').then((k) => (ai.key = k));
@@ -78,10 +77,10 @@ export async function askAi<T extends keyof AiTasks>(task: T, body: AiTasks[T]['
   const t = TASKS[task];
   const prompt = t.build(body);
   if (!prompt) throw new AiError('Слишком мало текста — Василию нечего проверять');
-  for (const [i, m] of MODELS.entries()) {
+  for (const [i, m] of modelsFor(task).entries()) {
     try {
       // A hung first model gets 45 s, then the next one has its turn.
-      const out = t.parse(await chat(m, t.maxTokens, prompt.sys, prompt.user, i === 0 ? 45_000 : 70_000), prompt as never);
+      const out = t.parse(await chat(m, t.maxTokens, prompt, i === 0 ? 45_000 : 70_000), prompt as never);
       if (out) return out as AiTasks[T]['res'];
     } catch (e) {
       if (e instanceof AiError) throw e; // a bad key: the next model will not help
@@ -101,16 +100,8 @@ export async function saveAiKey(key: string): Promise<void> {
   await kvSet(AI_KEY_KV, ai.key);
 }
 
-async function chat(m: { name: string; effort?: string }, maxTokens: number, sys: string, user: string, timeout: number): Promise<string> {
-  const body = {
-    model: m.name,
-    max_tokens: maxTokens,
-    messages: [
-      { role: 'system', content: sys },
-      { role: 'user', content: user },
-    ],
-    ...(m.effort ? { reasoning_effort: m.effort } : {}),
-  };
+async function chat(m: { name: string; effort?: string }, maxTokens: number, prompt: { sys: string; user: string }, timeout: number): Promise<string> {
+  const body = { model: m.name, max_tokens: maxTokens, messages: messagesOf(prompt), ...(m.effort ? { reasoning_effort: m.effort } : {}) };
   const r = await http('POST', `${DEFAULT_BASE}/chat/completions`, ai.key, body, timeout);
   if (r.status === 401 || r.status === 403) throw new AiError('Ключ ИИ не подходит или отозван — вставьте новый в настройках');
   if (r.status < 200 || r.status >= 300) throw new Error(`model ${r.status}`);

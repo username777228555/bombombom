@@ -15,11 +15,11 @@ export const DEFAULT_BASE = 'https://api.reformboss.com/v1';
 /**
  * Модели по порядку, «model[:reasoning_effort]»; следующая — если предыдущая не ответила, ответила отказом или оборвала
  * ответ. Выбраны прогонами на задачах приложения (октябрь 2026): grok-4.7 на effort low находит все заложенные ошибки
- * в пересказе и не выдумывает своих (выше effort — медленнее и пропускал больше); kimi-k3 честнее всех судит развилки,
- * но сервис иногда обрывает его ответы — для проверок он запасной; glm-5.3 хорош, но часто перегружен.
- * У задания может быть свой порядок — `models` в TASKS.
+ * в пересказе и не выдумывает своих (выше effort — медленнее и пропускал больше), но думает 20–40 с; gemini-3.5-flash
+ * и kimi-k3 пишут лучше всех, но сервис часто обрезает их ответы (у Gemini это видно за 2 с, у Kimi — за 25 с);
+ * glm-5.3 хорош, но часто перегружен. У задания может быть свой порядок — `models` в TASKS.
  */
-export const DEFAULT_MODELS = 'grok-4.7:low,kimi-k3,glm-5.3';
+export const DEFAULT_MODELS = 'grok-4.7:low,gemini-3.5-flash,glm-5.3,kimi-k3';
 
 /** The models for a task: its own order or the default one. */
 export const modelsFor = (task) => parseModels(TASKS[task]?.models ?? DEFAULT_MODELS);
@@ -98,14 +98,14 @@ export const TASKS = {
     },
     parse(raw) {
       // A JSON answer cut short (the service sometimes truncates) is no answer: the next model will do better.
-      const t = str(json(raw)?.text, 1200) || (raw.trim().startsWith('{') ? '' : russianOnly(raw));
+      const t = str(json(raw)?.text, 1200) || (cut(raw) ? '' : russianOnly(raw));
       return t ? { text: t } : null;
     },
   },
   fork: {
     // «Развилки»: игрок решает за историческое лицо. Модель — строгий историк: вердикт и правдоподобные последствия из
     // расклада сил; «как было на самом деле» приложение показывает само (проверенная справка), модель ей не противоречит.
-    models: 'kimi-k3,grok-4.7:low,glm-5.3',
+    models: 'gemini-3.5-flash,kimi-k3,grok-4.7:low,glm-5.3',
     maxTokens: 6000,
     build(b) {
       const situation = str(b.situation, 1500);
@@ -145,6 +145,7 @@ export const TASKS = {
   },
   ask: {
     // «Спросить Василия» на карточке: ответ по ней и соседним карточкам.
+    models: 'gemini-3.5-flash,grok-4.7:low,glm-5.3,kimi-k3',
     maxTokens: 5000,
     build(b) {
       const q = str(b.question, 500);
@@ -160,12 +161,15 @@ export const TASKS = {
     },
     parse(raw, ctx) {
       const j = json(raw);
-      const text = str(j?.text, 1200) || (raw.trim().startsWith('{') ? '' : russianOnly(raw));
+      const text = str(j?.text, 1200) || (cut(raw) ? '' : russianOnly(raw));
       if (!text) return null;
       return { text, ids: (Array.isArray(j?.ids) ? j.ids : []).filter((i) => ctx.ids.includes(i)).slice(0, 6) };
     },
   },
 };
+
+/** A JSON answer the service cut short: there is a «{» but no complete object. */
+const cut = (raw) => !json(raw) && raw.replace(/```[a-z]*|```/g, '').trim().startsWith('{');
 
 /** Модель иногда дописывает после ответа свои английские рассуждения: оставляем только абзацы по-русски. */
 function russianOnly(t) {

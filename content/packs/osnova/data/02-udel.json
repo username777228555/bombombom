@@ -1621,7 +1621,16 @@
       "importance": 1,
       "place": "Сауле (Шяуляй), Литва",
       "summary": "22 сентября 1236 года литовцы и земгалы разгромили войско Ордена меченосцев; погиб магистр Фольквин. Через год остатки ордена влились в Тевтонский орден, образовав Ливонский орден.",
-      "details": "Меченосцы ходили в поход на Литву вместе с отрядом псковичей. На обратном пути их войско застигли в болотистой местности и почти полностью истребили. Поражение надолго остановило натиск рыцарей на Литву и заставило меченосцев искать союза с Тевтонским орденом."
+      "details": "Меченосцы ходили в поход на Литву вместе с отрядом псковичей. На обратном пути их войско застигли в болотистой местности и почти полностью истребили. Поражение надолго остановило натиск рыцарей на Литву и заставило меченосцев искать союза с Тевтонским орденом.",
+      "image": "images/events/e-bitva-pri-saule-1236.webp",
+      "imageInfo": {
+        "title": "Ливонская Конфедерация 1260",
+        "date": "2008",
+        "about": "Иллюстрация к событию «Битва при Сауле»",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9B%D0%B8%D0%B2%D0%BE%D0%BD%D1%81%D0%BA%D0%B0%D1%8F_%D0%9A%D0%BE%D0%BD%D1%84%D0%B5%D0%B4%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F_1260.png"
+      },
+      "wiki": "Битва при Сауле"
     },
     {
       "id": "e-velikaya-zamyatnya",
@@ -4000,7 +4009,14 @@
         "Заказала напрестольный крест мастеру Лазарю Богше.",
         "Умерла в паломничестве в Иерусалим."
       ],
-      "wiki": "Евфросиния Полоцкая"
+      "wiki": "Евфросиния Полоцкая",
+      "image": "images/persons/p-evfrosiniya-polotskaya.webp",
+      "imageInfo": {
+        "date": "1910",
+        "about": "Прп. Евфросиния Полоцкая. Икона. Ок. 1910 г. (ГМИР)",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Euphrosyne_of_Polatsk_(icon).jpg"
+      }
     },
     {
       "id": "p-kirill-turovskiy",
@@ -4024,7 +4040,13 @@
         "Его называли «Златоустом» Руси.",
         "Автор «Притчи о душе и теле»."
       ],
-      "wiki": "Кирилл Туровский"
+      "wiki": "Кирилл Туровский",
+      "image": "images/persons/p-kirill-turovskiy.webp",
+      "imageInfo": {
+        "about": "Осип Семёнович Чириков. \"Св. Кирилл епископ Туровский\".. Икона месячной минеи. Государственный музей истории религии",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Cyril_of_Turov_by_O.Chirikov_(Muz.ist._rel).jpg"
+      }
     },
     {
       "id": "p-kliment-smolyatich",
@@ -4048,7 +4070,16 @@
         "Избран собором русских епископов без согласия Константинополя.",
         "Изгнан после смерти Изяслава Мстиславича."
       ],
-      "wiki": "Климент Смолятич"
+      "wiki": "Климент Смолятич",
+      "image": "images/persons/p-kliment-smolyatich.webp",
+      "imageInfo": {
+        "title": "Поставление Климента Смолятича в Киевские митрополиты",
+        "author": "Неизвестный автор",
+        "date": "1568",
+        "about": "Изображение: Климент Смолятич",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9F%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%9A%D0%BB%D0%B8%D0%BC%D0%B5%D0%BD%D1%82%D0%B0_%D0%A1%D0%BC%D0%BE%D0%BB%D1%8F%D1%82%D0%B8%D1%87%D0%B0_%D0%B2_%D0%9A%D0%B8%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B5_%D0%BC%D0%B8%D1%82%D1%80%D0%BE%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D1%8B.png"
+      }
     },
     {
       "id": "p-daniil-zatochnik",
@@ -4071,7 +4102,13 @@
         "Писал, что лучше служить князю, чем боярину.",
         "Автор «Слова» и «Моления»."
       ],
-      "wiki": "Даниил Заточник"
+      "wiki": "Даниил Заточник",
+      "image": "images/persons/p-daniil-zatochnik.webp",
+      "imageInfo": {
+        "about": "Рукопись \"Моления Даниила Заточника\". Список XVI века",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Praying_of_Daniel_the_Immured_01.png"
+      }
     },
     {
       "id": "p-yaroslav-osmomysl",
@@ -4095,7 +4132,14 @@
         "Его наложницу Настасью сожгли бояре.",
         "Княжил в Галиче в 1153–1187 годах."
       ],
-      "wiki": "Ярослав Владимирович Осмомысл"
+      "wiki": "Ярослав Владимирович Осмомысл",
+      "image": "images/persons/p-yaroslav-osmomysl.webp",
+      "imageInfo": {
+        "author": "достеменно невідомо",
+        "about": "Ярослав Осмомисл: галицький князь",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Yaroslav_Osmomysl.jpg"
+      }
     },
     {
       "id": "p-dovmont",
@@ -4120,7 +4164,16 @@
         "Его именем названа часть кремля в городе, где он княжил.",
         "Женат на внучке Александра Невского."
       ],
-      "wiki": "Довмонт"
+      "wiki": "Довмонт",
+      "image": "images/persons/p-dovmont.webp",
+      "imageInfo": {
+        "title": "Князь Довмонт в церкви Святой Троицы перед военным походом",
+        "author": "Неизвестный автор",
+        "date": "1568",
+        "about": "Изображение: Довмонт",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BD%D1%8F%D0%B7%D1%8C_%D0%94%D0%BE%D0%B2%D0%BC%D0%BE%D0%BD%D1%82_%D0%B2_%D1%86%D0%B5%D1%80%D0%BA%D0%B2%D0%B8_%D0%A1%D0%B2%D1%8F%D1%82%D0%BE%D0%B9_%D0%A2%D1%80%D0%BE%D0%B8%D1%86%D1%8B_%D0%BF%D0%B5%D1%80%D0%B5%D0%B4_%D0%B2%D0%BE%D0%B5%D0%BD%D0%BD%D1%8B%D0%BC_%D0%BF%D0%BE%D1%85%D0%BE%D0%B4%D0%BE%D0%BC.png"
+      }
     },
     {
       "id": "p-mindovg",
@@ -4143,7 +4196,13 @@
         "Соперничал и союзничал с Даниилом Галицким.",
         "Убит заговорщиками в 1263 году."
       ],
-      "wiki": "Миндовг"
+      "wiki": "Миндовг",
+      "image": "images/persons/p-mindovg.webp",
+      "imageInfo": {
+        "about": "Изображение: Миндовг",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Mindaugas_(99259281).jpg"
+      }
     },
     {
       "id": "p-gedimin",
@@ -4166,7 +4225,14 @@
         "Отец Ольгерда и Кейстута.",
         "Родоначальник княжеской династии, от которой происходят Голицыны."
       ],
-      "wiki": "Гедимин"
+      "wiki": "Гедимин",
+      "image": "images/persons/p-gedimin.webp",
+      "imageInfo": {
+        "date": "1578",
+        "about": "Изображение: Гедимин",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Giedzimin._%D0%93%D0%B5%D0%B4%D0%B7%D1%96%D0%BC%D1%96%D0%BD_(A._Guagnini,_1578).jpg"
+      }
     },
     {
       "id": "p-subedey",
@@ -4189,7 +4255,14 @@
         "Командовал монголами на Калке.",
         "Главный военный советник Батыя."
       ],
-      "wiki": "Субэдэй"
+      "wiki": "Субэдэй",
+      "image": "images/persons/p-subedey.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "about": "Субэдэй. Средневековый китайский рисунок",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Subudei.jpg"
+      }
     },
     {
       "id": "p-timur",
@@ -4214,7 +4287,14 @@
         "В 1402 году разбил турецкого султана Баязида.",
         "В 1395 году взял Елец и повернул назад."
       ],
-      "wiki": "Тамерлан"
+      "wiki": "Тамерлан",
+      "image": "images/persons/p-timur.webp",
+      "imageInfo": {
+        "date": "2008-08",
+        "about": "Изображение: Тимур",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Timur_reconstruction03.jpg"
+      }
     },
     {
       "id": "p-edigey",
@@ -4238,7 +4318,14 @@
         "Победил Витовта на Ворскле.",
         "В 1408 году осаждал Москву."
       ],
-      "wiki": "Едигей"
+      "wiki": "Едигей",
+      "image": "images/persons/p-edigey.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "about": "нашествие Едыгея В ту же зиму месяца декабря в 20 день Ордынский князь Едыгей повелением царя Большой Орды Булат-Салтана пришел с войском на Русскую землю, а вместе с ним четыре царевича и много татарских князей, вот их имена: царевич…",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.12,_p.177_-_Edigu%27s_invasion.jpg"
+      }
     },
     {
       "id": "p-oleg-ryazanskiy",
@@ -4262,7 +4349,16 @@
         "Помирился с Дмитрием Донским при посредничестве Сергия Радонежского.",
         "Московские летописцы называли его изменником."
       ],
-      "wiki": "Олег Иванович Рязанский"
+      "wiki": "Олег Иванович Рязанский",
+      "image": "images/persons/p-oleg-ryazanskiy.webp",
+      "imageInfo": {
+        "title": "Олег Иванович Рязанский - реконструкция Т.С. Балуевой, Е.В.Веселовской",
+        "author": "Неизвестен, находится в общем пользовании",
+        "date": "ок. 2011 г",
+        "about": "Изображение: Олег Рязанский",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9E%D0%BB%D0%B5%D0%B3_%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87_%D0%A0%D1%8F%D0%B7%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_-_%D1%80%D0%B5%D0%BA%D0%BE%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F_%D0%A2.%D0%A1._%D0%91%D0%B0%D0%BB%D1%83%D0%B5%D0%B2%D0%BE%D0%B9,_%D0%95.%D0%92.%D0%92%D0%B5%D1%81%D0%B5%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B9.jpg"
+      }
     },
     {
       "id": "p-vladimir-serpukhovskoy",
@@ -4287,7 +4383,15 @@
         "Командовал засадным полком.",
         "В 1408 году руководил обороной Москвы."
       ],
-      "wiki": "Владимир Андреевич Храбрый"
+      "wiki": "Владимир Андреевич Храбрый",
+      "image": "images/persons/p-vladimir-serpukhovskoy.webp",
+      "imageInfo": {
+        "title": "Владимир Храбрый выезжает из дубравы",
+        "author": "Сказание о Мамаевом побоище",
+        "about": "Изображение: Владимир Серпуховской",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%A5%D1%80%D0%B0%D0%B1%D1%80%D1%8B%D0%B9_%D0%B2%D1%8B%D0%B5%D0%B7%D0%B6%D0%B0%D0%B5%D1%82_%D0%B8%D0%B7_%D0%B4%D1%83%D0%B1%D1%80%D0%B0%D0%B2%D1%8B.jpg"
+      }
     },
     {
       "id": "p-kirill-belozerskiy",
@@ -4310,7 +4414,15 @@
         "Писал поучения сыновьям Дмитрия Донского.",
         "Основал обитель на берегу Сиверского озера."
       ],
-      "wiki": "Кирилл Белозерский"
+      "wiki": "Кирилл Белозерский",
+      "image": "images/persons/p-kirill-belozerskiy.webp",
+      "imageInfo": {
+        "title": "Мастерская Дионисия Кирилл Белозерский с житием",
+        "author": "Мастерская Дионисия",
+        "about": "Мастерская Дионисия. Кирилл Белозерский с житием. Начало XVI века",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%B0%D1%81%D1%82%D0%B5%D1%80%D1%81%D0%BA%D0%B0%D1%8F_%D0%94%D0%B8%D0%BE%D0%BD%D0%B8%D1%81%D0%B8%D1%8F_%D0%9A%D0%B8%D1%80%D0%B8%D0%BB%D0%BB_%D0%91%D0%B5%D0%BB%D0%BE%D0%B7%D0%B5%D1%80%D1%81%D0%BA%D0%B8%D0%B9_%D1%81_%D0%B6%D0%B8%D1%82%D0%B8%D0%B5%D0%BC.jpg"
+      }
     },
     {
       "id": "p-ulu-mukhammed",
@@ -4333,7 +4445,14 @@
         "Его сыновья взяли в плен Василия II.",
         "Его сын Касим перешёл на службу Москве."
       ],
-      "wiki": "Улу-Мухаммед"
+      "wiki": "Улу-Мухаммед",
+      "image": "images/persons/p-ulu-mukhammed.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "about": "В ту же зиму царь Улу-Мах- мет приходил с войском к Мурому из Старого Нижнего Новгорода",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Facial_Chronicle_-_b.14,_p._033.gif"
+      }
     },
     {
       "id": "p-plano-karpini",
@@ -4358,7 +4477,14 @@
         "Присутствовал при возведении на престол хана Гуюка.",
         "Описал разорённый Киев."
       ],
-      "wiki": "Джованни Плано Карпини"
+      "wiki": "Джованни Плано Карпини",
+      "image": "images/persons/p-plano-karpini.webp",
+      "imageInfo": {
+        "author": "Уильям Роберт Шепард",
+        "about": "Изображение: Плано Карпини",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Central_Asian_trade_routes.jpg"
+      }
     }
   ],
   "culture": [
@@ -4838,7 +4964,15 @@
         "утрачен в 1941 году, в 1997 году воссоздан"
       ],
       "importance": 1,
-      "wiki": "Крест Евфросинии Полоцкой"
+      "wiki": "Крест Евфросинии Полоцкой",
+      "image": "images/culture/c-krest-evfrosinii-polotskoy.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "date": "1890",
+        "about": "Изображение: Крест Евфросинии Полоцкой.",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Kry%C5%BE_E%C5%ADfrasi%C5%84ni_Po%C5%82ackaj._%D0%9A%D1%80%D1%8B%D0%B6_%D0%AD%D1%9E%D1%84%D1%80%D0%B0%D1%81%D1%96%D0%BD%D1%8C%D0%BD%D1%96_%D0%9F%D0%BE%D0%BB%D0%B0%D1%86%D0%BA%D0%B0%D0%B9_(1890).jpg"
+      }
     },
     {
       "id": "c-kievo-pecherskiy-paterik",
@@ -4854,7 +4988,16 @@
         "рассказ об иконописце Алимпии"
       ],
       "importance": 1,
-      "wiki": "Киево-Печерский патерик"
+      "wiki": "Киево-Печерский патерик",
+      "image": "images/culture/c-kievo-pecherskiy-paterik.webp",
+      "imageInfo": {
+        "title": "Киево-Печерский патерик",
+        "author": "Российская национальная библиотека",
+        "date": "2020",
+        "about": "Первая страница рукописи",
+        "license": "CC0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%B8%D0%B5%D0%B2%D0%BE-%D0%9F%D0%B5%D1%87%D0%B5%D1%80%D1%81%D0%BA%D0%B8%D0%B9_%D0%BF%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%BA.jpg"
+      }
     },
     {
       "id": "c-molenie-daniila-zatochnika",
@@ -4870,7 +5013,13 @@
         "служба князю лучше службы боярину"
       ],
       "importance": 1,
-      "wiki": "Моление Даниила Заточника"
+      "wiki": "Моление Даниила Заточника",
+      "image": "images/culture/c-molenie-daniila-zatochnika.webp",
+      "imageInfo": {
+        "about": "Рукопись \"Моления Даниила Заточника\". Список XVI века",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Praying_of_Daniel_the_Immured_01.png"
+      }
     },
     {
       "id": "c-angel-zlatye-vlasy",
@@ -4886,7 +5035,16 @@
         "домонгольская икона"
       ],
       "importance": 1,
-      "wiki": "Ангел Златые власы"
+      "wiki": "Ангел Златые власы",
+      "image": "images/culture/c-angel-zlatye-vlasy.webp",
+      "imageInfo": {
+        "title": "Архангел Гавриил из оглавного деисусного чина. (Ангел \"Златые власы\")",
+        "author": "Неизвестный автор",
+        "date": "ок. 1200",
+        "about": "Изображение: «Ангел Златые власы»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Unknow_-_The_Angel_with_Golden_Hair_-_Google_Art_Project.jpg"
+      }
     },
     {
       "id": "c-kirillo-belozerskiy-monastyr",
@@ -4902,7 +5060,16 @@
         "место ссылки опальных бояр и иерархов"
       ],
       "importance": 1,
-      "wiki": "Кирилло-Белозерский монастырь"
+      "wiki": "Кирилло-Белозерский монастырь",
+      "image": "images/culture/c-kirillo-belozerskiy-monastyr.webp",
+      "imageInfo": {
+        "title": "Кирилло-Белозерский монастырь коптер",
+        "author": "Шелковников Евгений Анатольевич",
+        "date": "2016",
+        "about": "Кирилло-Белозерский монастырь",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%B8%D1%80%D0%B8%D0%BB%D0%BB%D0%BE-%D0%91%D0%B5%D0%BB%D0%BE%D0%B7%D0%B5%D1%80%D1%81%D0%BA%D0%B8%D0%B9_%D0%BC%D0%BE%D0%BD%D0%B0%D1%81%D1%82%D1%8B%D1%80%D1%8C_%D0%BA%D0%BE%D0%BF%D1%82%D0%B5%D1%80.jpg"
+      }
     },
     {
       "id": "c-skazanie-o-mamaevom-poboishche",
@@ -4918,7 +5085,14 @@
         "засадный полк Владимира Андреевича и Боброка"
       ],
       "importance": 2,
-      "wiki": "Сказание о Мамаевом побоище"
+      "wiki": "Сказание о Мамаевом побоище",
+      "image": "images/culture/c-skazanie-o-mamaevom-poboishche.webp",
+      "imageInfo": {
+        "date": "2011",
+        "about": "Сказание о Мамаевом побоище. Конец 17 века. ГИМ",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_Tale_of_Mamai%27s_Debacle_(GIM,_17_c.)_by_shakko.jpg"
+      }
     }
   ],
   "terms": [

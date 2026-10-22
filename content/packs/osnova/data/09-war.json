@@ -3185,7 +3185,15 @@
         "Обратился к верующим в первый день войны.",
         "Избран главой церкви в 1943 году после встречи со Сталиным."
       ],
-      "wiki": "Сергий (Страгородский)"
+      "wiki": "Сергий (Страгородский)",
+      "image": "images/persons/p-patriarkh-sergiy.webp",
+      "imageInfo": {
+        "title": "Патриарх Сергий",
+        "author": "Неизвестный автор",
+        "about": "Патриарх Московский и всея Руси Сергий",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9F%D0%B0%D1%82%D1%80%D0%B8%D0%B0%D1%80%D1%85_%D0%A1%D0%B5%D1%80%D0%B3%D0%B8%D0%B9.jpg"
+      }
     },
     {
       "id": "p-antonov-aleksey",
@@ -4391,7 +4399,15 @@
         "Кукрыниксы — три художника"
       ],
       "importance": 1,
-      "wiki": "Кукрыниксы"
+      "wiki": "Кукрыниксы",
+      "image": "images/culture/c-plakat-kukryniksy-1941.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "date": "1933",
+        "about": "Кукрыниксы — творческий коллектив советских художников-графиков и живописцев: Михаил Куприянов (1903—1991), Порфирий Крылов (1902—1990) и Николай Соколов (1903—2000)",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Kukryniksy_(1933).jpg"
+      }
     },
     {
       "id": "c-leningradskaya-poema",

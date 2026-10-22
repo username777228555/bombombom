@@ -3839,7 +3839,14 @@
         "Обвинён в «формализме» в 1930-е годы.",
         "Его дом — два врезанных друг в друга цилиндра."
       ],
-      "wiki": "Мельников, Константин Степанович"
+      "wiki": "Мельников, Константин Степанович",
+      "image": "images/persons/p-melnikov-konstantin.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "about": "Константин Мельников, русский архитектор",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Melnikov.jpg"
+      }
     },
     {
       "id": "p-iofan",
@@ -4586,7 +4593,15 @@
         "сатира на бюрократа Бывалова"
       ],
       "importance": 1,
-      "wiki": "Волга, Волга"
+      "wiki": "Волга, Волга",
+      "image": "images/culture/c-film-volga-volga.webp",
+      "imageInfo": {
+        "author": "Зеленский, Александр Николаевич",
+        "date": "1938",
+        "about": "Киноплакат к фильму «Волга, Волга»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Volga-volga.jpg"
+      }
     },
     {
       "id": "c-belaya-gvardiya",
@@ -4601,7 +4616,16 @@
         "пьесу «Дни Турбиных» Сталин смотрел более десяти раз"
       ],
       "importance": 2,
-      "wiki": "Белая гвардия (роман)"
+      "wiki": "Белая гвардия (роман)",
+      "image": "images/culture/c-belaya-gvardiya.webp",
+      "imageInfo": {
+        "title": "Белая-гвардия-1927",
+        "author": "Неизвестный автор",
+        "date": "1927",
+        "about": "Издание романа М.Булгакова \"Белая Гвардия\", 1927",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%91%D0%B5%D0%BB%D0%B0%D1%8F-%D0%B3%D0%B2%D0%B0%D1%80%D0%B4%D0%B8%D1%8F-1927.jpg"
+      }
     },
     {
       "id": "c-sobache-serdtse",
@@ -4712,7 +4736,14 @@
         "фонтан «Дружба народов» (1954)"
       ],
       "importance": 2,
-      "wiki": "ВДНХ"
+      "wiki": "ВДНХ",
+      "image": "images/culture/c-vskhv-1939.webp",
+      "imageInfo": {
+        "date": "2020",
+        "about": "Москва. ВДНХ",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Moscow._VDNKh_DSC_3753_2350.jpg"
+      }
     },
     {
       "id": "c-petya-i-volk",
@@ -4727,7 +4758,14 @@
         "написана для Центрального детского театра Н. Сац"
       ],
       "importance": 1,
-      "wiki": "Петя и волк"
+      "wiki": "Петя и волк",
+      "image": "images/culture/c-petya-i-volk.webp",
+      "imageInfo": {
+        "date": "2016",
+        "about": "Изображение: Симфоническая сказка «Петя и волк»",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:David_Bowie_Narrates_Prokofiev%27s_Peter_and_the_Wolf.png"
+      }
     }
   ],
   "terms": [

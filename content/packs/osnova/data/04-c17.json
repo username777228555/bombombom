@@ -1330,7 +1330,15 @@
       ],
       "place": "Москва",
       "summary": "Узнав о возможном стрелецком заговоре, Пётр бежал в Троице-Сергиев монастырь, где его поддержали потешные полки и бóльшая часть двора. Софья была отстранена от власти и заключена в Новодевичий монастырь.",
-      "details": "Падению Софьи способствовали неудачные Крымские походы Голицына и взросление Петра, которого в 1689 году женили. В ночь с 7 на 8 августа Пётр из Преображенского уехал в Троице-Сергиев монастырь, куда стали стекаться его сторонники и часть стрельцов. Начальник Стрелецкого приказа Фёдор Шакловитый был арестован и казнён, Василий Голицын лишён боярства и сослан. Софью отправили в Новодевичий монастырь. Фактически власть оказалась у Нарышкиных, а самостоятельно Пётр стал править только после смерти матери в 1694 году."
+      "details": "Падению Софьи способствовали неудачные Крымские походы Голицына и взросление Петра, которого в 1689 году женили. В ночь с 7 на 8 августа Пётр из Преображенского уехал в Троице-Сергиев монастырь, куда стали стекаться его сторонники и часть стрельцов. Начальник Стрелецкого приказа Фёдор Шакловитый был арестован и казнён, Василий Голицын лишён боярства и сослан. Софью отправили в Новодевичий монастырь. Фактически власть оказалась у Нарышкиных, а самостоятельно Пётр стал править только после смерти матери в 1694 году.",
+      "image": "images/events/e-sverzhenie-sofi-1689.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "about": "Царевна Софья",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Sophia_Alekseyevna_of_Russia.jpg"
+      },
+      "wiki": "«Двенадцать статей» царевны Софьи"
     },
     {
       "id": "e-osnovanie-yakutska",
@@ -1735,7 +1743,15 @@
       "importance": 1,
       "place": "Чуднов на Волыни",
       "summary": "Осенью 1660 года русское войско воеводы В. Б. Шереметева, окружённое польской армией и крымскими татарами, после измены гетмана Юрия Хмельницкого капитулировало под Чудновом.",
-      "details": "Шереметев шёл на Львов в расчёте на помощь казаков, но Юрий Хмельницкий заключил договор с поляками. Окружённые русские несколько недель оборонялись в таборе и сдались; Шереметев провёл в крымском плену более двадцати лет. Поражение надолго подорвало позиции России на Правобережной Украине и предопределило условия Андрусовского перемирия."
+      "details": "Шереметев шёл на Львов в расчёте на помощь казаков, но Юрий Хмельницкий заключил договор с поляками. Окружённые русские несколько недель оборонялись в таборе и сдались; Шереметев провёл в крымском плену более двадцати лет. Поражение надолго подорвало позиции России на Правобережной Украине и предопределило условия Андрусовского перемирия.",
+      "image": "images/events/e-bitva-pod-chudnovom-1660.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "about": "Осада лагеря Шереметева и Цецюры польскими войсками в 1660 году",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Chudhov_1660.JPG"
+      },
+      "wiki": "Битва под Чудновом"
     },
     {
       "id": "e-pokhod-atlasova-1697",
@@ -3210,7 +3226,14 @@
         "Почти два года осаждал Смоленск.",
         "Не отпустил сына на русский престол."
       ],
-      "wiki": "Сигизмунд III"
+      "wiki": "Сигизмунд III",
+      "image": "images/persons/p-sigizmund-iii.webp",
+      "imageInfo": {
+        "date": "1590",
+        "about": "Герб Речи Посполитой",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Title_page_of_Aeconomiae_Marienburgensis_Revisio_crop.png"
+      }
     },
     {
       "id": "p-vladislav-iv",
@@ -3234,7 +3257,13 @@
         "В 1618 году безуспешно штурмовал Москву.",
         "Отказался от титула по Поляновскому миру."
       ],
-      "wiki": "Владислав IV"
+      "wiki": "Владислав IV",
+      "image": "images/persons/p-vladislav-iv.webp",
+      "imageInfo": {
+        "about": "Изображение: Королевич Владислав",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Campana_Ladislaus_IV_Vasa_in_a_cuirass.jpg"
+      }
     },
     {
       "id": "p-zholkevskiy",
@@ -3257,7 +3286,14 @@
         "Увёз в Польшу пленного царя.",
         "Погиб в битве с турками."
       ],
-      "wiki": "Жолкевский, Станислав"
+      "wiki": "Жолкевский, Станислав",
+      "image": "images/persons/p-zholkevskiy.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "about": "Изображение: Станислав Жолкевский",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Stanis%C5%82aw_%C5%BB%C3%B3%C5%82kiewski_11.PNG"
+      }
     },
     {
       "id": "p-shein",
@@ -3281,7 +3317,14 @@
         "Провёл восемь лет в польском плену.",
         "Казнён после неудачной войны 1632–1634 годов."
       ],
-      "wiki": "Шеин, Михаил Борисович"
+      "wiki": "Шеин, Михаил Борисович",
+      "image": "images/persons/p-shein.webp",
+      "imageInfo": {
+        "author": "Описание «в лицах» свадьбы царя Михаила Федоровича с Евдокией Лукьяновной Стрешневой. 29…",
+        "about": "Изображение: Михаил Шеин",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Mikhail_Borisovich_Shein,_Prince_Daniil_Gagarin,_Prince_Roman_Pozharsky_to_Marfa_Ivanovna_Romanova_with_royal_gifts.jpg"
+      }
     },
     {
       "id": "p-trubetskoy-dmitriy",
@@ -3306,7 +3349,14 @@
         "Возглавлял казацкие «таборы» под Москвой.",
         "Был кандидатом на престол в 1613 году."
       ],
-      "wiki": "Трубецкой, Дмитрий Тимофеевич"
+      "wiki": "Трубецкой, Дмитрий Тимофеевич",
+      "image": "images/persons/p-trubetskoy-dmitriy.webp",
+      "imageInfo": {
+        "author": "Г.А. Афонасьев",
+        "about": "Трубецкой, Дмитрий Тимофеевич. Гравюра",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Dmitry_Troubetskoy.jpg"
+      }
     },
     {
       "id": "p-vygovskiy",
@@ -3331,7 +3381,14 @@
         "Вместе с крымцами победил под Конотопом.",
         "Расстрелян поляками в 1664 году."
       ],
-      "wiki": "Выговский, Иван Евстафьевич"
+      "wiki": "Выговский, Иван Евстафьевич",
+      "image": "images/persons/p-vygovskiy.webp",
+      "imageInfo": {
+        "author": "Васько Гаврило Андреевич / Автор оригинала — Самуил Васильевич Величко",
+        "about": "Изображение: Иван Выговский",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Ivan_Vyhovsky_(Portrait,_19th_century,_before_restoration).png"
+      }
     },
     {
       "id": "p-shaklovityy",
@@ -3355,7 +3412,15 @@
         "Из-за слухов о нём Пётр ночью бежал в Троицу.",
         "Казнён после падения правительницы."
       ],
-      "wiki": "Шакловитый, Фёдор Леонтьевич"
+      "wiki": "Шакловитый, Фёдор Леонтьевич",
+      "image": "images/persons/p-shaklovityy.webp",
+      "imageInfo": {
+        "author": "Неизвестен",
+        "date": "1680-е",
+        "about": "Изображение: Фёдор Шакловитый",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Fyodor_Leontyevich_Shaklovity_as_Fyodor_Stratilat.jpg"
+      }
     },
     {
       "id": "p-silvestr-medvedev",
@@ -3379,7 +3444,14 @@
         "Спорил с патриархом Иоакимом о таинстве причастия.",
         "Описал события 1682–1684 годов."
       ],
-      "wiki": "Сильвестр (Медведев)"
+      "wiki": "Сильвестр (Медведев)",
+      "image": "images/persons/p-silvestr-medvedev.webp",
+      "imageInfo": {
+        "date": "2013",
+        "about": "1682, 1 марта. Письмо царя Федора Алексеевича к чернецу Сильвестру медведеву о предстоящей свадьбе с Марфой Апраксиной. Автограф. РГАДА",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Fedor_III%27s_letter_to_S._Medvedev_about_wedding_(March_1,_1682,_RGADA).jpg"
+      }
     },
     {
       "id": "p-karion-istomin",
@@ -3402,7 +3474,14 @@
         "Составил азбуку с картинками к каждой букве.",
         "Гравюры к его книге сделал Леонтий Бунин."
       ],
-      "wiki": "Карион Истомин"
+      "wiki": "Карион Истомин",
+      "image": "images/persons/p-karion-istomin.webp",
+      "imageInfo": {
+        "date": "2012",
+        "about": "Изображение: Карион Истомин",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Karion_Istomin_Tromba.jpg"
+      }
     },
     {
       "id": "p-kotoshikhin",
@@ -3447,7 +3526,13 @@
         "Её братья погибли в Стрелецком бунте 1682 года.",
         "Мать первого российского императора."
       ],
-      "wiki": "Наталья Кирилловна"
+      "wiki": "Наталья Кирилловна",
+      "image": "images/persons/p-natalya-naryshkina.webp",
+      "imageInfo": {
+        "about": "Изображение: Наталья Нарышкина.",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Natalia_Naryshkina_by_anonymous_(17-18_c.,_Yaroslavl_museum).jpg"
+      }
     },
     {
       "id": "p-ivan-v",
@@ -3471,7 +3556,15 @@
         "Царствовал номинально до 1696 года.",
         "Отец будущей императрицы Анны."
       ],
-      "wiki": "Иван V"
+      "wiki": "Иван V",
+      "image": "images/persons/p-ivan-v.webp",
+      "imageInfo": {
+        "author": "Приписывается: Чоглоков, Михаил Иванович",
+        "date": "1696",
+        "about": "Портрет царя Ивана V",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Ivan_V_(Russian_museum).jpg"
+      }
     },
     {
       "id": "p-atlasov",
@@ -3543,7 +3636,15 @@
         "Заводы работали на водяных колёсах.",
         "Его сын стал сподвижником Петра I."
       ],
-      "wiki": "Виниус, Андрей Денисович"
+      "wiki": "Виниус, Андрей Денисович",
+      "image": "images/persons/p-vinius.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "date": "Неизвестная дата",
+        "about": "Портрет Андрія Д. Вініуса",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Andries_Winius.JPG"
+      }
     }
   ],
   "culture": [
@@ -4039,7 +4140,14 @@
         "происхождение выражения «шемякин суд»"
       ],
       "importance": 1,
-      "wiki": "Повесть о Шемякином суде"
+      "wiki": "Повесть о Шемякином суде",
+      "image": "images/culture/c-povest-o-shemyakinom-sude.webp",
+      "imageInfo": {
+        "date": "1916",
+        "about": "Шемякин суд",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:The_judgment_of_Shemyaka_(Rosciszewski).jpg"
+      }
     },
     {
       "id": "c-povest-o-frole-skobeeve",
@@ -4071,7 +4179,14 @@
         "гербы русских земель"
       ],
       "importance": 1,
-      "wiki": "Царский титулярник"
+      "wiki": "Царский титулярник",
+      "image": "images/culture/c-tsarskiy-titulyarnik.webp",
+      "imageInfo": {
+        "date": "1672",
+        "about": "Царский титулярник: Книга, а в ней собрание, откуду произыде корень Великих Государей царей и Великих Князей Росийских",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:00_Tsarskiy_titulyarnik_page.jpg"
+      }
     },
     {
       "id": "c-kolomenskiy-dvorets",
@@ -4087,7 +4202,14 @@
         "воссоздан в 2010 году"
       ],
       "importance": 1,
-      "wiki": "Коломенский дворец"
+      "wiki": "Коломенский дворец",
+      "image": "images/culture/c-kolomenskiy-dvorets.webp",
+      "imageInfo": {
+        "date": "2011",
+        "about": "Музей-заповедник Коломенское в Москве: воссозданный деревянный дворец царя Алексея Михайловича",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kolomenskoe_Wooden_Palace_(Morning).jpg"
+      }
     },
     {
       "id": "c-tserkov-pokrova-v-filyakh",
@@ -4103,7 +4225,14 @@
         "резной золочёный иконостас"
       ],
       "importance": 2,
-      "wiki": "Церковь Покрова в Филях"
+      "wiki": "Церковь Покрова в Филях",
+      "image": "images/culture/c-tserkov-pokrova-v-filyakh.webp",
+      "imageInfo": {
+        "date": "2008",
+        "about": "Церковь Покрова в Филях, 1690-1694, Москва",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Moscow_Fili_ChurchProtectionTheotokos3.jpg"
+      }
     },
     {
       "id": "c-psaltir-rifmotvornaya",
@@ -4118,7 +4247,15 @@
         "музыка Василия Титова"
       ],
       "importance": 1,
-      "wiki": "Псалтирь рифмотворная"
+      "wiki": "Псалтирь рифмотворная",
+      "image": "images/culture/c-psaltir-rifmotvornaya.webp",
+      "imageInfo": {
+        "author": "Симеон Полоцкий",
+        "date": "1680",
+        "about": "Изображение: «Псалтирь рифмотворная»",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:IL3-009.jpg"
+      }
     }
   ],
   "terms": [

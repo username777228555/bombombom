@@ -43,7 +43,7 @@
       initWidgets();
       initAutoBackup();
       if (restored) {
-        toast('Прогресс восстановлен из копии в аккаунте Google', 'success', 4000);
+        toast('С возвращением! Прогресс восстановлен.', 'success', 4000);
         // A new install has no notification permission yet: ask again so Vasily's reminders keep coming.
         if (settings.remindAt) void enableReminders(settings.remindAt);
       }

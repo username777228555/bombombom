@@ -8,7 +8,7 @@
   import Vasily from '$lib/design/components/Vasily.svelte';
   import { settings, systemReducedMotion, type Accent } from '$lib/core/settings.svelte';
   import { exportBackup, importBackup, resetProgress } from '$lib/core/backup';
-  import { pickFiles } from '$lib/core/platform';
+  import { isNative, pickFiles } from '$lib/core/platform';
   import { toast, confirmDialog, ui } from '$lib/core/ui.svelte';
   import { navigate } from '$lib/core/router.svelte';
   import { REMIND_TIMES, enableReminders, disableReminders, nextReminder, reminderStatus, reminderToast, syncReminders, testReminder, whenLabel, type ReminderStatus } from '$lib/core/reminders';
@@ -237,7 +237,7 @@
     <Card padding="md">
       <div class="stack inner">
         <label class="line"><span class="grow">Сообщать о новой версии<small>раз в день спрашивает GitHub, есть ли свежий APK</small></span><Toggle bind:checked={settings.checkUpdates} label="Сообщать о новой версии" /></label>
-        <p class="muted small">Прогресс хранится только на этом устройстве. Делайте резервную копию, чтобы перенести его на другой телефон. Файлы книг в копию не входят.</p>
+        <p class="muted small">{#if isNative}Прогресс хранится на телефоне, а если в Android включено резервное копирование Google — ещё и в вашем аккаунте: после переустановки он вернётся сам. Копию можно сохранить и вручную.{:else}Прогресс хранится только на этом устройстве. Делайте резервную копию, чтобы перенести его на другое.{/if} Ключ ИИ и файлы книг в копию не входят.</p>
         <Button variant="secondary" full icon={Download} onclick={doExport}>Сохранить резервную копию</Button>
         <Button variant="secondary" full icon={Upload} onclick={doImport}>Восстановить из копии</Button>
         <Button variant="danger" full icon={RotateCcw} onclick={doReset}>Сбросить прогресс</Button>

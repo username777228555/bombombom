@@ -218,7 +218,7 @@
           {#if cur.scene === 'hello'}
             <div class="card">
               <TextField bind:value={name} label="Как к вам обращаться" placeholder="Имя" onenter={next} />
-              <small class="note">Имя останется только на этом устройстве — для приветствия на главной.</small>
+              <small class="note">Имя нужно только для приветствия на главной.</small>
             </div>
           {:else if cur.scene === 'course'}
             <div class="card lesson">

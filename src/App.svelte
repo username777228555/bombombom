@@ -7,17 +7,18 @@
   import { kb } from '$lib/core/content/kb.svelte';
   import { loadSettings, settings, persistSettings, applyTheme, motionOK } from '$lib/core/settings.svelte';
   import { loadProgress, progress } from '$lib/core/progress.svelte';
-  import { initReminders, syncReminders } from '$lib/core/reminders';
+  import { enableReminders, initReminders, syncReminders } from '$lib/core/reminders';
   import { initWidgets, syncWidgets } from '$lib/modules/widgets/native';
   import { loadUserDecks } from '$lib/core/content/userdecks.svelte';
   import { initPlatform, setHapticsEnabled } from '$lib/core/platform';
   import { checkForUpdate } from '$lib/core/update.svelte';
+  import { initAutoBackup, restoreFromGoogle } from '$lib/core/autobackup';
   import TabBar from '$lib/app/TabBar.svelte';
   import SheetHost from '$lib/app/SheetHost.svelte';
   import Overlays from '$lib/app/Overlays.svelte';
   import Splash from '$lib/app/Splash.svelte';
   import Onboarding from '$lib/app/Onboarding.svelte';
-  import { ui } from '$lib/core/ui.svelte';
+  import { toast, ui } from '$lib/core/ui.svelte';
   import { ArrowLeft } from '@lucide/svelte';
   import { returnPoint, awayFromReturn, comeBack, dropReturnIfBack } from '$lib/core/return-point.svelte';
   import NotFound from '$lib/app/NotFound.svelte';
@@ -27,6 +28,8 @@
 
   onMount(async () => {
     try {
+      // A reinstall: Android has already put back the snapshot from the Google account (core/autobackup.ts).
+      const restored = await restoreFromGoogle();
       await loadSettings();
       await Promise.all([kb.load(), loadProgress(), loadUserDecks()]);
       for (const m of modules) await m.init?.();
@@ -38,6 +41,12 @@
       void checkForUpdate();
       void initReminders();
       initWidgets();
+      initAutoBackup();
+      if (restored) {
+        toast('Прогресс восстановлен из копии в аккаунте Google', 'success', 4000);
+        // A new install has no notification permission yet: ask again so Vasily's reminders keep coming.
+        if (settings.remindAt) void enableReminders(settings.remindAt);
+      }
     } catch (e) {
       console.error(e);
       failure = e instanceof Error ? e.message : String(e);

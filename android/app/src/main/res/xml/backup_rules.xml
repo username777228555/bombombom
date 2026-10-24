@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 6–11: Google keeps only the progress snapshot written by src/core/autobackup.ts (no AI key, books or
+     WebView caches). Android 12+ reads data_extraction_rules.xml instead. -->
+<full-backup-content>
+    <include domain="file" path="autobackup/" />
+</full-backup-content>

@@ -5862,7 +5862,15 @@
         "При нём была принята Конституция 3 мая 1791 года.",
         "Последний король Речи Посполитой, бывший фаворит Екатерины II."
       ],
-      "wiki": "Станислав Август Понятовский"
+      "wiki": "Станислав Август Понятовский",
+      "image": "images/persons/p-ponyatovskiy.webp",
+      "imageInfo": {
+        "author": "Марчелло Баччарелли",
+        "date": "1786",
+        "about": "Изображение: Станислав Понятовский",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Stanislaw_poniatowski_bacciarelli.jpg"
+      }
     }
   ],
   "culture": [

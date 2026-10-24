@@ -2321,10 +2321,11 @@
       "image": "images/events/e-adrianopolskiy-mir.webp",
       "imageInfo": {
         "author": "Неизвестный автор",
-        "about": "Иллюстрация к событию «Адрианопольский мир»",
+        "about": "Московские триумфальные ворота в Петербурге (архитектор В. П. Стасов, 1834–1838) — памятник победам в войнах с Персией и Турцией 1826–1829 годов.",
         "license": "CC BY 2.5",
         "source": "https://commons.wikimedia.org/wiki/File:Moscow_Triumphal_Gates.jpg"
-      }
+      },
+      "imageQuiz": false
     },
     {
       "id": "e-kholernye-bunty",
@@ -7989,16 +7990,7 @@
         "Изваял Ермака и Нестора-летописца.",
         "Автор скульптуры «Иван Грозный» (1871)."
       ],
-      "wiki": "Антокольский, Марк Матвеевич",
-      "image": "images/persons/p-antokolskiy.webp",
-      "imageInfo": {
-        "title": "Антокольский портрет Николая Александровича Львова 1870-е годы мрамор ЕМИИ",
-        "author": "Иван Абатуров",
-        "date": "2022",
-        "about": "Антокольский Марк Матвеевич портрет Николая Александровича Львова 1870-е годы мрамор ЕМИИ",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:%D0%90%D0%BD%D1%82%D0%BE%D0%BA%D0%BE%D0%BB%D1%8C%D1%81%D0%BA%D0%B8%D0%B9_%D0%BF%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D1%8F_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D0%BE%D0%B2%D0%B8%D1%87%D0%B0_%D0%9B%D1%8C%D0%B2%D0%BE%D0%B2%D0%B0_1870-%D0%B5_%D0%B3%D0%BE%D0%B4%D1%8B_%D0%BC%D1%80%D0%B0%D0%BC%D0%BE%D1%80_%D0%95%D0%9C%D0%98%D0%98.jpg"
-      }
+      "wiki": "Антокольский, Марк Матвеевич"
     },
     {
       "id": "p-savitskiy",

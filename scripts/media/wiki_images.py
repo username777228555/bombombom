@@ -9,6 +9,7 @@
     аватарах лицо было по центру;
   * события — длинная сторона до 640 px; культура — до 900 px. Всё в webp.
 В JSON пакета записываются `image` и `imageInfo` { title, author, date, about, license, source }.
+Подпись `about`, исправленная вручную, сохраняется, пока картинка остаётся тем же файлом Commons.
 
 Использование (из корня репозитория, нужен интернет и `pip install requests pillow opencv-python`):
   python3 scripts/media/wiki_images.py fetch  [--pack osnova] [--kinds persons,events,culture] [--missing-only]
@@ -542,12 +543,15 @@ def cmd_apply(a):
             with open(os.path.join(cdir, 'img', f'{iid}.webp'), 'rb') as src, open(dst, 'wb') as out:
                 out.write(src.read())
             meta = rec['meta']
+            old_info = it.get('imageInfo') or {}
             it['image'] = new_rel
             info = {k: meta[k] for k in ('title', 'author') if meta.get(k)}
             date = clean_date(meta.get('date', ''), meta.get('license', ''))
             if date:
                 info['date'] = date
-            info['about'] = author_line(meta, kind, it)
+            # A caption written by hand stays while the picture is the same file.
+            same = old_info.get('source') == meta['source'] and old_info.get('about')
+            info['about'] = old_info['about'] if same else author_line(meta, kind, it)
             info['license'] = meta['license']
             info['source'] = meta['source']
             it['imageInfo'] = info

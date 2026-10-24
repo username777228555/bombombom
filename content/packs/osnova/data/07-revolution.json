@@ -7185,7 +7185,14 @@
         "напечатаны уже после падения монархии"
       ],
       "importance": 2,
-      "imageQuiz": false
+      "imageQuiz": false,
+      "image": "images/culture/c-vospominaniya-vitte.webp",
+      "imageInfo": {
+        "about": "Изображение: «Воспоминания» С. Ю. Витте",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:SergeiWitte01548v.jpg"
+      },
+      "wiki": "Витте, Сергей Юльевич"
     },
     {
       "id": "c-vospominaniya-milyukova",
@@ -7203,7 +7210,14 @@
         "история Прогрессивного блока и речи «Глупость или измена?»"
       ],
       "importance": 1,
-      "imageQuiz": false
+      "imageQuiz": false,
+      "image": "images/culture/c-vospominaniya-milyukova.webp",
+      "imageInfo": {
+        "about": "Изображение: «Воспоминания» П. Н. Милюкова",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Pavel_Milyukov_2.jpg"
+      },
+      "wiki": "Милюков, Павел Николаевич"
     },
     {
       "id": "c-ocherki-russkoy-smuty",
@@ -7224,7 +7238,15 @@
       ],
       "importance": 2,
       "imageQuiz": false,
-      "wiki": "Очерки русской смуты"
+      "wiki": "Очерки русской смуты",
+      "image": "images/culture/c-ocherki-russkoy-smuty.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "date": "1921",
+        "about": "Обложка книги А. И. Деникина «Очерки русской смуты»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:The_Russian_turmoil_by_A._I._Denikin.jpg"
+      }
     },
     {
       "id": "c-dni-shulgina",
@@ -7243,7 +7265,16 @@
         "переиздана в СССР в 1926 году"
       ],
       "importance": 2,
-      "imageQuiz": false
+      "imageQuiz": false,
+      "image": "images/culture/c-dni-shulgina.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "date": "1913",
+        "about": "Шульгин, Василий Витальевич",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Shulgin_VV_1913.jpg"
+      },
+      "wiki": "Шульгин, Василий Витальевич"
     }
   ],
   "terms": [

@@ -2204,7 +2204,14 @@
         "p-bulganin",
         "p-khrushchev"
       ],
-      "wiki": "Суэцкий кризис"
+      "wiki": "Суэцкий кризис",
+      "image": "images/events/e-suetskiy-krizis-1956.webp",
+      "imageInfo": {
+        "date": "1956",
+        "about": "Поврежденные танк М-4 \"Шерман\" американского производства и транспортные средства, Синай, 1956 год",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Tanks_Destroyed_Sinai.jpg"
+      }
     },
     {
       "id": "e-asuanskaya-plotina",
@@ -2225,7 +2232,13 @@
       "persons": [
         "p-khrushchev"
       ],
-      "wiki": "Асуанская плотина"
+      "wiki": "Асуанская плотина",
+      "image": "images/events/e-asuanskaya-plotina.webp",
+      "imageInfo": {
+        "about": "Иллюстрация к событию «Строительство Асуанской плотины»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:BarragemAssu%C3%A3o.jpg"
+      }
     },
     {
       "id": "e-deklaratsiya-o-dekolonizatsii-1960",
@@ -2264,7 +2277,15 @@
       "persons": [
         "p-khrushchev"
       ],
-      "wiki": "Российский университет дружбы народов"
+      "wiki": "Российский университет дружбы народов",
+      "image": "images/events/e-universitet-druzhby-narodov-1960.webp",
+      "imageInfo": {
+        "title": "Вход в РУДН 02.2023 3",
+        "date": "Снято: 15 февраля 2023 (в соответствии…",
+        "about": "Вход в РУДН вечером, февраль 2023 года",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%92%D1%85%D0%BE%D0%B4_%D0%B2_%D0%A0%D0%A3%D0%94%D0%9D_02.2023_3.jpg"
+      }
     },
     {
       "id": "e-tashkentskaya-vstrecha-1966",
@@ -2325,7 +2346,14 @@
         "p-kosygin",
         "p-brezhnev"
       ],
-      "wiki": "Война во Вьетнаме"
+      "wiki": "Война во Вьетнаме",
+      "image": "images/events/e-voyna-vo-vetname.webp",
+      "imageInfo": {
+        "date": "1966",
+        "about": "Иллюстрация к событию «Война во Вьетнаме и помощь СССР»",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:VietnamMural.jpg"
+      }
     }
   ],
   "persons": [
@@ -5310,7 +5338,16 @@
       ],
       "importance": 2,
       "imageQuiz": false,
-      "wiki": "Воспоминания и размышления"
+      "wiki": "Воспоминания и размышления",
+      "image": "images/culture/c-vospominaniya-i-razmyshleniya.webp",
+      "imageInfo": {
+        "title": "Воспоминания и размышления Жуков",
+        "author": "Агентство печати «Новости» (АПН) Москва",
+        "date": "1969",
+        "about": "Суперобложка к первым изданиям",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%BE%D1%81%D0%BF%D0%BE%D0%BC%D0%B8%D0%BD%D0%B0%D0%BD%D0%B8%D1%8F_%D0%B8_%D1%80%D0%B0%D0%B7%D0%BC%D1%8B%D1%88%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D0%96%D1%83%D0%BA%D0%BE%D0%B2.jpg"
+      }
     },
     {
       "id": "c-generalnyy-shtab-v-gody-voyny",
@@ -5363,7 +5400,17 @@
         "полное русское издание — 1999"
       ],
       "importance": 1,
-      "imageQuiz": false
+      "imageQuiz": false,
+      "image": "images/culture/c-vremya-lyudi-vlast.webp",
+      "imageInfo": {
+        "title": "НДУ 1 Івашко Володимир Антонович",
+        "author": "Верховна Рада України",
+        "date": "1990",
+        "about": "Івашко Володимир Антонович, народний депутат України I скликання",
+        "license": "Attribution",
+        "source": "https://commons.wikimedia.org/wiki/File:%D0%9D%D0%94%D0%A3_1_%D0%86%D0%B2%D0%B0%D1%88%D0%BA%D0%BE_%D0%92%D0%BE%D0%BB%D0%BE%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%90%D0%BD%D1%82%D0%BE%D0%BD%D0%BE%D0%B2%D0%B8%D1%87.jpg"
+      },
+      "wiki": "Генеральный секретарь ЦК КПСС"
     },
     {
       "id": "c-pamyatnoe-gromyko",
@@ -5380,7 +5427,15 @@
         "дипломатия от Второй мировой войны до разрядки"
       ],
       "importance": 1,
-      "imageQuiz": false
+      "imageQuiz": false,
+      "image": "images/culture/c-pamyatnoe-gromyko.webp",
+      "imageInfo": {
+        "date": "1972",
+        "about": "Изображение: «Памятное» А. А. Громыко",
+        "license": "CC BY-SA 3.0 nl",
+        "source": "https://commons.wikimedia.org/wiki/File:Andrei_Gromyko_1972.jpg"
+      },
+      "wiki": "Громыко, Андрей Андреевич"
     }
   ],
   "terms": [

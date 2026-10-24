@@ -2564,7 +2564,14 @@
       "persons": [
         "p-petr-i"
       ],
-      "wiki": "Денежная реформа Петра I"
+      "wiki": "Денежная реформа Петра I",
+      "image": "images/events/e-denezhnaya-reforma-petra-i.webp",
+      "imageInfo": {
+        "date": "2004",
+        "about": "Монета Банка России — серия «Денежное обращение», 300-летие денежной реформы Петра I, 25 рублей, реверс",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:RR5615-0001R.gif"
+      }
     }
   ],
   "persons": [

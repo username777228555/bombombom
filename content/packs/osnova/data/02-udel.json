@@ -5225,7 +5225,15 @@
         "главная святыня Новгорода, с ней связан праздник Знамения (27 ноября)",
         "чудо от иконы изображено на иконе «Битва новгородцев с суздальцами»"
       ],
-      "importance": 2
+      "importance": 2,
+      "image": "images/culture/c-ikona-znamenie-novgorod.webp",
+      "imageInfo": {
+        "author": "Неизвестный автор",
+        "about": "Знамение икона",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Orthodox_icon_of_Our_Lady_of_the_Sign._Veliky_Novgorod,_Russia.jpg"
+      },
+      "wiki": "Новгородская икона Знамения Пресвятой Богородицы"
     },
     {
       "id": "c-bitva-novgorodtsev-s-suzdaltsami",
@@ -5242,7 +5250,15 @@
         "одно из первых изображений реального исторического события в русской иконописи"
       ],
       "importance": 2,
-      "wiki": "Битва новгородцев с суздальцами"
+      "wiki": "Битва новгородцев с суздальцами",
+      "image": "images/culture/c-bitva-novgorodtsev-s-suzdaltsami.webp",
+      "imageInfo": {
+        "title": "Битва новгородцев и суздальцев в 1170 году",
+        "author": "Неизвестный автор",
+        "about": "Находилась, вероятно, в церкви Святого Димитрия в Кожевниках; в XIX веке перенесена в часовню Святого Варлаама Хутынского, а позднее – в церковь Николы Кочанова Поступила в Новгородское епархиальное древлехранилище в 1912 году",
+        "license": "Общественное достояние",
+        "source": "https://commons.wikimedia.org/wiki/File:Battle_between_Novgorod_and_Suzdal.jpg"
+      }
     }
   ],
   "terms": [
